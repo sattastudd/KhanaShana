@@ -1,0 +1,28 @@
+{
+  "name": "khanashana",
+  "version": "1.0.0",
+  "description": "u knw it food delivery and all",
+  "main": "index.js",
+  "scripts": {
+    "test": "aye aye captain"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sattastudd/KhanaShana.git"
+  },
+  "keywords": [
+    "mean",
+    "baby"
+  ],
+  "author": "satish",
+  "license": "dont have it",
+  "bugs": {
+    "url": "https://github.com/sattastudd/KhanaShana/issues"
+  },
+  "homepage": "https://github.com/sattastudd/KhanaShana",
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "express": "^4.10.7",
+    "mongoose": "^3.8.21"
+  }
+}
