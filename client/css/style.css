@@ -1,0 +1,21 @@
+
+.border{
+	border-bottom: solid 1px;
+}
+.fontSize35{
+	font-size: 35px;
+	font-family: Book Antiqua;
+}
+.bgcolorGreen{
+	background-color: #E60000 ;
+}
+.marginTop5{
+	margin-top: 5px;
+}
+.lpad15{
+	padding-left: 15px
+}
+.bpad5{
+	padding-bottom: 5px;
+}
+
