@@ -1,1 +1,28 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" ng-app="foodApp">
+<head>
+    <title>KhanaShana</title>
+    <script src="library/angular.min.js"></script>
+    <script src="library/ui-bootstrap.min.js"></script>
+    <script src="library/angular-route.min.js"></script>
+    <script src="js/controller/UserIndexController.js"></script>
+    <link rel="stylesheet" type="text/css" href="library/bootstrap.css">
+</head>
+
+<body>
+
+	<div ng-include="'header.html'"></div>
+
+	<h1>shree ganesh</h1>
+
+	<a href="#">home</a>
+	<a href="#searchresult">search</a>
+
+	<div id="main">
+		<div ng-view></div>
+	</div>
+
+
+	<div ng-include="'footer.html'"></div>
+</body>
+</html>
