@@ -18,4 +18,9 @@
 .bpad5{
 	padding-bottom: 5px;
 }
-
+.logo{
+	padding-left: 15px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	width: 230px;
+}
