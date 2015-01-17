@@ -1,10 +1,10 @@
-var globalApp = angular.module('foodApp', ['ngRoute']);
+globalApp = angular.module('foodApp', ['ngRoute']);
 
 globalApp.config(function($routeProvider){
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/userLandingPage.html',
-			controller:   'indexController'
+			controller:   'landingPageController'
 		})
 
 		.when('/searchresult', {
@@ -13,7 +13,7 @@ globalApp.config(function($routeProvider){
 		})
 });
 
-globalApp.controller('indexController', function($scope){
+globalApp.controller('landingPageController', function($scope){
 
 	console.log("landing page controller");
 	
@@ -22,4 +22,8 @@ globalApp.controller('indexController', function($scope){
 globalApp.controller('searchResultController', function($scope){
 	console.log('searc result controller');
 });
+
+globalApp.controller('headerController', function(){
+	console.log("headerController");	
+})
 
