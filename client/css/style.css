@@ -1,9 +1,5 @@
 body {
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #333;
-	background-color: #FAF8FD;
+	background-color: #FAF8FD; 
 }
 .fontSize35{
 	font-size: 35px;
@@ -24,4 +20,14 @@ body {
 .logo{
 	padding-top: 5px;
 	width: 180px;
+}
+.userLogo{
+	width: 35px;
+	border-radius: 22px;
+}
+
+@media screen and (max-width: 300px) {
+    .navbar {
+        border-radius: 0px;
+    }
 }
