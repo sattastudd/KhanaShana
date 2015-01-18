@@ -4,24 +4,29 @@ define([], function() {
     return UserIndexController;
 });
 
-function userLandingPageController($scope, $log){
+function userLandingPageController($scope, $log, $location){
 	$scope.welcomeText = "Welcome to KhanaShana. All in one destination for Foodies...";
 	console.log("inside user landing pge controller");
 
 	$scope.items = ['Bhilai','Delhi', 'Mumbai', 'Lucknow'];
+	
+	$scope.status = {
+    	isopen: false
+  	};
 
-	$scope.city = "Lucknow";
+	  $scope.toggled = function(open) {
+	    $log.log('Dropdown is now: ', open);
+	  };
+
+	 $scope.city = "Lucknow";
 
 	$scope.selectCity = function(name){
-		console.log("the city//////"+name);
 		$scope.city = name;
 	}
 
-	 $scope.status = {
-    isopen: false
-  };
+	$scope.goButton = function(){
+		$location.path('/userSearchResultPage.html');
+		console.log("the go button");
+	}
 
-  $scope.toggled = function(open) {
-    $log.log('Dropdown is now: ', open);
-  };
 }
