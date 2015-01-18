@@ -61,15 +61,12 @@ div.pizza {
 .tpad5{
 	padding-top: 7px;
 }
-.cityButton{
-	width: 110px;
-	background-color: #DC141B;
-}
+
 .padRight0{
 	padding-right: 0px;
 }
-.lpad30{
-	padding-left: 30px;
+.lpad35{
+	padding-left: 35px;
 }
 .cityName{
 	color: white;
@@ -79,3 +76,21 @@ div.pizza {
 	display: inline-block;
 }
 
+@media (min-width: 1200px){
+	.cityButton{
+		width: 95px;
+		background-color: #DC141B;
+	}
+}
+@media (min-width: 768px){
+	.cityButton{
+		width: 110px;
+		background-color: #DC141B;
+	}
+}
+@media (max-width: 760px){
+	.cityButton{
+		width: 85px;
+		background-color: #DC141B;
+	}
+}
