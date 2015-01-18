@@ -6,7 +6,7 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         .when('/', 
             routeConfig.config(
                 'views/userLandingPage.html',
-                '../../appResources/controller/UserIndexController'
+                '../../appResources/controller/userLandingPageController'
         ));
 
         $routeProvider

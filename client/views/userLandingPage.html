@@ -1,3 +1,48 @@
-<div ng-controller="indexController">
-	<h2>landing page</h2>
+
+<div ng-controller="userLandingPageController">
+	
+		<div class="col-xs-12 col-sm-12 col-lg-12 pizza bpad5">
+
+			<div class="welcomeText"></div>
+			
+			<div>
+				<form>
+						<div class="row">
+							<div class="bpad5">
+								<div class="col-xs-4 col-sm-4 col-lg-1 bpad5 padRight0">
+									<div class="btn-group" dropdown is-open="status.isopen">
+									      <button type="button" class="btn btn-default cityButton dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+									        {{city}} <span class="caret"></span>
+									      </button>
+									      <ul class="dropdown-menu" role="menu">
+									         <li ng-repeat="name in items" ng-click="selectCity(name)">
+									         {{name}}
+									         </li>
+									      </ul>
+									 </div>
+								</div>
+
+								<div class="col-xs-7 col-sm-4 col-lg-3 bpad5 lpad30">
+									<input type="text" ng-model="user.location" class="form-control" placeholder="Search Locality">
+								</div>
+							</div>						
+						</div>
+						<div class="col-xs-12 col-sm-12 col-lg-12">
+							<div class="col-xs-11 col-sm-9 col-lg-4 bpad5">
+								<input type="text" ng-model="user.search" class="form-control" placeholder="search food, food joints, dishes anything..">
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-lg-12">
+							<div class="col-xs-11 col-sm-9 col-lg-4">
+								<button class="btn btnColor btn-block">go go go</button>
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+		<div class="row tpad508">
+			<div class="col-xs-12 col-sm-12 col-lg-12 landingLocality">
+				<h2>The nearby localities</h2>
+			</div>
+		</div>
 </div>
