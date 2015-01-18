@@ -94,3 +94,9 @@ div.pizza {
 		background-color: #DC141B;
 	}
 }
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+color: #fff;
+text-decoration: none;
+background-color: #DC141B;
+outline: 0;
+}

@@ -20,6 +20,15 @@ function userLandingPageController($scope, $log, $location, $http, $filter){
 
 	 $scope.city = "Lucknow";
 
+	 $http({ method: 'GET', url: 'http://localhost:3000/locations/lucknow'}).
+  		success(function (data) {
+  			console.log(data);
+  			$scope.locations = data;
+		  }).
+		  error(function (data) {
+		    // ...
+		  });	
+
 	$scope.selectCity = function(name){
 		$scope.city = name;
 
@@ -42,7 +51,6 @@ function userLandingPageController($scope, $log, $location, $http, $filter){
   		success(function (data) {
   			console.log(data);
   			$scope.cities = data;
-  			$filter('uppercase')($scope.cities);
   }).
   error(function (data) {
     // ...
