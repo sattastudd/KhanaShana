@@ -35,6 +35,7 @@ if ('production' == app.get('env')) {
 // Routes
 app.use(function (req, res, next) {
   console.log('%s user from %s at Time: %s',req.headers['x-forwarded-for'] || req.connection.remoteAddress ,req.headers['user-agent'] ,moment(Date.now()).format());
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   next();
 });
 
