@@ -7,7 +7,8 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , methodOverride = require('method-override')
   , errorHandler = require('errorhandler')
-  , moment = require('moment');;
+  , moment = require('moment')
+  , mongoose = require('mongoose');
 
 var app = module.exports = express();
 
@@ -32,7 +33,6 @@ if ('production' == app.get('env')) {
 }
 
 // Routes
-
 app.use(function (req, res, next) {
   console.log('%s user from %s at Time: %s',req.headers['x-forwarded-for'] || req.connection.remoteAddress ,req.headers['user-agent'] ,moment(Date.now()).format());
   next();
@@ -42,6 +42,11 @@ app.use('/', router);
 
 app.set('port', process.env.PORT || 3000);
 
-app.listen(app.get('port'), function() {
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+console.log('trying to connect to DB');
+mongoose.connect('mongodb://karim:Karim@ds033831.mongolab.com:33831/lucknow', function(err) {
+    if(err) res.send(err);
+    console.log('DB connection successful');
+    app.listen(app.get('port'), function() {
+  		console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+	});
 });

@@ -1,13 +1,6 @@
+var Controller = require("../controllers/locations");
 
-/* GET /todos listing. */
-router.get('/locations/:id', function(req, res, next) {
-  //Todo.find(function (err, todos) {
-  //  if (err) return next(err);
-  	if (req.params.id === 'lucknow'){
-    	res.json([{'name':'gomtinagar'},{'name':'Patrakar'},{'name':'Chinhat'}]);
-  	}
-  	else{
-  		res.json([]);
-  	}
-  //});
+/* GET /locations/CityName listing */
+router.get('/locations/:CityName', function(req, res, next) {
+	Controller.main(req, res, next);
 });
