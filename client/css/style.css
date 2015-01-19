@@ -1,12 +1,18 @@
 body {
-  background-color: #FAF8FD; }
+  background-color: #FAF8FD;
+  font-family: "Segoe UI", Consolas, "Lucida Console", "Perpetua"; }
 
-.headerColor {
+.customNavBar {
   background-color: #DC141B; }
+  .customNavBar a.navbar-brand {
+    color: #fff;
+    text-decoration: none; }
+  .customNavBar a.navbar-brand:hover {
+    color: #fff;
+    text-decoration: underline; }
 
 .fontSize35 {
-  font-size: 35px;
-  font-family: Book Antiqua; }
+  font-size: 35px; }
 
 .marginTop5 {
   margin-top: 5px; }

@@ -1,20 +1,32 @@
 $theme-background-color		:		#FAF8FD;
 $theme-primary-color 		:		#DC141B;
 
+$theme-primary-font			: 		"Segoe UI", Consolas, "Lucida Console", "Perpetua";
 
+$theme-primary-font-color 	:		#fff;
 
 body {
-	background-color: $theme-background-color;
+	background-color 		: 		$theme-background-color;
+	font-family 			: 		$theme-primary-font;
 }
 
-.headerColor{
-	background-color: $theme-primary-color;
+.customNavBar{
+	background-color 		:		$theme-primary-color;
+
+	a.navbar-brand{
+		color 				:		$theme-primary-font-color;
+		text-decoration		:		none;
+	}
+
+	a.navbar-brand:hover{
+		color 				:		$theme-primary-font-color;
+		text-decoration 		: 		underline;
+	}
 }
 
 
 .fontSize35{
 	font-size: 35px;
-	font-family: Book Antiqua;
 }
 
 .marginTop5{

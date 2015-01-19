@@ -4,6 +4,8 @@ define([], function(){
 	return TopController;
 });
 
-function parentController($scope){
+function parentController($scope, DataStore, AppConstants){
 	console.log('Hi. I am parentController');
+
+	$scope.appName = AppConstants.appName;
 }
