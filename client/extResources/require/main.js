@@ -10,6 +10,7 @@ require.config({
 		services: "../../appResources/services/services",
 		directives: "../../appResources/directives/directives",
 		application: "../../appResources/application/application",
+		topController: "../../appResources/TopController"
 	},
 
 	shim: {
@@ -20,7 +21,7 @@ require.config({
 	priority: ["angular"]
 });
 
-require(["angular", "ngRoute", "ui_bootstrap", "ngResource", "services", "application", "directives"], function(angular) {
+require(["angular", "ngRoute", "ui_bootstrap", "ngResource", "services", "application", "directives", "topController"], function(angular) {
     angular.element(document).ready(function() {
         angular.bootstrap(document, ["khanaShanaApp"]);
     });
