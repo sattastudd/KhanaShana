@@ -56,6 +56,22 @@ body {
 .footerColor {
   background-color: grey; }
 
+h3{
+	opacity: 1;
+	color: white;
+	font-size: 16px;
+}
+
+.button{
+  background-color: rgba(255, 153, 36, 0);
+  border: solid 1px white;
+}
+
+button:hover {
+    background-color: #60c144;
+    border: solid 0px;
+}
+
 div.pizza {
   width: 100%;
   height: 500px;
@@ -72,6 +88,10 @@ div.pizza {
 
 .tpad5 {
   padding-top: 7px; }
+
+  .tpad10{
+  	padding-top: 40px;
+  }
 
 .padRight0 {
   padding-right: 0px; }

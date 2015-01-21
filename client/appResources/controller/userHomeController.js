@@ -14,6 +14,17 @@ function homeController($scope, $log, $location, $http, $filter){
     	isopen: false
   	};
 
+  	$scope.user = {};
+
+  	 $scope.onSelect = function ($item, $model, $label) {
+    $scope.$item = $item;
+    $scope.$model = $model;
+    $scope.$label = $label;
+    $scope.localitySelected = true;
+    $scope.user.location = $scope.$item.name;
+    console.log($scope.$item.name);
+	};
+
 	  $scope.toggled = function(open) {
 	    $log.log('Dropdown is now: ', open);
 	  };
