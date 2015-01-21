@@ -1,0 +1,60 @@
+
+<div ng-controller="homeController">
+	
+		<div class="col-xs-12 col-sm-12 col-lg-12 pizza bpad5">
+
+			<div class="welcomeText"></div>
+			
+			<div class="col-xs-12 col-sm-12 col-lg-12">
+				<form>
+						<div class="row">
+							<div class="bpad5">
+								<div class="col-xs-3 col-sm-3 col-lg-1 bpad5 padRight0">
+									<div class="btn-group" dropdown is-open="status.isopen">
+									      <button type="button" class="btn cityButton dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+									        <font class="cityName">{{city}}</font> <span class="caret"></span>
+									      </button>
+									      <ul class="dropdown-menu" role="menu">
+									         <li ng-repeat="name in cities" ng-click="selectCity(name)">
+									         <a href>{{name}}</a>
+									         </li>
+									      </ul>
+									 </div>
+								</div>
+
+								<div class="col-xs-9 col-sm-4 col-lg-3 bpad5 lpad35">
+									<input type="text" ng-model="user.location" typeahead="locality.name for locality in locations | filter:$viewValue | limitTo:8" class="form-control" placeholder="Search Locality">
+								</div>
+							</div>						
+						</div>
+						<div class="col-xs-12 col-sm-12 col-lg-12">
+							<div class="col-xs-12 col-sm-7 col-lg-4 bpad5">
+								<input type="text" ng-model="user.search" style="height:44px;" class="form-control" placeholder="search food, food joints, dishes anything..">
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-lg-12">
+							<div class="col-xs-12 col-sm-7 col-lg-4">
+								<button class="btn btnColor btn-block" type="button" style="font-size:22px;" ng-click="goButton()"><font color="white">Search it</font></button>
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-lg-12 divInlineBlock">
+			<div class="tpad5">
+				<div class="col-xs-12 col-sm-12 col-lg-12 landingLocalityBlock">
+					<h2>The nearby localities</h2>
+					<ul>
+						<li ng-repeat="locality in locations"><a href>{{locality.name}}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-lg-12 divInlineBlock">
+			<div class="tpad5">
+				<div class="col-xs-12 col-sm-12 col-lg-12 landingLocalityBlock">
+					<h2>The Cuisines</h2>
+				</div>
+			</div>
+		</div>
+</div>

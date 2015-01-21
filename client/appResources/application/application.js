@@ -5,17 +5,16 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         $routeProvider
         .when('/', 
             routeConfig.config(
-                'views/userLandingPage.html',
-                '../../appResources/controller/userLandingPageController'
-        ));
-
-        $routeProvider
-        .when('/searchresult', 
-            routeConfig.config(
-                'views/userSearchResultPage.html',
-                '../../appResources/controller/UserIndexController'
+                'views/userHome.html',
+                '../../appResources/controller/userHomeController'
         ));
         
+        $routeProvider
+        .when('/restaurantDetails', 
+            routeConfig.config(
+                'views/adminRestaurantDetails.html',
+                '../../appResources/controller/adminRestaurantController'
+        ));
         //Will use it later.
         //Will know how. 
         //$httpProvider.interceptors.push("customHttpInterceptor");
