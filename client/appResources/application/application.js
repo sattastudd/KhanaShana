@@ -7,9 +7,7 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
             routeConfig.config(
                 'views/userHome.html',
                 '../../appResources/controller/userHomeController'
-        ));
-        
-        $routeProvider
+        ))
         .when('/restaurantDetails', 
             routeConfig.config(
                 'views/adminRestaurantDetails.html',
