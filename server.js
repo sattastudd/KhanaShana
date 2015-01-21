@@ -45,7 +45,7 @@ app.set('port', process.env.PORT || 3000);
 
 console.log('trying to connect to DB');
 mongoose.connect('mongodb://karim:Karim@ds033831.mongolab.com:33831/lucknow', function(err) {
-    if(err) res.send(err);
+    if(err) console.log(err);
     console.log('DB connection successful');
     app.listen(app.get('port'), function() {
   		console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
