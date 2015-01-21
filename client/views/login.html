@@ -1,0 +1,2 @@
+<div ng-controller="loginController">
+</div>

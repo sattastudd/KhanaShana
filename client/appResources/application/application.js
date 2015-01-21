@@ -12,6 +12,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
             routeConfig.config(
                 'views/adminRestaurantDetails.html',
                 '../../appResources/controller/adminRestaurantController'
+        ))
+        .when('/login',
+            routeConfig.config(
+                'views/login.html',
+                '../../appResources/controller/LoginController'
         ));
         //Will use it later.
         //Will know how. 

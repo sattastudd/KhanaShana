@@ -1,14 +1,21 @@
 body {
   background-color: #FAF8FD;
-  font-family: 'Segoe UI', sans-serif;
-}
+  font-family: "Segoe UI", sans-serif; }
 
 .customNavBar {
-  background-color: #DC141B; }
+  background-color: #DC141B;
+  border-bottom: 0px;
+  box-shadow: #444 0 0 5px; }
   .customNavBar a.navbar-brand {
     color: #fff;
     text-decoration: none; }
   .customNavBar a.navbar-brand:hover {
+    color: #fff;
+    text-decoration: underline; }
+  .customNavBar ul.navbar-nav a {
+    color: #fff;
+    text-decoration: none; }
+  .customNavBar ul.navbar-nav a:hover {
     color: #fff;
     text-decoration: underline; }
 

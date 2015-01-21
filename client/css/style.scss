@@ -1,9 +1,11 @@
 $theme-background-color		:		#FAF8FD;
 $theme-primary-color 		:		#DC141B;
 
-$theme-primary-font			: 		"Segoe UI", Consolas, "Lucida Console", "Perpetua";
+$theme-primary-font			: 		'Segoe UI', sans-serif;
 
 $theme-primary-font-color 	:		#fff;
+
+$theme-shadow-color 			:		#444;
 
 body {
 	background-color 		: 		$theme-background-color;
@@ -12,6 +14,8 @@ body {
 
 .customNavBar{
 	background-color 		:		$theme-primary-color;
+	border-bottom 			:		0px;
+	box-shadow 				:		$theme-shadow-color 0 0 5px;
 
 	a.navbar-brand{
 		color 				:		$theme-primary-font-color;
@@ -21,6 +25,16 @@ body {
 	a.navbar-brand:hover{
 		color 				:		$theme-primary-font-color;
 		text-decoration 		: 		underline;
+	}
+
+	ul.navbar-nav a{
+		color 				:		$theme-primary-font-color;
+		text-decoration 		:		none;
+	}
+
+	ul.navbar-nav a:hover{
+		color 				: 		$theme-primary-font-color;
+		text-decoration 		:		underline;
 	}
 }
 

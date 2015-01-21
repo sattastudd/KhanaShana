@@ -12,7 +12,8 @@ define(
 								routeConfig.setControllerProvider($controllerProvider);
 							})
 					.constant('AppConstants', {
-						appName : 'KhanaShana'
+						appName : 'KhanaShana',
+						httpServicePrefix : 'node'
 					})
 					.service('DataStore', function(){
 						var storedData = {};
