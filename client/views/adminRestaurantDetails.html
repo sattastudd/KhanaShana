@@ -1,3 +1,153 @@
-<div ng-controller="restaurantController">
-	<h2>WELCOME ADMIN</h2>
+<div ng-controller="restaurantController" class="restaurantBody">
+	<div class="container">
+		<div class="row">
+			<form>
+				<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+					<div class="jumbotron">
+						<h1 align="center">{{restaurant.name}}</h1>
+					</div>
+				</div>
+				<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 bpad5">
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3">
+						<label>Restaurant Name:</label>
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3">
+						<input type="text" class="form-control" ng-model="restaurant.name">
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3 tpad5">
+						<label>Restaurant Type:</label>
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3 tpad5">
+						<input type="text" class="form-control" ng-model="restaurant.type">
+					</div>
+				</div>
+				<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 bpad5">
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3">
+						<label>Timing:</label>
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3">
+						<input type="text" class="form-control" ng-model="restaurant.timing">
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3 tpad5">
+						<label>Minimum Order:</label>
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3 tpad5">
+						<input type="text" class="form-control" ng-model="restaurant.minOrder">
+					</div>
+				</div>
+				<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 bpad5">
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3">
+						<label>Avg cost/person:</label>
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3">
+						<input type="text" class="form-control" ng-model="restaurant.averageCost">
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3 tpad5">
+						<label>Cuisines</label>
+					</div>
+					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3 tpad5">
+						<input type="text" class="form-control" ng-model="restaurant.cuisines">
+					</div>
+				</div>
+				<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 bpad5">
+					<div class="col-xs-6 col-lg-12 col-sm-12 col-md-12">
+						<label>About Us:</label>
+					</div>
+					<div class="col-xs-6 col-lg-6 col-sm-6 col-md-6">
+						<textarea rows="5" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 bpad5 lpad30">
+					<button ng-click="submitDetail()" class="btn button btn-lg" type="button"><font color="white">Submit</font></button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<div class="row tpad30">
+			<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+				
+				<h2 align="center" class="bpad5 borderMenu">Menu</h2>
+			
+				    <div ng-repeat="category in restaurant.menu">
+				    	<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 tpad30 bpad30">
+						    <div class="col-xs-6 col-lg-6 col-sm-6 col-md-6 lpad0">
+					             <label ng-hide="editCategoryActive" class="categoryLabel">{{category.categoryName}}</label>
+					             <div class="col-xs-9 col-lg-9 col-sm-9 col-md-9 lpad0">
+					             	<input type="text" ng-model="category.categoryName" class="form-control" ng-show="editCategoryActive">
+					             </div>
+						        <div class="col-xs-3 col-lg-3 col-md-3 col-sm-3 lpad0">
+						             <button ng-click="editCategoryDone(category)" ng-show="editCategoryActive" class="btn btn-default" type="button">Done</button>
+						        </div>
+				            </div>
+				            <div class="col-xs-3 col-lg-1 col-md-2 col-sm-2 rpad3">
+				            	<button type="button" class="btn btn-default" ng-click="deleteCategory($index)">delete</hp>
+				            </div>
+				            <div class="col-xs-3 col-lg-1 col-md-2 col-sm-2">
+				            	<button type="button" class="btn btn-default" ng-click="editCategory(category)">edit</hp>
+				            </div>
+				        </div>
+				            <table class="table table-striped table-hover">
+						        <thead>
+						             <tr>
+				                    	<th>ID</th>
+				                        <th>Dish</th>
+				                        <th>Price</th>
+						           	 </tr>
+						             <tr ng-repeat="detail in category.detail">
+						               	<td>
+						            		<p>{{details.id}}</p>
+				                    	</td>
+				                        <td>
+				                        	<p ng-hide="detail.editActive">{{detail.dish}}</p>
+					                          <input type="text" ng-show="detail.editActive" ng-model="detail.dish" class="form-control"/>
+						                </td>
+						                <td>
+						                  	<p ng-hide="detail.editActive">{{detail.price}}</p><input type="text" ng-show="detail.editActive" ng-model="detail.price" class="form-control"/>
+					                    </td>
+				                        <td>
+				                        	<p ng-hide="detail.editActive" ng-click="editDish(detail)">edit</p>	    	
+				                       		<button type="button" ng-click="editButtonActive(detail)" class="btn btn-default" ng-show="detail.editActive">done</button>
+						                </td>
+						                <td>
+						                   	<p ng-click="deleteDish(detail, category, $index)">delete</p>
+					                     </td>
+			   	                     </tr>
+						        </thead>
+						            <tr>
+						               	<td>
+						                		
+						               	</td>
+							            <td>
+							                <input type="text" class="form-control" ng-model="detail.addDish" />
+						                </td>
+				       	                 <td>
+						                    <input type="text" class="form-control" ng-model="detail.addPrice" />
+						                </td>
+						                 <td>
+						                     <button type="button" class="btn btn-default" ng-click="addNewDish(detail, category)">Add</button>
+						                </td>
+					                </tr>
+						    </table>
+				    </div>
+				 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+				 	<div class="col-xs-3 col-lg-1 col-md-2 col-sm-2 tpad15">
+						<button ng-show="showSubmitButton" type="button" class="btn button" ng-click="submitMenu()"><font color="white">Submit</font></button>
+					</div>
+					<div class="bpad5 col-xs-9 col-lg-9 col-md-9 col-sm-9">
+
+						<div class="col-xs-7 col-lg-2 col-sm-4 col-md-3 tpad15 rpad3">
+					    	 <button type="button" class="btn btn-default" ng-click="addNewCategory()">Add Category</button>	
+					    </div>
+						<div class="col-xs-5 col-lg-6 col-sm-6 col-md-6 tpad15 lpad0 rpad0">
+							<input type="text" class="form-control" ng-model="addCategory"/>
+					    </div>
+						    
+					</div>
+				 </div>
+			</div>
+		</div>
+	</div>
 </div>

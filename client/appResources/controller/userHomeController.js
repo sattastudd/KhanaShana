@@ -54,7 +54,7 @@ function homeController($scope, $log, $location, $http, $filter){
 	}
 
 	$scope.goButton = function(){
-		$location.path('/restaurantDetails.html');
+		$location.path('/restaurantDetails');
 		console.log("the go button");
 	}
 

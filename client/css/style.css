@@ -19,7 +19,7 @@ body {
     color: #fff;
     text-decoration: underline; }
 
-.fontSize35 {
+/*.fontSize35 {
   font-size: 35px; }
 
 .marginTop5 {
@@ -47,57 +47,22 @@ body {
 
 .searchFood {
   position: relative;
-  margin-left: 33%; }
-
-.row {
-  margin-right: 15px;
-  margin-left: 15px; }
+  margin-left: 33%; }*/
 
 .footerColor {
   background-color: grey; }
 
-h3{
-	opacity: 1;
-	color: white;
-	font-size: 16px;
-}
-
 .button{
-  background-color: rgba(255, 153, 36, 0);
-  border: solid 1px white;
-}
-
-button:hover {
-    background-color: #60c144;
-    border: solid 0px;
+  background-color: #DC141B
 }
 
 div.pizza {
   width: 100%;
   height: 500px;
   background: url("../images/pizza.jpg");
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
   box-shadow: 0px 2px 5px #888888; }
-
-.landingLocalityBlock {
-  border-radius: 3px;
-  background-color: white;
-  height: 250px;
-  box-shadow: 0px 0px 5px #888888; }
-
-.tpad5 {
-  padding-top: 7px; }
-
-  .tpad10{
-  	padding-top: 40px;
-  }
-
-.padRight0 {
-  padding-right: 0px; }
-
-.lpad35 {
-  padding-left: 35px; }
 
 .cityName {
   color: white;
@@ -123,3 +88,44 @@ div.pizza {
   text-decoration: none;
   background-color: #DC141B;
   outline: 0; }
+
+
+/*styles for restaurant details page*/
+
+.restaurantBody{
+  margin-top: 65px;
+}
+.bpad5{
+  padding-bottom: 5px;
+}
+.bpad30{
+  padding-bottom: 30px;
+}
+.rpad0{
+  padding-right: 0px;
+}
+.rpad3{
+  padding-right: 3px;
+}
+.borderMenu{
+  border-bottom: solid 1px grey;
+}
+.categoryLabel{
+  float: left;
+  font-size: 18px;
+}
+.lpad0{
+  padding-left: 0px;
+}
+.lpad30{
+  padding-left: 30px;
+}
+.tpad5{
+  padding-top: 5px;
+}
+.tpad15{
+  padding-top: 15px;
+}
+.tpad30{
+  padding-top: 30px;
+}
