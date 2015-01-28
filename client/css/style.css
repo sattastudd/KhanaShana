@@ -74,6 +74,7 @@ div.pizza {
 @media (min-width: 1200px) {
   .adminBlock{
   height: 250px;
+  padding-top: 50px;
 }
   .cityButton {
     width: 95px;
@@ -85,6 +86,7 @@ div.pizza {
 @media (max-width: 768px) {
   .adminBlock{
   height: 130px;
+  padding-top: 5px;
 }
   .cityButton {
     width: 85px;
@@ -147,7 +149,6 @@ div.pizza {
   background-color: #DC141B;
   border-radius: 155px;
   color: white;
-  padding-top: 50px;
   cursor: pointer;
 }
 .tpad50{
