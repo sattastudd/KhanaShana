@@ -58,6 +58,10 @@ function homeController($scope, $log, $location, $http, $filter){
 		console.log("the go button");
 	}
 
+	$scope.goSearch = function(){
+		$location.path('/adminHome');
+	}
+
 	$http({ method: 'GET', url: '/node/cities' }).
   		success(function (data) {
   			console.log(data);

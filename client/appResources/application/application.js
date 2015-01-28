@@ -17,7 +17,17 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
             routeConfig.config(
                 'views/login.html',
                 '../../appResources/controller/LoginController'
-        ));
+        ))
+        .when('/adminHome',
+            routeConfig.config(
+                'views/adminHome.html',
+                '../../appResources/controller/adminHomeController'
+        ))
+        .when('/adminRestaurant',
+            routeConfig.config(
+                'views/adminRestaurants.html',
+                '../../appResources/controller/adminRestHomeController'
+        ))
         //Will use it later.
         //Will know how. 
         //$httpProvider.interceptors.push("customHttpInterceptor");

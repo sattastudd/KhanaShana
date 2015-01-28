@@ -1,0 +1,28 @@
+<div ng-controller="restHomeController" class="adminBody">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					<h3>
+						List of Enrolled Restaurants
+					</h3>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<input type="text" ng-model="search.restaurant" typeahead="locality.name for locality in locations | filter:$viewValue | limitTo:8" typeahead-on-select='onSelect($item, $model, $label)' class="form-control" placeholder="Search Locality">
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tpad15">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 bpad5" ng-repeat="restaurants in restaurantList">
+					<div class="newsFeedBlock">
+						{{restaurants.name}}
+					</div>
+				</div>
+			</div>
+			<!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					
+				</div>
+			</div> -->
+		</div>	
+	</div>
+</div>

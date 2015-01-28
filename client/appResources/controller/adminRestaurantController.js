@@ -53,7 +53,7 @@ function restaurantController($scope){
     }
 
     $scope.submitMenu = function(){
-    	console.log("inside submit menu");
+    	console.log($scope.restaurant.menu);
     }
 
     $scope.deleteCategory = function(index){

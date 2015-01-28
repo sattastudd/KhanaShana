@@ -92,7 +92,7 @@ div.pizza {
 
 /*styles for restaurant details page*/
 
-.restaurantBody{
+.adminBody{
   margin-top: 65px;
 }
 .bpad5{
@@ -114,6 +114,11 @@ div.pizza {
   float: left;
   font-size: 18px;
 }
+.restaurantNameBlock{
+  background-color: gainsboro;
+  border-radius: 5px;
+  height: 85px;
+}
 .lpad0{
   padding-left: 0px;
 }
@@ -128,4 +133,24 @@ div.pizza {
 }
 .tpad30{
   padding-top: 30px;
+}
+
+/* admin home page styles */
+
+.adminBlock{
+  background-color: #DC141B;
+  height: 175px;
+  border-radius: 5px;
+  color: white;
+  padding-top: 50px;
+  cursor: pointer;
+}
+.tpad50{
+  padding-top: 50px;
+}
+.newsFeedBlock{
+  height: 90px;
+  background-color: gainsboro;
+  border-radius: 5px;
+  cursor: pointer;
 }

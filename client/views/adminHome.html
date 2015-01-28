@@ -1,0 +1,47 @@
+<div ng-controller="homeAdminController" class="adminBody">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">	
+				<h2 class="borderMenu bpad5" align="center">Welcome Admin</h2>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 tpad5">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 adminBlock">
+						<h4 align="center">Orders</h4>
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 tpad5">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 adminBlock" ng-click="goToRestaurant()">
+						<h4 align="center">Restaurants</h4>
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 tpad5">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 adminBlock">
+						<h4 align="center">Users</h4>
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 tpad5">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 adminBlock">
+						<h4 align="center">Analysis</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 tpad5 bpad5">
+					<h3 align="center" class="borderMenu bpad5 tpad50">
+						News Feed
+					</h3>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5" ng-repeat="news in admin.newsFeed">
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 newsFeedBlock" ng-click="goToNewsDestinatoion(news)">
+					<h3>{{news.newsType}}</h3>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+			</div>
+		</div>
+	</div>
+</div>
