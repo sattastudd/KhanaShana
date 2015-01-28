@@ -72,6 +72,9 @@ div.pizza {
   display: inline-block; }
 
 @media (min-width: 1200px) {
+  .adminBlock{
+  height: 250px;
+}
   .cityButton {
     width: 95px;
     background-color: #DC141B; } }
@@ -79,7 +82,10 @@ div.pizza {
   .cityButton {
     width: 110px;
     background-color: #DC141B; } }
-@media (max-width: 760px) {
+@media (max-width: 768px) {
+  .adminBlock{
+  height: 130px;
+}
   .cityButton {
     width: 85px;
     background-color: #DC141B; } }
@@ -139,8 +145,7 @@ div.pizza {
 
 .adminBlock{
   background-color: #DC141B;
-  height: 175px;
-  border-radius: 5px;
+  border-radius: 155px;
   color: white;
   padding-top: 50px;
   cursor: pointer;
