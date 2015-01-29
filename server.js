@@ -48,8 +48,21 @@ app.set('port', process.env.PORT || 3000);
 
 console.log('trying to connect to DB');
 
+/*These two objects would be available in global scope*/
 global.lucknowConnection = mongoose.createConnection( credentials.connectionString.lucknow );
 global.delhiConection = mongoose.createConnection( credentials.connectionString.delhi );
+
+global.getConnectionByCity = function( cityName ) {
+
+  console.log('I got ' + cityName);
+
+  console.log( cityName === 'lucknow' );
+  console.log( cityName == 'lucknow' );
+	if ( cityName === 'lucknow' ) { console.log('Returing lucknow' ); return global.lucknowConnection; }
+	else if ( cityName === 'delhi' ) { console.log('Returning Delhi' ); return global.delhiConnection; }
+};
+
+console.log(global.getConnectionByCity( 'lucknow' ));
 
 mongoose.connect('mongodb://karim:Karim@ds033831.mongolab.com:33831/lucknow', function(err) {
     if(err) console.log(err);
