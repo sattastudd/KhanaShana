@@ -8,7 +8,10 @@ var express = require('express')
   , methodOverride = require('method-override')
   , errorHandler = require('errorhandler')
   , moment = require('moment')
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , credentials = require('./credentials');
+
+console.log(credentials);
 
 var app = module.exports = express();
 
@@ -44,6 +47,10 @@ app.use('/', router);
 app.set('port', process.env.PORT || 3000);
 
 console.log('trying to connect to DB');
+
+global.lucknowConnection = mongoose.createConnection( credentials.connectionString.lucknow );
+global.delhiConection = mongoose.createConnection( credentials.connectionString.delhi );
+
 mongoose.connect('mongodb://karim:Karim@ds033831.mongolab.com:33831/lucknow', function(err) {
     if(err) console.log(err);
     console.log('DB connection successful');
