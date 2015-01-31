@@ -1,46 +1,74 @@
 var credentials = require( './../credentials' );
-console.log( credentials );
-
 var mongoose = require( 'mongoose' );
 
-var citiesConnection = mongoose.createConnection( credentials.connectionString.cities);
+//Retrieving global variables that would be used in here.
+var eventHandler = utils.getEventHandler();
 
-var citiesSchema = new mongoose.Schema( {
-	city : String,
-	partialConnectionString : String
-} );
+//We need a variable here, to make sure that we have opened all the connections for the available cities in the database.
+//This variable will be updated on a event emit.
+//If its value gets same as the length of the avaiable cities array,
+//We will know its time to broadcast event to start our server.
+var callCount = 0;
 
-var CitiesModal = citiesConnection.model( 'cities', citiesSchema );
+eventHandler.on( 'connectionEstablished' , function ( totalCount ) {
+	callCount++;
 
-citiesConnection.on('open', function (){
-	console.log('Connection has been opened to cites');
-
-	CitiesModal.find( {}, function ( err, availableCities ) {
-		console.log('Total Available Cities count ' + availableCities.length );
-
-		if ( availableCities.length == 0 ){
-			throw new Error("No cites in the DB");
-		} else {
-			availableCities.forEach( function ( city ) {
-				console.log( city );
-
-				var connectionStringForCity = credentials.connectionString[city.city];
-
-				if ( typeof connectionStringForCity === 'undefined' ) {
-					//We don't have entry for it in credentials.js
-					throw new Error("Credentials Not found for " + city.city + " city in credentials.js");
-				} else {
-					var connectionName = '"' + city.city + 'Connection' + '"';
-
-					global[connectionName] = mongoose.createConnection( 'mongodb://' + credentials.mongo.user + ':' + credentials.mongo.pass + city.partialConnectionString);
-
-					global[connectionName].on('open', function() {
-						console.log('Connection to ' + global[connectionName] + ' has been opened');
-						console.log(global);
-					});
-				}
-
-			} );
-		}
-	});
+	if( callCount == totalCount ) {
+		eventHandler.emit('pleaseStartServerNow');
+	}
 });
+
+var configure = function(){
+
+	console.log( 'Configuring Global Database Connections ')
+
+	var citiesConnection = mongoose.createConnection( credentials.connectionString.cities );
+
+	var citiesSchema = new mongoose.Schema( {
+		city : String,
+		partialConnectionString : String
+	} );
+
+	var CitiesModal = citiesConnection.model( 'cities', citiesSchema );
+
+	citiesConnection.on( 'open', function() {
+		console.log( 'Connection to cities has been opened' );
+
+		CitiesModal.find( function( err, availableCities ) {
+			console.log('Total Available Cities ' + availableCities.length );
+
+			if( availableCities.length == 0 ) {
+				throw new Error( 'No cities found in the Database' );
+			} else {
+				//Creating a array in global object for storing connection references
+				global.globalConnections = [];
+
+				availableCities.forEach( function ( city ) {
+					
+					var connectionObject = { cityName : city.city };
+					
+					connectionObject.connection = mongoose.createConnection( 'mongodb://' +
+										credentials.mongo.user +
+										':' +
+										credentials.mongo.pass +
+										city.partialConnectionString
+									);
+
+					connectionObject.connection.on( 'open' , function() {
+
+						global.globalConnections.push( connectionObject );
+						console.log('Connection opened for ' + connectionObject.cityName + ' city' );
+						
+						eventHandler.emit( 'connectionEstablished', availableCities.length );
+					});
+				} );
+			}
+
+			citiesConnection.close();
+		} );
+	} );
+
+	console.log( 'Configuring Global Database Connections Completed' );
+};
+
+exports.configure = configure;

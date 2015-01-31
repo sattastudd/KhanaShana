@@ -1,3 +1,4 @@
 *.dat
 *.njsproj
 credentials.js
+CodeOrganizer*

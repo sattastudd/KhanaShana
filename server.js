@@ -3,15 +3,22 @@
  * Module dependencies.
  */
 
+/*Module needs to be included first to configure global objects in the app.*/
+var globalVariables = require('./config/globalVariables');
+globalVariables.configure();
+
 var express = require('express')
   , bodyParser = require('body-parser')
   , methodOverride = require('method-override')
   , errorHandler = require('errorhandler')
   , moment = require('moment')
   , mongoose = require('mongoose')
-  , credentials = require('./credentials');
+  , credentials = require('./credentials')
+  , dbConfig = require('./config/dbConfig');
 
-console.log(credentials);
+
+
+dbConfig.configure();
 
 var app = module.exports = express();
 
@@ -46,28 +53,12 @@ app.use('/', router);
 
 app.set('port', process.env.PORT || 3000);
 
-console.log('trying to connect to DB');
+eventHandler.on('pleaseStartServerNow', function(){
+  console.log('DB Connection Established to all cities.');
+  console.log('Starting Server');
 
-/*These two objects would be available in global scope*/
-global.lucknowConnection = mongoose.createConnection( credentials.connectionString.lucknow );
-global.delhiConection = mongoose.createConnection( credentials.connectionString.delhi );
+  app.listen(app.get('port'), function() {
+      console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  });
 
-global.getConnectionByCity = function( cityName ) {
-
-  console.log('I got ' + cityName);
-
-  console.log( cityName === 'lucknow' );
-  console.log( cityName == 'lucknow' );
-	if ( cityName === 'lucknow' ) { console.log('Returing lucknow' ); return global.lucknowConnection; }
-	else if ( cityName === 'delhi' ) { console.log('Returning Delhi' ); return global.delhiConnection; }
-};
-
-console.log(global.getConnectionByCity( 'lucknow' ));
-
-mongoose.connect('mongodb://karim:Karim@ds033831.mongolab.com:33831/lucknow', function(err) {
-    if(err) console.log(err);
-    console.log('DB connection successful');
-    app.listen(app.get('port'), function() {
-  		console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-	});
 });
