@@ -1,4 +1,3 @@
-var request = require("request");
 var BlueDart = require('../dataTraveller/BlueDart');
 var citiesModelModule = require( '../models/citiesModel' );
 

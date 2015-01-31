@@ -25,7 +25,7 @@ var app = module.exports = express();
 router = express.Router();
 var restaurants = require('./server/routes/restaurants');
 var cities = require('./server/routes/citiesRoutes' );
-var locations = require('./server/routes/locations');
+var locations = require('./server/routes/locationsRoutes' );
 
 // Configuration
 app.use(bodyParser.json());

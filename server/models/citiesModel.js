@@ -15,7 +15,7 @@ var CitiesModal = null;
 var setUpConnection = function( connectionToBeUsed ) {
 	connection = connectionToBeUsed;
 
-	CitiesModal = connectionToBeUsed.model( 'cities');
+	CitiesModal = connection.model( 'cities');
 };
 
 var getModel = function() {
