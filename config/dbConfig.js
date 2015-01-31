@@ -43,6 +43,9 @@ var configure = function(){
 				//Creating a array in global object for storing connection references
 				global.globalConnections = [];
 
+				//Pushing cities connection to the list with key 'all'
+				global.globalConnections.push( { cityName : 'all', connection : citiesConnection});
+
 				availableCities.forEach( function ( city ) {
 					
 					var connectionObject = { cityName : city.city };
@@ -63,8 +66,6 @@ var configure = function(){
 					});
 				} );
 			}
-
-			citiesConnection.close();
 		} );
 	} );
 
