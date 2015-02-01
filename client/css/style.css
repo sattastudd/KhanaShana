@@ -1,6 +1,11 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url('fonts/bree-serif.otf');
+}
+
 body {
   background-color: #FAF8FD;
-  font-family: "Segoe UI", sans-serif; }
+  font-family: myFirstFont, "Segoe UI", sans-serif; }
 
 .customNavBar {
   background-color: #DC141B;
