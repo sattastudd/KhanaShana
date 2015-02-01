@@ -5,7 +5,7 @@ define([], function() {
 });
 
 function homeController($scope, $log, $location, $http, $filter){
-	$scope.welcomeText = "Welcome to KhanaShana. All in one destination for Foodies...";
+	/*$scope.welcomeText = "Welcome to KhanaShana. All in one destination for Foodies...";
 	console.log("inside user landing pge controller");
 
 	//$scope.items = ['Bhilai','Delhi', 'Mumbai', 'Lucknow'];
@@ -69,5 +69,33 @@ function homeController($scope, $log, $location, $http, $filter){
   }).
   error(function (data) {
     // ...
-  });
+  });*/
+
+	//for city button
+	$scope.cities = ['Bhilai','Delhi', 'Mumbai', 'Lucknow'];
+	$scope.status = {
+    	isopen: false
+  	};
+	$scope.city = "Lucknow";
+	$scope.toggled = function(open) {
+	    $log.log('Dropdown is now: ', open);
+	  };
+
+	 $scope.selectCity = function(item){
+		$scope.city = item;
+	}
+
+	$scope.hideButton = function(){
+		$scope.buttonHidden = true;
+		$scope.extendInput = true;
+		window.scrollTo(0, 400);
+	}
+
+	$scope.showButton = function(){
+		$scope.buttonHidden = false;	
+		$scope.extendInput = false;
+
+		window.scrollTo(0, 0);
+	}
+
 }

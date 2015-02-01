@@ -1,4 +1,4 @@
-
+<!-- 
 <div ng-controller="homeController">
 	
 		<div class="col-xs-12 col-sm-12 col-lg-12 pizza bpad5">
@@ -62,4 +62,51 @@
 				</div>
 			</div>
 		</div>
+</div> -->
+
+<div ng-controller="homeController">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pizza">
+				<div class="row welcomeText">
+					<div class="col-sm-2 col-md-3 col-lg-3"></div>
+					<div class="col-xs-12 col-sm-9 col-md-6 col-lg-6">
+						<h1 align="center">Welcome to PetuRaam!!!</h1>
+						<h3 align="center">Explore Food, Restaurants, Cuisines and Almost everything related to Food</h3>
+						<h3 align="center">We do Food Delivery as well</h3>
+					</div>
+				</div>
+					<div class="row">
+						<div class="col-sm-2 col-md-3 col-lg-3"></div>
+						<div class="col-xs-12 col-sm-9 col-md-6 col-lg-6 searchBox">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 lpad0" ng-hide="buttonHidden">
+								<div class="btn-group" dropdown is-open="status.isopen">
+									<button type="button" class="btn buttonCity dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+										<font color="white">{{city}}</font>
+									</button>
+										<ul class="dropdown-menu" role="menu">
+									         <li ng-repeat="item in cities" ng-click="selectCity(item)">
+											         <a href>{{item}}</a>
+									         </li>
+								      </ul>
+								</div>
+							</div>							
+							<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+								<input type="text" class="form-control hiddenInput" ng-class="{'extendedInput': extendInput}" ng-blur="showButton()" ng-focus="hideButton()"  placeholder="Search Food, Restaurants, Cuisines, Street Food" ng-model="search" />
+							</div>
+							<!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="selectDiv">
+									Select It
+								</div>
+							</div> -->
+						</div>
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				
+			</div>
+		</div>
+	</div>
 </div>
