@@ -89,13 +89,32 @@ function homeController($scope, $log, $location, $http, $filter){
 		$scope.buttonHidden = true;
 		$scope.extendInput = true;
 		window.scrollTo(0, 400);
+		$scope.showOptions = true;
+		//console.log("the value for show options is>>>>"+$scope.showOptions);
 	}
 
 	$scope.showButton = function(){
 		$scope.buttonHidden = false;	
 		$scope.extendInput = false;
-
-		window.scrollTo(0, 0);
+		$scope.showLocality = false;
+		//window.scrollTo(0, 0);
 	}
+
+
+	//for search options
+	$scope.searchOption = ['Search By Locality', 'Search all the Restaurants in the City',
+						 'Search all the Food Delivering in the City', 'Search all the Street Food joints in the City'];
+	
+	$scope.selectedOption = function(index){
+		$scope.showOptions = false;
+		$scope.buttonHidden = true;
+		$scope.extendInput = true;
+		//window.scrollTo(0, 400);
+		document.getElementById("localityId").focus();
+		console.log(index);
+		if (index === 0) {
+			$scope.showLocality = true;
+		};
+	}						 
 
 }

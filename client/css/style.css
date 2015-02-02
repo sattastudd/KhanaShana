@@ -1,11 +1,12 @@
 @font-face {
     font-family: myFirstFont;
-    src: url('fonts/bree-serif.otf');
+    src: url('fonts/Avdira_R.woff');
 }
 
 body {
   background-color: #FAF8FD;
-  font-family: myFirstFont, "Segoe UI", sans-serif; }
+  font-family: myFirstFont;
+}
 
 .customNavBar {
   background-color: #DC141B;
@@ -216,7 +217,7 @@ div.pizza {
 .hiddenInput{
   border: solid 0px;
   height: 47px;
-  width: 336px;
+  width: 415px;
   padding-left: 22px;
 }
 
@@ -233,17 +234,26 @@ div.pizza {
 }*/
 
 .selectDiv{
-  background-color: gray;
+  background-color: #61463B;
   color: white;
   padding-left: 10px;
-  height: 25px;
-  padding-top: 2px;
+  height: 55px;
+  padding-bottom: 2px;
+  border-bottom: solid 1px rgb(146, 109, 100);
+  padding-top: 16px;
+  cursor: pointer;
 }
 
 .welcomeText{
   color: white;
   margin-top: 80px;
   padding-bottom: 25px;
+}
+
+.form-control:focus{
+  border-color: white;
+  box-shadow: inset 0px 0px 0px white, 0px 0px 0px white;
+  border-radius: 25px;
 }
 
 @media (max-width: 768px) {
@@ -264,5 +274,8 @@ div.pizza {
     color: white;
     margin-top: 40px;
     padding-bottom: 23px;
-}
+  }
+  h3{
+    font-size: 18px;
+  }
 }
