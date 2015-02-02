@@ -4,7 +4,7 @@ define([], function() {
     return userHomeController;
 });
 
-function homeController($scope, $log, $location, $http, $filter){
+function homeController($scope, $log, $location, $http, $filter, $timeout){
 	/*$scope.welcomeText = "Welcome to KhanaShana. All in one destination for Foodies...";
 	console.log("inside user landing pge controller");
 
@@ -97,14 +97,17 @@ function homeController($scope, $log, $location, $http, $filter){
 		$scope.buttonHidden = false;	
 		$scope.extendInput = false;
 		$scope.showLocality = false;
+		$scope.location = null;
+		console.log("timeout working properly");
 		//window.scrollTo(0, 0);
 	}
-
 
 	//for search options
 	$scope.searchOption = ['Search By Locality', 'Search all the Restaurants in the City',
 						 'Search all the Food Delivering in the City', 'Search all the Street Food joints in the City'];
-	
+
+	$scope.localities = ['Hazratganj', 'Gomtinagar', 'PatrakarPuram', 'Alambagh', 'Charbagh', 'Aliganj', 'Aminabad'];
+	$scope.location = undefined;
 	$scope.selectedOption = function(index){
 		$scope.showOptions = false;
 		$scope.buttonHidden = true;

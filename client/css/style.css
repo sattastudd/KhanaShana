@@ -208,7 +208,7 @@ div.pizza {
   background-color: #DC141B;
   padding: 13px;
   width: 150px;
-  border-radius: 23px;
+  border-radius: 23px 0px 0px 23px;
    position: absolute; 
    z-index: 1;
    box-shadow: 1px 0px 13px 0px;
