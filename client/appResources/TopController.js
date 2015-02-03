@@ -18,11 +18,13 @@ function parentController($scope, DataStore, AppConstants, $location){
 	//code for header
 
 	$scope.searchCalled = function(){
-         $scope.searchActive = true;
+        $scope.searchActive = true;
         $scope.$broadcast('newItemAdded');
+        $scope.hideLogin = true;
     }
     $scope.searchDeactive = function(){
-         $scope.searchActive = false;   
+         $scope.searchActive = false;
+         $scope.hideLogin = false;
     }
     $scope.searchPage = true;
 }
