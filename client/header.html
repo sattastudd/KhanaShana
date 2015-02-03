@@ -1,16 +1,28 @@
 <div>
-	<div class="navbar navbar-default navbar-fixed-top customNavBar">
-		<div class="container">
-
-			<div class="navbar-header">
-	        	<a class="navbar-brand" href="#" ng-bind="appName"></a>
-	    	</div>
-
-	    	<ul class="nav navbar-nav navbar-right">
-	        		<li>
-	        			<a ng-click="goToLoginPage()">Login</a>
-	        		</li>
-	        </ul>
-		</div>
-	</div>
+	 <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12  backColor">
+                <div class="col-xs-6 col-md-4 col-sm-4 col-lg-4" ng-hide="searchActive"><h4><strong>PetuRaam</strong></h4></div>
+                <div class="col-xs-12 hidden-sm hidden-lg hidden-md" ng-show="searchActive">
+                    <input type="text" ng-blur="searchDeactive()" class="form-control" ng-model="search" placeholder="u type here" focus-on="newItemAdded">
+                </div>
+                <div class="hidden-xs col-md-4 col-sm-4 col-lg-4 hideInput">
+                    <input type="text" class="form-control" ng-model="search" placeholder="u type here" ng-show="searchPage" />
+                </div>
+                <div class="col-xs-6 col-md-4 col-sm-4 col-lg-4">
+                    <div class="row">
+                        <div>
+                            <h5 class="login">Login</h5>
+                        </div>
+                        <div class="hidden-sm hidden-lg hidden-md">
+                            <h5 class="login">lo</h5>
+                        </div>
+                        <div class="hidden-sm hidden-lg hidden-md">
+                            <h5 class="login" ng-click="searchCalled()">se</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

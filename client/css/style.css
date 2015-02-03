@@ -8,22 +8,22 @@ body {
   font-family: myFirstFont;
 }
 
-.customNavBar {
-  background-color: #DC141B;
-  border-bottom: 0px;
-  box-shadow: #444 0 0 5px; }
-  .customNavBar a.navbar-brand {
-    color: #fff;
-    text-decoration: none; }
-  .customNavBar a.navbar-brand:hover {
-    color: #fff;
-    text-decoration: underline; }
-  .customNavBar ul.navbar-nav a {
-    color: #fff;
-    text-decoration: none; }
-  .customNavBar ul.navbar-nav a:hover {
-    color: #fff;
-    text-decoration: underline; }
+/* styles for header starts */
+.backColor {
+    position: fixed;
+    background-color: #DC141B;
+    color:white;
+    height: 50px;
+    padding-top: 8px;
+    z-index: 2;
+    box-shadow: #444 0 0 5px;
+}
+.login{
+    float: right;
+    padding-right: 20px;
+}
+/* styles for header ends */
+
 
 /*.fontSize35 {
   font-size: 35px; }
@@ -254,6 +254,19 @@ div.pizza {
   border-color: white;
   box-shadow: inset 0px 0px 0px white, 0px 0px 0px white;
   border-radius: 25px;
+}
+
+.homePageBlocks{
+  background-color: rgb(228, 211, 204);
+  color: rgb(6, 6, 6);
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px #888888;
+}
+
+.blockRows{
+  padding-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 @media (max-width: 768px) {
