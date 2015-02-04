@@ -4,7 +4,7 @@ define([], function(){
 	return TopController;
 });
 
-function parentController($scope, DataStore, AppConstants, $location){
+function parentController($scope, DataStore, AppConstants, $location, $log){
 	console.log('Hi. I am parentController');
 
 	$scope.appName = AppConstants.appName;
@@ -19,12 +19,29 @@ function parentController($scope, DataStore, AppConstants, $location){
 
 	$scope.searchCalled = function(){
         $scope.searchActive = true;
-        $scope.$broadcast('newItemAdded');
         $scope.hideLogin = true;
     }
     $scope.searchDeactive = function(){
          $scope.searchActive = false;
          $scope.hideLogin = false;
+         $scope.showLocation = false;
     }
-    $scope.searchPage = true;
+    
+    $scope.locationCalled = function(){
+    	$scope.showLocation = true;
+    	$scope.hideLogin = true;
+    }
+
+    $scope.cities = ['Bhilai','Delhi', 'Mumbai', 'Lucknow'];
+	$scope.status = {
+    	isopen: false
+  	};
+	$scope.city = "Lucknow";
+	$scope.toggled = function(open) {
+	    $log.log('Dropdown is now: ', open);
+	  };
+
+	 $scope.selectCity = function(item){
+		$scope.city = item;
+	}
 }

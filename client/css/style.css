@@ -8,6 +8,15 @@ body {
   font-family: myFirstFont;
 }
 
+/* universal styles */
+
+.lpad0{
+  padding-left: 0px;
+}
+.rpad0{
+  padding-right: 0px;
+}
+
 /* styles for header starts */
 .backColor {
     position: fixed;
@@ -21,6 +30,9 @@ body {
 .login{
     float: right;
     padding-right: 20px;
+}
+.locationButton{
+  background-color: red;
 }
 /* styles for header ends */
 
@@ -290,5 +302,9 @@ div.pizza {
   }
   h3{
     font-size: 18px;
+  }
+  .headerLocationInput{
+    padding-left: 30px;
+    padding-right: 0px;
   }
 }

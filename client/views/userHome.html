@@ -92,10 +92,10 @@
 								</div>
 							</div>							
 							<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 bpad5">
-								<input type="text" class="form-control hiddenInput" ng-class="{'extendedInput': extendInput}" ng-blur="showButton()" ng-focus="hideButton()" placeholder="Search Food, Restaurants, Cuisines, Street Food" ng-model="search" ng-hide="showLocality" />
+								<input type="text" class="form-control hiddenInput" ng-class="{'extendedInput': extendInput}" ng-blur="blurActive()" ng-focus="hideButton()" placeholder="Search Food, Restaurants, Cuisines, Street Food" ng-model="search" ng-hide="showLocality" typeahead="food for food in foods | filter:$viewValue | limitTo:10" ng-change="searchActive(foo)"/>
 								<input type="text" class="form-control hiddenInput" ng-class="{'extendedInput': extendInput}" 
 								ng-model="location" ng-show="showLocality" placeholder="Enter your Locality" 
-								ng-blur="showButton()" id="localityId" typeahead="locality for locality in localities | filter:$viewValue | limitTo:8" autofocus/>
+								ng-blur="blurActive()" id="localityId" typeahead="locality for locality in localities | filter:$viewValue | limitTo:8" autofocus/>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tpad2" ng-show="showOptions" ng-repeat="options in searchOption">
 								<div class="selectDiv" ng-click="selectedOption($index)">
@@ -106,10 +106,18 @@
 					</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				
+		<div class="row blockRows">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 homePageBlocks">
+				<div>
+					<h2 align="center">Localities</h2>
+				</div>
+				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" ng-repeat="locality in localities">
+					<div>
+						<p align="center">{{locality}}</p>
+					</div>
+				</div>
 			</div>
 		</div>
+		
 	</div>
 </div>

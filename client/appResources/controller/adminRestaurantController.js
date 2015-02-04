@@ -8,22 +8,22 @@ function restaurantController($scope){
 
 	console.log("admin screen");
 
-	$scope.restaurant = {};
+    $scope.menu = [];
 
-    $scope.restaurant.menu = [];
+    $scope.restDetail = {};
     
-    $scope.addNewDish = function(detail, category){
-        console.log(category);
+    $scope.addNewDish = function(dishDetail, category){
+        //console.log(category);
         category.detail.push({
-            dish: detail.addDish,
-            price: detail.addPrice,
+            dish: dishDetail.addDish,
+            price: dishDetail.addPrice,
         })
-        detail.addDish = null;
-        detail.addPrice = null;
+        dishDetail.addDish = null;
+        dishDetail.addPrice = null;
         $scope.showSubmitButton = true;
     }
     $scope.addNewCategory = function(){
-        $scope.restaurant.menu.push({
+        $scope.menu.push({
             categoryName: $scope.addCategory,
             detail: []
         })
@@ -32,32 +32,33 @@ function restaurantController($scope){
         $scope.showSubmitButton = true;
     }
     
-    $scope.editDish = function(detail){
-        console.log(detail)
-        detail.editActive = true;
+    $scope.editDish = function(dishDetail){
+        console.log(dishDetail)
+        dishDetail.editActive = true;
         $scope.showSubmitButton = true;
     }
 
-    $scope.deleteDish = function(detail, category, index){
+    $scope.deleteDish = function(dishDetail, category, index){
     	console.log("inside delete");
     	$scope.showSubmitButton = true;
     	category.detail.splice(index, 1);
     }
     
-    $scope.editButtonActive = function(detail){
-        detail.editActive = false;
+    $scope.editButtonActive = function(dishDetail){
+        dishDetail.editActive = false;
     }
 
     $scope.submitDetail = function(){
-    	console.log("inside submit detail");
+    	console.log("inside submit dishDetail");
+        console.log($scope.restDetail);
     }
 
     $scope.submitMenu = function(){
-    	console.log($scope.restaurant.menu);
+    	console.log($scope.menu);
     }
 
     $scope.deleteCategory = function(index){
-    	$scope.restaurant.menu.splice(index, 1);
+    	$scope.menu.splice(index, 1);
     }
 
     $scope.editCategory = function(category){
