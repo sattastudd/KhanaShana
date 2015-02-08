@@ -6,7 +6,7 @@ define([], function() {
 
 function searchResultController ($scope){
 
-	$scope.sort = ['Lorem', 'Ipsum', 'dolor', 'sit', 'amet', 'consectetur',
+	$scope.sort = ['Manish Eating Point', 'Waah ji Waah', 'Mughal Dastarkhwan', 'Tundey Kabab', 'amet', 'consectetur',
 					'Lonnrem', 'Ipnnsum', 'dolomnnr', 'sjjjit', 'annmet', 'conbbsectetur'];
     
     $scope.isCollapsed = true;
