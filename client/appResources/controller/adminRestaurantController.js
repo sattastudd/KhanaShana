@@ -16,10 +16,11 @@ function restaurantController($scope){
         //console.log(category);
         category.detail.push({
             dish: dishDetail.addDish,
-            price: dishDetail.addPrice,
+            price: [dishDetail.addPriceHalf,dishDetail.addPriceFull]
         })
         dishDetail.addDish = null;
-        dishDetail.addPrice = null;
+        dishDetail.addPriceHalf = null;
+        dishDetail.addPriceFull = null;
         $scope.showSubmitButton = true;
     }
     $scope.addNewCategory = function(){
@@ -46,6 +47,18 @@ function restaurantController($scope){
     
     $scope.editButtonActive = function(dishDetail){
         dishDetail.editActive = false;
+    }
+
+    $scope.restDetail.cuisines = [];
+    
+    $scope.addCuisine = function(){
+        $scope.restDetail.cuisines.push($scope.cuisineName);
+        console.log($scope.cuisines);
+    }
+
+    $scope.deleteCuisine = function(index){
+        console.log(index);
+        $scope.restDetail.cuisines.splice(index, 1);
     }
 
     $scope.submitDetail = function(){
