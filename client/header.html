@@ -1,58 +1,48 @@
-<div>
-	 <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12  backColor">
-                <div class="hidden-xs col-md-4 col-sm-3 col-lg-4">
-                	<h4><strong>PetuRaam</strong></h4>
+<div class="fullScreenWidth customNavBar">
+    <div class="container">
+        <div class="row hidden-xs visible-sm visible-md visible-lg">
+            <div class="col-sm-3 col-md-4 col-lg-4">
+                <a class="navbar-brand">PetuRaam</a>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-4 navSearch">
+                <input class="form-control" placeholder="{{search.searchPlaceHolder}}" ng-model="search.searchText" />
+            </div>
+
+            <div class="col-sm-3 col-md-4 col-lg-4 navLinks">
+                <div class="pull-right">
+                    <span class="glyphicon glyphicon-search marRight5"></span>
+                    <span class="glyphicon glyphicon-map-marker marRight5"></span>
+                    <span class="loginSpan">Login</span>
                 </div>
-                <div class="col-xs-6 hidden-sm hidden-lg hidden-md" ng-hide="searchActive||showLocation">
-                	<h4><strong>PetuRaam</strong></h4>
+            </div>
+        </div>
+
+        <div class="row visible-xs hidden-sm hidden-md hidden-lg">
+            <div class="col-xs-12">
+                <div class="row">
+            <div class="col-xs-3 hidden-sm hidden-md hidden-lg">
+                <img src="images/Peturam.png" alt="Peturaam" title="PetuRam" />
+            </div>
+
+            <div class="col-xs-6 col-xs-offset-3 navLinks">
+                <div class="pull-right">
+                    <span class="glyphicon glyphicon-search marRight5"></span>
+                    <span class="glyphicon glyphicon-map-marker marRight5"></span>
+                    <span class="loginSpan">Login</span>
                 </div>
-                <div class="col-xs-12 hidden-sm hidden-lg hidden-md" ng-show="searchActive">
-                    <input type="text" ng-blur="searchDeactive()" class="form-control" ng-model="search" placeholder="u type here" focus-on="newItemAdded">
-                </div>
-                <div class="hidden-xs col-md-4 col-sm-4 col-lg-4 hideInput" ng-hide="showLocation">
-                    <input type="text" class="form-control" ng-model="search" placeholder="u type here" />
-                </div>
-                <div class="col-xs-12 col-md-4 col-sm-6 col-lg-4 hideInput" ng-show="showLocation">
-                	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 lpad0">
-                		<button type="button" class="btn locationButton dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-                			<font color="white">{{city}}</font><span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li ng-repeat="item in cities" ng-click="selectCity(item)">
-					         <a href>{{item}}</a>
-					        </li>
-				      </ul>
-					</div>
-					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 headerLocationInput">
-                    	<input type="text" class="form-control" ng-blur="searchDeactive()" ng-model="searchLocation" placeholder="Enter Location" />
+            </div>
                     </div>
                 </div>
-                <div class="hidden-xs col-md-4 col-sm-3 col-lg-4">
-                    <div class="row">
-                        <div>
-                            <h5 class="login">Login</h5>
-                        </div>
-                        <div>
-                            <h5 ng-click="locationCalled()" class="login">lo</h5>
-                        </div>
-                        <div class="hidden-sm hidden-lg hidden-md">
-                            <h5 class="login" ng-click="searchCalled()">se</h5>
-                        </div>
+
+            <div class="col-xs-12 overLappedRow">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <input class="form-control" placeholder="{{search.searchPlaceHolder}}" ng-model="search.searchText" />
                     </div>
-                </div>
-                <div class="col-xs-6 hidden-sm hidden-lg hidden-md" ng-hide="hideLogin">
-                    <div class="row">
-                        <div>
-                            <h5 class="login">Login</h5>
-                        </div>
-                        <div>
-                            <h5 ng-click="locationCalled()" class="login">lo</h5>
-                        </div>
-                        <div class="hidden-sm hidden-lg hidden-md">
-                            <h5 class="login" ng-click="searchCalled()">se</h5>
-                        </div>
+
+                    <div class="col-xs-2 centerGlyph" style="text-align : center;">
+                        <span class="glyphicon glyphicon-remove remove" ></span>
                     </div>
                 </div>
             </div>

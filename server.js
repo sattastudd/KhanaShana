@@ -51,7 +51,7 @@ app.use(function (req, res, next) {
 
 app.use('/', router);
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', 3000);
 
 eventHandler.on('pleaseStartServerNow', function(){
   console.log('DB Connection Established to all cities.');

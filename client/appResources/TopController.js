@@ -5,43 +5,34 @@ define([], function(){
 });
 
 function parentController($scope, DataStore, AppConstants, $location, $log){
-	console.log('Hi. I am parentController');
-
-	$scope.appName = AppConstants.appName;
-
-	$scope.goToLoginPage = function(){
-		console.log('Going to Login Page');
-		$location.path('/login');
-	}
-
-
-	//code for header
-
-	$scope.searchCalled = function(){
-        $scope.searchActive = true;
-        $scope.hideLogin = true;
-    }
-    $scope.searchDeactive = function(){
-         $scope.searchActive = false;
-         $scope.hideLogin = false;
-         $scope.showLocation = false;
-    }
+    console.log('In parent Controller ');
     
-    $scope.locationCalled = function(){
-    	$scope.showLocation = true;
-    	$scope.hideLogin = true;
+    $scope.search = {
+        searchText : '',
+        searchType : '',
+        searchPlaceHolder : ''
+    };
+
+    /*Header Controls*/
+    $scope.visibilityControl = {
+        isHomePage : false,
+        isSeachActive : false,
+        isLocationSearchActive : false
+    };
+    
+    $scope.shouldShowSearch = function () {
+        return !$scope.visibilityControl.isHomePage;
     }
 
-    $scope.cities = ['Bhilai','Delhi', 'Mumbai', 'Lucknow'];
-	$scope.status = {
-    	isopen: false
-  	};
-	$scope.city = "Lucknow";
-	$scope.toggled = function(open) {
-	    $log.log('Dropdown is now: ', open);
-	  };
+    $scope.showSearch = function () {
+        $scope.visibilityControl.isSearchActive = true;
+        $scope.visibilityControl.isLocationSearchActive = false;
+        $scope.search.searchPlaceHolder = 'Looking for meals ?';
+    };
 
-	 $scope.selectCity = function(item){
-		$scope.city = item;
-	}
+    $scope.showLocationSearch = function () {
+        $scope.visibilityControl.isSearchActive = false;
+        $scope.visibilityControl.isLocationSearchActive = true;
+        $scope.search.searchPlaceHolder = 'Lokking for locality ?'
+    };
 }
