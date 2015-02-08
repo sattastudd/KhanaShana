@@ -374,7 +374,9 @@ div.pizza {
 
 .restaurantIcon{
   height: 150px;
+  width: 150px;
   border-radius: 80px;
+  box-shadow: 0 4px 10px 0px #555;
 }
 .orderButton{
   border: solid 1px;
