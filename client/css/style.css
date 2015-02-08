@@ -36,6 +36,8 @@ body {
 }
 /* styles for header ends */
 
+/* styles for footer starts */
+/* styles for footer ends */
 
 /*.fontSize35 {
   font-size: 35px; }
@@ -137,6 +139,10 @@ body {
   background-color: gainsboro;
   border-radius: 5px;
   height: 85px;
+}
+.cuisineBlock{
+  padding-top: 10px;
+  padding-bottom: :5px;
 }
 .lpad0{
   padding-left: 0px;
@@ -280,6 +286,46 @@ div.pizza {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+/* styles for search result page starts */
+
+.containerBlock{
+  margin-top: 50px;
+}
+
+.sortBlock{
+    border: solid 1px gainsboro;
+    border-radius: 5px;
+    padding-left: 18px;
+    height: 32px;
+    cursor: pointer;
+}
+.resultBlock{
+    border: solid 1px rgb(236, 225, 225);
+    border-radius: 5px;
+    padding-left: 18px;
+    height: 180px;
+    background-color: gainsboro;
+}
+.repeatBlock{
+    padding-bottom:2px;
+}
+.fixedBlock{
+    position: fixed;
+    padding-left: 0px;
+    padding-right: 25px;
+}
+
+.tpad15{
+  padding-top: 15px;
+}
+
+.restaurantIcon{
+  height: 150px;
+  border-radius: 80px;
+}
+
+/* styles for search result page ends */
 
 @media (max-width: 768px) {
   .buttonCity{

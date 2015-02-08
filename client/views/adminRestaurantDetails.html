@@ -46,7 +46,25 @@
 						<label>Cuisines</label>
 					</div>
 					<div class="col-xs-6 col-lg-3 col-sm-3 col-md-3 tpad5">
-						<input type="text" class="form-control" ng-model="restDetail.cuisines">
+						<div class="row">
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 rpad0">
+	                			<input type="text" ng-model="cuisineName" class="form-control"/>
+	            			</div>
+	            			<div class="row">
+				            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				                <button type="button" class="btn btn-default" ng-click="addCuisine()">add</button>
+				            </div>
+				             <div class-"col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cuisineBlock" ng-repeat="list in restDetail.cuisines">
+					                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+				                       {{list}}
+				                    </div>
+				                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+				                       <a ng-click="deleteCuisine($index)">del</a>
+				                    </div>
+			                    </div>  
+			                </div>				            
+			            </div>
 					</div>
 				</div>
 				<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 bpad5">
@@ -104,8 +122,8 @@
 				                        	<p ng-hide="dishDetail.editActive">{{dishDetail.dish}}</p>
 					                          <input type="text" ng-show="dishDetail.editActive" ng-model="dishDetail.dish" class="form-control"/>
 						                </td>
-						                <td>
-						                  	<p ng-hide="dishDetail.editActive">{{dishDetail.price}}</p><input type="text" ng-show="dishDetail.editActive" ng-model="dishDetail.price" class="form-control"/>	
+						                <td ng-repeat="dishPrice in dishDetail.price">
+						                  	<p ng-hide="dishDetail.editActive">{{dishPrice}}</p><input type="text" ng-show="dishDetail.editActive" ng-model="dishPrice" class="form-control"/>	
 						   	        	 </td>
 				                        <td>
 				                        	<p ng-hide="dishDetail.editActive" ng-click="editDish(dishDetail)">edit</p>	    	
@@ -121,10 +139,13 @@
 						                		
 						               	</td>
 							            <td>
-							                <input type="text" class="form-control" ng-model="dishDetail.addDish" />
+							                <input type="text" class="form-control" ng-model="dishDetail.addDish" placeholder="Add Dish Name" />
 						                </td>
-				       	                 <td>
-						                    <input type="text" class="form-control" ng-model="dishDetail.addPrice" />
+				       	                <td>
+						                    <input type="text" class="form-control" ng-model="dishDetail.addPriceHalf" placeholder="Dish Half price" />
+						                </td>
+						                <td>
+						                    <input type="text" class="form-control" ng-model="dishDetail.addPriceFull" placeholder="Dish Full Price"/>
 						                </td>
 						                 <td>
 						                     <button type="button" class="btn btn-default" ng-click="addNewDish(dishDetail, category)">Add</button>

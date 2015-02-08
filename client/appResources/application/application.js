@@ -28,6 +28,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/adminRestaurants.html',
                 '../../appResources/controller/adminRestHomeController'
         ))
+        .when('/userSearchResult',
+            routeConfig.config(
+                'views/userSearchResult.html',
+                '../../appResources/controller/userSearchResultController'
+        ))
         //Will use it later.
         //Will know how. 
         //$httpProvider.interceptors.push("customHttpInterceptor");
