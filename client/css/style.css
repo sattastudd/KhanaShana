@@ -1,7 +1,7 @@
 ﻿/*Min-ins*/
-@font-face {
+/*@font-face {
   font-family: Avdira;
-  src: url('fonts/Avdira_R.woff'); }
+  src: url('fonts/Avdira_R.woff'); }*/
 
 body {
   background-color: #FAF8FD;
@@ -16,7 +16,8 @@ body {
   border-bottom: 0;
   box-shadow: #444 0 0 5px;
   height: 50px;
-  position: fixed; }
+  position: fixed;
+  z-index: 2; }
   .customNavBar a.navbar-brand {
     color: #fff;
     text-decoration: none;
@@ -127,6 +128,9 @@ body {
   background-color: #DC141B
 }
 
+p {
+  margin: 0 0 3px;
+}
 
 .cityName {
   color: white;
@@ -353,35 +357,40 @@ div.pizza {
 }
 .resultBlock{
     border: solid 1px rgb(236, 225, 225);
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     padding-left: 18px;
-    height: 180px;
+    height: auto;
     background-color: white;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.26);
 }
 .repeatBlock{
     padding-bottom:5px;
 }
+.resultRepeatBlock{
+    padding-bottom:35px;
+}
 .fixedBlock{
     position: fixed;
     padding-left: 0px;
     padding-right: 25px;
 }
-
-.tpad15{
-  padding-top: 15px;
+.quickView{
+  background-color: rgb(86, 178, 48);
+  color: white;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.26);
 }
-
 .restaurantIcon{
-  height: 150px;
-  width: 150px;
+  height: 140px;
+  width: 140px;
   border-radius: 80px;
   box-shadow: 0 4px 10px 0px #555;
 }
 .orderButton{
-  border: solid 1px;
-  height: 40px;
-  padding-top: 10px;
+  font-size: 22px;
+  background-color: rgb(220, 20, 27);
+  border-radius: 4px;
+  color: white;
 }
 .restTitle{
   padding-top: 15px;
@@ -389,6 +398,12 @@ div.pizza {
 }
 .lpad2{
   padding-left: 2px;
+}
+.tpad8{
+    padding-top: 8px;
+}
+.bpad8{
+  padding-bottom: 8px;
 }
 
 /* styles for search result page ends */
@@ -419,11 +434,27 @@ div.pizza {
     padding-left: 30px;
     padding-right: 0px;
   }
-
-  @media (max-width: 992px){
-    .searchResultBlock{
-      padding-left: 280px;
-    }
+  .restaurantIcon{
+    height: 90px;
+    padding-top: 0px;
+    width: 90px;
+  }
+  .restTitle{
+    padding-top: 05px;
+    font-size: 16px;
+  }
+  .paraNoMargin{
+    margin: 0px 0px 0px;
+    font-size: 12px;
+  }
+  .tpad5{
+    padding-top: 5px;
+  }
+  .orderButton {
+    font-size: 19px;
+  }
+  .ordrBtnFLtRight{
+    float: right;
   }
 }
 
