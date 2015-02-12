@@ -361,7 +361,6 @@ div.pizza {
     padding-left: 18px;
     height: auto;
     background-color: white;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.26);
 }
 .repeatBlock{
     padding-bottom:5px;
@@ -375,10 +374,10 @@ div.pizza {
     padding-right: 25px;
 }
 .quickView{
-  background-color: rgb(86, 178, 48);
-  color: white;
+  background-color: gainsboro;
+  color: black;
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.26);
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
 }
 .restaurantIcon{
   height: 140px;
