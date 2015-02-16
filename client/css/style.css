@@ -1,11 +1,13 @@
 ﻿/*Min-ins*/
-/*@font-face {
+@font-face {
   font-family: Avdira;
-  src: url('fonts/Avdira_R.woff'); }*/
+  src: url('fonts/Riven.woff');
+ }
 
 body {
   background-color: #FAF8FD;
-  font-family: Avdira; }
+  font-family: Avdira;
+  font-size: 18px; }
 
 .fullScreenWidth {
   width: 100%; }
@@ -129,7 +131,7 @@ body {
 }
 
 p {
-  margin: 0 0 3px;
+  margin: 0 0 0px;
 }
 
 .cityName {
@@ -294,8 +296,8 @@ div.pizza {
   padding-left: 22px;
 }
 
-.lpad0{
-  padding-left: 0px;
+.lpad5{
+  padding-left: 5px;
 }
 
 /*.inputText{
@@ -358,7 +360,6 @@ div.pizza {
 .resultBlock{
     border: solid 1px rgb(236, 225, 225);
     border-radius: 5px 5px 0 0;
-    padding-left: 18px;
     height: auto;
     background-color: white;
 }
@@ -366,7 +367,7 @@ div.pizza {
     padding-bottom:5px;
 }
 .resultRepeatBlock{
-    padding-bottom:35px;
+    padding-bottom: 40px;
 }
 .fixedBlock{
     position: fixed;
@@ -378,6 +379,21 @@ div.pizza {
   color: black;
   border-radius: 0 0 5px 5px;
   box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+}
+.resultBlockRow{
+  margin-right: -18px;
+  margin-left: -15px;
+}
+.glyphDown{
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: ghostwhite;
+  border-radius: 15px;
+  height: 27px;
+  width: 27px;
+  padding-top: 5px;
+  color: gray;
 }
 .restaurantIcon{
   height: 140px;
@@ -386,20 +402,63 @@ div.pizza {
   box-shadow: 0 4px 10px 0px #555;
 }
 .orderButton{
-  font-size: 22px;
+  font-size: 25px;
   background-color: rgb(220, 20, 27);
   border-radius: 4px;
   color: white;
 }
+.corouselBlock {
+  height: 250px;
+}
 .restTitle{
   padding-top: 15px;
-  font-size: 22px;
+  font-size: 30px;
 }
-.lpad2{
-  padding-left: 2px;
+.rating{
+  padding-top: 20px;
 }
-.tpad8{
-    padding-top: 8px;
+.glyphicon-heart{
+    font-size: 34px;
+    color: red;
+    -webkit-animation-name : beat;
+    -webkit-animation-duration : 1.2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-play-state : running
+}
+@-webkit-keyframes beat{
+    0%{
+        -webkit-transform: scale(1);
+    }  
+    20%{
+        -webkit-transform: scale(1.1);
+    }
+    33%{
+        -webkit-transform: scale(.95);
+    }
+    
+    50%{
+        -webkit-transform: scale(1.2);
+    }
+    65%{
+        -webkit-transform: scale(1);
+    }
+    80%{
+        -webkit-transform: scale(.95);
+    }
+    100%{
+        -webkit-transform: scale(1);
+    }
+}
+.ratingNumber{
+  font-size: 26px;
+  color: #333;
+  padding-left: 30px;
+}
+.lpad8{
+  padding-left: 8px;
+}
+.tpad10{
+    padding-top: 10px;
 }
 .bpad8{
   padding-bottom: 8px;
@@ -440,20 +499,34 @@ div.pizza {
   }
   .restTitle{
     padding-top: 05px;
-    font-size: 16px;
+    font-size: 18px;
   }
   .paraNoMargin{
     margin: 0px 0px 0px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .tpad5{
     padding-top: 5px;
   }
   .orderButton {
-    font-size: 19px;
+    font-size: 21px;
   }
   .ordrBtnFLtRight{
     float: right;
+  }
+  .quickViewRow{
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .rating{
+    padding-top: 5px;
+  }
+  .glyphicon-heart{
+    font-size: 20px
+  }
+  .ratingNumber{
+    font-size: 15px;
+    padding-left: 8px;
   }
 }
 

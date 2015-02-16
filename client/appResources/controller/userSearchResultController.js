@@ -6,24 +6,40 @@ define([], function() {
 
 function searchResultController ($scope){
 
-	$scope.sort = ['Manish Eating Point', 'Waah ji Waah', 'Mughal Dastarkhwan', 'Tundey Kabab', 'amet', 'consectetur',
-					'Lonnrem', 'Ipnnsum', 'dolomnnr', 'sjjjit', 'annmet', 'conbbsectetur'];
-    
-    $scope.isCollapsed = true;
+    $scope.sort = [{name:'Manish Eating Point', img:'../images/pizza4.jpg'}, {name:'Waah ji Waah', img:'../images/northIndian.jpg'},
+                    {name:'Mughal Dastarkhwan', img:'../images/thaali.jpg'},{name:'Tundey Kabab', img:'../images/pizza2.jpg'},
+                    {name:'Royal Cafe', img:'../images/pizza1.jpg'}];
 
-    console.log("inside search result page");
+    $scope.showMenu = true;
 
-    if(window.scrollTo(0, 400)){
-        $scope.customizeVisible = true;
-        console.log("its a miracle");
+    $scope.openMenu = function(){
+        console.log("open menu button working");
+        $scope.showMenu = !$scope.showMenu;
     }
 
-    //for making circle
+    $scope.showQuickView = true;
 
-   /* var c = document.getElementById("myCanvas");
-	var ctx = c.getContext("2d");
-	ctx.beginPath();
-	ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-	ctx.stroke();*/
+    $scope.openQuickView = function(index){
+        $scope.showQuickView = !$scope.showQuickView;
+    }
 
+    $scope.myInterval = 50000;
+    $scope.quickViewContent = {};
+    $scope.quickViewContent.aboutUs = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum";
+    $scope.quickViewContent.image = [{src:'http://lorempixel.com/400/200/'},{src:'http://lorempixel.com/400/200/food'},{src:'http://lorempixel.com/400/200/sports'},
+                                    {src:'http://lorempixel.com/400/200/sports/1'},{src:'http://lorempixel.com/400/200/people'}];
+    $scope.slides = [];
+     $scope.slides = [
+    {
+      image: 'http://lorempixel.com/400/200/'
+    },
+    {
+      image: 'http://lorempixel.com/400/200/food'
+    },
+    {
+      image: 'http://lorempixel.com/400/200/sports'
+    },
+    {
+      image: 'http://lorempixel.com/400/200/people'
+    }];
 }
