@@ -6,7 +6,7 @@ define(
 			return angular
 					.module(
 							'khanaShanaApp',
-							[ 'ngRoute', 'khanaShanaDirectives', 'ui.bootstrap', 'ngTouch'],
+							[ 'ngRoute', 'khanaShanaDirectives', 'ui.bootstrap'],
 							function($compileProvider, $controllerProvider) {
 								routeConfig.setCompileProvider($compileProvider);
 								routeConfig.setControllerProvider($controllerProvider);
