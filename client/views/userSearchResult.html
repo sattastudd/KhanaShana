@@ -5,7 +5,7 @@
                <h1>List of the Restaurants in Gomti Nagar</h1>
                <h5 ng-show="customizeVisible">Customize</h5>
            </div>
-           <div class="col-xs-2 col-sm-1 col-md-1 sortBlock hidden-lg"  ng-click="openMenu()">
+           <div class="col-xs-2 col-sm-1 sortBlock hidden-md hidden-lg"  ng-click="openMenu()">
                <h5>filter</h5>
            </div>
        </div>
@@ -32,7 +32,7 @@
                            <p>{{list}}
                            <i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
                            </p>
-                           <div collapse="filterCollapse"
+                           <div collapse="filterCollapse">
                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                <p>m there</p>
                                <p>m there</p>
@@ -46,7 +46,7 @@
                        </div>
                    </div>
                </div>
-               <div class="hidden-xs hidden-sm col-md-3 col-lg-2"></div>
+               <div class="hidden-xs hidden-sm hidden-md col-lg-2"></div>
                <div class="row">
                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
                     <div class="fixed-top">
@@ -59,8 +59,8 @@
                                  <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 tpad10 tpad5 lpad8">
                                    <img src={{option.img}} class="restaurantIcon" />
                                  </div>
-                                 <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
-                                     <div class="col-xs-9 col-sm-7 col-md-7 col-lg-7">
+                                 <div class="col-xs-9 col-sm-10 col-md-7 col-lg-10">
+                                     <div class="col-xs-9 col-sm-7 col-md-10 col-lg-7">
                                        <p class="restTitle"><strong>{{option.name}}</strong></p>
                                      </div>
                                      <div class="col-xs-3 col-sm-5 col-md-5 col-lg-5 rating">
