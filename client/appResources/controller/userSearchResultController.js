@@ -20,6 +20,21 @@ function searchResultController ($scope){
     $scope.showQuickView = true;
 
     $scope.openQuickView = function(index){
+    	var current = $scope.sort[index];
+    	var status = current.showQuickView;
+    
+    	if(var i=0; i<$scope.sort.length; i++){
+    		
+    		var obj = $scope.sort[i];
+    		obj.showQuickView = true;
+    	}
+    	
+    	current.showQuickView = !status;
+    }
+
+    
+
+    $scope.openQuickView = function(index){
         $scope.showQuickView = !$scope.showQuickView;
     }
 
