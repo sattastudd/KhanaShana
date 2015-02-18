@@ -16,27 +16,21 @@ function searchResultController ($scope){
         console.log("open menu button working");
         $scope.showMenu = !$scope.showMenu;
     }
-
+    
     $scope.showQuickView = true;
-
-    $scope.openQuickView = function(index){
-    	var current = $scope.sort[index];
-    	var status = current.showQuickView;
     
-    	for(var i=0; i<$scope.sort.length; i++){
-    		
-    		var obj = $scope.sort[i];
-    		obj.showQuickView = true;
-    	}
-    	
-    	current.showQuickView = !status;
-    }
-
-    
-
     $scope.openQuickView = function(index){
-        $scope.showQuickView = !$scope.showQuickView;
-    }
+        var current = $scope.sort[index];
+        var status = current.showQuickView;
+    
+        for(var i=0; i<$scope.sort.length; i++){
+            
+            var obj = $scope.sort[i];
+            obj.showQuickView = true;
+        }
+        
+        current.showQuickView = !status;
+    }    
 
     $scope.myInterval = 50000;
     $scope.quickViewContent = {};
