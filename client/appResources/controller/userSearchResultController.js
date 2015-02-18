@@ -16,7 +16,7 @@ function searchResultController ($scope){
         console.log("open menu button working");
         $scope.showMenu = !$scope.showMenu;
     }
-    
+
     $scope.showQuickView = true;
     
     $scope.openQuickView = function(index){
@@ -51,4 +51,25 @@ function searchResultController ($scope){
     {
       image: 'http://lorempixel.com/400/200/people'
     }];
+
+    //code for filter block
+
+    $scope.filters = ['Filters', 'Cuisines', 'Average Cost', 'Minimum Cost', 'Locality', 'Restaurant type', 'Top 10'];
+
+    $scope.filterCollapse = true;
+
+    $scope.filterClicked = function(index){
+        /*var current = $scope.filters[index];
+        var status = current.filterCollapse;
+    
+        for(var i=0; i<$scope.filters.length; i++){
+            
+            var obj = $scope.filters[i];
+            obj.filterCollapse = true;
+        }
+        
+        current.filterCollapse = !status;*/
+
+        $scope.filterCollapse = !$scope.filterCollapse;
+    }
 }

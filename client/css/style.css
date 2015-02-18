@@ -350,12 +350,12 @@ div.pizza {
   margin-top: 50px;
 }
 
-.sortBlock{
-    border: solid 1px gainsboro;
-    border-radius: 5px;
-    padding-left: 18px;
-    height: 32px;
-    cursor: pointer;
+.filterBlock{
+  height: 50px;
+  padding-top: 5px;
+  cursor: pointer;
+  border-bottom: solid 1px gray;
+  font-size: 20px;
 }
 .resultBlock{
     border: solid 1px rgb(236, 225, 225);
@@ -370,9 +370,13 @@ div.pizza {
     padding-bottom: 40px;
 }
 .fixedBlock{
-    position: fixed;
     padding-left: 0px;
-    padding-right: 25px;
+    padding-right: 48px;
+}
+.filterGlyph{
+  font-size: 15px;
+  padding-right: 8px;
+  padding-top: 3px;
 }
 .quickView{
   background-color: gainsboro;
@@ -416,6 +420,7 @@ div.pizza {
 }
 .rating{
   padding-top: 20px;
+  padding-right: 50px;
 }
 .glyphicon-heart{
     font-size: 34px;
@@ -524,6 +529,7 @@ div.pizza {
   }
   .rating{
     padding-top: 5px;
+    padding-right: 10px;
   }
   .glyphicon-heart{
     font-size: 20px;
