@@ -23,7 +23,7 @@ function searchResultController ($scope){
     	var current = $scope.sort[index];
     	var status = current.showQuickView;
     
-    	if(var i=0; i<$scope.sort.length; i++){
+    	for(var i=0; i<$scope.sort.length; i++){
     		
     		var obj = $scope.sort[i];
     		obj.showQuickView = true;
