@@ -420,8 +420,9 @@ div.pizza {
 .glyphicon-heart{
     font-size: 34px;
     color: red;
+    padding-left: 15px;
     -webkit-animation-name : beat;
-    -webkit-animation-duration : 1.2s;
+    -webkit-animation-duration : 2.4s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-play-state : running
 }
@@ -429,21 +430,24 @@ div.pizza {
     0%{
         -webkit-transform: scale(1);
     }  
-    20%{
+    10%{
         -webkit-transform: scale(1.1);
     }
-    33%{
+    16%{
         -webkit-transform: scale(.95);
     }
     
-    50%{
+    25%{
         -webkit-transform: scale(1.2);
     }
-    65%{
+    32%{
         -webkit-transform: scale(1);
     }
-    80%{
+    40%{
         -webkit-transform: scale(.95);
+    }
+    50%{
+        -webkit-transform: scale(1);
     }
     100%{
         -webkit-transform: scale(1);
@@ -522,11 +526,18 @@ div.pizza {
     padding-top: 5px;
   }
   .glyphicon-heart{
-    font-size: 20px
+    font-size: 20px;
+    padding-left: 4px;
   }
   .ratingNumber{
     font-size: 15px;
     padding-left: 8px;
   }
 }
+@media (max-width: 360px) {
 
+  .glyphicon-heart{
+    font-size: 15px;
+    padding-top: 4px;
+  }
+}
