@@ -54,12 +54,29 @@ function searchResultController ($scope){
 
     //code for filter block
 
-    $scope.filters = ['Filters', 'Cuisines', 'Average Cost', 'Minimum Cost', 'Locality', 'Restaurant type', 'Top 10'];
+    $scope.filters = [{name: 'filters', list:['aloo', 'bhaloo', 'chaloo']}, 
+                     {name: 'Cuisines', list:['hakoona', 'matata','oh shit']},
+                     {name: 'Average Cost', list:['aloo', 'bhaloo', 'chaloo']},
+                     {name: 'Minimum Cost', list:['aloo', 'bhaloo', 'chaloo']},
+                     {name: 'Locality', list:['aloo', 'bhaloo', 'chaloo']},
+                     {name: 'Restaurant Type', list:['aloo', 'bhaloo', 'chaloo']},
+                     {name: 'Top 10', list:['aloo', 'bhaloo', 'chaloo']}];
 
     $scope.filterCollapse = true;
+    /*$scope.localityCollapse = true;
+    $scope.cuisineCollapse = true;
 
+    $scope.localityClicked = function(){
+        $scope.localityCollapse = !$scope.localityCollapse;
+    }
+    $scope.cuisineClicked = function(){
+        $scope.cuisineCollapse = !$scope.cuisineCollapse;
+    }
+*/
     $scope.filterClicked = function(index){
-        /*var current = $scope.filters[index];
+        console.log("inside filter clicked");
+
+        var current = $scope.filters[index];
         var status = current.filterCollapse;
     
         for(var i=0; i<$scope.filters.length; i++){
@@ -68,8 +85,11 @@ function searchResultController ($scope){
             obj.filterCollapse = true;
         }
         
-        current.filterCollapse = !status;*/
+        current.filterCollapse = !status;
+    }
 
-        $scope.filterCollapse = !$scope.filterCollapse;
+    $scope.contentSelected = function(value){
+        //$scope.filterCollapse = false;
+        console.log(value);
     }
 }

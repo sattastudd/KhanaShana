@@ -351,11 +351,18 @@ div.pizza {
 }
 
 .filterBlock{
-  height: 50px;
-  padding-top: 5px;
-  cursor: pointer;
+  height: auto;
+  padding-top: 12px;
+  padding-bottom: 13px;
   border-bottom: solid 1px gray;
   font-size: 20px;
+}
+.filterContent{
+  cursor: pointer;
+}
+.contentClass{
+  padding-left: 15px;
+  cursor: pointer;
 }
 .resultBlock{
     border: solid 1px rgb(236, 225, 225);
@@ -371,7 +378,7 @@ div.pizza {
 }
 .fixedBlock{
     padding-left: 0px;
-    padding-right: 48px;
+    padding-right: 10px;
 }
 .filterGlyph{
   font-size: 15px;
@@ -419,7 +426,7 @@ div.pizza {
   font-size: 30px;
 }
 .rating{
-  padding-top: 3px;
+  padding-top: 14px;
   padding-right: 50px;
 }
 .glyphicon-heart{
@@ -465,6 +472,9 @@ div.pizza {
 }
 .lpad8{
   padding-left: 8px;
+}
+.lpad15{
+  padding-left: 15px;
 }
 .tpad10{
     padding-top: 10px;
@@ -539,6 +549,16 @@ div.pizza {
     font-size: 15px;
     padding-left: 8px;
   }
+  .filterBlock {
+    height: auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 15px;
+  }
+  .filterGlyph {
+    font-size: 9px;
+    padding-right: 15px;
+  }
 }
 @media (max-width: 360px) {
 
@@ -546,4 +566,18 @@ div.pizza {
     font-size: 15px;
     padding-top: 4px;
   }
+}
+
+@media (min-width: 992px) {
+
+ .restTitleContent{
+    padding-left: 26px;
+  } 
+}
+
+@media (min-width: 1200px) {
+
+ .restTitleContent{
+    padding-left: 7px;
+  } 
 }
