@@ -234,6 +234,11 @@ button.kh-primary {
 
 /*styles for restaurant details page*/
 
+p {
+  margin: 0px 0 0px;
+  font-size: 18px;
+}
+
 .adminBody{
   margin-top: 65px;
 }
@@ -480,10 +485,12 @@ div.pizza {
   box-shadow: 0 4px 10px 0px #555;
 }
 .orderButton{
-  font-size: 25px;
   background-color: rgb(220, 20, 27);
   border-radius: 4px;
   color: white;
+}
+.orderBtnFont{
+  font-size: 25px;
 }
 .corouselBlock {
   height: 250px;
@@ -555,7 +562,7 @@ div.pizza {
 /* styles for check out page starts*/
 
 .reviewBlock{
-  border: solid 1px gray;
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
   border-radius: 5px;
   background-color: gainsboro;
   padding-bottom: 5px;
@@ -630,6 +637,9 @@ div.pizza {
     padding-top: 5px;
   }
   .orderButton {
+    font-size: 21px;
+  }
+  .orderBtnFont{
     font-size: 21px;
   }
   .ordrBtnFLtRight{
