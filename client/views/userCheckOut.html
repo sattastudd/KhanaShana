@@ -1,0 +1,153 @@
+<div ng-controller="checkOutContoller">
+    <div class="container containerBlock">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1>
+                    Review your order and Check Out
+                    <i class="glyphicon glyphicon-paste"></i>
+                </h1>
+                <hr />
+            </div>
+        </div>
+        <div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 split">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h3>Your Order</h3>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 orderBlock">
+                            <table class="table tableFont">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Dish</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Paneer Butter Masala</td>
+                                            <td>2</td>
+                                            <td>200</td>
+                                            <td>del</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Paneer Butter Masala</td>
+                                            <td>2</td>
+                                            <td>200</td>
+                                            <td>del</td>
+                                        </tr>
+                                    </tbody>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h3>Any Requests</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <textarea ng-model="checkOut.requests" style="width:100%" rows="4" placeholder="Type your requests">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h3>Enter Address</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 addressBlock">
+                                <div class="row">
+                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label>House No. / Flat No.</label>
+                                    </div> -->
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">H no.</div>
+                                            <input type="text" ng-model="checkOut.houseNo" class="form-control" placeholder="Enter your House No. /  Flat No.">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label>Locality</label>
+                                    </div> -->
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Area.</div>
+                                            <input type="text" ng-model="checkOut.area" class="form-control" placeholder="Enter your Area / Society Name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label>Nearest LandMark</label>
+                                    </div> -->
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Land.</div>
+                                            <input type="text" ng-model="checkOut.landmark" class="form-control" placeholder="Enter your LandMark">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label>Contact No.</label>
+                                    </div> -->
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">+91-</div>
+                                            <input type="text" ng-model="checkOut.contact" class="form-control" placeholder="Enter your Contact No.">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label>Email ID.</label>
+                                    </div> -->
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">ID@</div>
+                                            <input type="text" ng-model="checkOut.street" class="form-control" placeholder="Enter your Email ID">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="checkbox">
+                                            <label>
+                                              <input type="checkbox"> Save This Address
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <button class="btn addressButton">Cancel Address</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+    </div>
+</div>

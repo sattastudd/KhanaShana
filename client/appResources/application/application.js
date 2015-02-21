@@ -33,6 +33,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/userSearchResult.html',
                 '../../appResources/controller/userSearchResultController'
         ))
+        .when('/userCheckOut',
+            routeConfig.config(
+                'views/UserCheckOut.html',
+                '../../appResources/controller/userCheckOutController'
+        ))
         //Will use it later.
         //Will know how. 
         //$httpProvider.interceptors.push("customHttpInterceptor");

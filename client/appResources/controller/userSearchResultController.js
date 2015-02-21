@@ -63,16 +63,7 @@ function searchResultController ($scope){
                      {name: 'Top 10', list:['aloo', 'bhaloo', 'chaloo']}];
 
     $scope.filterCollapse = true;
-    /*$scope.localityCollapse = true;
-    $scope.cuisineCollapse = true;
 
-    $scope.localityClicked = function(){
-        $scope.localityCollapse = !$scope.localityCollapse;
-    }
-    $scope.cuisineClicked = function(){
-        $scope.cuisineCollapse = !$scope.cuisineCollapse;
-    }
-*/
     $scope.filterClicked = function(index){
         console.log("inside filter clicked");
 

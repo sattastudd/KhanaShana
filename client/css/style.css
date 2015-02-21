@@ -360,6 +360,9 @@ div.pizza {
 .filterContent{
   cursor: pointer;
 }
+.filterButton{
+  border: solid 1px gray;
+}
 .contentClass{
   padding-left: 15px;
   cursor: pointer;
@@ -484,6 +487,41 @@ div.pizza {
 }
 
 /* styles for search result page ends */
+
+/* styles for check out page starts*/
+
+.reviewBlock{
+  border: solid 1px gray;
+  border-radius: 5px;
+  background-color: gainsboro;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+.split{
+  border-right: solid 1px white;
+}
+.addressBlock{
+  padding-top: 13px;
+  background-color: white;
+  border-radius: 5px;
+  padding-bottom: 9px;
+}
+.orderBlock{
+  background-color: white;
+  border-radius: 5px;
+  padding-top: 5px;
+}
+.addressButton{
+  background-color: #DC141B;
+  color: white;
+}
+.tableFont{
+  font-size: 15px;
+}
+.input-group-addon{
+  font-size: 18px;
+}
+/* styles for check out page ends */
 
 @media (max-width: 768px) {
   .buttonCity{
