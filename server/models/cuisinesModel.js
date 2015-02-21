@@ -3,28 +3,29 @@
 //In other words, DAOImpl.
 var mongoose = require( 'mongoose' );
 
-var locationsSchema = new mongoose.Schema( {
-	name : String
+var cuisinesSchema = new mongoose.Schema( {
+	name : String,
+	img : String
 } );
 
 var connection = null;
-var LocationModel = null;
+var model = null;
 
 var setUpConnection = function(connectionToBeUsed) {
 
 	connection = connectionToBeUsed;
 
-	LocationModel = connectionToBeUsed.model( 'locations', locationsSchema );
+	model = connectionToBeUsed.model( 'Cuisines', cuisinesSchema, 'Cuisines' );
 };
 
-var getLocationModel = function() {
+var getCuisinesModel = function() {
 
-	if ( connection !== null && LocationModel !== null ) {
-		return LocationModel;
+	if ( connection !== null && model !== null ) {
+		return model;
 	} else {
 		throw new Error( 'Connection has not been set up yet.' );
 	}
 };
 
 exports.setUpConnection = setUpConnection;
-exports.getLocationModel = getLocationModel;
+exports.getCuisinesModel = getCuisinesModel;

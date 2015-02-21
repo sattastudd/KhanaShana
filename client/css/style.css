@@ -1,17 +1,18 @@
-﻿/*Min-ins*/
+/*Cuisine Image*/
+/*Min-ins*/
 @font-face {
   font-family: Avdira;
-  src: url('fonts/Riven.woff');
- }
+  src: url('fonts/Riven.woff'); }
+
+input {
+  font-family: 'Segoe UI'; }
 
 body {
   background-color: #FAF8FD;
-  font-family: Avdira;
-  font-size: 18px; }
+  font-family: Avdira; }
 
 .fullScreenWidth {
   width: 100%; }
-
 
 .customNavBar {
   background-color: #DC141B;
@@ -19,7 +20,7 @@ body {
   box-shadow: #444 0 0 5px;
   height: 50px;
   position: fixed;
-  z-index: 2; }
+  z-index: 10; }
   .customNavBar a.navbar-brand {
     color: #fff;
     text-decoration: none;
@@ -40,19 +41,21 @@ body {
       text-decoration: underline; }
   .customNavBar .overLappedRow {
     position: relative;
-    top: -100px;
+    top: -200px;
     background-color: #DC141B;
     padding: 8px;
-    -moz-transition: all 1s;
-    -o-transition: all 1s;
-    -webkit-transition: all 1s;
-    transition: all 1s; }
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s; }
     .customNavBar .overLappedRow .remove {
       color: #fff;
       font-size: 22px; }
     .customNavBar .overLappedRow .centerGlyph {
       padding-top: 5px;
       text-align: center; }
+    .customNavBar .overLappedRow.moveToNormalPosition {
+      top: -50px; }
 
 /*Utility Classes*/
 .marRight5 {
@@ -62,560 +65,168 @@ body {
   padding-left: 0;
   padding-right: 0; }
 
-/*# sourceMappingURL=style.css.map */
+.noLPad {
+  padding-left: 0; }
 
-.lpad0{
-  padding-left: 0px;
-}
-.rpad0{
-  padding-right: 0px;
-}
+.noRPad {
+  padding-right: 0; }
 
-/* styles for header starts */
-.backColor {
-    position: fixed;
-    background-color: #DC141B;
-    color:white;
-    height: 50px;
-    padding-top: 8px;
-    z-index: 2;
-    box-shadow: #444 0 0 5px;
-}
-.login{
-    float: right;
-    padding-right: 20px;
-}
-.locationButton{
-  background-color: red;
-}
-/* styles for header ends */
-
-/* styles for footer starts */
-/* styles for footer ends */
-
-/*.fontSize35 {
-  font-size: 35px; }
-
-.marginTop5 {
-  margin-top: 5px; }
-
-.lpad15 {
-  padding-left: 15px; }
-
-.bpad5 {
-  padding-bottom: 5px; }
-
-.logo {
-  padding-top: 5px;
-  width: 180px; }
-
-.btnColor {
-  background-color: #DC141B; }
-
-.userLogo {
-  width: 35px;
-  border-radius: 25px; }
+/*Home Page Styles*/
+.pizzaBack {
+  background: url("../images/pizza.jpg") no-repeat top center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 500px; }
 
 .welcomeText {
-  margin-top: 120px; }
-
-.searchFood {
-  position: relative;
-  margin-left: 33%; }*/
-
-.footerColor {
-  background-color: grey; }
-
-.button{
-  background-color: #DC141B
-}
-
-p {
-  margin: 0 0 0px;
-}
-
-.cityName {
-  color: white;
-  float: left; }
-
-.divInlineBlock {
-  display: inline-block; }
-
-@media (min-width: 1200px) {
-  .adminBlock{
-  height: 250px;
-  padding-top: 50px;
-}
-  .cityButton {
-    width: 95px;
-    background-color: #DC141B; } }
-@media (min-width: 768px) {
-  .cityButton {
-    width: 110px;
-    background-color: #DC141B; } }
-@media (max-width: 768px) {
-  .adminBlock{
-  height: 130px;
-  padding-top: 5px;
-}
-  .cityButton {
-    width: 85px;
-    background-color: #DC141B; } }
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-  color: #fff;
-  text-decoration: none;
-  background-color: #DC141B;
-  outline: 0; }
-
-
-/*styles for restaurant details page*/
-
-.adminBody{
-  margin-top: 65px;
-}
-.bpad5{
-  padding-bottom: 5px;
-}
-.bpad30{
-  padding-bottom: 30px;
-}
-.rpad0{
-  padding-right: 0px;
-}
-.rpad3{
-  padding-right: 3px;
-}
-.borderMenu{
-  border-bottom: solid 1px grey;
-}
-.categoryLabel{
-  float: left;
-  font-size: 18px;
-}
-.restaurantNameBlock{
-  background-color: gainsboro;
-  border-radius: 5px;
-  height: 85px;
-}
-.cuisineBlock{
-  padding-top: 10px;
-  padding-bottom: :5px;
-}
-.lpad0{
-  padding-left: 0px;
-}
-.lpad30{
-  padding-left: 30px;
-}
-.tpad5{
-  padding-top: 5px;
-}
-.tpad15{
-  padding-top: 15px;
-}
-.tpad30{
-  padding-top: 30px;
-}
-
-/* admin home page styles */
-
-.adminBlock{
-  background-color: #DC141B;
-  border-radius: 155px;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
-    top: 0px;
-    -webkit-transition: all .5s;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
-    top: 0px;
-    -webkit-transition: all .5s;
-}
-.adminBlock:hover{
-    box-shadow: 0 9px 10px 0px #555;
-    top: -1px;
-}
-.tpad50{
-  padding-top: 50px;
-}
-.bpad13{
-  padding-bottom: 13px;
-}
-.newsFeedBlock{
-  height: 90px;
-  background-color: gainsboro;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
-    top: 0px;
-    -webkit-transition: all .5s;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
-    top: 0px;
-    -webkit-transition: all .5s;
-}
-.newsFeedBlock:hover{
-    box-shadow: 0 9px 10px 0px #555;
-    top: -1px;
-}
-
-
-
-
-/* styles for user home page */
-
-div.pizza {
-  width: 100%;
-  min-height: 550px;
-  background: url("../images/pizza.jpg");
-  background-position: top;
-  background-repeat: no-repeat;
-  box-shadow: 0px 2px 5px #888888;
- }
-
- .searchBox{
-  border: solid 1px white;
-  height: 52px;
-  background-color: white;
-  padding-left: 0px;
-  border-radius: 25px;
-  border: solid 2px;
- }
-
- .buttonCity{
-  background-color: #DC141B;
-  padding: 13px;
-  width: 150px;
-  border-radius: 23px 0px 0px 23px;
-   position: absolute; 
-   z-index: 1;
-   box-shadow: 1px 0px 13px 0px;
-}
-
-.hiddenInput{
-  border: solid 0px;
-  height: 47px;
-  width: 415px;
-  padding-left: 22px;
-}
-
-.lpad5{
-  padding-left: 5px;
-}
-
-/*.inputText{
-   position: absolute;
-    left: 153px;
-    top: 10px;
-    z-index: 0;
-    font-size: 18px;
-}*/
-
-.selectDiv{
-  background-color: #61463B;
-  color: white;
-  padding-left: 10px;
-  height: 55px;
-  padding-bottom: 2px;
-  border-bottom: solid 1px rgb(146, 109, 100);
-  padding-top: 16px;
-  cursor: pointer;
-}
-
-.welcomeText{
   color: white;
   margin-top: 80px;
   padding-bottom: 25px;
-}
+  text-align: center; }
 
-.form-control:focus{
-  border-color: white;
-  box-shadow: inset 0px 0px 0px white, 0px 0px 0px white;
-  border-radius: 25px;
-}
+.bannerSearch {
+  font-family: 'Segoe UI', sans-serif; }
+  .bannerSearch input {
+    height: 50px;
+    font-size: 19px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding-left: 20px;
+    box-shadow: 0 0 15px #000; }
+  .bannerSearch .input-group-btn button {
+    height: 50px;
+    font-size: 19px;
+    box-shadow: 0 0 15px #000;
+    width: 90px; }
+  .bannerSearch .dropdown {
+    list-style: none;
+    background-color: #FAF8FD;
+    padding-left: 0;
+    margin-left: 21px;
+    margin-right: 90px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; }
+    .bannerSearch .dropdown li {
+      font-size: 16px;
+      padding: 5px 0 5px 5px;
+      margin-bottom: 2px; }
+      .bannerSearch .dropdown li:hover {
+        background-color: #DC141B;
+        color: #fff; }
+      .bannerSearch .dropdown li:last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px; }
 
-.homePageBlocks{
-  background-color: rgb(228, 211, 204);
-  color: rgb(6, 6, 6);
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px #888888;
-}
-
-.blockRows{
-  padding-top: 30px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-/* styles for search result page starts */
-
-.containerBlock{
-  margin-top: 50px;
-}
-
-.filterBlock{
-  height: auto;
-  padding-top: 12px;
-  padding-bottom: 13px;
-  border-bottom: solid 1px gray;
-  font-size: 20px;
-}
-.filterContent{
-  cursor: pointer;
-}
-.filterButton{
-  border: solid 1px gray;
-}
-.contentClass{
-  padding-left: 15px;
-  cursor: pointer;
-}
-.resultBlock{
-    border: solid 1px rgb(236, 225, 225);
-    border-radius: 5px 5px 0 0;
-    height: auto;
-    background-color: white;
-}
-.repeatBlock{
-    padding-bottom:5px;
-}
-.resultRepeatBlock{
-    padding-bottom: 40px;
-}
-.fixedBlock{
-    padding-left: 0px;
-    padding-right: 10px;
-}
-.filterGlyph{
-  font-size: 15px;
-  padding-right: 8px;
-  padding-top: 3px;
-}
-.quickView{
-  background-color: gainsboro;
-  color: black;
-  border-radius: 0 0 5px 5px;
-  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
-  cursor: pointer;
-}
-.resultBlockRow{
-  margin-right: -18px;
-  margin-left: -15px;
-}
-.glyphDown{
-  padding-left: 1px;
-  padding-right: 1px;
-  background-color: ghostwhite;
-  border-radius: 15px;
-  height: 27px;
-  width: 27px;
-  padding-top: 5px;
-  color: gray;
-}
-.restaurantIcon{
-  height: 140px;
-  width: 140px;
-  border-radius: 80px;
-  box-shadow: 0 4px 10px 0px #555;
-}
-.orderButton{
-  font-size: 25px;
-  background-color: rgb(220, 20, 27);
-  border-radius: 4px;
-  color: white;
-}
-.corouselBlock {
-  height: 250px;
-}
-.restTitle{
-  padding-top: 15px;
-  font-size: 30px;
-}
-.rating{
-  padding-top: 14px;
-  padding-right: 50px;
-}
-.glyphicon-heart{
-    font-size: 34px;
-    color: red;
-    padding-left: 15px;
-    -webkit-animation-name : beat;
-    -webkit-animation-duration : 2.4s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-play-state : running
-}
-@-webkit-keyframes beat{
-    0%{
-        -webkit-transform: scale(1);
-    }  
-    10%{
-        -webkit-transform: scale(1.1);
-    }
-    16%{
-        -webkit-transform: scale(.95);
-    }
-    
-    25%{
-        -webkit-transform: scale(1.2);
-    }
-    32%{
-        -webkit-transform: scale(1);
-    }
-    40%{
-        -webkit-transform: scale(.95);
-    }
-    50%{
-        -webkit-transform: scale(1);
-    }
-    100%{
-        -webkit-transform: scale(1);
-    }
-}
-.ratingNumber{
-  font-size: 26px;
-  color: #333;
-  padding-left: 30px;
-}
-.lpad8{
-  padding-left: 8px;
-}
-.lpad15{
-  padding-left: 15px;
-}
-.tpad10{
-    padding-top: 10px;
-}
-.bpad8{
-  padding-bottom: 8px;
-}
-
-/* styles for search result page ends */
-
-/* styles for check out page starts*/
-
-.reviewBlock{
-  border: solid 1px gray;
-  border-radius: 5px;
-  background-color: gainsboro;
-  padding-bottom: 5px;
-  padding-top: 5px;
-}
-.split{
-  border-right: solid 1px white;
-}
-.addressBlock{
-  padding-top: 13px;
-  background-color: white;
-  border-radius: 5px;
-  padding-bottom: 9px;
-}
-.orderBlock{
-  background-color: white;
-  border-radius: 5px;
-  padding-top: 5px;
-}
-.addressButton{
+button.kh-primary {
   background-color: #DC141B;
-  color: white;
-}
-.tableFont{
-  font-size: 15px;
-}
-.input-group-addon{
-  font-size: 18px;
-}
-/* styles for check out page ends */
+  border: 1px solid #DC141B;
+  color: #fff;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding-right: 20px;
+  outline: 0; }
+  button.kh-primary:hover, button.kh-primary:focus {
+    background-color: #C61218;
+    border: 1px solid #DC141B;
+    color: #fff;
+    outline: 0; }
+  button.kh-primary:active, button.kh-primary:focus {
+    outline: 0; }
 
-@media (max-width: 768px) {
-  .buttonCity{
-    width: 125px;
-  }
-  .hiddenInput{
-    width: 200px;
-    font-size: 12px;
-    padding-left: 40px;
-  }
-  .extendedInput{
-    width: 285px;
-    font-size: 14px;
-    padding-left: 28px;
-  }
-  .welcomeText{
-    color: white;
-    margin-top: 40px;
-    padding-bottom: 23px;
-  }
-  h3{
-    font-size: 18px;
-  }
-  .headerLocationInput{
-    padding-left: 30px;
-    padding-right: 0px;
-  }
-  .restaurantIcon{
-    height: 90px;
-    padding-top: 0px;
-    width: 90px;
-  }
-  .restTitle{
-    padding-top: 05px;
-    font-size: 18px;
-  }
-  .paraNoMargin{
-    margin: 0px 0px 0px;
-    font-size: 14px;
-  }
-  .tpad5{
-    padding-top: 5px;
-  }
-  .orderButton {
-    font-size: 21px;
-  }
-  .ordrBtnFLtRight{
-    float: right;
-  }
-  .quickViewRow{
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-  .rating{
-    padding-top: 5px;
-    padding-right: 10px;
-  }
-  .glyphicon-heart{
+.cuisinesContainer {
+  padding-top: 30px;
+  padding-bottom: 30px; }
+
+.cuisine {
+  position: relative;
+  height: 200px;
+  margin-bottom: 30px;
+  overflow: hidden; }
+  .cuisine img {
+    margin-bottom: 30px;
+    top: 0;
+    position: absolute;
+    -moz-transition: all 10s;
+    -o-transition: all 10s;
+    -webkit-transition: all 10s;
+    transition: all 10s; }
+  .cuisine .image-container {
+    overflow: hidden;
+    height: 210px;
+    position: relative;
+    cursor: pointer; }
+  .cuisine .cuisine-image {
+    height: 210px;
+    -moz-transition: all 10s;
+    -o-transition: all 10s;
+    -webkit-transition: all 10s;
+    transition: all 10s; }
+  .cuisine .cuisine-description {
+    position: relative;
+    cursor: pointer;
+    height: 60px;
+    top: -70px;
+    color: #fff;
     font-size: 20px;
-    padding-left: 4px;
-  }
-  .ratingNumber{
-    font-size: 15px;
-    padding-left: 8px;
-  }
-  .filterBlock {
-    height: auto;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    font-size: 15px;
-  }
-  .filterGlyph {
-    font-size: 9px;
-    padding-right: 15px;
-  }
-}
-@media (max-width: 360px) {
+    line-height: 60px;
+    background-color: rgba(220, 20, 27, 0.3);
+    padding-left: 15px;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s; }
+  .cuisine:hover .cuisine-image {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5); }
+  .cuisine:hover .cuisine-description {
+    height: 100px;
+    line-height: 100px;
+    top: -110px;
+    font-size: 25px; }
 
-  .glyphicon-heart{
-    font-size: 15px;
-    padding-top: 4px;
-  }
-}
+.localitiesContainer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #e7e7e7; }
+  .localitiesContainer .locationHeading {
+    padding-bottom: 20px; }
+  .localitiesContainer .location {
+    padding-bottom: 10px; }
+    .localitiesContainer .location a {
+      font-size: 18px;
+      color: #333;
+      text-decoration: none; }
+      .localitiesContainer .location a:hover {
+        color: #333;
+        text-decoration: underline; }
 
-@media (min-width: 992px) {
+.footer {
+  background-color: #333;
+  padding: 20px 0; }
+  .footer .mainBar {
+    border-bottom: 1px solid #707070;
+    margin-bottom: 10px; }
+  .footer .footerCompany {
+    color: #707070;
+    font-size: 24px; }
+  .footer .copyRight {
+    color: #5d5d5d; }
+  .footer ul.footerLinks {
+    padding-left: 0;
+    list-style: none;
+    line-height: 34px; }
+    .footer ul.footerLinks li {
+      float: right; }
+      .footer ul.footerLinks li a {
+        padding: 0 10px;
+        color: #707070;
+        text-decoration: none; }
+        .footer ul.footerLinks li a:hover {
+          text-decoration: underline; }
 
- .restTitleContent{
-    padding-left: 26px;
-  } 
-}
-
-@media (min-width: 1200px) {
-
- .restTitleContent{
-    padding-left: 7px;
-  } 
-}
+/*# sourceMappingURL=style.css.map */

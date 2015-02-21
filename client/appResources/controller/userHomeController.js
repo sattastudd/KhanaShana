@@ -1,123 +1,71 @@
-define([], function() {
-    function userHomeController($scope) {
-    }
-    return userHomeController;
-});
+define( [], function() {
 
-function homeController($scope, $log, $location, $http, $filter, $timeout){
-	/*$scope.welcomeText = "Welcome to KhanaShana. All in one destination for Foodies...";
-	console.log("inside user landing pge controller");
+	function userHomeController($scope) {
 
-	//$scope.items = ['Bhilai','Delhi', 'Mumbai', 'Lucknow'];
-	
-	$scope.status = {
-    	isopen: false
-  	};
+	}
+	return userHomeController;
+} );
 
-  	$scope.user = {};
+function homeController($scope, $http, DataStore, AppConstants, RestRequests) {
 
-  	 $scope.onSelect = function ($item, $model, $label) {
-    $scope.$item = $item;
-    $scope.$model = $model;
-    $scope.$label = $label;
-    $scope.localitySelected = true;
-    $scope.user.location = $scope.$item.name;
-    console.log($scope.$item.name);
+	$scope.search = {
+		searchText : ''
 	};
 
-	  $scope.toggled = function(open) {
-	    $log.log('Dropdown is now: ', open);
-	  };
+	$scope.canSelectionDropDownBeOpened = true;
 
-	 $scope.city = "Lucknow";
+	/* Retriving dropdown options from DataStore */
+	$scope.bannerDropDownOptions = DataStore.getData( 'bannerDropDowns' );
 
-	 $http({ method: 'GET', url: '/node/locations/lucknow'}).
-  		success(function (data) {
-  			console.log(data);
-  			$scope.locations = data;
-		  }).
-		  error(function (data) {
-		    // ...
-		  });	
+	console.log( $scope.bannerDropDownOptions );
 
-	$scope.selectCity = function(name){
-		$scope.city = name;
+	$scope.handleClickOnSearch = function($event) {
 
-		$http({ method: 'GET', url: '/node/locations/'+$scope.city}).
-  		success(function (data) {
-  			console.log(data);
-  			$scope.locations = data;
-		  }).
-		  error(function (data) {
-		    // ...
-		  });	
-	}
+		if ( $scope.search.searchText.length == 0
+				&& $scope.canSelectionDropDownBeOpened ) {
+			$scope.firstClickHandled = true;
+			$scope.canSelectionDropDownBeOpened = false;
 
-	$scope.goButton = function(){
-		$location.path('/restaurantDetails');
-		console.log("the go button");
-	}
+			$event.stopPropagation();
+		}
+	};
 
-	$scope.goSearch = function(){
-		$location.path('/adminHome');
-	}
+	$scope.closeOptionsDropDown = function($event) {
 
-	$http({ method: 'GET', url: '/node/cities' }).
-  		success(function (data) {
-  			console.log(data);
-  			$scope.cities = data;
-  }).
-  error(function (data) {
-    // ...
-  });*/
+		if ( $scope.firstClickHandled == true ) {
+			$scope.firstClickHandled = false;
 
-	//for city button
-	$scope.cities = ['Bhilai','Delhi', 'Mumbai', 'Lucknow'];
-	$scope.status = {
-    	isopen: false
-  	};
-	$scope.city = "Lucknow";
-	$scope.toggled = function(open) {
-	    $log.log('Dropdown is now: ', open);
-	  };
+			$event.stopPropagation();
+		}
+	};
 
-	 $scope.selectCity = function(item){
-		$scope.city = item;
-	}
+	$scope.pickedCategory = function(menu) {
 
-	$scope.hideButton = function(){
-		$scope.buttonHidden = true;
-		$scope.extendInput = true;
-		window.scrollTo(0, 400);
-		$scope.showOptions = true;
-		//console.log("the value for show options is>>>>"+$scope.showOptions);
-	}
+		console.log( menu );
+		var bannerSearch = document.getElementById( 'bannerSearch' );
 
-	$scope.showButton = function(){
-		$scope.buttonHidden = false;	
-		$scope.extendInput = false;
-		$scope.showLocality = false;
-		$scope.location = null;
-		console.log("timeout working properly");
-		//window.scrollTo(0, 0);
-	}
+		$scope.firstClickHandled = false;
 
-	//for search options
-	$scope.searchOption = ['Search By Locality', 'Search all the Restaurants in the City',
-						 'Search all the Food Delivering in the City', 'Search all the Street Food joints in the City'];
+		bannerSearch.focus();
+	};
 
-	$scope.localities = ['Hazratganj', 'Gomtinagar', 'PatrakarPuram', 'Alambagh', 'Charbagh', 'Aliganj', 'Aminabad'];
-	$scope.location = undefined;
-	$scope.selectedOption = function(index){
-		$scope.showOptions = false;
-		$scope.buttonHidden = true;
-		$scope.extendInput = true;
-		//window.scrollTo(0, 400);
-		document.getElementById("localityId").focus();
-		console.log(index);
-		if (index === 0) {
-			$scope.showLocality = true;
-		};
-	}						 
+	/*
+	 * We need a watch over the content of Banner Search as we need to determine
+	 * if the length has shortened.
+	 */
+	$scope.$watch( function() {
 
+		return $scope.search.searchText;
+	}, function(currentValue, prevValue) {
+
+		if ( currentValue.length === 0
+				&& ( prevValue.length > currentValue.length ) ) {
+			$scope.canSelectionDropDownBeOpened = true;
+		} else if ( currentValue.length > 0 ) {
+			$scope.firstClickHandled = false;
+		}
+	} );
+
+	var request = AppConstants.httpServicePrefix + '/'
+			+ RestRequests.getDropDowns;
 }
