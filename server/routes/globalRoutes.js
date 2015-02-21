@@ -1,12 +1,12 @@
-var citiesController = require( '../controllers/citiesController' );
+var globalDataController = require( '../controllers/globalDataController' );
 
 /* GET /cities listing. */
-router.get( '/cities',
+router.post( '/getGlobalData',
 		function(req, res, next) {
 
 			console.log( 'In citiesRoutes | Handling ' + req.route.path );
 
-			citiesController.getCityList( req, res, next );
+			globalDataController.getGlobalData( req, res, next );
 
 			console.log( 'In citiesRoutes | Complted Processing for '
 					+ req.route.path );

@@ -1,13 +1,21 @@
-$theme-background-color		:		#FAF8FD;
-$theme-primary-color 		:		#DC141B;
+$theme-background-color: #FAF8FD;
+$theme-primary-color: #DC141B;
 
-$theme-primary-font			: 		'Segoe UI', sans-serif;
+$theme-secondary-font: 'Segoe UI', sans-serif;
 
-$theme-primary-font-color 	:		#fff;
+$theme-primary-font-color: #fff;
 
-$theme-shadow-color 			:		#444;
+$theme-shadow-color: #444;
 
-$theme-glyphicon-size           :       22px;
+$theme-glyphicon-size: 22px;
+
+$theme-footer-color : #333;
+
+/*Cuisine Image*/
+$theme-cuisine-lg-width : 703px;
+$theme-cuisine-lg-height : 210px;
+
+$theme-cuisine-lgs-width : 337px;
 
 /*Min-ins*/
 @mixin transition-mix($property, $duration) {
@@ -17,87 +25,363 @@ $theme-glyphicon-size           :       22px;
     transition: $property $duration;
 }
 
-@font-face{
-    font-family : Avdira;
-    src : url('fonts/Avdira_R.woff');
+@mixin background-size-mix($property) {
+    -webkit-background-size: $property;
+    -moz-background-size: $property;
+    -o-background-size: $property;
+    background-size: $property;
+}
+
+@mixin rotate-transform($degree){
+    -webkit-transform : rotate($degree);
+    -moz-transform : rotate($degree);
+    -o-transform : rotate($degree);
+    -ms-transform: rotate($degree);
+    transform : rotate($degree);
+}
+
+@mixin transform-property($property){
+    -webkit-transform : $property;
+    -moz-transform : $property;
+    -o-transform : $property;
+    -ms-transform : $property;
+    transform : $property;
+}
+
+@font-face {
+    font-family: Avdira;
+    src: url('fonts/Avdira_R.woff');
+}
+
+input {
+    font-family: 'Segoe UI';
 }
 
 body {
-	background-color 		: 		$theme-background-color;
-	font-family 			: 		Avdira;
+    background-color: $theme-background-color;
+    font-family: Avdira;
 }
 
-.fullScreenWidth{
-    width                   : 100%;
+.fullScreenWidth {
+    width: 100%;
 }
 
-.customNavBar{
-	background-color 		:		$theme-primary-color;
-	border-bottom 			:		0;
-	box-shadow 				:		$theme-shadow-color 0 0 5px;
+.customNavBar {
+    background-color: $theme-primary-color;
+    border-bottom: 0;
+    box-shadow: $theme-shadow-color 0 0 5px;
+    height: 50px;
+    position: fixed;
+    z-index: 10;
 
-    height                  :       50px;
-
-    position                :       fixed;
-
-	a.navbar-brand{
-		color 				:		$theme-primary-font-color;
-		text-decoration		:		none;
-        cursor              :       pointer;
-	}
-
-	a.navbar-brand:hover{
-		color 				:		$theme-primary-font-color;
-		text-decoration 		: 		underline;
-	}
-
-    .navSearch input{
-        margin-top          :       8px;
+    a.navbar-brand {
+        color: $theme-primary-font-color;
+        text-decoration: none;
+        cursor: pointer;
     }
 
-	.navLinks{
-        span{
-            color               :       $theme-primary-font-color;
-            font-size           :       $theme-glyphicon-size;
-            line-height         :       50px;
-            vertical-align      :       middle;
+    a.navbar-brand:hover {
+        color: $theme-primary-font-color;
+        text-decoration: underline;
+    }
+
+    .navSearch input {
+        margin-top: 8px;
+    }
+
+    .navLinks {
+        span {
+            color: $theme-primary-font-color;
+            font-size: $theme-glyphicon-size;
+            line-height: 50px;
+            vertical-align: middle;
         }
 
-        span.loginSpan{
-            font-size           :       18px;
+        span.loginSpan {
+            font-size: 18px;
 
-            &:hover{
-                text-decoration     :       underline;
+            &:hover {
+                text-decoration: underline;
             }
         }
-	}
+    }
 
-    .overLappedRow{
-        position:relative;
-        top : -100px;
+    .overLappedRow {
+        position: relative;
+        top: -200px;
+        background-color: $theme-primary-color;
+        padding: 8px;
 
-        background-color        :       $theme-primary-color;
-        padding                 :       8px;
-        @include transition-mix(all, 1s);
+        @include transition-mix(all, .5s);
 
-        .remove{
-            color           :       $theme-primary-font-color;
-            font-size       :       $theme-glyphicon-size;
+        .remove {
+            color: $theme-primary-font-color;
+            font-size: $theme-glyphicon-size;
         }
 
-        .centerGlyph{
-            padding-top     :       5px;
-            text-align      :       center;
+        .centerGlyph {
+            padding-top: 5px;
+            text-align: center;
+        }
+
+        &.moveToNormalPosition {
+            top: -50px;
         }
     }
 }
 
 /*Utility Classes*/
-.marRight5{
-    margin-right            :       5px;
+.marRight5 {
+    margin-right: 5px;
 }
 
-.noLeftRightPadding{
-    padding-left            :       0;
-    padding-right           :       0;
+.noLeftRightPadding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.noLPad{
+    padding-left:0;
+}
+
+.noRPad{
+    padding-right: 0;
+}
+
+/*Home Page Styles*/
+.pizzaBack {
+    background: url("../images/pizza.jpg") no-repeat top center fixed;
+
+    @include background-size-mix(cover);
+    height: 500px;
+}
+
+.welcomeText {
+    color: white;
+    margin-top: 80px;
+    padding-bottom: 25px;
+    text-align : center;
+}
+
+.bannerSearch{
+
+    font-family : $theme-secondary-font;
+
+    input{
+        height: 50px;
+        font-size:19px;
+
+        border-top-left-radius : 25px;
+        border-bottom-left-radius: 25px;
+
+        padding-left : 20px;
+
+        box-shadow: 0 0 15px #000;
+    }
+
+    .input-group-btn{
+        button{
+            height: 50px;
+            font-size: 19px;
+
+            box-shadow: 0 0 15px #000;
+
+            width: 90px;
+        }
+    }
+
+    .dropdown{
+        list-style: none;
+        background-color: $theme-background-color;
+
+        padding-left: 0;
+
+        margin-left: 21px;
+        margin-right: 90px;
+
+        border-bottom-left-radius : 5px;
+        border-bottom-right-radius : 5px;
+
+        li{
+            font-size : 16px;
+            padding : 5px 0 5px 5px;
+
+            margin-bottom : 2px;
+
+            &:hover{
+                background-color: $theme-primary-color;
+                color: $theme-primary-font-color;
+            }
+
+            &:last-child{
+                border-bottom-left-radius : 5px;
+                border-bottom-right-radius : 5px;
+            }
+        }
+    }
+}
+
+button.kh-primary{
+    background-color: $theme-primary-color;
+    border : 1px solid $theme-primary-color;
+    color : $theme-primary-font-color;
+
+    border-top-right-radius: 25px;
+    border-bottom-right-radius : 25px;
+
+    padding-right: 20px;
+
+    outline: 0;
+
+    &:hover, &:focus{
+        background-color : #C61218;
+        border: 1px solid $theme-primary-color;
+        color: $theme-primary-font-color;
+        outline:0;
+    }
+
+    &:active, &:focus{
+        outline: 0;
+    }
+}
+
+.cuisinesContainer{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.cuisine{
+    position: relative;
+    height: 200px;
+
+    margin-bottom : 30px;
+    overflow: hidden;
+
+    
+
+    img{
+        margin-bottom: 30px;
+        top: 0;
+        position: absolute;
+
+        @include transition-mix(all, 10s);
+    }
+
+    .image-container{
+        overflow : hidden;
+        height: $theme-cuisine-lg-height;
+
+        position : relative;
+
+        cursor : pointer;
+        
+    }
+
+    .cuisine-image{
+        height: $theme-cuisine-lg-height;
+        @include transition-mix(all, 10s);
+    }
+
+    .cuisine-description{
+
+        position: relative;
+        cursor : pointer;
+
+        height: 60px;
+        top: -70px;
+
+        color: $theme-primary-font-color;
+        font-size: 20px;
+
+        line-height: 60px;
+
+        background-color : rgba(220, 20, 27, 0.3);
+
+        padding-left : 15px;
+
+        @include transition-mix(all, .4s);
+    }
+
+    &:hover{
+        .cuisine-image{
+            @include transform-property(scale(1.5));
+        }
+
+        .cuisine-description{
+            height: 100px;
+            line-height: 100px;
+
+            top : -110px;
+
+            font-size: 25px;
+        }
+    }
+}
+
+.localitiesContainer{
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    background-color: #e7e7e7;
+
+    .locationHeading{
+        padding-bottom : 20px;
+    }
+
+    .location{
+        padding-bottom : 10px;
+
+        a{
+            font-size: 18px;
+
+            color: #333;
+            text-decoration : none;
+
+            &:hover{
+                color: #333;
+                text-decoration : underline;
+            }
+        }
+    }
+}
+
+.footer{
+    background-color : $theme-footer-color;
+
+    padding : 20px 0;
+
+    .mainBar{
+        border-bottom: 1px solid #707070;
+        margin-bottom : 10px;
+    }
+
+    .footerCompany{
+        color : #707070;
+        font-size : 24px;
+    }
+
+    .copyRight{
+        color : #5d5d5d;
+    }
+
+    ul.footerLinks{
+        padding-left: 0;
+        list-style: none;
+
+        line-height: 34px;
+
+        li{
+            float: right;
+
+            a{
+                padding : 0 10px;
+                color : #707070;
+                text-decoration : none;
+
+                &:hover{
+                    text-decoration : underline;
+                }
+            }
+        }
+    }
 }
