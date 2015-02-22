@@ -1,4 +1,5 @@
 ﻿/*Cuisine Image*/
+/*Transition Constants*/
 /*Min-ins*/
 @font-face {
   font-family: Avdira;
@@ -25,10 +26,15 @@ body {
     color: #fff;
     text-decoration: none;
     cursor: pointer;
-    font-size: 25px; }
+    font-size: 25px;
+    border-bottom: none;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s; }
   .customNavBar a.navbar-brand:hover {
     color: #fff;
-    text-decoration: underline; }
+    border-bottom: 2px solid #fff; }
   .customNavBar .navSearch input {
     margin-top: 8px; }
   .customNavBar .navLinks span {
@@ -37,11 +43,21 @@ body {
     line-height: 50px;
     vertical-align: middle; }
   .customNavBar .navLinks span.loginSpan {
-    font-size: 18px; }
+    line-height: 20px;
+    font-size: 20px;
+    display: inline-block;
+    padding: 14px 15px;
+    border-bottom: 2px solid #DC141B;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s; }
     .customNavBar .navLinks span.loginSpan:hover {
-      text-decoration: underline; }
+      border-bottom: 2px solid #fff; }
+  .customNavBar .row.visible-xs {
+    position: relative; }
   .customNavBar .overLappedRow {
-    position: relative;
+    position: absolute;
     top: -200px;
     background-color: #DC141B;
     padding: 8px;
@@ -56,7 +72,7 @@ body {
       padding-top: 5px;
       text-align: center; }
     .customNavBar .overLappedRow.moveToNormalPosition {
-      top: -50px; }
+      top: 0; }
 
 /*Utility Classes*/
 .marRight5 {
@@ -115,13 +131,15 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: 500px; }
+  height: 560px; }
 
 .welcomeText {
   color: white;
-  margin-top: 80px;
+  margin-top: 125px;
   padding-bottom: 25px;
   text-align: center; }
+  .welcomeText h1 {
+    font-size: 59px; }
 
 .bannerSearch {
   font-family: 'Segoe UI', sans-serif; }
@@ -132,6 +150,8 @@ body {
     border-bottom-left-radius: 25px;
     padding-left: 20px;
     box-shadow: 0 0 15px #000; }
+    .bannerSearch input:focus {
+      box-shadow: 0 0 15px #000; }
   .bannerSearch .input-group-btn button {
     height: 50px;
     font-size: 19px;
@@ -450,6 +470,11 @@ button.kh-primary {
   font-size: 18px; }
 
 /* styles for check out page ends */
+@media (max-width: 480px) {
+  .welcomeText {
+    margin-top: 68px; }
+ }
+
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px; }
@@ -463,11 +488,6 @@ button.kh-primary {
     width: 285px;
     font-size: 14px;
     padding-left: 28px; }
-
-  .welcomeText {
-    color: white;
-    margin-top: 40px;
-    padding-bottom: 23px; }
 
   h3 {
     font-size: 18px; }

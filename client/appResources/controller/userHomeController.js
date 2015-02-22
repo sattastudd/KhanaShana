@@ -17,7 +17,15 @@ function homeController($scope, $http, DataStore, AppConstants, RestRequests) {
 	/* Retriving dropdown options from DataStore */
 	$scope.bannerDropDownOptions = DataStore.getData( 'bannerDropDowns' );
 
-	console.log( $scope.bannerDropDownOptions );
+    console.log($scope.bannerDropDownOptions);
+    
+    if (typeof $scope.bannerDropDownOptions === 'undefined') {
+        console.log('Got Undefined from DataStore | Falling back to back up.')
+        $scope.bannerDropDownOptions = [
+            {menuTitle: "Search By Location", type: "loc"},
+            { menuTitle: "Search All Restaurants", type: "rest" }
+        ];
+    }
 
 	$scope.handleClickOnSearch = function($event) {
 
