@@ -2,3 +2,5 @@
 *.njsproj
 credentials.js
 CodeOrganizer*
+bin/
+obj/
