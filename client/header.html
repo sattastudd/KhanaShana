@@ -27,8 +27,8 @@
 
                     <div class="col-xs-7 col-xs-offset-2 navLinks">
                         <div class="pull-right">
-                            <span class="glyphicon glyphicon-search marRight5" title="Search" ng-click="showOverLappedMealSearch()"></span>
-                            <span class="glyphicon glyphicon-map-marker marRight5" title="Location Search" ng-click="showOverLappedLocationSearch()"></span>
+                            <span class="glyphicon glyphicon-search marRight5" title="Search" ng-if="isSearchForMealInactive()" ng-click="showOverLappedMealSearch()" ></span>
+                            <span class="glyphicon glyphicon-map-marker marRight5" title="Location Search" ng-if="isSearchForLocationInactive()" ng-click="showOverLappedLocationSearch()"></span>
                             <span class="loginSpan">Login</span>
                         </div>
                     </div>
