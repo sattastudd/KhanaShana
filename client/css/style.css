@@ -9,7 +9,8 @@ input {
 
 body {
   background-color: #FAF8FD;
-  font-family: Avdira; }
+  font-family: Avdira;
+  font-size: 18px; }
 
 .fullScreenWidth {
   width: 100%; }
@@ -236,6 +237,9 @@ button.kh-primary {
 
 p {
   margin: 0px 0 0px;
+  font-size: 18px;
+}
+.btn{
   font-size: 18px;
 }
 
@@ -571,11 +575,59 @@ div.pizza {
 .split{
   border-right: solid 1px white;
 }
+.paymentBlock{
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.paymentIcon{
+  height: 120px;
+  width: 120px;
+  cursor: pointer;
+    top: 0px;
+    -webkit-transition: all .5s;
+}
+.paymentIcon:hover{
+    box-shadow: 0 9px 10px 0px #555;
+    top: -1px;
+}
 .addressBlock{
   padding-top: 13px;
   background-color: white;
   border-radius: 5px;
   padding-bottom: 9px;
+}
+.addressLineTitle1{
+  background-color: #555;
+  color: white;
+  cursor: pointer;
+}
+.addressLineTitle2{
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+.makingCenter{
+  margin-left: 50px;
+  padding-right: 130px;
+  margin-top: 20px;
+}
+.addressLineContent:hover{
+  box-shadow: 0 9px 10px 0px #555;
+  top: -1px;
+}
+.addressOk{
+  padding-top: 5px;
+  font-size: 23px;
+}
+.addressLineContent{
+  background-color: white;
+  padding-top: 5px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
+    top: 0px;
+    -webkit-transition: all .5s;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
+    top: 0px;
+    -webkit-transition: all .5s;
 }
 .orderBlock{
   background-color: white;
@@ -583,6 +635,10 @@ div.pizza {
   padding-top: 5px;
 }
 .addressButton{
+  background-color: green;
+  color: white;
+}
+.addressCancelButton{
   background-color: #DC141B;
   color: white;
 }
@@ -632,6 +688,14 @@ div.pizza {
   .paraNoMargin{
     margin: 0px 0px 0px;
     font-size: 14px;
+  }
+  .paymentIcon{
+    height: 100px;
+    width: 100px;
+  }
+  .makingCenter{
+    margin-left: 0px;
+    padding-right: 16px;
   }
   .tpad5{
     padding-top: 5px;
