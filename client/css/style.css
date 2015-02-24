@@ -1,4 +1,4 @@
-﻿﻿/*Cuisine Image*/
+﻿/*Cuisine Image*/
 /*Transition Constants*/
 /*Min-ins*/
 @font-face {
@@ -10,7 +10,8 @@ input {
 
 body {
   background-color: #FAF8FD;
-  font-family: Avdira; }
+  font-family: Avdira;
+  font-size: 18px; }
 
 /*Global Classes Begin*/
 .fullScreenWidth {
