@@ -26,22 +26,19 @@
                                         <th>Dish</th>
                                         <th>Qty</th>
                                         <th>Price</th>
-                                        <th>Remove</th>
+                                        <th>Edit</th>
                                     </tr>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Paneer Butter Masala</td>
-                                            <td>2</td>
-                                            <td>200</td>
-                                            <td>del</td>
+                                        <tr ng-repeat="list in order">
+                                            <td>{{list.no}}</td>
+                                            <td>{{list.name}}</td>
+                                            <td>{{list.quantity}}</td>
+                                            <td>{{list.price}}</td>
+                                            <td><i class="glyphicon glyphicon-trash"></i></td>
                                         </tr>
                                         <tr>
-                                            <td>2</td>
-                                            <td>Paneer Butter Masala</td>
-                                            <td>2</td>
-                                            <td>200</td>
-                                            <td>del</td>
+                                            <td>Total</td>
+                                            <td>{{orderTotal}}</td>
                                         </tr>
                                     </tbody>
                                 </thead>
@@ -61,16 +58,33 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <h3>Enter Address</h3>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 makingCenter" ng-repeat="list in address">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" 
+                                ng-click="addressSelected($index)" ng-class="{addressLineTitle1: addressDeActive, addressLineTitle2:
+                                addressActive}">
+                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                        <h4>{{list.name}}</h4>
+                                    </div>
+                                    <div class="col-xs-2 col-md-2 col-md-2 col-lg-2 addressOk">
+                                        <i class="glyphicon glyphicon-ok-sign" ng-show="addressActive"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 addressLineContent" 
+                                ng-click="addressSelected()">
+                                    <p>{{list.destination}}</p>
+                                    <p>Contact No. : {{list.phone}}</p>
+                                    <p>E mail : {{list.mail}}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 makingCenter">
+                                <button type="button" class="btn btn-default" ng-hide="hideAddressBtn" ng-click="showAddress()">
+                                    Add an Address
+                                </button>
                             </div>
                         </div>
-                        <div>
+                        <div collapse="isCollapsed">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 addressBlock">
                                 <div class="row">
                                     <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -123,7 +137,7 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
                                         <div class="input-group">
                                             <div class="input-group-addon">ID@</div>
-                                            <input type="text" ng-model="checkOut.street" class="form-control" placeholder="Enter your Email ID">
+                                            <input type="text" ng-model="checkOut.mail" class="form-control" placeholder="Enter your Email ID">
                                         </div>
                                     </div>
                                 </div>
@@ -131,14 +145,15 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="checkbox">
                                             <label>
-                                              <input type="checkbox"> Save This Address
+                                              <input type="checkbox"> Dont save this address
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <button class="btn addressButton">Cancel Address</button>
+                                        <button class="btn addressButton" type="button" ng-click="saveAddress()">Save Address</button>
+                                         <button class="btn addressCancelButton" type="button" ng-click="cancelAddress()">Cancel Address</button>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +162,50 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 paymentBlock">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
+                        <h2>Payment Method</h2>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tpad10">
+                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                    <div>
+                                        <img class="paymentIcon" src="../images/cod.png"/>
+                                    </div>
+                                    <div>
+                                        <p class="tpad10">Cash On Delivery</p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                    <div>
+                                        <img class="paymentIcon" src="../images/netBanking.png"/>
+                                    </div>
+                                    <div>
+                                        <p class="lpad15 tpad10">Net Banking</p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                    <div>
+                                        <img class="paymentIcon" src="../images/creditCard.png"/>
+                                    </div>
+                                    <div>
+                                        <p class="lpad15 tpad10">Debit Card</p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                    <div>
+                                        <img class="paymentIcon" src="../images/paytm.png"/>
+                                    </div>
+                                    <div>
+                                        <p class="lpad30 tpad10">Paytm</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
