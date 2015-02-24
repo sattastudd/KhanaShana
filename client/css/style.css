@@ -12,9 +12,42 @@ body {
   background-color: #FAF8FD;
   font-family: Avdira; }
 
+/*Global Classes Begin*/
 .fullScreenWidth {
   width: 100%; }
 
+.contentContainer {
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s; }
+
+.blurredBack {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px); }
+
+.darkTransparentBack {
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.btn-pram-primary {
+  background-color: #DC141B;
+  color: #fff;
+  font-size: 18px; }
+  .btn-pram-primary:hover {
+    background-color: #c61218;
+    color: #fff; }
+  .btn-pram-primary:active {
+    background-color: #b01015;
+    color: #fff; }
+  .btn-pram-primary:focus {
+    background-color: #DC141B;
+    color: #fff;
+    outline: none; }
+
+/*Global Classes End*/
 .customNavBar {
   background-color: #DC141B;
   border-bottom: 0;
@@ -51,7 +84,8 @@ body {
     -moz-transition: all 0.2s;
     -o-transition: all 0.2s;
     -webkit-transition: all 0.2s;
-    transition: all 0.2s; }
+    transition: all 0.2s;
+    cursor: pointer; }
     .customNavBar .navLinks span.loginSpan:hover {
       border-bottom: 2px solid #fff; }
   .customNavBar .row.visible-xs {
@@ -74,6 +108,45 @@ body {
     .customNavBar .overLappedRow.moveToNormalPosition {
       top: 0; }
 
+/*Login Modal Start*/
+.loginModal .modal-header {
+  background-color: #DC141B;
+  padding: 5px 15px;
+  color: #fff;
+  text-align: center;
+  position: relative; }
+  .loginModal .modal-header:after {
+    content: " ";
+    top: 100%;
+    left: 48%;
+    border: 10px solid transparent;
+    height: 0;
+    width: 0;
+    position: absolute;
+    border-top-color: #DC141B; }
+.loginModal .form-group {
+  margin-top: 10px; }
+  .loginModal .form-group .glyphicon {
+    color: #ccc; }
+  .loginModal .form-group input {
+    height: 40px;
+    line-height: 40px; }
+  .loginModal .form-group .form-control-feedback {
+    top: 3px; }
+.loginModal .btn-pram-primary {
+  font-size: 19px;
+  padding: 6px 12px;
+  font-family: 'Segoe UI'; }
+.loginModal .forgotPassword {
+  line-height: 41px; }
+  .loginModal .forgotPassword a {
+    color: #ccc;
+    text-decoration: none; }
+    .loginModal .forgotPassword a:hover {
+      color: #ccc;
+      text-decoration: underline; }
+
+/*Login Modal End*/
 /*Utility Classes*/
 .marRight5 {
   margin-right: 5px; }
@@ -131,7 +204,8 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: 560px; }
+  height: 560px;
+  box-shadow: #333 0 0 15px; }
 
 .welcomeText {
   color: white;

@@ -51,6 +51,14 @@ $theme-fast-reaction : .2s;
     transform: $property;
 }
 
+@mixin filter-property($property){
+    -webkit-filter : $property;
+    -moz-filter : $property;
+    -o-filter : $property;
+    -ms-filter : $property;
+    filter : $property;
+}
+
 @font-face {
     font-family: Avdira;
     src: url('fonts/Riven.woff');
@@ -65,9 +73,47 @@ body {
     font-family: Avdira;
 }
 
+/*Global Classes Begin*/
 .fullScreenWidth {
     width: 100%;
 }
+
+.contentContainer{
+    @include transition-mix(all, .2s);
+}
+
+.blurredBack{
+    @include filter-property(blur(5px));
+}
+
+.darkTransparentBack{
+    background-color : rgba(0,0,0, .4);
+}
+
+.btn-pram-primary{
+    background-color : $theme-primary-color;
+    color : $theme-primary-font-color;
+
+    font-size : 18px;
+
+    &:hover{
+        background-color : #c61218;
+        color : $theme-primary-font-color;
+    }
+
+    &:active{
+        background-color : #b01015;
+        color : $theme-primary-font-color;
+    }
+
+    &:focus{
+        background-color : $theme-primary-color;
+        color : $theme-primary-font-color;
+
+        outline : none;
+    }
+}
+/*Global Classes End*/
 
 .customNavBar {
     background-color: $theme-primary-color;
@@ -111,6 +157,8 @@ body {
             border-bottom: 2px solid $theme-primary-color;
             @include transition-mix(all, $theme-fast-reaction);
 
+            cursor : pointer;
+
             &:hover {
                 border-bottom: 2px solid $theme-primary-font-color;
             }
@@ -144,6 +192,75 @@ body {
         }
     }
 }
+
+/*Login Modal Start*/
+.loginModal{
+    .modal-header{
+        background-color : $theme-primary-color;
+
+        padding : 5px 15px;
+
+        color : $theme-primary-font-color;
+
+        text-align : center;
+
+        position : relative;
+
+        &:after{
+            content: " ";
+
+            top : 100%;
+            left: 48%;
+
+            border : 10px solid transparent;
+
+            height: 0;
+            width:0;
+
+            position : absolute;
+
+            border-top-color : $theme-primary-color;
+        }
+    }
+
+    .form-group{
+        margin-top : 10px;
+
+        .glyphicon{
+            color : #ccc;
+        }
+
+        input{
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .form-control-feedback{
+            top : 3px;
+        }
+    }
+
+    .btn-pram-primary{
+        font-size : 19px;
+        padding: 6px 12px;
+
+        font-family : 'Segoe UI';
+    }
+
+    .forgotPassword{
+        line-height : 41px;
+        a{
+            color : #ccc;
+            text-decoration : none;
+
+            &:hover{
+                color: #ccc;
+                text-decoration : underline;
+            }
+        }
+    }
+}
+/*Login Modal End*/
 
 /*Utility Classes*/
 .marRight5 {
@@ -217,6 +334,8 @@ body {
 
     @include background-size-mix(cover);
     height: 560px;
+
+    box-shadow :#333 0 0 15px;
 }
 
 .welcomeText {

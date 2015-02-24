@@ -6,7 +6,7 @@ define( [], function() {
 	return TopController;
 } );
 
-function parentController($scope, $http, DataStore, AppConstants, RestRequests) {
+function parentController($scope, $http, DataStore, AppConstants, RestRequests, $modal) {
 
 	console.log( 'In parent Controller ' );
 
@@ -181,5 +181,31 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests) 
 		var imgUrl = url.split( '.' );
 
 		return imgUrl[0] + '-lg.' + imgUrl[1];
-	}
+    }
+
+    /*OpenLoginModal*/
+    $scope.openLoginModal = function () {
+        var modalInstance = $modal.open({
+            templateUrl : 'views/loginModal.html',
+            controller : 'LoginModalController',
+            backdrop : 'static',
+            windowClass    : 'darkTransparentBack',
+            size : 'sm'
+        });
+
+        var contentContainer = angular.element(document.querySelector('#contentContainer'));
+        contentContainer.addClass('blurredBack');
+
+        modalInstance.result.then(function (data) {
+            
+            contentContainer.removeClass('blurredBack');
+        }, function (data) {
+            
+            contentContainer.removeClass('blurredBack');
+        });
+    };
+}
+
+function LoginModalController($scope, $modalInstance){
+    console.log('In Login Modal');
 }
