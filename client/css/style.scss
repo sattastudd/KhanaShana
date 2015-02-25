@@ -75,6 +75,10 @@ input {
     font-family: 'Segoe UI';
 }
 
+p {
+    margin: 0 0 0px;
+}
+
 body {
     background-color: $theme-background-color;
     font-family: Avdira;
@@ -869,13 +873,6 @@ button.kh-primary {
     }
 }
 
-@media (max-width: 360px) {
-
-    .glyphicon-heart {
-        font-size: 15px;
-        padding-top: 4px;
-    }
-}
 
 @media (min-width: 992px) {
 
@@ -934,5 +931,13 @@ button.kh-primary {
 
     100% {
         -webkit-transform: scale(1);
+    }
+}
+
+@media (min-width: 320px) {
+
+    .glyphicon-heart {
+        font-size: 15px;
+        padding-top: 4px;
     }
 }

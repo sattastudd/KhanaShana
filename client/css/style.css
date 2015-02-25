@@ -8,6 +8,10 @@
 input {
   font-family: 'Segoe UI'; }
 
+p {
+  margin: 0 0 0px;
+}
+
 body {
   background-color: #FAF8FD;
   font-family: Avdira;
@@ -638,12 +642,6 @@ button.kh-primary {
     padding-right: 15px; }
  }
 
-@media (max-width: 360px) {
-  .glyphicon-heart {
-    font-size: 15px;
-    padding-top: 4px; }
- }
-
 @media (min-width: 992px) {
   .restTitleContent {
     padding-left: 26px; }
@@ -690,3 +688,9 @@ button.kh-primary {
     -webkit-transform: scale(1); } }
 
 /*# sourceMappingURL=style.css.map */
+
+@media (min-width: 320px) {
+  .glyphicon-heart {
+    font-size: 15px;
+    padding-top: 4px; }
+ }
