@@ -104,7 +104,7 @@ body {
 
 .modal.scale .modal-dialog {
 
-    @include transition-transform-mixin(.4s, ease);
+    @include transition-transform-mixin(.3s, ease);
     @include transform-property(scale(0));
 }
 
@@ -214,12 +214,15 @@ body {
 
 /*Login Modal Start*/
 .loginModal {
+    font-family : 'Segoe UI';
+
     .modal-header {
         background-color: $theme-primary-color;
-        padding: 5px 15px;
+        padding: 8px 15px 0 8px;
         color: $theme-primary-font-color;
-        text-align: center;
         position: relative;
+        height : 45px;
+        overflow : hidden;
 
         &:after {
             content: " ";
@@ -230,6 +233,48 @@ body {
             width: 0;
             position: absolute;
             border-top-color: $theme-primary-color;
+        }
+
+        ul.login-links{
+            padding-left: 0;
+            list-style : none;
+
+            margin-bottom : 0;
+
+            li{
+                display : inline-block;
+                padding : 4px 10px;
+                border : 2px solid $theme-primary-color;
+
+                a{
+                    color : #fff;
+                    line-height : 10px;
+                    
+                    font-size : 20px;
+                    text-decoration : none;
+
+                    &:hover{
+                        color : #fff;
+                        text-decoration : none;
+                    }
+                }
+
+                &.active, &.active:hover{
+                    background-color : #9a0e12;
+                    border-color : #840c10;
+                    border-bottom : none;
+
+                    border-radius : 5px 5px 0 0;
+                }
+
+                &:hover{
+                    background-color : #c61218;
+                    border-color :  #840c10;
+                    border-bottom : none;
+
+                    border-radius : 5px 5px 0 0;
+                }
+            }
         }
     }
 

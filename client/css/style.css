@@ -9,8 +9,7 @@ input {
   font-family: 'Segoe UI'; }
 
 p {
-  margin: 0 0 0px;
-}
+  margin: 0 0 0px; }
 
 body {
   background-color: #FAF8FD;
@@ -38,10 +37,10 @@ body {
   background-color: rgba(0, 0, 0, 0.4); }
 
 .modal.scale .modal-dialog {
-  -moz-transition: -moz-transform 0.4s ease;
-  -o-transition: -o-transform 0.4s ease;
-  -webkit-transition: -webkit-transform 0.4s ease;
-  transition: transform 0.4s ease;
+  -moz-transition: -moz-transform 0.3s ease;
+  -o-transition: -o-transform 0.3s ease;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
   -webkit-transform: scale(0);
   -moz-transform: scale(0);
   -o-transform: scale(0);
@@ -132,42 +131,71 @@ body {
       top: 0; }
 
 /*Login Modal Start*/
-.loginModal .modal-header {
-  background-color: #DC141B;
-  padding: 5px 15px;
-  color: #fff;
-  text-align: center;
-  position: relative; }
-  .loginModal .modal-header:after {
-    content: " ";
-    top: 100%;
-    left: 48%;
-    border: 10px solid transparent;
-    height: 0;
-    width: 0;
-    position: absolute;
-    border-top-color: #DC141B; }
-.loginModal .form-group {
-  margin-top: 10px; }
-  .loginModal .form-group .glyphicon {
-    color: #ccc; }
-  .loginModal .form-group input {
-    height: 40px;
-    line-height: 40px; }
-  .loginModal .form-group .form-control-feedback {
-    top: 3px; }
-.loginModal .btn-pram-primary {
-  font-size: 19px;
-  padding: 6px 12px;
+.loginModal {
   font-family: 'Segoe UI'; }
-.loginModal .forgotPassword {
-  line-height: 41px; }
-  .loginModal .forgotPassword a {
-    color: #ccc;
-    text-decoration: none; }
-    .loginModal .forgotPassword a:hover {
+  .loginModal .modal-header {
+    background-color: #DC141B;
+    padding: 8px 15px 0 8px;
+    color: #fff;
+    position: relative;
+    height: 45px;
+    overflow: hidden; }
+    .loginModal .modal-header:after {
+      content: " ";
+      top: 100%;
+      left: 48%;
+      border: 10px solid transparent;
+      height: 0;
+      width: 0;
+      position: absolute;
+      border-top-color: #DC141B; }
+    .loginModal .modal-header ul.login-links {
+      padding-left: 0;
+      list-style: none;
+      margin-bottom: 0; }
+      .loginModal .modal-header ul.login-links li {
+        display: inline-block;
+        padding: 4px 10px;
+        border: 2px solid #DC141B; }
+        .loginModal .modal-header ul.login-links li a {
+          color: #fff;
+          line-height: 10px;
+          font-size: 20px;
+          text-decoration: none; }
+          .loginModal .modal-header ul.login-links li a:hover {
+            color: #fff;
+            text-decoration: none; }
+        .loginModal .modal-header ul.login-links li.active, .loginModal .modal-header ul.login-links li.active:hover {
+          background-color: #9a0e12;
+          border-color: #840c10;
+          border-bottom: none;
+          border-radius: 5px 5px 0 0; }
+        .loginModal .modal-header ul.login-links li:hover {
+          background-color: #c61218;
+          border-color: #840c10;
+          border-bottom: none;
+          border-radius: 5px 5px 0 0; }
+  .loginModal .form-group {
+    margin-top: 10px; }
+    .loginModal .form-group .glyphicon {
+      color: #ccc; }
+    .loginModal .form-group input {
+      height: 40px;
+      line-height: 40px; }
+    .loginModal .form-group .form-control-feedback {
+      top: 3px; }
+  .loginModal .btn-pram-primary {
+    font-size: 19px;
+    padding: 6px 12px;
+    font-family: 'Segoe UI'; }
+  .loginModal .forgotPassword {
+    line-height: 41px; }
+    .loginModal .forgotPassword a {
       color: #ccc;
-      text-decoration: underline; }
+      text-decoration: none; }
+      .loginModal .forgotPassword a:hover {
+        color: #ccc;
+        text-decoration: underline; }
 
 /*Login Modal End*/
 /*Utility Classes*/
@@ -687,10 +715,10 @@ button.kh-primary {
   100% {
     -webkit-transform: scale(1); } }
 
-/*# sourceMappingURL=style.css.map */
-
 @media (min-width: 320px) {
   .glyphicon-heart {
     font-size: 15px;
     padding-top: 4px; }
  }
+
+/*# sourceMappingURL=style.css.map */
