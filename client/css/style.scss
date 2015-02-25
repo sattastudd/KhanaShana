@@ -18,7 +18,7 @@ $theme-cuisine-lg-height: 210px;
 $theme-cuisine-lgs-width: 337px;
 
 /*Transition Constants*/
-$theme-fast-reaction : .2s;
+$theme-fast-reaction: .2s;
 
 /*Min-ins*/
 @mixin transition-mix($property, $duration) {
@@ -26,6 +26,13 @@ $theme-fast-reaction : .2s;
     -o-transition: $property $duration;
     -webkit-transition: $property $duration;
     transition: $property $duration;
+}
+
+@mixin transition-transform-mixin($duration, $timing-function) {
+    -moz-transition: -moz-transform $duration $timing-function;
+    -o-transition: -o-transform $duration $timing-function;
+    -webkit-transition: -webkit-transform $duration $timing-function;
+    transition: transform $duration $timing-function;
 }
 
 @mixin background-size-mix($property) {
@@ -51,12 +58,12 @@ $theme-fast-reaction : .2s;
     transform: $property;
 }
 
-@mixin filter-property($property){
-    -webkit-filter : $property;
-    -moz-filter : $property;
-    -o-filter : $property;
-    -ms-filter : $property;
-    filter : $property;
+@mixin filter-property($property) {
+    -webkit-filter: $property;
+    -moz-filter: $property;
+    -o-filter: $property;
+    -ms-filter: $property;
+    filter: $property;
 }
 
 @font-face {
@@ -71,7 +78,7 @@ input {
 body {
     background-color: $theme-background-color;
     font-family: Avdira;
-    font-size : 18px;
+    font-size: 18px;
 }
 
 /*Global Classes Begin*/
@@ -79,39 +86,47 @@ body {
     width: 100%;
 }
 
-.contentContainer{
+.contentContainer {
     @include transition-mix(all, .2s);
 }
 
-.blurredBack{
+.blurredBack {
     @include filter-property(blur(5px));
 }
 
-.darkTransparentBack{
-    background-color : rgba(0,0,0, .4);
+.darkTransparentBack {
+    background-color: rgba(0,0,0, .4);
 }
 
-.btn-pram-primary{
-    background-color : $theme-primary-color;
-    color : $theme-primary-font-color;
+.modal.scale .modal-dialog {
 
-    font-size : 18px;
+    @include transition-transform-mixin(.4s, ease);
+    @include transform-property(scale(0));
+}
 
-    &:hover{
-        background-color : #c61218;
-        color : $theme-primary-font-color;
+.modal.scale.in .modal-dialog {
+    @include transform-property(scale(1));
+}
+
+.btn-pram-primary {
+    background-color: $theme-primary-color;
+    color: $theme-primary-font-color;
+    font-size: 18px;
+
+    &:hover {
+        background-color: #c61218;
+        color: $theme-primary-font-color;
     }
 
-    &:active{
-        background-color : #b01015;
-        color : $theme-primary-font-color;
+    &:active {
+        background-color: #b01015;
+        color: $theme-primary-font-color;
     }
 
-    &:focus{
-        background-color : $theme-primary-color;
-        color : $theme-primary-font-color;
-
-        outline : none;
+    &:focus {
+        background-color: $theme-primary-color;
+        color: $theme-primary-font-color;
+        outline: none;
     }
 }
 /*Global Classes End*/
@@ -135,7 +150,7 @@ body {
 
     a.navbar-brand:hover {
         color: $theme-primary-font-color;
-        border-bottom : 2px solid $theme-primary-font-color;
+        border-bottom: 2px solid $theme-primary-font-color;
     }
 
     .navSearch input {
@@ -151,14 +166,13 @@ body {
         }
 
         span.loginSpan {
-            line-height : 20px;
+            line-height: 20px;
             font-size: 20px;
             display: inline-block;
             padding: 14px 15px;
             border-bottom: 2px solid $theme-primary-color;
             @include transition-mix(all, $theme-fast-reaction);
-
-            cursor : pointer;
+            cursor: pointer;
 
             &:hover {
                 border-bottom: 2px solid $theme-primary-font-color;
@@ -166,8 +180,8 @@ body {
         }
     }
 
-    .row.visible-xs{
-        position : relative;
+    .row.visible-xs {
+        position: relative;
     }
 
     .overLappedRow {
@@ -195,68 +209,59 @@ body {
 }
 
 /*Login Modal Start*/
-.loginModal{
-    .modal-header{
-        background-color : $theme-primary-color;
+.loginModal {
+    .modal-header {
+        background-color: $theme-primary-color;
+        padding: 5px 15px;
+        color: $theme-primary-font-color;
+        text-align: center;
+        position: relative;
 
-        padding : 5px 15px;
-
-        color : $theme-primary-font-color;
-
-        text-align : center;
-
-        position : relative;
-
-        &:after{
+        &:after {
             content: " ";
-
-            top : 100%;
+            top: 100%;
             left: 48%;
-
-            border : 10px solid transparent;
-
+            border: 10px solid transparent;
             height: 0;
-            width:0;
-
-            position : absolute;
-
-            border-top-color : $theme-primary-color;
+            width: 0;
+            position: absolute;
+            border-top-color: $theme-primary-color;
         }
     }
 
-    .form-group{
-        margin-top : 10px;
+    .form-group {
+        margin-top: 10px;
 
-        .glyphicon{
-            color : #ccc;
+        .glyphicon {
+            color: #ccc;
         }
 
-        input{
+        input {
             height: 40px;
             line-height: 40px;
         }
 
-        .form-control-feedback{
-            top : 3px;
+        .form-control-feedback {
+            top: 3px;
         }
     }
 
-    .btn-pram-primary{
-        font-size : 19px;
+    .btn-pram-primary {
+        font-size: 19px;
         padding: 6px 12px;
-
-        font-family : 'Segoe UI';
+        font-family: 'Segoe UI';
     }
 
-    .forgotPassword{
-        line-height : 41px;
-        a{
-            color : #ccc;
-            text-decoration : none;
+    .forgotPassword {
+        line-height: 41px;
 
-            &:hover{
+        a {
+            color: #ccc;
+            text-decoration: none;
+
+            &:hover {
                 color: #ccc;
-                text-decoration : underline;
+                text-decoration: underline;
             }
         }
     }
@@ -335,8 +340,7 @@ body {
 
     @include background-size-mix(cover);
     height: 560px;
-
-    box-shadow :#333 0 0 15px;
+    box-shadow: #333 0 0 15px;
 }
 
 .welcomeText {
@@ -345,8 +349,8 @@ body {
     padding-bottom: 25px;
     text-align: center;
 
-    h1{
-        font-size : 59px;
+    h1 {
+        font-size: 59px;
     }
 }
 
@@ -361,7 +365,7 @@ body {
         padding-left: 20px;
         box-shadow: 0 0 15px #000;
 
-        &:focus{
+        &:focus {
             box-shadow: 0 0 15px #000;
         }
     }
@@ -596,9 +600,9 @@ button.kh-primary {
 
     @include transition-mix(all, .5s);
 
-    &:hover{
+    &:hover {
         box-shadow: 0 9px 10px 0 #555;
-    top: -1px;
+        top: -1px;
     }
 }
 
@@ -772,8 +776,8 @@ button.kh-primary {
 }
 /* styles for check out page ends */
 
-@media (max-width: 480px){
-    .welcomeText{
+@media (max-width: 480px) {
+    .welcomeText {
         margin-top: 68px;
     }
 }
