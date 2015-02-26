@@ -133,6 +133,15 @@ body {
 /*Login Modal Start*/
 .loginModal {
   font-family: 'Segoe UI'; }
+  .loginModal .collapsibleContent {
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    height: 65px;
+    overflow: hidden; }
+    .loginModal .collapsibleContent.noHeight {
+      height: 0; }
   .loginModal .modal-header {
     background-color: #DC141B;
     padding: 8px 15px 0 8px;
@@ -161,7 +170,8 @@ body {
           color: #fff;
           line-height: 10px;
           font-size: 20px;
-          text-decoration: none; }
+          text-decoration: none;
+          cursor: pointer; }
           .loginModal .modal-header ul.login-links li a:hover {
             color: #fff;
             text-decoration: none; }
@@ -175,6 +185,14 @@ body {
           border-color: #840c10;
           border-bottom: none;
           border-radius: 5px 5px 0 0; }
+        .loginModal .modal-header ul.login-links li.close-icon {
+          padding: 4px 0;
+          font-size: 18px;
+          border: 2px solid #DC141B;
+          cursor: pointer; }
+          .loginModal .modal-header ul.login-links li.close-icon:hover {
+            background-color: #DC141B;
+            border: 2px solid #DC141B; }
   .loginModal .form-group {
     margin-top: 10px; }
     .loginModal .form-group .glyphicon {

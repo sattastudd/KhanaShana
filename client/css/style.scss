@@ -216,6 +216,17 @@ body {
 .loginModal {
     font-family : 'Segoe UI';
 
+    .collapsibleContent{
+        @include transition-mix(all, .3s);
+        height : 65px;
+        overflow : hidden;
+
+        &.noHeight{
+            height : 0;
+        }
+    }
+
+    
     .modal-header {
         background-color: $theme-primary-color;
         padding: 8px 15px 0 8px;
@@ -253,6 +264,8 @@ body {
                     font-size : 20px;
                     text-decoration : none;
 
+                    cursor : pointer;
+
                     &:hover{
                         color : #fff;
                         text-decoration : none;
@@ -273,6 +286,18 @@ body {
                     border-bottom : none;
 
                     border-radius : 5px 5px 0 0;
+                }
+
+                &.close-icon{
+                    padding : 4px 0;
+                    font-size : 18px;
+                    border : 2px solid $theme-primary-color;
+                    cursor : pointer;
+
+                    &:hover{
+                        background-color : $theme-primary-color;
+                        border : 2px solid $theme-primary-color;
+                    }
                 }
             }
         }

@@ -164,7 +164,8 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 			return 'col-sm-6 col-md-4 col-lg-4';
 		}
 	};
-
+    
+    /*Depending Upon the image Path Reported, append -lg for larger grid and -lgs for smaller. | Convention*/
 	$scope.getImageSrcForLg = function(index, url) {
 
 		var imageUrl = url.split( '.' );
@@ -175,7 +176,8 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 			return imageUrl[0] + '-lgs.' + imageUrl[1];
 		}
 	};
-
+    
+    /*Depending Upon the image Path Reported, append -lg  | Convention*/
 	$scope.getImageSrcForXs = function(index, url) {
 
 		var imgUrl = url.split( '.' );
@@ -192,20 +194,66 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
             windowClass    : 'darkTransparentBack',
             size : 'sm'
         });
-
+        
+        /*To make rest of the page blurred.*/
         var contentContainer = angular.element(document.querySelector('#contentContainer'));
         contentContainer.addClass('blurredBack');
 
         modalInstance.result.then(function (data) {
             
+            /*On modal close, we want to remove the blurred.*/
             contentContainer.removeClass('blurredBack');
         }, function (data) {
-            
+            /*On modal close, we want to remove the blurred.*/
             contentContainer.removeClass('blurredBack');
         });
     };
 }
 
 function LoginModalController($scope, $modalInstance){
-    console.log('In Login Modal');
+    $scope.isSignUpFormNotActive = true;
+    
+    /*Depending upon isSignUpFormNotActive, we have to make sure sign up fields are at no height.*/
+    $scope.getCSSCLassDependingOnSignUp = function (){
+        if ($scope.isSignUpFormNotActive)
+            return 'noHeight';
+        return '';
+    }
+    
+    /*Switch over to other form type.*/
+    $scope.changeFormType = function (type) {
+          
+        if (type === 'login') {
+            if ($scope.isSignUpFormNotActive) { return; }
+            else {
+                $scope.isSignUpFormNotActive = true;
+                $scope.adjustLinks(0);
+            }
+        } else {
+            if (!$scope.isSignUpFormNotActive) { return; }
+            else {
+                $scope.isSignUpFormNotActive = false;
+                $scope.adjustLinks(1);
+            }
+        }
+        
+    };
+    
+    /*Depending upon isSignUpFormNotActive, we need to adjust button text as well.*/
+    $scope.getButtonText = function () {
+        return $scope.isSignUpFormNotActive ? 'Sign In ' : 'Sign Up';
+    };
+    
+    /* This really should not be here.
+     * But for the sake of simplicity, it is.
+     * We retrive all the login links, remove the active class from all of its children.
+     * Then on the index received, we put up active class.
+     */
+    $scope.adjustLinks = function (index) {
+
+        var loginLinks = angular.element(document.querySelector('.login-links'));
+
+        loginLinks.children().removeClass('active');
+        loginLinks.children().eq(index).addClass('active');
+    }
 }
