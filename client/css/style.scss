@@ -233,18 +233,6 @@ body {
         color: $theme-primary-font-color;
         position: relative;
         height : 45px;
-        overflow : hidden;
-
-        &:after {
-            content: " ";
-            top: 100%;
-            left: 48%;
-            border: 10px solid transparent;
-            height: 0;
-            width: 0;
-            position: absolute;
-            border-top-color: $theme-primary-color;
-        }
 
         ul.login-links{
             padding-left: 0;
@@ -256,6 +244,7 @@ body {
                 display : inline-block;
                 padding : 4px 10px;
                 border : 2px solid $theme-primary-color;
+                border-bottom : none;
 
                 a{
                     color : #fff;
@@ -278,6 +267,18 @@ body {
                     border-bottom : none;
 
                     border-radius : 5px 5px 0 0;
+                    position : relative;
+
+                    &:after {
+                        content: " ";
+                        top: 100%;
+                        left: 38%;
+                        border: 10px solid transparent;
+                        height: 0;
+                        width: 0;
+                        position: absolute;
+                        border-top-color: #9a0e12;
+                    }
                 }
 
                 &:hover{
@@ -289,7 +290,7 @@ body {
                 }
 
                 &.close-icon{
-                    padding : 4px 0;
+                    padding : 3px 0;
                     font-size : 18px;
                     border : 2px solid $theme-primary-color;
                     cursor : pointer;

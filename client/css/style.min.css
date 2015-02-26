@@ -175,7 +175,7 @@ body {
           .loginModal .modal-header ul.login-links li.active:after, .loginModal .modal-header ul.login-links li.active:hover:after {
             content: " ";
             top: 100%;
-            left: 38%;
+            left: 39%;
             border: 10px solid transparent;
             height: 0;
             width: 0;
@@ -739,5 +739,3 @@ button.kh-primary {
     font-size: 15px;
     padding-top: 4px; }
  }
-
-/*# sourceMappingURL=style.css.map */
