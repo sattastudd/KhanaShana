@@ -1,6 +1,7 @@
 var citiesController = require( '../controllers/citiesController' );
 
 /* GET /cities listing. */
+/* Request-Name : /cities, Type : Get, Allowed : public */
 router.get( '/cities',
 		function(req, res, next) {
 

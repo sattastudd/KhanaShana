@@ -15,14 +15,14 @@ eventHandler.on( 'connectionEstablished', function(totalCount) {
 
 	callCount++;
 
-	if ( callCount == totalCount ) {
+	if ( callCount === totalCount ) {
 		eventHandler.emit( 'pleaseStartServerNow' );
 	}
 } );
 
 var configure = function() {
 
-	console.log( 'Configuring Global Database Connections ' )
+	console.log( 'Configuring Global Database Connections ' );
 
 	var citiesConnection = mongoose
 			.createConnection( credentials.connectionString.global_data );
@@ -42,7 +42,7 @@ var configure = function() {
 
 			console.log( 'Total Available Cities ' + availableCities.length );
 
-			if ( availableCities.length == 0 ) {
+			if ( availableCities.length === 0 ) {
 				throw new Error( 'No cities found in the Database' );
 			} else {
 				// Creating a array in global object for storing connection
