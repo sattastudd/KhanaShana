@@ -241,7 +241,7 @@ function LoginModalController($scope, $modalInstance){
     
     /*Depending upon isSignUpFormNotActive, we need to adjust button text as well.*/
     $scope.getButtonText = function () {
-        return $scope.isSignUpFormNotActive ? 'Sign In ' : 'Sign Up';
+        return $scope.isSignUpFormNotActive ? 'Log In ' : 'Register';
     };
     
     /* This really should not be here.
@@ -255,5 +255,9 @@ function LoginModalController($scope, $modalInstance){
 
         loginLinks.children().removeClass('active');
         loginLinks.children().eq(index).addClass('active');
+    }
+
+    $scope.closeLoginModal = function (){
+        $modalInstance.close();
     }
 }
