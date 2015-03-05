@@ -4,3 +4,7 @@ credentials.js
 CodeOrganizer*
 bin/
 obj/
+.settings/
+.jshintrc
+.project
+.tern-project
