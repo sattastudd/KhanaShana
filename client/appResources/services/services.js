@@ -11,7 +11,7 @@ define( [ 'angular', '../require/route-config' ], function(angular,
 				routeConfig.setControllerProvider( $controllerProvider );
 			} ).constant( 'AppConstants', {
 		appName : 'KhanaShana',
-		httpServicePrefix : 'node'
+		httpServicePrefix : 'node/public'
 	} ).constant( 'RestRequests', {
 		getDropDowns : 'getGlobalData'
 	} ).service( 'DataStore', function() {

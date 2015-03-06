@@ -18,12 +18,18 @@ var cities = require( './server/routes/citiesRoutes' );
 var locations = require( './server/routes/locationsRoutes' );
 var globalDataRoute = require( './server/routes/globalRoutes' );
 
+/* For authorization Module */
+var expressJwt = require( 'express-jwt' );
+var jwt = require( 'jsonwebtoken' );
+
 /* Retrieving Request Mapper Module */
 var requestMapper = require( './config/RequestMapper' );
 
 /* Create Syncronized request authorization map */
 requestMapper.createRequestMap();
 
+// Integrating ExpressJWT
+app.use( '/', expressJwt({secret : credentials.expressJwtSecret }).unless( {path : [/\/public\//g]}) );
 // Configuration
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( {
@@ -51,6 +57,7 @@ app.use( function(req, res, next) {
 	res.header( 'Access-Control-Allow-Origin', '*' );
 	next();
 } );
+
 
 app.use( '/', router );
 

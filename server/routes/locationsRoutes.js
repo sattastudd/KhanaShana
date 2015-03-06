@@ -2,7 +2,7 @@ var locationController = require( "../controllers/locationsController" );
 
 /* GET /locations/CityName listing */
 /* Request-Name : /locations, Type : Get, Allowed : public */
-router.get( '/locations/:CityName', function(req, res, next) {
+router.get( '/public/locations/:CityName', function(req, res, next) {
 
 	console.log( 'In locationsRoute | Handling ' + req.route.path );
 
