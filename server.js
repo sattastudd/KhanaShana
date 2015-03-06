@@ -18,6 +18,12 @@ var cities = require( './server/routes/citiesRoutes' );
 var locations = require( './server/routes/locationsRoutes' );
 var globalDataRoute = require( './server/routes/globalRoutes' );
 
+/* Retrieving Request Mapper Module */
+var requestMapper = require( './config/RequestMapper' );
+
+/* Create Syncronized request authorization map */
+requestMapper.createRequestMap();
+
 // Configuration
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( {
