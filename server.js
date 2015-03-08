@@ -56,6 +56,7 @@ var restaurants = require( './server/routes/restaurants' );
 var cities = require( './server/routes/citiesRoutes' );
 var locations = require( './server/routes/locationsRoutes' );
 var globalDataRoute = require( './server/routes/globalRoutes' );
+var loginRoute = require( './server/routes/loginRoutes' );
 
 /* Setting up modules to work on /admin and /user requests only. */
 app.use( ['/admin', '/user'], Authenticator, BlackListFilter, AuthorizationFilter);
