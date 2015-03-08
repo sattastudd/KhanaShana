@@ -10,7 +10,7 @@ var validateToken = function( req, res, next ) {
 	 * Token would be fallowed by Bearer and a space.
 	 * We would need to strip it.
 	 */
-	var token = req.headers.Authorization;
+	var token = req.headers.authorization;
 
 	if( typeof token === 'undefined' || token === '' ) {
 		console.log('Authenticator | No Authentication Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
@@ -20,7 +20,7 @@ var validateToken = function( req, res, next ) {
 		   	error : 'No Authentication Token Found',
 			message : 'TE'
 		});
-	} else if ( token.indexOf( 'Bearer ' ) !== -1 ) {
+	} else if ( token.indexOf( 'Bearer ' ) !== 0 ) {
 		console.log('Authenticator | Invalid Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
 
 		res.status( 401 )
@@ -33,7 +33,7 @@ var validateToken = function( req, res, next ) {
 		token = token.substr( 7 );
 		
 		try{
-			var decoded = jwt.decode( token, credntials.jwtSecret );
+			var decoded = jwt.decode( token, credentials.jwtSecret );
 
 			if( decoded.exp <= (new Date()).getTime() ){
 				res.status( 400 )
@@ -46,6 +46,7 @@ var validateToken = function( req, res, next ) {
 				next();
 			}
 		} catch ( err ) {
+			console.log( err );
 			console.log('Authenticator | No Authentication Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
 
 			res.status( 401 )

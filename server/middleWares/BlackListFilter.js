@@ -4,7 +4,7 @@
  * Other wise calls up for next middleware in queue
  */
 var BlackListFilter = function( req, res, next ) {
-	var token = req.headers.Authorization;
+	var token = req.headers.authorization;
 
 	token = token.substr( 7 );
 
