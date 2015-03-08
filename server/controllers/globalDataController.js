@@ -15,9 +15,9 @@ var getDropDownFromDB = function(callback) {
 
 	console.log( 'In GlobalDataController | Entering getDropDownFromDB ' );
 
-	var cityConnection = utils.getDBConnection( 'all' );
+	var globalDBConnection = utils.getDBConnection( 'globalDB' );
 
-	bannerDropDownModule.setUpConnection( cityConnection );
+	bannerDropDownModule.setUpConnection( globalDBConnection );
 	var BannerDropDownModel = bannerDropDownModule.getBannerDropDownModel();
 
 	BannerDropDownModel.find( query, projection, function(err, dropdowns) {
@@ -32,13 +32,13 @@ var getDropDownFromDB = function(callback) {
 	console.log( 'In GlobalDataController | Exiting getDropDownFromDB ' );
 };
 
-var getLocationsFromDB = function(cityName, callback) {
+var getLocationsFromDB = function(dbName, callback) {
 
 	console.log( 'In GlobalDataController | Entering getLocationsFromDB' );
 
-	var cityConnection = utils.getDBConnection( cityName );
+	var dbConnection = utils.getDBConnection( dbName );
 
-	locationsModule.setUpConnection( cityConnection );
+	locationsModule.setUpConnection( dbConnection );
 	var LocationsModel = locationsModule.getLocationModel();
 
 	LocationsModel.find( query, projection, function(err, locations) {
@@ -52,13 +52,13 @@ var getLocationsFromDB = function(cityName, callback) {
 	console.log( 'In GlobalDataController | Exiting getLocationsFromDB' );
 };
 
-var getCuisinesFromDB = function(cityName, callback) {
+var getCuisinesFromDB = function(dbName, callback) {
 
 	console.log( 'In GlobalDataController | Executing getCuisinesFromDB' );
 
-	var cityConnection = utils.getDBConnection( cityName );
+	var dbConnection = utils.getDBConnection( dbName );
 
-	cuisinesModule.setUpConnection( cityConnection );
+	cuisinesModule.setUpConnection( dbConnection );
 	var CuisinesModel = cuisinesModule.getCuisinesModel();
 
 	CuisinesModel.find( query, projection, function(err, cuisines) {

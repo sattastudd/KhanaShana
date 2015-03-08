@@ -6,7 +6,7 @@ var citiesModelModule = require( '../models/citiesModel' );
 var getCityList = function(req, res, next){
 	console.log( 'In citiesController | Entering getCityList method ');
 
-	var citiesConnection = utils.getDBConnection('all');
+	var citiesConnection = utils.getDBConnection('globalDB');
 
 	citiesModelModule.setUpConnection( citiesConnection );
 	var CitiesModal = citiesModelModule.getModel();

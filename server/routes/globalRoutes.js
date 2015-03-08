@@ -1,7 +1,7 @@
 var globalDataController = require( '../controllers/globalDataController' );
 
 /* GET /cities listing. */
-/* Request-Name : /getGlobalData, Type : Post, Allowed : public, admin */
+/* Request-Name : /public/getGlobalData, Type : Post, Allowed : public*/
 router.post( '/public/getGlobalData',
 		function(req, res, next) {
 
