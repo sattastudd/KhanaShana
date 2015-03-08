@@ -23,12 +23,18 @@ var Authenticator 	= 	require( './server/middleWares/Authenticator' );
 var BlackListFilter 	= 	require( './server/middleWares/BlackListFilter' );
 var AuthorizationFilter =	require( './server/middleWares/AuthorizationFilter' );
 
+/* Retrieving Request Mapper Module */
+var requestMapper = require( './config/RequestMapper' );
+
 var jwt 		= 	require( 'jsonwebtoken' );
 
 /* Setting up DataBase Connections using Configure */
 dbConfig.configure();
 
 var app = module.exports = express();
+
+/* Create Synchronized request authorization map */
+requestMapper.createRequestMap();
 
 /* MiddleWare to log all Requests, No matter what is their fate.*/
 app.use( function( req, res, next ) {

@@ -104,6 +104,8 @@ var configure = function() {
 		}
 
 		currRequest[requestType] = role;
+
+		console.log('Added { ' + requestName + ' : ' + ' { ' + requestType + ' : ' + role + ' } }');
 	};
 
 	// Getter to list all the mappings in the map
