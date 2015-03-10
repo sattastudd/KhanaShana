@@ -8,7 +8,7 @@ var usersSchema = new mongoose.Schema({
 	email : String,
 	credential : String,
 	contact : String,
-	role_id : String
+	role_id : mongoose.Schema.Types.ObjectId
 });
 
 var connection = null;

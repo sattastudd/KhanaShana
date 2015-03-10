@@ -22,3 +22,12 @@ router.post( '/public/isUserAlreadyPresent', function( req, res, next) {
 
 	console.log( 'In loginRoutes | Completed Processing for ' + req.route.path );
 });
+
+/* Request-Name : /public/signUpUser, Type: Post, Allowed : public*/
+router.post( '/public/signUpUser', function( req, res, next ) {
+	console.log( 'In loginRoutes, Handling ' + req.route.path );
+
+	loginController.signUpUser( req, res, next );
+
+	console.log( 'In loginRoutes | Completed Processinf for ' + req.route.path );
+});
