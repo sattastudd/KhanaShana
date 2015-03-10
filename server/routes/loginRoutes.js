@@ -14,11 +14,11 @@ router.post( '/public/login',
 		} );
 
 /* Request-Name : /public/isUserAlreadyPresent, Type : Post, Allowed : public*/
-router.post( '/public/isUserAlreadyPresent', function( req, res, next) {
+router.post( '/public/isUserAlreadyInSystem', function( req, res, next) {
 
 	console.log( 'In loginRoutes | Handling ' + req.route.path );
 
-	loginController.isEmailAlreadyUsed( req, res, next );
+	loginController.isUserAlreadyInSystem( req, res, next );
 
 	console.log( 'In loginRoutes | Completed Processing for ' + req.route.path );
 });

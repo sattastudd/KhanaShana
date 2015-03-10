@@ -117,7 +117,62 @@ var signUpUser = function( userInfo, callback ) {
 	console.log( 'In LoginDBI | Finished Execution of signUpUserDBI' );
 };
 
+/* Public Method.
+ * It will check for presence of email id in the collection.
+ * This method can also be used as the utility if no callback is passed.
+ */
+var isUserAlreadyInSystem = function( email, callback ) {
+
+	console.log( 'In LoginDBI | Starting Execution of isUserAlreadyInSystem' );
+
+	var isBeingUsedAsUtility = false;
+
+	if( null === callback ) {
+		isBeingUsedAsUtility = true;
+	}
+
+	var userDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
+	userModelModule.setUpConnection( userDBConnection );
+
+	var UserModel = userModelModule.getUsersModel();
+
+	var query = {
+		email : email
+	};
+
+	var projection = {
+		'_id' : false
+	};
+
+	UserModel.findOne( query, projection, function( err, result ) {
+		if( err ) {
+			if( isBeingUsedAsUtility ){
+				return {msg : err};
+			} else {
+				callback( err );
+			}
+		} else {
+			if( result !== null ) {
+				if( isBeingUsedAsUtility ) {
+					return true;
+				} else {
+					callback( null, true)
+				}
+			} else {
+				if ( isBeingUsedAsUtility ) {
+					return false;
+				} else {
+					callback( null, false);
+				}
+			}
+		}
+	});
+
+	console.log( 'In LoginDBI | Finished Execution of isUserAlreadyInSystem' );
+};
+
 /*										Exports In Progress Methods									*/
 /*==================================================================================================*/
 
 exports.signUpUser = signUpUser;
+exports.isUserAlreadyInSystem = isUserAlreadyInSystem;

@@ -22,4 +22,21 @@ var signUpUser = function( userInfo, callback ) {
 	console.log( 'In LoginService | Finished Execution of signUpUser' );
 };
 
+var isUserAlreadyInSystem = function( email, callback ) {
+	console.log('In LoginService | Starting Execution of isUserAlreadyInSystem' );
+
+	/*Peform Validations here.
+	 */
+	loginDBI.isUserAlreadyInSystem( email, function( err, result ) {
+
+		if( err ) {
+			callback( err );
+		} else {
+			callback( null, result );
+		}
+	});
+	console.log('In LoginService  | Finished Execution of isUserAlreadyInSystem' );
+};
+
 exports.signUpUser = signUpUser;
+exports.isUserAlreadyInSystem = isUserAlreadyInSystem;

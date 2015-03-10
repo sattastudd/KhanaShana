@@ -16,6 +16,8 @@ var appConstants = require( '../constants/ServerConstants' );
 var userModelModule = require( '../models/login/usersModel' );
 var roleModelModule = require( '../models/login/rolesModel' );
 
+var loginService = require( '../serviceLayer/login/LoginService' );
+
 /* Private method to generate token*/
 var generateToken = function( user ) {
 	return jwt.encode( user, credentials.jwtSecret );
@@ -222,5 +224,59 @@ var isEmailAlreadyUsed = function( req, res, next ) {
 	console.log( 'In LoginController | Finished Execution of isEmailAlreadyUsed');
 };
 
+var isUserAlreadyInSystem = function( req, res, next ) {
+
+	console.log( 'In LoginController | Starting Execution of isUserAlreadyInSystem ' );
+
+	var email = req.body.email;
+
+	loginService.isUserAlreadyInSystem( email, function( err, result ) {
+		if( err ) {
+			res.status( 500 )
+			   .json({
+			   		msg : err
+			   });
+		} else {
+			res.status( 200 )
+				.json({
+					result : result
+				});
+		}
+	});
+
+	console.log( 'In LoginController | Finished Execution of isUserAlreadyInSystem ');
+};
+
+var signUpUser = function( req, res, next ) {
+
+	console.log( 'In LoginController | Starting Execution of signUpUser ' );
+
+	var email = req.body.email;
+	var user = {
+		name : req.body.name,
+		email : req.body.email,
+		credential : req.body.credential,
+		contact : req.body.contact,
+		role : 'User'
+	};
+
+	loginService.signUpUser( user, function( err, result ) {
+		if( err ) {
+			res.status( 500 )
+			   .json({
+			   		msg : err
+			   });
+		} else {
+			res.status( 200 )
+				.json({
+					result : result
+				});
+		}
+	});
+
+	console.log( 'In LoginController | Finished Execution of signUpUser ');
+};
+
 exports.loginUser = loginUser;
-exports.isEmailAlreadyUsed = isEmailAlreadyUsed;
+exports.signUpUser = signUpUser;
+exports.isUserAlreadyInSystem = isUserAlreadyInSystem;
