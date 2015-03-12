@@ -607,6 +607,27 @@ button.kh-primary {
   background-color: #DC141B;
   color: white; }
 
+.paymentBlock{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.addressOk{
+  padding-top: 10px;
+}
+.addressLineTitle1{
+  background-color: #333;
+  color: white;
+}
+.addressLineTitle2{
+  background-color: green;
+  color: white;
+}
+.addressLineContent{
+  border: solid 1px gray;
+}
+.makingCenter{
+  padding-bottom: 5px;
+}
 .tableFont {
   font-size: 15px; }
 
