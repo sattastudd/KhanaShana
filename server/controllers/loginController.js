@@ -6,6 +6,7 @@
  */
 
 var loginService = require( '../serviceLayer/login/LoginService' );
+var appConstants = require( '../constants/ServerConstants' );
 
 
 /* This method is the landing point of control from the route.
@@ -43,59 +44,6 @@ var loginUser = function( req, res, next ) {
 
 /* This method checks if a user already exists with given email id.
  */
-var isEmailAlreadyUsed = function( req, res, next ) {
-	
-	console.log('In LoginController | Starting Execution of isEmailAlreadyUsed' );
-
-	var usersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
-
-	userModelModule.setUpConnection( usersDBConnection );
-	var UserModel = userModelModule.getUsersModel();
-
-	var email = req.body.email;
-
-	var query = {
-		email : email 
-	};
-
-	var projection = {
-		'_id' : false,
-		credential : false
-	};
-	
-	var blueDart = new BlueDart();
-
-	UserModel.findOne( query, projection, function( err, result ) {
-		if( err ) {
-			console.log( err );
-			
-			blueDart.setStatus( 500 );
-			blueDart.setMessage( 'An error has ocurred' );
-			blueDart.setData( null );
-
-			res.status( 500 );
-		} else {
-			if( result !== null ) {
-				blueDart.setStatus( 500 );
-				blueDart.setMessage( 'Ok' );
-				blueDart.setData( true );
-
-				res.status( 200 );
-			} else {
-				blueDart.setStatus( 200 );
-				blueDart.setMessage( 'Ok' );
-				blueDart.setData( false );
-
-				res.status( 200 );
-			}
-		}
-
-		res.send( blueDart );
-	});
-
-	console.log( 'In LoginController | Finished Execution of isEmailAlreadyUsed');
-};
-
 var isUserAlreadyInSystem = function( req, res, next ) {
 
 	console.log( 'In LoginController | Starting Execution of isUserAlreadyInSystem ' );
@@ -106,12 +54,14 @@ var isUserAlreadyInSystem = function( req, res, next ) {
 		if( err ) {
 			res.status( 500 )
 			   .json({
-			   		msg : err
+			   		message : appConstants.errorMessage.someError,
+			   		data : false
 			   });
 		} else {
 			res.status( 200 )
 				.json({
-					result : result
+					message : appConstants.successMessage,
+					data : result
 				});
 		}
 	});
@@ -136,12 +86,14 @@ var signUpUser = function( req, res, next ) {
 		if( err ) {
 			res.status( 500 )
 			   .json({
-			   		msg : err
+			   		msg : appConstants.errorMessage.someError,
+			   		data : null
 			   });
 		} else {
 			res.status( 200 )
 				.json({
-					result : result
+					msg : appConstants.successMessage,
+					data : result
 				});
 		}
 	});

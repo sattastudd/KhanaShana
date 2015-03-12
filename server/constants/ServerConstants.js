@@ -4,7 +4,13 @@
 
 var appConstants = {
 	globalDataBase 		:	'globalDB',
-	appUsersDataBase	:	'appUsers'
+	appUsersDataBase	:	'appUsers',
+
+	errorMessage : {
+		someError : 'Some Error Occurred. Please try after some time.'
+	},
+
+	successMessage : 'Ok'
 };
 
 module.exports = appConstants;

@@ -5,37 +5,37 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         $routeProvider
         .when('/', 
             routeConfig.config(
-                'views/userHome.html',
+                'views/user/userHome.html',
                 '../../appResources/controller/userHomeController'
         ))
         .when('/restaurantDetails', 
             routeConfig.config(
-                'views/adminRestaurantDetails.html',
+                'views/admin/adminRestaurantDetails.html',
                 '../../appResources/controller/adminRestaurantController'
         ))
         .when('/login',
             routeConfig.config(
-                'views/login.html',
+                'views/login/login.html',
                 '../../appResources/controller/LoginController'
         ))
         .when('/adminHome',
             routeConfig.config(
-                'views/adminHome.html',
+                'views/admin/adminHome.html',
                 '../../appResources/controller/adminHomeController'
         ))
         .when('/adminRestaurant',
             routeConfig.config(
-                'views/adminRestaurants.html',
+                'views/admin/adminRestaurants.html',
                 '../../appResources/controller/adminRestHomeController'
         ))
         .when('/userSearchResult',
             routeConfig.config(
-                'views/userSearchResult.html',
+                'views/user/userSearchResult.html',
                 '../../appResources/controller/userSearchResultController'
         ))
         .when('/userCheckOut',
             routeConfig.config(
-                'views/UserCheckOut.html',
+                'views/user/UserCheckOut.html',
                 '../../appResources/controller/userCheckOutController'
         ))
         //Will use it later.

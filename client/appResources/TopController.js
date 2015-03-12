@@ -188,7 +188,7 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
     /*OpenLoginModal*/
     $scope.openLoginModal = function () {
         var modalInstance = $modal.open({
-            templateUrl : 'views/loginModal.html',
+            templateUrl : 'views/login/loginModal.html',
             controller : 'LoginModalController',
             backdrop : 'static',
             windowClass    : 'darkTransparentBack',
@@ -210,7 +210,11 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
     };
 }
 
-function LoginModalController($scope, $modalInstance){
+function LoginModalController($scope, $modalInstance, $http, AppConstants, RestRequests){
+	$scope.user = {
+
+	};
+
     $scope.isSignUpFormNotActive = true;
     
     /*Depending upon isSignUpFormNotActive, we have to make sure sign up fields are at no height.*/
@@ -218,6 +222,23 @@ function LoginModalController($scope, $modalInstance){
         if ($scope.isSignUpFormNotActive)
             return 'noHeight';
         return '';
+    }
+
+    /*Check if User Exists*/
+    $scope.checkUserExistance = function(){
+    		if( $scope.isSignUpFormNotActive ) {
+    			return;
+    		} else {
+    			var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.checkUserExistance;
+
+    			$http.post( requestName, { email : $scope.user.email} )
+    			     .success( function( data ) {
+    			     	console.log( data );
+    			     })
+    			     .error ( function( data ){
+    			     	console.log( data );
+    			     });
+    		}
     }
     
     /*Switch over to other form type.*/
