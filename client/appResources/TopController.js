@@ -28,9 +28,9 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 
 	$http.post( requestString, $scope.dataFor ).success( function(data) {
 
-		$scope.bannerDropDownOptions = data.dataToCarry.data.dropdownMenu;
-		$scope.locations = data.dataToCarry.data.locations;
-		$scope.cuisines = data.dataToCarry.data.cuisines;
+		$scope.bannerDropDownOptions = data.dropdownMenu;
+		$scope.locations = data.locations;
+		$scope.cuisines = data.cuisines;
 
 		DataStore.storeData( 'bannerDropDowns', $scope.bannerDropDownOptions );
 

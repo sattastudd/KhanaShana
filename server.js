@@ -52,9 +52,6 @@ app.set( 'port', 3000 );
 /* Here is another global variable that really should not be here.*/
 router  = express.Router();
 
-var restaurants = require( './server/routes/restaurants' );
-var cities = require( './server/routes/citiesRoutes' );
-var locations = require( './server/routes/locationsRoutes' );
 var globalDataRoute = require( './server/routes/globalRoutes' );
 var loginRoute = require( './server/routes/loginRoutes' );
 

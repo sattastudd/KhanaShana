@@ -13,7 +13,7 @@ define( [ 'angular', '../require/route-config' ], function(angular,
 		appName : 'KhanaShana',
 		httpServicePrefix : 'node/public'
 	} ).constant( 'RestRequests', {
-		getDropDowns : 'getGlobalData'
+		getDropDowns : 'globalData'
 	} ).service( 'DataStore', function() {
 
 		var storedData = {};
