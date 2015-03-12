@@ -710,6 +710,17 @@ button.kh-primary {
     padding-right: 15px; }
  }
 
+ /* css for user restaurant home page starts */
+
+  .bottomBorder{
+    border-bottom: solid 1px gainsboro;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #DC141B;
+ }
+
+ /* css for user restaurant home page ends */
+
 @media (min-width: 992px) {
   .restTitleContent {
     padding-left: 26px; }
