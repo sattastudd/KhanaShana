@@ -40,7 +40,7 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         ))
         .when('/userRestaurantHome',
             routeConfig.config(
-                'views/userRestaurantHome.html',
+                'views/user/userRestaurantHome.html',
                 '../../appResources/controller/userRestaurantHomeController'
         ))
         //Will use it later.
