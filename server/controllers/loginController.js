@@ -86,7 +86,7 @@ var signUpUser = function( req, res, next ) {
 		if( err ) {
 			res.status( 500 )
 			   .json({
-			   		msg : appConstants.errorMessage.someError,
+			   		msg : err === appConstants.errorMessage.userExists ? appConstants.errorMessage.userExists : appConstants.errorMessage.someError,
 			   		data : null
 			   });
 		} else {

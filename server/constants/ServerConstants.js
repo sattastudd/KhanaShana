@@ -7,7 +7,8 @@ var appConstants = {
 	appUsersDataBase	:	'appUsers',
 
 	errorMessage : {
-		someError : 'Some Error Occurred. Please try after some time.'
+		someError : 'Some Error Occurred. Please try after some time.',
+		userExists: 'User Already Exists.'
 	},
 
 	successMessage : 'Ok'

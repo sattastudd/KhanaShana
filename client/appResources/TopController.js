@@ -210,9 +210,29 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
     };
 }
 
-function LoginModalController($scope, $modalInstance, $http, AppConstants, RestRequests){
+function LoginModalController($scope, $modalInstance, $http, AppConstants, RestRequests, ValidationService){
 	$scope.user = {
+		name : '',
+		email : '',
+		password : '',
+		confirmPassword : '',
+		contact : ''
+	};
 
+	$scope.err = {
+		name : '',
+		email : '',
+		password : '',
+		confirmPassword : '',
+		contact : ''
+	};
+
+	$scope.errMsg = {
+		name : '',
+		email : '',
+		password : '',
+		confirmPassword : '',
+		contact : ''
 	};
 
     $scope.isSignUpFormNotActive = true;
@@ -239,7 +259,22 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
     			     	console.log( data );
     			     });
     		}
-    }
+    };
+
+    $scope.isNameNotValid = function(){
+
+    		$scope.err.name = ValidationService.isNameNotValid( $scope.user.name, false ); 
+    };
+
+    $scope.hasNameError = function(){
+
+    		if( $scope.err.name ) {
+    			$scope.errMsg.name = 'Invalid Name';
+
+    			return '';
+    		}
+    		return 'noHeight';
+    };
     
     /*Switch over to other form type.*/
     $scope.changeFormType = function (type) {

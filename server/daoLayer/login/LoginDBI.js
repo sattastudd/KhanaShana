@@ -49,9 +49,13 @@ var prepareObjectForResponse = function( user, role ) {
  * callback = callback for the async module.
  * Part of Sign UP
  */
-var retrieveRoleIdForRole = function( role, callback ) {
+var retrieveRoleIdForRole = function( role, isUserAlreadyInSystem, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of retrieveRoleIdForRole' );
 
+	if( isUserAlreadyInSystem ) {
+		callback( appConstants.errorMessage.userExists );
+	}
+	
 	var userDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
 
 	roleModelModule.setUpConnection( userDBConnection );
@@ -235,6 +239,7 @@ var signUpUser = function( userInfo, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of signUpUserDBI' );
 
 	async.waterfall([
+		async.apply( isUserAlreadyInSystem, userInfo.email ),
 		async.apply( retrieveRoleIdForRole, 'User' ),
 		async.apply( insertUser, userInfo)
 		], 

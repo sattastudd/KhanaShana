@@ -9,13 +9,46 @@ define( [ 'angular', '../require/route-config' ], function(angular,
 
 				routeConfig.setCompileProvider( $compileProvider );
 				routeConfig.setControllerProvider( $controllerProvider );
-			} ).constant( 'AppConstants', {
+			} )
+	.constant( 'AppConstants', {
+
 		appName : 'KhanaShana',
 		httpServicePrefix : 'node/public'
-	} ).constant( 'RestRequests', {
+
+	} )
+	.constant( 'RestRequests', {
+
 		getDropDowns : 'globalData',
 		checkUserExistance : 'email'
-	} ).service( 'DataStore', function() {
+
+	} )
+	.constant( 'RegExProvider', {
+
+		name : /[a-zA-Z ]/
+
+	} )
+	.service( 'ValidationService', function( RegExProvider ){
+		// True -> Validation Failed.
+		// False -> Validation Passed.
+
+		this.isNameNotValid = function( name, isMandatory ) {
+
+			if( isMandatory && ( name === '' || null == name ) ) {
+				return false;
+			} else if( name === '' ){
+				return true;
+			}
+
+			var nameRegEx = RegExProvider.name;
+
+			if( !nameRegEx.test( name )){
+				return false;
+			}
+
+			return true;
+		}
+	} )
+	.service( 'DataStore', function() {
 
 		var storedData = {};
 
