@@ -4,14 +4,24 @@
 
 var appConstants = {
 	globalDataBase 		:	'globalDB',
-	appUsersDataBase	:	'appUsers',
+    appUsersDataBase	: 'appUsers',
+    
+    appErrors : {
+        userExists : 'UserExists',
+        validationError : 'ValidationError'
+    },
 
 	errorMessage : {
 		someError : 'Some Error Occurred. Please try after some time.',
-		userExists: 'User Already Exists.'
+        userExists: 'User Already Exists.',
+        name : 'Invalid Name',
+        email : 'Invalid Email',
+        mandatory : 'Field can not be left empty.',
+        contact : 'Invalid Contact Number.'
 	},
 
-	successMessage : 'Ok'
+    successMessage : 'Ok',
+    userCreated : 'User Created Successfully.'
 };
 
 module.exports = appConstants;

@@ -210,7 +210,7 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
     };
 }
 
-function LoginModalController($scope, $modalInstance, $http, AppConstants, RestRequests, ValidationService){
+function LoginModalController($scope, $modalInstance, $http, AppConstants, RestRequests, ValidationService, AppUtils){
 	$scope.user = {
 		name : '',
 		email : '',
@@ -233,7 +233,9 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
 		password : '',
 		confirmPassword : '',
 		contact : ''
-	};
+    };
+    
+    $scope.hasRecievedResponseFromServer = false;
 
     $scope.isSignUpFormNotActive = true;
     
@@ -265,16 +267,6 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
 
     		$scope.err.name = ValidationService.isNameNotValid( $scope.user.name, false ); 
     };
-
-    $scope.hasNameError = function(){
-
-    		if( $scope.err.name ) {
-    			$scope.errMsg.name = 'Invalid Name';
-
-    			return '';
-    		}
-    		return 'noHeight';
-    };
     
     /*Switch over to other form type.*/
     $scope.changeFormType = function (type) {
@@ -283,13 +275,27 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
             if ($scope.isSignUpFormNotActive) { return; }
             else {
                 $scope.isSignUpFormNotActive = true;
+                
+                $scope.err = {};
+                $scope.errMsg = {};
                 $scope.adjustLinks(0);
+
+                $scope.hasRecievedResponseFromServer = false;
+                $scope.isServerError = false;
+                $scope.serverResponse = '';
             }
         } else {
             if (!$scope.isSignUpFormNotActive) { return; }
             else {
                 $scope.isSignUpFormNotActive = false;
                 $scope.adjustLinks(1);
+
+                $scope.err = {};
+                $scope.errMsg = {};
+
+                $scope.hasRecievedResponseFromServer = false;
+                $scope.isServerError = false;
+                $scope.serverResponse = '';
             }
         }
         
@@ -315,5 +321,71 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
 
     $scope.closeLoginModal = function (){
         $modalInstance.close();
+    }
+
+    $scope.loginSignUpUser = function () {
+        if ($scope.isSignUpFormNotActive) {
+
+        } else {
+            var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.addNewUser;
+
+            $http.post(requestName, $scope.user)
+                .success(function (data) {
+                    console.log('In Success');
+                    
+                    $scope.hasRecievedResponseFromServer = true;
+                    $scope.isServerError = false;
+                    $scope.serverResponse = data.msg;
+                })
+                .error(function (data) {
+
+                    $scope.err = data.err;
+                    $scope.errMsg = data.errMsg;
+
+                    if (AppUtils.isObjectEmpty(data.err) ) {
+                        $scope.hasRecievedResponseFromServer = true;
+                        $scope.isServerError = true;
+                        $scope.serverResponse = data.msg;
+                    } else {
+                        $scope.hasRecievedResponseFromServer = false;
+                        $scope.isServerError = false;
+                        $scope.serverResponse = '';
+                    }
+                });
+        }
+    };
+
+    /*Valdation Getters Begin*/
+    $scope.hasNameError = function () {
+        
+        return $scope.err.name ? '' : 'noHeight';
+    };
+
+    $scope.hasEmailError = function () {
+
+        return $scope.err.email ? '' : 'noHeight';
+    }
+
+    $scope.hasPasswordError = function () {
+        
+        return $scope.err.password ? '' : 'noHeight';
+    };
+
+    $scope.hasContactError = function (){
+
+        return $scope.err.contact ? '' : 'noHeight';
+    }
+    /*Validation Getters End*/
+
+    $scope.haveRecievedFromServer = function () {
+        if ($scope.hasRecievedResponseFromServer) {
+            if ($scope.isServerError) {
+                return 'bg-danger';
+            } else {
+                return 'bg-success';
+            }
+        }
+
+        return 'noHeight';
     }
 }

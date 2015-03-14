@@ -77,24 +77,18 @@ var signUpUser = function( req, res, next ) {
 	var user = {
 		name : req.body.name,
 		email : req.body.email,
-		credential : req.body.credential,
+		credential : req.body.password,
 		contact : req.body.contact,
 		role : 'User'
 	};
 
 	loginService.signUpUser( user, function( err, result ) {
 		if( err ) {
-			res.status( 500 )
-			   .json({
-			   		msg : err === appConstants.errorMessage.userExists ? appConstants.errorMessage.userExists : appConstants.errorMessage.someError,
-			   		data : null
-			   });
+            res.status(500)
+               .json( result )
 		} else {
-			res.status( 200 )
-				.json({
-					msg : appConstants.successMessage,
-					data : result
-				});
+            res.status(200)
+				.json(result);
 		}
 	});
 

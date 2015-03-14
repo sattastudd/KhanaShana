@@ -41,6 +41,15 @@ var prepareObjectForResponse = function( user, role ) {
 	return toReturn;
 };
 
+var stripObjectProperties = function (newUser) {
+    var toReturn = {};
+
+    toReturn.name = newUser.name;
+    toReturn.email = newUser.email;
+
+    return toReturn;
+};
+
 /*											Private Methods											*/
 /*==================================================================================================*/
 
@@ -52,30 +61,27 @@ var prepareObjectForResponse = function( user, role ) {
 var retrieveRoleIdForRole = function( role, isUserAlreadyInSystem, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of retrieveRoleIdForRole' );
 
-	if( isUserAlreadyInSystem ) {
-		callback( appConstants.errorMessage.userExists );
-	}
-	
-	var userDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
-
-	roleModelModule.setUpConnection( userDBConnection );
-	var RolesModel = roleModelModule.getRolesModel();
-
-	var query = {
-		name : role
-	};
-
-	console.log( role );
-
-	RolesModel.findOne( query, function( err, role ) {
-		if( err ) {
-			console.log( err );
-			callback( err );
-		} else {
-			console.log( role );
-			callback( null, role );
-		}
-	});
+    if (isUserAlreadyInSystem) {
+        callback(appConstants.appErrors.userExists);
+    } else {
+        
+        var userDBConnection = utils.getDBConnection(appConstants.appUsersDataBase);
+        
+        roleModelModule.setUpConnection(userDBConnection);
+        var RolesModel = roleModelModule.getRolesModel();
+        
+        var query = {
+            name : role
+        };
+        
+        RolesModel.findOne(query, function (err, role) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, role);
+            }
+        });
+    }
 
 	console.log( 'In LoginDBI | Finished Execution of retrieveRoleIdForRole' );
 };
@@ -101,11 +107,9 @@ var insertUser = function( userInfo, role, callback ) {
 
 	User.save( function( err, result ) {
 		if( err ) {
-			console.log( err );
 			callback( err );
 		} else {
-			console.log( result );
-			callback( null, result );
+			callback( null, stripObjectProperties( result) );
 		}
 	});
 	
@@ -196,10 +200,8 @@ var finishSignUpProcess = function( serviceLayerCallBack, errorFromWaterFalledMe
 	console.log( 'In LoginDBI | Starting Execution of finishSignUpProcess' );
 
 	if( errorFromWaterFalledMethod ) {
-		console.log( errorFromWaterFalledMethod );
 		serviceLayerCallBack( errorFromWaterFalledMethod );
 	} else {
-		console.log( resultFromWaterFalledMethod );
 		serviceLayerCallBack( null, resultFromWaterFalledMethod );
 	}
 

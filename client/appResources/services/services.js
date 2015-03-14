@@ -3,49 +3,54 @@
 define( [ 'angular', '../require/route-config' ], function(angular,
 		routeConfig, lazyDirectives) {
 
-	return angular.module( 'khanaShanaApp',
-			[ 'ngRoute', 'khanaShanaDirectives', 'ui.bootstrap' ],
-			function($compileProvider, $controllerProvider) {
+    return angular.module('khanaShanaApp',
+			['ngRoute', 'khanaShanaDirectives', 'ui.bootstrap'],
+			function ($compileProvider, $controllerProvider) {
+        
+        routeConfig.setCompileProvider($compileProvider);
+        routeConfig.setControllerProvider($controllerProvider);
+    })
+	.constant('AppConstants', {
+        
+        appName : 'KhanaShana',
+        httpServicePrefix : 'node/public'
 
-				routeConfig.setCompileProvider( $compileProvider );
-				routeConfig.setControllerProvider( $controllerProvider );
-			} )
-	.constant( 'AppConstants', {
+    })
+	.constant('RestRequests', {
+        
+        getDropDowns : 'globalData',
+        checkUserExistance : 'email',
+        addNewUser : 'users'
 
-		appName : 'KhanaShana',
-		httpServicePrefix : 'node/public'
+    })
+	.constant('RegExProvider',  {
+        
+        name : /^[a-zA-Z ]{1,}$/
 
-	} )
-	.constant( 'RestRequests', {
-
-		getDropDowns : 'globalData',
-		checkUserExistance : 'email'
-
-	} )
-	.constant( 'RegExProvider', {
-
-		name : /[a-zA-Z ]/
-
-	} )
+    })
+    .service('AppUtils', function ($filter){
+        this.isObjectEmpty = function (obj) {
+            var toJson = $filter('json')(obj, 0).replace(/(\r\n|\n|\r)/gm, '');
+            
+            if (toJson === '{}')
+                return true;
+            return false;
+        };
+    })
 	.service( 'ValidationService', function( RegExProvider ){
 		// True -> Validation Failed.
 		// False -> Validation Passed.
 
 		this.isNameNotValid = function( name, isMandatory ) {
 
-			if( isMandatory && ( name === '' || null == name ) ) {
+            if (isMandatory && (name === '' || null == name)) {
 				return false;
-			} else if( name === '' ){
+            } else if (name === '') {
 				return true;
 			}
 
 			var nameRegEx = RegExProvider.name;
-
-			if( !nameRegEx.test( name )){
-				return false;
-			}
-
-			return true;
+            return !nameRegEx.test(name);
 		}
 	} )
 	.service( 'DataStore', function() {

@@ -226,6 +226,73 @@ body {
         }
     }
 
+    .collapsibleServerResponse{
+        @include transition-mix(all, .3s);
+        height : 40px;
+        margin-bottom : 6px;
+        font-size : 14px;
+
+        .bg-danger, .bg-success{
+            height: 40px;
+            line-height : 40px;
+            padding-left : 15px;
+        }
+
+        &.bg-success, &.bg-danger{
+            background: none;
+        }
+
+        &.noHeight{
+            height : 0;
+            margin-bottom : 0;
+            overflow : hidden;
+
+            .noHeight{
+                height : 0;
+                overflow : hidden;
+            }
+        }
+    }
+
+    .collapsibleErrorMessage{
+        @include transition-mix(all, .3s);
+        height : 40px;
+
+        margin-bottom : 6px;
+        font-size : 14px;
+
+        &.noHeight{
+            height : 0;
+            margin-bottom : 0;
+            overflow : hidden;
+
+            .noHeight{
+                height : 0;
+                overflow : hidden;
+            }
+        }
+
+        .bg-danger{
+            height : 40px;
+            line-height : 40px;
+            padding-left : 15px;
+            border-radius : 2px;
+
+            position: relative;
+
+            &:after {
+                content: " ";
+                top: -23px;
+                left: 12%;
+                border: 12px solid transparent;
+                height: 0;
+                width: 0;
+                position: absolute;
+                border-bottom-color: #f2dede;
+            }
+        }
+    }
+
     
     .modal-header {
         background-color: $theme-primary-color;
