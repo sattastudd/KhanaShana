@@ -53,16 +53,10 @@ var isUserAlreadyInSystem = function( req, res, next ) {
 	loginService.isUserAlreadyInSystem( email, function( err, result ) {
 		if( err ) {
 			res.status( 500 )
-			   .json({
-			   		message : appConstants.errorMessage.someError,
-			   		data : false
-			   });
+			   .json( result );
 		} else {
 			res.status( 200 )
-				.json({
-					message : appConstants.successMessage,
-					data : result
-				});
+				.json(result);
 		}
 	});
 

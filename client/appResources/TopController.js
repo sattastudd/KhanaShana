@@ -248,19 +248,7 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
 
     /*Check if User Exists*/
     $scope.checkUserExistance = function(){
-    		if( $scope.isSignUpFormNotActive ) {
-    			return;
-    		} else {
-    			var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.checkUserExistance;
-
-    			$http.post( requestName, { email : $scope.user.email} )
-    			     .success( function( data ) {
-    			     	console.log( data );
-    			     })
-    			     .error ( function( data ){
-    			     	console.log( data );
-    			     });
-    		}
+    		
     };
 
     $scope.isNameNotValid = function(){
@@ -327,9 +315,17 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
         if ($scope.isSignUpFormNotActive) {
 
         } else {
-            var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.addNewUser;
+            $scope.hasAnyValidationFailed = false;
 
-            $http.post(requestName, $scope.user)
+            $scope.isNameNotValid(true);
+            $scope.isEmailNotValid(true);
+            $scope.areTwoPasswordsNotSame();
+            $scope.isContactNotValid(true);
+            
+            if (!$scope.hasAnyValidationFailed) {
+                var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.addNewUser;
+                
+                $http.post(requestName, $scope.user)
                 .success(function (data) {
                     console.log('In Success');
                     
@@ -338,11 +334,11 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
                     $scope.serverResponse = data.msg;
                 })
                 .error(function (data) {
-
+                    
                     $scope.err = data.err;
                     $scope.errMsg = data.errMsg;
-
-                    if (AppUtils.isObjectEmpty(data.err) ) {
+                    
+                    if (AppUtils.isObjectEmpty(data.err)) {
                         $scope.hasRecievedResponseFromServer = true;
                         $scope.isServerError = true;
                         $scope.serverResponse = data.msg;
@@ -352,6 +348,7 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
                         $scope.serverResponse = '';
                     }
                 });
+            }
         }
     };
 
@@ -371,12 +368,11 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
         return $scope.err.password ? '' : 'noHeight';
     };
 
-    $scope.hasContactError = function (){
-
+    $scope.hasContactError = function () {
+        
         return $scope.err.contact ? '' : 'noHeight';
-    }
-    /*Validation Getters End*/
-
+    };
+    
     $scope.haveRecievedFromServer = function () {
         if ($scope.hasRecievedResponseFromServer) {
             if ($scope.isServerError) {
@@ -385,7 +381,103 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
                 return 'bg-success';
             }
         }
-
+        
         return 'noHeight';
-    }
+    };
+
+    /*Validation Getters End*/
+    
+    /*Setting up Errors*/
+    $scope.hasAnyValidationFailed = false;
+
+    $scope.setUpError = function (err, errMsg, type, resultFromValidation) {
+        
+        $scope.hasAnyValidationFailed = true;
+
+        err[type] = resultFromValidation.result;
+        errMsg[type] = resultFromValidation.message;
+    };
+    
+    $scope.removeError = function (err, errMsg, type) {
+        err[type] = false;
+        errMsg[type] = '';
+    };
+
+    $scope.isNameNotValid = function (isMandatory) {
+        
+        if (!isMandatory) {
+            isMandatory = false;
+        }
+        
+        var result = ValidationService.isNameNotValid($scope.user.name, isMandatory);
+        
+        if (result.result) {
+            $scope.setUpError($scope.err, $scope.errMsg, 'name', result);
+        } else {
+            $scope.removeError($scope.err, $scope.errMsg, 'name');
+        }
+    };
+
+    $scope.isEmailNotValid = function (isMandatory) {
+        
+        if (!isMandatory) {
+            isMandatory = false;
+        }
+        
+        var result = ValidationService.isEmailNotValid($scope.user.email, isMandatory);
+        
+        if (result.result) {
+            $scope.setUpError($scope.err, $scope.errMsg, 'email', result);
+        } else {
+            $scope.removeError($scope.err, $scope.errMsg, 'email');
+
+            if ($scope.isSignUpFormNotActive) {
+                return;
+            } else {
+                var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.checkUserExistance;
+                
+                $http.post(requestName, { email : $scope.user.email })
+    			     .success(function (data) {
+                    if (data.result) {
+                        $scope.err.email = true;
+                        $scope.errMsg.email = data.msg;
+                    }
+                })
+    			     .error(function (data) {
+                    console.log(data);
+                });
+            }
+        }
+    };
+
+    $scope.isContactNotValid = function (isMandatory) {
+        
+        if(!isMandatory) {
+            isMandatory = false;
+        }
+        
+        var result = ValidationService.isContactNotValid($scope.user.contact, isMandatory);
+        
+        console.log(result);
+        
+        if (result.result) {
+            $scope.setUpError($scope.err, $scope.errMsg, 'contact', result);
+        } else {
+            $scope.removeError($scope.err, $scope.errMsg, 'contact');
+        }
+    };
+
+    $scope.areTwoPasswordsNotSame = function () {
+        var result = !($scope.user.password === $scope.user.cfmPassword)
+        
+        if (result) {
+            $scope.hasAnyValidationFailed = true;
+
+            $scope.err.password = true;
+            $scope.errMsg.password = 'Passwords do not match.';
+        } else {
+            $scope.err.password = false;
+            $scope.errMsg.password = '';
+        }
+    };
 }

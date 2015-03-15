@@ -25,7 +25,9 @@ define( [ 'angular', '../require/route-config' ], function(angular,
     })
 	.constant('RegExProvider',  {
         
-        name : /^[a-zA-Z ]{1,}$/
+        name: /^[a-zA-Z ]{1,}$/,
+        email: /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/,
+        contactNumber : /^[1-9][0-9]{1,10}$/
 
     })
     .service('AppUtils', function ($filter){
@@ -37,21 +39,48 @@ define( [ 'angular', '../require/route-config' ], function(angular,
             return false;
         };
     })
-	.service( 'ValidationService', function( RegExProvider ){
+    .service('ResponseMessage', function (){
+        this.errorMessage = {
+            someError : 'Some Error Occurred. Please try after some time.',
+            userExists: 'User Already Exists.',
+            name : 'Invalid Name',
+            email : 'Invalid Email',
+            mandatory : 'Field can not be left empty.',
+            contact : 'Invalid Contact Number.'
+            }
+    })
+	.service( 'ValidationService', function(ResponseMessage, RegExProvider ){
 		// True -> Validation Failed.
-		// False -> Validation Passed.
+        // False -> Validation Passed.
+        
+        var isFieldNotValid = function (value, isMandatory, regEx, mandatoryMessage, regExFailMessage) {
+            if (isMandatory && (value === '' || null == value)) {
+                return { result : true, message : mandatoryMessage };
+            } else if (value === '') {
+                return { result : false };
+            }
+            
+            var resultToReturn = !regEx.test(value);
+            
+            var message = resultToReturn ? regExFailMessage : '';
+            
+            return { result : resultToReturn, message : message };
+        };
+        
+        var mandatoryMessage = ResponseMessage.errorMessage.mandatory;
+        var errorMessage = ResponseMessage.errorMessage;
 
-		this.isNameNotValid = function( name, isMandatory ) {
+        this.isNameNotValid = function (name, isMandatory) {
+            return isFieldNotValid(name, isMandatory, RegExProvider.name, mandatoryMessage, errorMessage.name);
+        };
 
-            if (isMandatory && (name === '' || null == name)) {
-				return false;
-            } else if (name === '') {
-				return true;
-			}
+        this.isEmailNotValid = function (email, isMadatory) {
+            return isFieldNotValid(email, isMadatory, RegExProvider.email, mandatoryMessage, errorMessage.email);
+        };
 
-			var nameRegEx = RegExProvider.name;
-            return !nameRegEx.test(name);
-		}
+        this.isContactNotValid = function (contact, isMandatory) {
+            return isFieldNotValid(contact, isMandatory, RegExProvider.contactNumber, mandatoryMessage, errorMessage.contact);
+        };
 	} )
 	.service( 'DataStore', function() {
 

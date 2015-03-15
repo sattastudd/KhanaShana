@@ -141,14 +141,33 @@ var isUserAlreadyInSystem = function( email, callback ) {
 
 	/*Peform Validations here.
 	 */
-	loginDBI.isUserAlreadyInSystem( email, function( err, result ) {
-
-		if( err ) {
-			callback( err );
-		} else {
-			callback( null, result );
-		}
-	});
+    var responseFromValidatorForEmail = Validator.isEmailNotValid(email, true);
+    
+    if (responseFromValidatorForEmail.result) {
+        callback(ServerConstants.appErrors.validationError, {
+            data : null,
+            msg : ServerConstants.errorMessage.email
+        });
+    } else {
+        loginDBI.isUserAlreadyInSystem(email, function (err, result) {
+            
+            if (err) {
+                callback(err, {
+                    result : null,
+                    msg : ServerConstants.errorMessage.someError
+                });
+            } else {
+                if (result) {
+                    callback(null, {
+                        result : result,
+                        msg : ServerConstants.errorMessage.userExists
+                    });
+                } else {
+                    callback(null, { result : result, msg: null });
+                }
+            }
+        });
+    }
 	console.log('In LoginService  | Finished Execution of isUserAlreadyInSystem' );
 };
 

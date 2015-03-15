@@ -916,6 +916,28 @@ button.kh-primary {
 .input-group-addon {
     font-size: 18px;
 }
+
+.paymentBlock{		
+  padding-top: 5px;		
+  padding-bottom: 5px;		
+-}		
+.addressOk{		
+  padding-top: 10px;		
+}		
+.addressLineTitle1{		
+  background-color: #333;		
+  color: white;		
+}		
+.addressLineTitle2{		
+  background-color: green;		
+  color: white;		
+}		
+.addressLineContent{		
+  border: solid 1px gray;		
+}		
+.makingCenter{		
+  padding-bottom: 5px;		
+}
 /* styles for check out page ends */
 
 @media (max-width: 480px) {
