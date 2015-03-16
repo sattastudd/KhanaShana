@@ -19,23 +19,17 @@ var loginUser = function( req, res, next ) {
 
 	var user = {
 		email : req.body.email,
-		credential : req.body.credential
+		credential : req.body.password
 	};
 
 	loginService.loginUser( user, function( err, result ){
 
 		if( err ) {
 			res.status( 500 )
-				.json({
-					data : null,
-					message : 'Invalid Credentials'
-				});
+				.json(result);
 		} else {
 			res.status( 200 )
-				.json({
-					data : result,
-					message : 'Login Succcessfull'
-				});
+				.json(result);;
 		}
 
 	});

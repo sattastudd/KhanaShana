@@ -8,7 +8,9 @@ var appConstants = {
     
     appErrors : {
         userExists : 'UserExists',
-        validationError : 'ValidationError'
+        validationError : 'ValidationError',
+        internalError : 'InternalError',
+        invalidCredentials : 'InvalidCredentials'
     },
 
 	errorMessage : {
@@ -17,11 +19,14 @@ var appConstants = {
         name : 'Invalid Name',
         email : 'Invalid Email',
         mandatory : 'Field can not be left empty.',
-        contact : 'Invalid Contact Number.'
+        contact : 'Invalid Contact Number.',
+        fillDetails : 'Please correct all mistakes before proceeding.',
+        invalidCredentials : 'Invalid Credentials'
 	},
 
     successMessage : 'Ok',
-    userCreated : 'User Created Successfully.'
+    userCreated : 'User Created Successfully.',
+    loginSuccessful : 'Login Successful'
 };
 
 module.exports = appConstants;

@@ -63,7 +63,12 @@ var isContactNotValid = function (contact, isMandatory) {
     return isFieldNotValid(contact, isMandatory, mandatoryMessage, RegExProvider.contactNumber, ServerConstants.errorMessage.contact);
 }
 
+var isReceivedFieldNotValid = function( fieldValue, isMandatory ) {
+    return isFieldNotValid( fieldValue, isMandatory, mandatoryMessage );
+};
+
 exports.isNameNotValid = isNameNotValid;
 exports.isEmailNotValid = isEmailNotValid;
 exports.isPasswordNotValid = isPasswordNotValid;
 exports.isContactNotValid = isContactNotValid;
+exports.isReceivedFieldNotValid = isReceivedFieldNotValid;

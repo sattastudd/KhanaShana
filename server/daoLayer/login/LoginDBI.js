@@ -144,8 +144,7 @@ var areValidCredentials = function( user, callback ) {
 			callback( err, null );
 		} else {
 			if( null === result ) {
-				console.log('LoginDBI | Login Failed for ' + user.email);
-				callback( 'No Such Record Exists', null );
+				callback( appConstants.appErrors.invalidCredentials, null );
 			} else {
 				callback( null, result );
 			}

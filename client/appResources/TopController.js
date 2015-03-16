@@ -313,6 +313,39 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
 
     $scope.loginSignUpUser = function () {
         if ($scope.isSignUpFormNotActive) {
+            $scope.hasAnyValidationFailed = false;
+
+            $scope.isEmailNotValid( true );
+            $scope.isPasswordNotValid();
+
+            if( !$scope.hasAnyValidationFailed ){
+                var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.login;
+
+                $http.post( requestName, $scope.user )
+                    .success( function( data ) {
+                        console.log( data );
+
+                        console.log('In Success');
+
+                        $scope.hasRecievedResponseFromServer = true;
+                        $scope.isServerError = false;
+                        $scope.serverResponse = data.msg;
+                    })
+                    .error( function( data ) {
+                        $scope.err = data.err;
+                        $scope.errMsg = data.errMsg;
+
+                        if (AppUtils.isObjectEmpty(data.err)) {
+                            $scope.hasRecievedResponseFromServer = true;
+                            $scope.isServerError = true;
+                            $scope.serverResponse = data.msg;
+                        } else {
+                            $scope.hasRecievedResponseFromServer = false;
+                            $scope.isServerError = false;
+                            $scope.serverResponse = '';
+                        }
+                    });
+            }
 
         } else {
             $scope.hasAnyValidationFailed = false;
@@ -385,6 +418,13 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
         return 'noHeight';
     };
 
+    $scope.getRidOfErrorInLogin = function() {
+
+        if( $scope.isSignUpFormNotActive && $scope.err.password){
+            $scope.err.password = false;
+        }
+    };
+
     /*Validation Getters End*/
     
     /*Setting up Errors*/
@@ -434,7 +474,7 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
             if ($scope.isSignUpFormNotActive) {
                 return;
             } else {
-                var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.checkUserExistance;
+                var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.checkUserExistence;
                 
                 $http.post(requestName, { email : $scope.user.email })
     			     .success(function (data) {
@@ -475,6 +515,20 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
 
             $scope.err.password = true;
             $scope.errMsg.password = 'Passwords do not match.';
+        } else {
+            $scope.err.password = false;
+            $scope.errMsg.password = '';
+        }
+    };
+
+    $scope.isPasswordNotValid = function() {
+        var result = ValidationService.isFieldNotBlank( $scope.user.password );
+
+        if( !result ) {
+            $scope.hasAnyValidationFailed = true;
+
+            $scope.err.password = true;
+            $scope.errMsg.password = 'Field can not be left blank.';
         } else {
             $scope.err.password = false;
             $scope.errMsg.password = '';

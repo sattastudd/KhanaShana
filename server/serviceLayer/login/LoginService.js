@@ -47,17 +47,69 @@ var setUpError = function (err, errMsg, type, response) {
 var loginUser = function( user, callback ) {
 	console.log( 'In LoginService | Starting Execution of loginUser' );
 
-	/*Perform validtions here.
+	/*Perform validation here.
 	 */
-	loginDBI.loginUser( user, function( err, result ) {
+    var err = {};
+    var errMsg = {};
 
-		if( err ) {
-			console.log( err );
-			callback( err );
-		} else {
-			callback( null, result );
-		}
-	});
+    var hasAnyValidationFailed = false;
+
+    var responseFromValidatorForEmail = Validator.isEmailNotValid( user.email, true);
+    var responseFromValidationForPassword = Validator.isReceivedFieldNotValid( user.credential, true );
+
+    if( responseFromValidatorForEmail.result ) {
+        hasAnyValidationFailed = true;
+
+        setUpError(err, errMsg, 'email', responseFromValidatorForEmail);
+    }
+
+    if( responseFromValidationForPassword.result ) {
+        hasAnyValidationFailed = true;
+
+        setUpError(err, errMsg, 'password', responseFromValidationForPassword);
+    }
+
+    if( !hasAnyValidationFailed ) {
+        loginDBI.loginUser( user, function(err, result ) {
+            if( err ){
+                console.log( err );
+
+                if( err === ServerConstants.appErrors.invalidCredentials){
+                    console.log( 'In LoginService | Login failed for user ' + user.email);
+
+                    callback( ServerConstants.appErrors.invalidCredentials, {
+                        err : {},
+                        errMsg: {},
+                        data : null,
+                        msg : ServerConstants.errorMessage.invalidCredentials
+                    });
+                } else {
+                    callback(ServerConstants.appErrors.someError, {
+                        err: {},
+                        errMsg: {},
+                        data: null,
+                        msg: ServerConstants.errorMessage.someError
+                    });
+                }
+            } else {
+                var toReturn = {};
+
+                toReturn.user = result;
+                toReturn.err = {};
+                toReturn.errMsg = {};
+                toReturn.msg = ServerConstants.loginSuccessful;
+
+                callback( null, toReturn );
+            }
+        });
+    } else {
+        callback( ServerConstants.appErrors.validationError, {
+            err : err,
+            errMsg : errMsg,
+            data : null,
+            message :ServerConstants.errorMessage.fillDetails
+        });
+    }
 
 	console.log( 'In LoginService | Finished Execution of loginUser' );
 }
@@ -107,7 +159,7 @@ var signUpUser = function( userInfo, callback ) {
             err : err,
             errMsg : errMsg,
             data : null,
-            msg : 'Please correct all mistakes before proceeding.'
+            msg : ServerConstants.errorMessage.fillDetails
         });
 
         return;
@@ -124,6 +176,13 @@ var signUpUser = function( userInfo, callback ) {
                     data : null,
                     msg : ServerConstants.errorMessage.userExists
                 });
+            } else {
+                callback( ServerConstants.appErrors.internalError, {
+                    err : {},
+                    errMsg : {},
+                    data : null,
+                    msg : ServerConstants.errorMessage.someError
+                })
             }
 		} else {
             callback(null, {
