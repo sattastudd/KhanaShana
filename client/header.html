@@ -13,7 +13,8 @@
                 <div class="pull-right">
                     <span class="glyphicon glyphicon-search marRight5" ng-if="isSearchForMealInactive()" ng-click="showSearch()"></span>
                     <span class="glyphicon glyphicon-map-marker marRight5" ng-if="isSearchForLocationInactive()" ng-click="showLocationSearch()"></span>
-                    <span class="loginSpan" ng-click="openLoginModal()">Login</span>
+                    <span ng-if="!isUserLoggedIn()" class="loginSpan" ng-click="openLoginModal()">Login</span>
+                    <span ng-if="isUserLoggedIn()" class="glyphicon glyphicon-user"></span>
                 </div>
             </div>
         </div>
@@ -29,7 +30,8 @@
                         <div class="pull-right">
                             <span class="glyphicon glyphicon-search marRight5" title="Search" ng-if="isSearchForMealInactive()" ng-click="showOverLappedMealSearch()" ></span>
                             <span class="glyphicon glyphicon-map-marker marRight5" title="Location Search" ng-if="isSearchForLocationInactive()" ng-click="showOverLappedLocationSearch()"></span>
-                            <span class="loginSpan" ng-click="openLoginModal()">Login</span>
+                            <span ng-if="!isUserLoggedIn()" class="loginSpan" ng-click="openLoginModal()">Login</span>
+                            <span ng-if="isUserLoggedIn()" class="glyphicon glyphicon-user"></span>
                         </div>
                     </div>
                 </div>

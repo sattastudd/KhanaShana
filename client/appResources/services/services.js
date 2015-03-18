@@ -28,7 +28,7 @@
 
             name: /^[a-zA-Z ]{1,}$/,
             email: /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/,
-            contactNumber : /^[1-9][0-9]{1,10}$/
+            contactNumber : /^[1-9][0-9]{9,10}$/
 
         })
         .service('AppUtils', function ($filter){
@@ -112,5 +112,30 @@
 
                 return storedData;
             };
-        } );
+        } )
+        .service( 'authInterceptor', function ($rootScope, $q, $window) {
+            return {
+                request : function( config ) {
+                    config.headers = config.headers || {};
+
+                    console.log( config );
+
+                    if( $window.sessionStorage.getItem( 'token') ) {
+                        config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+
+                        console.log( 'Token Attached' );
+                    } else {
+                        console.log( 'No Token Found' );
+                    }
+
+                    return config;
+                },
+
+                responseError : function( rejection ){
+                    console.log( rejection ) ;
+
+                    return $q.reject(rejection);
+                }
+            };
+        });
     } );

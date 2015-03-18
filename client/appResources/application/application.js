@@ -45,7 +45,8 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         ))
         //Will use it later.
         //Will know how. 
-        //$httpProvider.interceptors.push("customHttpInterceptor");
+        $httpProvider.interceptors.push("authInterceptor");
+
         return app;
     });
 });

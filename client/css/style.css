@@ -1,10 +1,9 @@
-﻿/*Cuisine Image*/
+/*Cuisine Image*/
 /*Transition Constants*/
 /*Min-ins*/
 @font-face {
   font-family: Avdira;
-  src: url('fonts/Riven.woff'); }
-
+  src: url("fonts/Riven.woff"); }
 input {
   font-family: 'Segoe UI'; }
 
@@ -291,6 +290,9 @@ body {
 .tpad5 {
   padding-top: 5px; }
 
+.tpad7 {
+  padding-top: 7px; }
+
 .tpad15 {
   padding-top: 15px; }
 
@@ -337,7 +339,7 @@ body {
     font-size: 59px; }
 
 .bannerSearch {
-  font-family: 'Segoe UI', sans-serif; }
+  font-family: "Segoe UI", sans-serif; }
   .bannerSearch input {
     height: 50px;
     font-size: 19px;
@@ -664,12 +666,31 @@ button.kh-primary {
 .input-group-addon {
   font-size: 18px; }
 
+.paymentBlock {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.addressOk {
+  padding-top: 10px; }
+
+.addressLineTitle1 {
+  background-color: #333;
+  color: white; }
+
+.addressLineTitle2 {
+  background-color: green;
+  color: white; }
+
+.addressLineContent {
+  border: solid 1px gray; }
+
+.makingCenter {
+  padding-bottom: 5px; }
+
 /* styles for check out page ends */
 @media (max-width: 480px) {
   .welcomeText {
-    margin-top: 68px; }
- }
-
+    margin-top: 68px; } }
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px; }
@@ -697,7 +718,7 @@ button.kh-primary {
     width: 90px; }
 
   .restTitle {
-    padding-top: 5px;
+    padding-top: 05px;
     font-size: 18px; }
 
   .paraNoMargin {
@@ -737,19 +758,13 @@ button.kh-primary {
 
   .filterGlyph {
     font-size: 9px;
-    padding-right: 15px; }
- }
-
+    padding-right: 15px; } }
 @media (min-width: 992px) {
   .restTitleContent {
-    padding-left: 26px; }
- }
-
+    padding-left: 26px; } }
 @media (min-width: 1200px) {
   .restTitleContent {
-    padding-left: 7px; }
- }
-
+    padding-left: 7px; } }
 /*Animation*/
 .glyphicon-heart {
   font-size: 34px;
@@ -763,32 +778,23 @@ button.kh-primary {
 @-webkit-keyframes beat {
   0% {
     -webkit-transform: scale(1); }
-
   10% {
     -webkit-transform: scale(1.1); }
-
   16% {
     -webkit-transform: scale(0.95); }
-
   25% {
     -webkit-transform: scale(1.2); }
-
   32% {
     -webkit-transform: scale(1); }
-
   40% {
     -webkit-transform: scale(0.95); }
-
   50% {
     -webkit-transform: scale(1); }
-
   100% {
     -webkit-transform: scale(1); } }
-
 @media (min-width: 320px) {
   .glyphicon-heart {
     font-size: 15px;
-    padding-top: 4px; }
- }
+    padding-top: 4px; } }
 
 /*# sourceMappingURL=style.css.map */

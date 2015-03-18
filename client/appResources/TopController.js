@@ -208,9 +208,19 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
             contentContainer.removeClass('blurredBack');
         });
     };
+
+    $scope.isUserLoggedIn = function() {
+        if( DataStore.getData( 'loggedInUser' )){
+            console.log('Returning true');
+            return true;
+        } else {
+            console.log('Returning false');
+            return false;
+        }
+    };
 }
 
-function LoginModalController($scope, $modalInstance, $http, AppConstants, RestRequests, ValidationService, AppUtils){
+function LoginModalController($scope, $modalInstance, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
 	$scope.user = {
 		name : '',
 		email : '',
@@ -240,20 +250,10 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
     $scope.isSignUpFormNotActive = true;
     
     /*Depending upon isSignUpFormNotActive, we have to make sure sign up fields are at no height.*/
-    $scope.getCSSCLassDependingOnSignUp = function (){
+    $scope.getCSSCLassDependingOnSignUp = function () {
         if ($scope.isSignUpFormNotActive)
             return 'noHeight';
         return '';
-    }
-
-    /*Check if User Exists*/
-    $scope.checkUserExistance = function(){
-    		
-    };
-
-    $scope.isNameNotValid = function(){
-
-    		$scope.err.name = ValidationService.isNameNotValid( $scope.user.name, false ); 
     };
     
     /*Switch over to other form type.*/
@@ -330,6 +330,15 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
                         $scope.hasRecievedResponseFromServer = true;
                         $scope.isServerError = false;
                         $scope.serverResponse = data.msg;
+
+                        $window.sessionStorage.token = data.user.token;
+
+                        DataStore.storeData( 'loggedInUser', data.user );
+
+                        setTimeout( function() {
+                                $scope.closeLoginModal();
+                        }, 2000 );
+
                     })
                     .error( function( data ) {
                         $scope.err = data.err;
@@ -361,6 +370,8 @@ function LoginModalController($scope, $modalInstance, $http, AppConstants, RestR
                 $http.post(requestName, $scope.user)
                 .success(function (data) {
                     console.log('In Success');
+
+                    $scope.changeFormType( 'login' );
                     
                     $scope.hasRecievedResponseFromServer = true;
                     $scope.isServerError = false;

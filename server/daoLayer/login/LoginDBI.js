@@ -4,7 +4,6 @@ var credentials = require( '../../../credentials' );
 var appConstants = require( '../../constants/ServerConstants' );
 
 var userModelModule = require( '../../models/login/usersModel' );
-var roleModelModule = require( '../../models/login/rolesModel' );
 
 var async = require( 'async' );
 var jwt = require( 'jwt-simple' );
@@ -17,7 +16,7 @@ var generateToken = function( user ) {
 };
 
 /* This method receives an object.
- * 1) Retrives name, email from the object received.
+ * 1) Retrieves name, email from the object received.
  * 2) Creates the role field in a new object.
  * 3) Creates an expiry date for the token to be generated.
  * 4) Generates the token using above information.
@@ -25,20 +24,26 @@ var generateToken = function( user ) {
  * 6) Deletes expiry date from the object.
  * 7) Returns object.
  */
-var prepareObjectForResponse = function( user, role ) {
+var prepareObjectForResponse = function( user ) {
 	var toReturn = {};
 
-	toReturn.name = user.name;
-	toReturn.email = user.email;
-	toReturn.role = role;
-	toReturn.exp = (new Date()).getTime() + (1000*60*60);
-	var token = generateToken( toReturn );
+    toReturn.email = user.email;
+    toReturn.exp = (new Date()).getTime() + (1000*60*60);
+    toReturn.role = user.role;
 
-	toReturn.token = token;
+    var token = generateToken( toReturn );
 
-	delete toReturn.exp;
+    delete toReturn.role;
+    delete toReturn.exp;
+
+    toReturn.name = user.name;
+    toReturn.token = token;
 
 	return toReturn;
+};
+
+var createCaseInSensitiveRegexString = function( value ) {
+    return new RegExp( '^' + value + '$', 'i');
 };
 
 var stripObjectProperties = function (newUser) {
@@ -53,43 +58,10 @@ var stripObjectProperties = function (newUser) {
 /*											Private Methods											*/
 /*==================================================================================================*/
 
-/* Private Method to retrive Role object Id for the desired Role.
- * role = role for which id is to be retrieved.
- * callback = callback for the async module.
- * Part of Sign UP
- */
-var retrieveRoleIdForRole = function( role, isUserAlreadyInSystem, callback ) {
-	console.log( 'In LoginDBI | Starting Execution of retrieveRoleIdForRole' );
-
-    if (isUserAlreadyInSystem) {
-        callback(appConstants.appErrors.userExists);
-    } else {
-        
-        var userDBConnection = utils.getDBConnection(appConstants.appUsersDataBase);
-        
-        roleModelModule.setUpConnection(userDBConnection);
-        var RolesModel = roleModelModule.getRolesModel();
-        
-        var query = {
-            name : role
-        };
-        
-        RolesModel.findOne(query, function (err, role) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null, role);
-            }
-        });
-    }
-
-	console.log( 'In LoginDBI | Finished Execution of retrieveRoleIdForRole' );
-};
-
 /* Private method to insert info into DB.
  * Part of Sign UP
  */
-var insertUser = function( userInfo, role, callback ) {
+var insertUser = function( userInfo, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of insertUser' );
 
 	var userDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
@@ -99,10 +71,10 @@ var insertUser = function( userInfo, role, callback ) {
 
 	var User = new UserModel({
 		name : userInfo.name,
-		email : userInfo.email,
+		email : userInfo.email.toLowerCase(),
 		credential : userInfo.credential,
 		contact : userInfo.contact,
-		role_id : role._id
+		role_id : 'user'
 	});
 
 	User.save( function( err, result ) {
@@ -115,119 +87,24 @@ var insertUser = function( userInfo, role, callback ) {
 	
 	console.log( 'In LoginDBI | Finished Execution of insertUser' );
 };
-
-/* This method checks if there exists a user with provided email and credential details.
- * Part of Login
- */
-var areValidCredentials = function( user, callback ) {
-
-	console.log( 'In LoginDBI | Starting execution of areValidCredentials' );
-
-	var usersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
-
-	userModelModule.setUpConnection( usersDBConnection );
-	var UserModel = userModelModule.getUsersModel();
-
-	var query = {
-		email : user.email,
-		credential : user.credential
-	};
-
-	var projection = {
-		'_id' : false,
-		credential : false
-	};
-
-	UserModel.findOne( query, projection, function( err, result ) {
-		
-		if( err ) {
-			callback( err, null );
-		} else {
-			if( null === result ) {
-				callback( appConstants.appErrors.invalidCredentials, null );
-			} else {
-				callback( null, result );
-			}
-		}
-	} );
-
-	console.log('In LoginDBI | Finished Execution of areValidCredentials' );
-};
-
-/* This method retrives the role for the corrosponing role id.
- * Part of Login.
- */
-var getRoleForId = function( resultFromLogin, callback ) {
-
-	console.log('In LoginDBI | Starting Execution of getRoleForId' );
-
-	var usersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
-
-	roleModelModule.setUpConnection( usersDBConnection );
-	var RolesModel = roleModelModule.getRolesModel();
-
-	var ObjectId = roleModelModule.getObjectIdObject();
-
-	var query = { '_id' : new ObjectId( resultFromLogin.role_id ) };
-	var projection = { '_id' : false };
-
-	RolesModel.findOne( query, projection, function( err, result ) {
-
-		if( err ) {
-			callback( err, null );
-		} else {
-			if( result === null ) {
-				callback( 'No Such Record Exists', null );
-			} else {
-
-				callback( null, resultFromLogin, result.name );
-			}
-		}
-	});
-
-	console.log('In LoginDBI | Finished Execution of getRoleForId' );
-};
-
 /*										Final Callback Methods											*/
 /*==================================================================================================*/
 
 /* This private method would be executed when Sign Up Process is finally completed.
  * Due to conditions, we would return back to service layer in this method only.
  */
-var finishSignUpProcess = function( serviceLayerCallBack, errorFromWaterFalledMethod, resultFromWaterFalledMethod ) {
-	
+var finishSignUpProcess = function( serviceLayerCallBack, errorFromWaterFallenMethod, resultFromWaterFallenMethod ) {
+
 	console.log( 'In LoginDBI | Starting Execution of finishSignUpProcess' );
 
-	if( errorFromWaterFalledMethod ) {
-		serviceLayerCallBack( errorFromWaterFalledMethod );
+	if( errorFromWaterFallenMethod ) {
+		serviceLayerCallBack( errorFromWaterFallenMethod );
 	} else {
-		serviceLayerCallBack( null, resultFromWaterFalledMethod );
+		serviceLayerCallBack( null, resultFromWaterFallenMethod );
 	}
 
 	console.log( 'In LoginDBI | Finishing Execution of finishSignUpProcess' );
 };
-
-/* This private method would be executed after login is done and user's role has been retrived.
- * We will call callback received from service layer.
- */
-var finishLoginProcess = function(callbackFromService, err, user, role ) {
-	console.log('In LoginDBI | Starting Execution of finishLoginProcess');
-
-	if( err ) {
-
-		callbackFromService( err );
-
-	} else {
-
-
-		var toReturn = prepareObjectForResponse( user, role );
-
-		callbackFromService( null, toReturn );
-	}
-
-	console.log('In LoginDBI | Finished Execution of finishLoginProcess');
-};
-
 
 /*											Public Methods											*/
 /*==================================================================================================*/
@@ -241,9 +118,8 @@ var signUpUser = function( userInfo, callback ) {
 
 	async.waterfall([
 		async.apply( isUserAlreadyInSystem, userInfo.email ),
-		async.apply( retrieveRoleIdForRole, 'User' ),
 		async.apply( insertUser, userInfo)
-		], 
+		],
 
 		async.apply( finishSignUpProcess, callback )
 	);
@@ -270,7 +146,7 @@ var isUserAlreadyInSystem = function( email, callback ) {
 	var UserModel = userModelModule.getUsersModel();
 
 	var query = {
-		email : email
+		email : createCaseInSensitiveRegexString(email),
 	};
 
 	var projection = {
@@ -310,11 +186,34 @@ var isUserAlreadyInSystem = function( email, callback ) {
 var loginUser = function( user, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of loginUser' );
 
-	async.waterfall([
-		async.apply( areValidCredentials, user),
-		getRoleForId
-	],
-	async.apply( finishLoginProcess, callback ));
+    var usersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
+
+    userModelModule.setUpConnection( usersDBConnection );
+    var UserModel = userModelModule.getUsersModel();
+
+    var query = {
+        email : createCaseInSensitiveRegexString( user.email ),
+        credential : user.credential
+    };
+
+    var projection = {
+        '_id' : false,
+        credential : false
+    };
+
+    UserModel.findOne( query, projection, function( err, result ) {
+
+        if( err ) {
+            callback( err, null );
+        } else {
+            if( null === result ) {
+                callback( appConstants.appErrors.invalidCredentials, null );
+            } else {
+                console.log( result );
+                callback( null, prepareObjectForResponse( result ) );
+            }
+        }
+    } );
 
 	console.log( 'In LoginDBI | Finished Execution of loginUser' );
 }
