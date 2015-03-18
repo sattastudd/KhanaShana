@@ -688,6 +688,46 @@ button.kh-primary {
   padding-bottom: 5px; }
 
 /* styles for check out page ends */
+
+ /* styles for user restaurant home page starts */
+
+  .bottomBorder{
+    border-bottom: solid 1px gainsboro;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #DC141B;
+    cursor: pointer;
+    padding-left: 10px;
+ }
+  .nav-tabs {
+    position: fixed;
+ }
+ .tpad40{
+    padding-top: 40px;
+ }
+ .lpad10{
+    padding-left: 10px;
+ }
+ .dishList{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: solid 1px gainsboro;
+    cursor: pointer;
+    color: green;
+ }
+ .dishPrice{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: solid 1px gainsboro;
+    cursor: pointer;
+    color: #222;
+ }
+ .menuActiveClass{
+    background-color: wheat;
+ }
+
+ /* styles for user restaurant home page ends */
+
 @media (max-width: 480px) {
   .welcomeText {
     margin-top: 68px; } }
