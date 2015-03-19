@@ -167,19 +167,43 @@ body {
             font-size: $theme-glyphicon-size;
             line-height: 50px;
             vertical-align: middle;
-        }
 
-        span.loginSpan {
-            line-height: 20px;
-            font-size: 20px;
-            display: inline-block;
-            padding: 14px 15px;
-            border-bottom: 2px solid $theme-primary-color;
-            @include transition-mix(all, $theme-fast-reaction);
-            cursor: pointer;
+            &.loginSpan{
+              line-height: 20px;
+              font-size: 20px;
+              display: inline-block;
+              padding: 14px 15px;
+              border-bottom: 2px solid $theme-primary-color;
+              @include transition-mix(all, $theme-fast-reaction);
+              cursor: pointer;
 
-            &:hover {
+              &:hover {
                 border-bottom: 2px solid $theme-primary-font-color;
+              }
+            }
+
+            &.userIcon{
+              cursor : pointer;
+
+              font-family : $theme-secondary-font;
+
+              ul.dropdown-menu{
+                right : 0;
+                left : 227px;
+
+                background-color: $theme-background-color;
+
+                li{
+                    a{
+                      text-align:  right;
+
+                      &:hover{
+                        background-color: $theme-primary-color;
+                        color: $theme-primary-font-color;
+                      }
+                    }
+                }
+              }
             }
         }
     }
@@ -584,8 +608,6 @@ button.kh-primary {
     margin-bottom: 30px;
     overflow: hidden;
 
-
-
     img {
         margin-bottom: 30px;
         top: 0;
@@ -944,6 +966,45 @@ button.kh-primary {
   padding-bottom: 5px;		
 }
 /* styles for check out page ends */
+
+/* styles for user restaurant home page starts */
+
+.bottomBorder{
+  border-bottom: solid 1px gainsboro;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  color: #DC141B;
+  cursor: pointer;
+  padding-left: 10px;
+}
+.nav-tabs {
+  position: fixed;
+}
+.tpad40{
+  padding-top: 40px;
+}
+.lpad10{
+  padding-left: 10px;
+}
+.dishList{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: solid 1px gainsboro;
+  cursor: pointer;
+  color: green;
+}
+.dishPrice{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: solid 1px gainsboro;
+  cursor: pointer;
+  color: #222;
+}
+.menuActiveClass{
+  background-color: wheat;
+}
+
+/* styles for user restaurant home page ends */
 
 @media (max-width: 480px) {
     .welcomeText {

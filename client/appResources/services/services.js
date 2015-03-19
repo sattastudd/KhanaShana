@@ -120,7 +120,7 @@
 
                     console.log( config );
 
-                    if( $window.sessionStorage.getItem( 'token') ) {
+                    if( $window.localStorage.getItem( 'token') ) {
                         config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
 
                         console.log( 'Token Attached' );

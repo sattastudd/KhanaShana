@@ -6,7 +6,7 @@ define( [], function() {
 	return TopController;
 } );
 
-function parentController($scope, $http, DataStore, AppConstants, RestRequests, $modal) {
+function parentController($scope, $http, DataStore, AppConstants, RestRequests, $modal, $window) {
 
 	console.log( 'In parent Controller ' );
 
@@ -185,10 +185,12 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 		return imgUrl[0] + '-lg.' + imgUrl[1];
     }
 
+    $scope.openOption = false;
+
     /*OpenLoginModal*/
     $scope.openLoginModal = function () {
         var modalInstance = $modal.open({
-            templateUrl : 'views/login/loginModal.html',
+            templateUrl : 'loginModal.html',
             controller : 'LoginModalController',
             backdrop : 'static',
             windowClass    : 'darkTransparentBack',
@@ -210,13 +212,19 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
     };
 
     $scope.isUserLoggedIn = function() {
-        if( DataStore.getData( 'loggedInUser' )){
+        if( DataStore.getData( 'loggedInUser' ) || $window.localStorage.user ){
             console.log('Returning true');
             return true;
         } else {
             console.log('Returning false');
             return false;
         }
+    };
+
+    $scope.getUserName = function () {
+        var user = DataStore.getData( 'loggedInUser' ) || JSON.parse($window.localStorage.user);
+
+        return user.name;
     };
 }
 
@@ -331,7 +339,10 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
                         $scope.isServerError = false;
                         $scope.serverResponse = data.msg;
 
-                        $window.sessionStorage.token = data.user.token;
+                        $window.localStorage.token = data.user.token;
+
+                        delete data.user.token;
+                        $window.localStorage.user = JSON.stringify(data.user);
 
                         DataStore.storeData( 'loggedInUser', data.user );
 
