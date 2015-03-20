@@ -978,7 +978,9 @@ button.kh-primary {
   padding-left: 10px;
 }
 .nav-tabs {
-  position: fixed;
+  position: fixed; 
+  z-index: 2;
+  background-color: #FAF8FD
 }
 .tpad40{
   padding-top: 40px;
@@ -1003,6 +1005,17 @@ button.kh-primary {
 .menuActiveClass{
   background-color: wheat;
 }
+.restImage{
+    background: url("../images/restPic.jpg") no-repeat top center;
+    min-height: 300px;
+    margin-top: 7px;
+    width: 100%;
+    background-position-x: 15px;
+    margin-bottom: 45px;
+ }
+ .restTitleName{
+    color: white;
+ }
 
 /* styles for user restaurant home page ends */
 
