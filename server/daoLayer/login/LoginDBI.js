@@ -42,10 +42,14 @@ var prepareObjectForResponse = function( user ) {
 	return toReturn;
 };
 
+/* Private method to generate case insensitive Regex.
+ */
 var createCaseInSensitiveRegexString = function( value ) {
     return new RegExp( '^' + value + '$', 'i');
 };
 
+/* Private method to strip properties unnecessary properties like id and details.
+ */
 var stripObjectProperties = function (newUser) {
     var toReturn = {};
 
@@ -61,7 +65,7 @@ var stripObjectProperties = function (newUser) {
 /* Private method to insert info into DB.
  * Part of Sign UP
  */
-var insertUser = function( userInfo, callback ) {
+var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of insertUser' );
 
 	var userDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
@@ -74,7 +78,8 @@ var insertUser = function( userInfo, callback ) {
 		email : userInfo.email.toLowerCase(),
 		credential : userInfo.credential,
 		contact : userInfo.contact,
-		role_id : 'user'
+		role : 'user',
+        profile_created_date : (new Date()).getTime()
 	});
 
 	User.save( function( err, result ) {
@@ -216,7 +221,7 @@ var loginUser = function( user, callback ) {
     } );
 
 	console.log( 'In LoginDBI | Finished Execution of loginUser' );
-}
+};
 
 /*										Exports In Progress Methods									*/
 /*==================================================================================================*/
