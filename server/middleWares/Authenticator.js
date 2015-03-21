@@ -17,16 +17,20 @@ var validateToken = function( req, res, next ) {
 
 		res.status( 401 )
 		   .json({
-		   	error : 'No Authentication Token Found',
-			message : 'TE'
+                err : {},
+                errMsg : {},
+                data : 'TE',
+                msg : 'Invalid token'
 		});
 	} else if ( token.indexOf( 'Bearer ' ) !== 0 ) {
 		console.log('Authenticator | Invalid Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
 
 		res.status( 401 )
 		   .json({
-		   	error : 'Invalid Authentication Token',
-			message : 'IE'
+                err : {},
+                errMsg : {},
+                data : 'IE',
+                msg : 'Invalid Authentication Token'
 		});
 	} else {
 		
@@ -36,10 +40,12 @@ var validateToken = function( req, res, next ) {
 			var decoded = jwt.decode( token, credentials.jwtSecret );
 
 			if( decoded.exp <= (new Date()).getTime() ){
-				res.status( 400 )
+				res.status( 401 )
 				   .json({
-				   	error : 'Token Expired',
-					message : 'TE'
+                        err : {},
+                        errMsg : {},
+                        data : 'TE',
+                        msg : 'Token Expired'
 				});
 			} else {
 				req.user = decoded;
@@ -51,8 +57,10 @@ var validateToken = function( req, res, next ) {
 
 			res.status( 401 )
 			   .json({
-			   	error : 'Invalid Authentication Token',
-				message : 'IE'
+                    err : {},
+                    errMsg : {},
+                    data : 'IE',
+                    msg : 'Invalid Authentication Token'
 			});
 		}
 	}

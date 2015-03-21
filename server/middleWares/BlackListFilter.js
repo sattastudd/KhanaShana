@@ -9,12 +9,14 @@ var BlackListFilter = function( req, res, next ) {
 	token = token.substr( 7 );
 
 	if( utils.isBlackListedToken( token ) ) {
-		console.log('BlackListFilter | BlackListed Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
+		console.log('BlackListFilter | BlackListed Token Found from %s for user %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, req.user.email, new Date(), req.originalUrl );
 
 		res.status( 401 )
 		   .json({
-		   	error : 'Session Expired',
-			message : 'SE'
+                err : {},
+                errMsg : {},
+                data : 'SE',
+                msg : 'Session Expired'
 		});
 	} else {
 		next();

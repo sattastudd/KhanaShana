@@ -184,14 +184,29 @@ body {
 
             &.userIcon{
               cursor : pointer;
+              line-height : 40px;
 
               font-family : $theme-secondary-font;
 
               ul.dropdown-menu{
                 right : 0;
-                left : 227px;
+                left : auto;
+
+                top : 114%;
+
+                height : 180px;
+                display: block;
+
+                overflow:  hidden;
+                @include transition-mix(all, .3s);
 
                 background-color: $theme-background-color;
+
+                &.noHeight{
+                  padding : 0;
+                  height : 0;
+                  border: 0;
+                }
 
                 li{
                     a{
@@ -200,6 +215,14 @@ body {
                       &:hover{
                         background-color: $theme-primary-color;
                         color: $theme-primary-font-color;
+                      }
+                    }
+
+                    a.noHover{
+                      cursor:  default;
+                      &:hover{
+                        background-color: $theme-background-color;
+                        color: #000;
                       }
                     }
                 }

@@ -85,6 +85,7 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 		smSearchBar.focus();
 	};
 
+    /* Activate Location Search */
 	$scope.showLocationSearch = function() {
 
 		/* We don't need you anymore searchText. */
@@ -183,9 +184,7 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 		var imgUrl = url.split( '.' );
 
 		return imgUrl[0] + '-lg.' + imgUrl[1];
-    }
-
-    $scope.openOption = false;
+    };
 
     /*OpenLoginModal*/
     $scope.openLoginModal = function () {
@@ -211,20 +210,56 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
         });
     };
 
+    /* We have stored use login info in window.localStorage.
+     * LocalStorage has advantages over others, as data will remain for infinite time.
+     * We need to delete it manually.
+     * 
+     * Method would return true, if sucd data exists.
+     */
     $scope.isUserLoggedIn = function() {
         if( DataStore.getData( 'loggedInUser' ) || $window.localStorage.user ){
-            console.log('Returning true');
             return true;
         } else {
-            console.log('Returning false');
             return false;
         }
     };
 
+    /* Retrieve user name from the localStorage.
+     * LocalStorage is restricted to storing only string.
+     * We need to have some other mechanism for it.
+     * So, while storing the data into localStorage,
+     * We stringify the object, store it in string form,
+     * And while reading, parse it into an object.
+     */
     $scope.getUserName = function () {
         var user = DataStore.getData( 'loggedInUser' ) || JSON.parse($window.localStorage.user);
 
         return user.name;
+    };
+
+    $scope.isUserContextMenuOpen = false;
+
+    $scope.toggleUserContextMenu = function () {
+        $scope.isUserContextMenuOpen = !$scope.isUserContextMenuOpen;
+    };
+
+    $scope.getClassForUserContext = function () {
+        return $scope.isUserContextMenuOpen ? '' : 'noHeight';
+    };
+
+    $scope.logoutUser = function () {
+        $http.post( 'node' + '/' + 'user/logout' , {})
+            .success( function ( data ) {
+
+                console.log( data.msg );
+
+                DataStore.removeData( 'loggedInUser' );
+                delete $window.localStorage['user'];
+                delete $window.localStorage['token'];
+            })
+            .error( function ( data ) {
+                console.log( data ) ;
+            });
     };
 }
 
@@ -253,8 +288,10 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
 		contact : ''
     };
     
+    /* Is there any response from server.*/
     $scope.hasRecievedResponseFromServer = false;
 
+    /* Which form is active right now ? */
     $scope.isSignUpFormNotActive = true;
     
     /*Depending upon isSignUpFormNotActive, we have to make sure sign up fields are at no height.*/
@@ -268,14 +305,18 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
     $scope.changeFormType = function (type) {
           
         if (type === 'login') {
+            /* If login is already active ? */
             if ($scope.isSignUpFormNotActive) { return; }
             else {
+
                 $scope.isSignUpFormNotActive = true;
                 
+                /* It is important that we forget all error before moving on. */
                 $scope.err = {};
                 $scope.errMsg = {};
                 $scope.adjustLinks(0);
 
+                /* So, is to forget serverResponses */
                 $scope.hasRecievedResponseFromServer = false;
                 $scope.isServerError = false;
                 $scope.serverResponse = '';
@@ -286,9 +327,11 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
                 $scope.isSignUpFormNotActive = false;
                 $scope.adjustLinks(1);
 
+                /* It is important that we forget all error before moving on. */
                 $scope.err = {};
                 $scope.errMsg = {};
 
+                /* So, is to forget serverResponses */
                 $scope.hasRecievedResponseFromServer = false;
                 $scope.isServerError = false;
                 $scope.serverResponse = '';
@@ -315,14 +358,19 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
         loginLinks.children().eq(index).addClass('active');
     }
 
+    /* Close Login Modal. */
     $scope.closeLoginModal = function (){
         $modalInstance.close();
     }
 
+    /* This method acts for login and sign up both.
+     */
     $scope.loginSignUpUser = function () {
+        /* Which form is active right now ? */
         if ($scope.isSignUpFormNotActive) {
             $scope.hasAnyValidationFailed = false;
 
+            /* Now, this is compulsory check.*/
             $scope.isEmailNotValid( true );
             $scope.isPasswordNotValid();
 
@@ -339,6 +387,7 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
                         $scope.isServerError = false;
                         $scope.serverResponse = data.msg;
 
+                        /* Storing token into localStorage */
                         $window.localStorage.token = data.user.token;
 
                         delete data.user.token;

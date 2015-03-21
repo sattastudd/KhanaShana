@@ -98,8 +98,6 @@
             };
 
             this.getData = function(key) {
-
-                console.log( storedData );
                 return storedData[key];
             };
 
@@ -118,10 +116,11 @@
                 request : function( config ) {
                     config.headers = config.headers || {};
 
-                    console.log( config );
+                    if( config.url.indexOf( 'node/' ) !== 0)
+                        return config;
 
                     if( $window.localStorage.getItem( 'token') ) {
-                        config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+                        config.headers.Authorization = 'Bearer ' + $window.localStorage.token;
 
                         console.log( 'Token Attached' );
                     } else {

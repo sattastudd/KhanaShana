@@ -3,10 +3,14 @@
  * forgot password
  * logout
  * userNameCheck
+ *
+ * Controllers have only task.
+ * pick values from request object, and send them to service.
+ * Where service validates and does everything.
+ * And on response, controller happily sends the response to client.
  */
 
 var loginService = require( '../serviceLayer/login/LoginService' );
-var appConstants = require( '../constants/ServerConstants' );
 
 
 /* This method is the landing point of control from the route.
@@ -57,6 +61,8 @@ var isUserAlreadyInSystem = function( req, res, next ) {
 	console.log( 'In LoginController | Finished Execution of isUserAlreadyInSystem ');
 };
 
+/* Method to create a new user.
+ */
 var signUpUser = function( req, res, next ) {
 
 	console.log( 'In LoginController | Starting Execution of signUpUser ' );
@@ -83,6 +89,27 @@ var signUpUser = function( req, res, next ) {
 	console.log( 'In LoginController | Finished Execution of signUpUser ');
 };
 
+/* Method to blacklist a token */
+var logoutUser = function (req, res, next ) {
+    console.log( 'In LoginController | Starting Execution of logoutUser' );
+
+    var token = req.headers.authorization;
+    token = token.substr( 7 );
+
+    loginService.logoutUser( token, function( err, result ) {
+        if( err ) {
+            res.status( 500 )
+                .json( result );
+        } else {
+            res.status( 200 )
+                .json( result ) ;
+        }
+    });
+
+    console.log( 'In LoginController | Finished Execution of logoutUser' );
+};
+
 exports.loginUser = loginUser;
 exports.signUpUser = signUpUser;
+exports.logoutUser = logoutUser;
 exports.isUserAlreadyInSystem = isUserAlreadyInSystem;

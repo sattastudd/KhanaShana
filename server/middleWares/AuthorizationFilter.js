@@ -5,15 +5,19 @@
  */
 
 var authorizeRequest = function( req, res, next ) {
+
+    console.log( req );
 	
-	if( utils.isAuthorized( req.url, req.method.toLowerCase(), req.user.role.toLowerCase()) ) {
+	if( utils.isAuthorized( req.originalUrl, req.method.toLowerCase(), req.user.role.toLowerCase()) ) {
 		next();
 	} else {
 		console.log('AuthorizationFilter | Access Denied to %s for %s with role %s. | Sent 403', req.headers['x-forwarded-for'] || req.connection.remoteAddress, req.url, req.user.role);
 		res.status( 403 )
 		   .json({
-		   	error : 'UnAuthorized User',
-			message : 'UA'
+                err : {},
+                errMsg : {},
+                data : 'UA',
+                msg : 'UnAuthorized User'
 		});
 	}
 };

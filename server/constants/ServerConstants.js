@@ -26,7 +26,8 @@ var appConstants = {
 
     successMessage : 'Ok',
     userCreated : 'User Created Successfully.',
-    loginSuccessful : 'Login Successful'
+    loginSuccessful : 'Login Successful',
+    logoutSuccessful : 'Logout Successful'
 };
 
 module.exports = appConstants;

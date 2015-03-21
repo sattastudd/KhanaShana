@@ -33,9 +33,20 @@ router.post( '/public/email', function( req, res, next) {
 /* This Rest Requset is supposed to add a new user in the system.
  */
 router.post( '/public/users', function( req, res, next ) {
-	console.log( 'In loginRoutes, Handling ' + req.route.path );
+	console.log( 'In loginRoutes | Handling ' + req.route.path );
 
 	loginController.signUpUser( req, res, next );
 
-	console.log( 'In loginRoutes | Completed Processinf for ' + req.route.path );
+	console.log( 'In loginRoutes | Completed Processing for ' + req.route.path );
+});
+
+/* Request-Name : /user/logout, Type: Post, Allowed : user, admin*/
+/* This request is supposed to put the retrieved token into blacklist.
+ */
+router.post( '/user/logout', function( req, res, next ){
+    console.log( 'In loginRoutes | Handling ' + req.route.path ) ;
+
+    loginController.logoutUser( req, res, next );
+
+    console.log( 'In loginRoutes | Completed Processing for ' + req.route.path);
 });

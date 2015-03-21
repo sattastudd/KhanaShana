@@ -39,11 +39,17 @@ var ServerConstants = require('../../constants/ServerConstants');
 
 var loginDBI = require('../../daoLayer/login/LoginDBI');
 
+/* This is private utility method to set up error flag and error msg in the received maps.
+ */
 var setUpError = function (err, errMsg, type, response) {
     err[type] = response.result;
     errMsg[type] = response.message;
 };
 
+/*  For logging user.
+    user => user info sent from controller.
+    callback => callback from controller.
+ */
 var loginUser = function( user, callback ) {
 	console.log( 'In LoginService | Starting Execution of loginUser' );
 
@@ -69,11 +75,17 @@ var loginUser = function( user, callback ) {
         setUpError(err, errMsg, 'password', responseFromValidationForPassword);
     }
 
+    /* If we don't have any error.
+     */
     if( !hasAnyValidationFailed ) {
         loginDBI.loginUser( user, function(err, result ) {
             if( err ){
+                /* Error should only be logged by services. */
                 console.log( err );
 
+                /* What should be shown to user ? *
+                 * DBI returns invalid credentials error, we can check it and send response accordingly.
+                 */
                 if( err === ServerConstants.appErrors.invalidCredentials){
                     console.log( 'In LoginService | Login failed for user ' + user.email);
 
@@ -84,6 +96,7 @@ var loginUser = function( user, callback ) {
                         msg : ServerConstants.errorMessage.invalidCredentials
                     });
                 } else {
+                    /* What if it isn't invalid credentials error ? */
                     callback(ServerConstants.appErrors.someError, {
                         err: {},
                         errMsg: {},
@@ -92,6 +105,9 @@ var loginUser = function( user, callback ) {
                     });
                 }
             } else {
+                /* DBI returns a lot of things, but that doesn't contains err flag map, and error message map.
+                 * So, we need to set the accordingly.
+                 */
                 var toReturn = {};
 
                 toReturn.user = result;
@@ -103,6 +119,7 @@ var loginUser = function( user, callback ) {
             }
         });
     } else {
+        /* To user, please send right details ? */
         callback( ServerConstants.appErrors.validationError, {
             err : err,
             errMsg : errMsg,
@@ -112,8 +129,12 @@ var loginUser = function( user, callback ) {
     }
 
 	console.log( 'In LoginService | Finished Execution of loginUser' );
-}
+};
 
+/* Method to create new user.
+ * userInfo => Send from LoginController.
+ * callback => Callback from LoginController.
+ */
 var signUpUser = function( userInfo, callback ) {
 
     console.log('In LoginService | Starting Execution of signUpUSer');
@@ -152,7 +173,8 @@ var signUpUser = function( userInfo, callback ) {
 
         setUpError(err, errMsg, 'contact', responseFromValidatorForContact);
     }
-    
+
+    /* If no validation has failed. */
     if (hasAnyValidationFailed) {
         console.log('Validation Error for SignUp | Sent ValidationError');
         callback('ValidationError', {
@@ -169,6 +191,11 @@ var signUpUser = function( userInfo, callback ) {
 	loginDBI.signUpUser( userInfo, function( err, result ) {
 		
 		if( err ) {
+            /* Though we know that user might now exist if request is sent through angular,
+             * but if we have another client, we can't be sure, wo we need to check again if user exists.
+             *
+             * User exists, someone must tell client.
+             */
             if (err === ServerConstants.appErrors.userExists) {
                 callback(ServerConstants.appErrors.userExists, {
                     err : {},
@@ -177,6 +204,7 @@ var signUpUser = function( userInfo, callback ) {
                     msg : ServerConstants.errorMessage.userExists
                 });
             } else {
+                /* Something gone wrong ? client needs to know anyway. */
                 callback( ServerConstants.appErrors.internalError, {
                     err : {},
                     errMsg : {},
@@ -185,7 +213,10 @@ var signUpUser = function( userInfo, callback ) {
                 })
             }
 		} else {
+            /* Yes, user created. Lets share the news. */
             callback(null, {
+                err : {},
+                errMsg : {},
                 data : result,
                 msg : ServerConstants.userCreated
             });
@@ -198,18 +229,19 @@ var signUpUser = function( userInfo, callback ) {
 var isUserAlreadyInSystem = function( email, callback ) {
 	console.log('In LoginService | Starting Execution of isUserAlreadyInSystem' );
 
-	/*Peform Validations here.
+	/*Perform Validations here.
 	 */
     var responseFromValidatorForEmail = Validator.isEmailNotValid(email, true);
     
     if (responseFromValidatorForEmail.result) {
+        /* Email is not valid. */
         callback(ServerConstants.appErrors.validationError, {
             data : null,
             msg : ServerConstants.errorMessage.email
         });
     } else {
         loginDBI.isUserAlreadyInSystem(email, function (err, result) {
-            
+            /* In case of error ? */
             if (err) {
                 callback(err, {
                     result : null,
@@ -230,6 +262,27 @@ var isUserAlreadyInSystem = function( email, callback ) {
 	console.log('In LoginService  | Finished Execution of isUserAlreadyInSystem' );
 };
 
+/* Method to logout a user
+ * token => token to blacklist.
+ * callback => callback to controller.
+ */
+var logoutUser = function( token, callback ) {
+
+    console.log( 'In loginService | Starting Execution of logoutUser' );
+
+    utils.setBlackListed( token );
+
+    callback( null, {
+        err : {},
+        errMsg : {},
+        result : null,
+        msg : ServerConstants.logoutSuccessful
+    });
+    console.log( 'In LoginService | Finished Execution of logoutUser' );
+
+};
+
 exports.loginUser = loginUser;
 exports.signUpUser = signUpUser;
 exports.isUserAlreadyInSystem = isUserAlreadyInSystem;
+exports.logoutUser = logoutUser;
