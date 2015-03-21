@@ -2,9 +2,11 @@
 *.njsproj
 credentials.js
 CodeOrganizer*
-bin/
-obj/
-.settings/
-.jshintrc
-.project
-.tern-project
+/bin/
+/obj/
+/.settings/
+/.jshintrc
+/.project
+/.tern-project
+/.idea
+/Petooram.iml
