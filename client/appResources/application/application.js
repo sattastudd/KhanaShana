@@ -18,6 +18,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/login/login.html',
                 '../../appResources/controller/LoginController'
         ))
+        .when('/search',
+            routeConfig.config(
+                'views/user/userSearchResult.html',
+                '../../appResources/controller/userSearchResultController'
+        ))
         .when('/adminHome',
             routeConfig.config(
                 'views/admin/adminHome.html',
@@ -27,11 +32,6 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
             routeConfig.config(
                 'views/admin/adminRestaurants.html',
                 '../../appResources/controller/adminRestHomeController'
-        ))
-        .when('/userSearchResult',
-            routeConfig.config(
-                'views/user/userSearchResult.html',
-                '../../appResources/controller/userSearchResultController'
         ))
         .when('/userCheckOut',
             routeConfig.config(

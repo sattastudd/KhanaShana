@@ -5,7 +5,7 @@
             <div class="col-xs-12">
                 <div class="row">
                     <div class="col-xs-3 hidden-sm hidden-md hidden-lg">
-                        <img src="images/Peturam.png" alt="Peturaam" title="PetuRam" />
+                        <img ng-click="goToHome()" src="images/Peturam.png" alt="Peturaam" title="PetuRam" />
                     </div>
 
                     <div class="col-xs-9  navLinks">
@@ -54,7 +54,7 @@
         <div class="visible-lg visible-md visible-sm hidden-xs">
 
             <div class="col-sm-3 col-md-4 col-lg-4">
-                <a class="navbar-brand">PetooRaam</a>
+                <a class="navbar-brand" ng-click="goToHome()">PetooRaam </a>
             </div>
 
             <div class="col-xs-6 col-md-4 col-lg-4 navSearch">
@@ -64,7 +64,7 @@
             <div class="col-sm-3 col-md-4 col-lg-4 navLinks">
                 <div class="pull-right">
 
-                    <div class="searchGlyphContainer">
+                    <div class="searchGlyphContainer" ng-if="isHomePageNotActive()">
                         <div class="searchGlyphWrapper" ng-class="adjustMargin('search')">
 
                             <div class="glyphicon glyphicon-search marRight5" ng-click="makeMealSearchActive()"></div>

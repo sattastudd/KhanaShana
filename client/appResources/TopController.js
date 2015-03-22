@@ -6,18 +6,19 @@ define( [], function() {
 	return TopController;
 } );
 
-function parentController($scope, $rootScope, $http, DataStore, AppConstants, RestRequests, $modal, $window, $timeout) {
+function parentController($scope, $rootScope, $http, DataStore, AppConstants, RestRequests, $modal, $window, $timeout, $location) {
 
-    /*$rootScope.$on('$locationChangeStart', function( event, next, current ){
+    /* Modify search box visibility on location change. */
+    $rootScope.$on('$locationChangeStart', function( event, next, current ){
 
         var retrievedPath = next.split('#')[1];
 
         if( retrievedPath !== '/'){
-            $scope.visibilityControl.isHomePage = false;
+            $scope.visibilityController.isHomePage = false;
         } else {
-            $scope.visibilityControl.isHomePage = true;
+            $scope.visibilityController.isHomePage = true;
         }
-    });*/
+    });
 
 	$scope.search = {
 		searchText : '',
@@ -27,7 +28,6 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
 
 	$scope.bannerDropDownOptions = [];
 	$scope.locations = [];
-	/* Retriving DropDowns */
 	$scope.dataFor = {
 		'cityName' : 'lucknow'
 	};
@@ -95,6 +95,11 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
         }, 1000);
     };
 
+    /*Page Navigation Controller */
+    $scope.goToHome = function(){
+        $location.path( '/' );
+    };
+
     /*                 Page Core Functionality Section                 */
     /*==================================================================/
      */
@@ -129,7 +134,7 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
     $scope.isUserContextMenuOpen = false;
 
     $scope.visibilityController = {
-        isHomePage : false,
+        isHomePage : true,
         isLocationSearcNotActive : true
     };
 
