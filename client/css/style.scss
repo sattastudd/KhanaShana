@@ -11,6 +11,8 @@ $theme-glyphicon-size: 22px;
 
 $theme-footer-color: #333;
 
+$theme-navbar-height : 50px;
+
 /*Cuisine Image*/
 $theme-cuisine-lg-width: 703px;
 $theme-cuisine-lg-height: 210px;
@@ -22,906 +24,1102 @@ $theme-fast-reaction: .2s;
 
 /*Min-ins*/
 @mixin transition-mix($property, $duration) {
-    -moz-transition: $property $duration;
-    -o-transition: $property $duration;
-    -webkit-transition: $property $duration;
-    transition: $property $duration;
+  -moz-transition: $property $duration;
+  -o-transition: $property $duration;
+  -webkit-transition: $property $duration;
+  transition: $property $duration;
 }
 
 @mixin transition-transform-mixin($duration, $timing-function) {
-    -moz-transition: -moz-transform $duration $timing-function;
-    -o-transition: -o-transform $duration $timing-function;
-    -webkit-transition: -webkit-transform $duration $timing-function;
-    transition: transform $duration $timing-function;
+  -moz-transition: -moz-transform $duration $timing-function;
+  -o-transition: -o-transform $duration $timing-function;
+  -webkit-transition: -webkit-transform $duration $timing-function;
+  transition: transform $duration $timing-function;
 }
 
 @mixin background-size-mix($property) {
-    -webkit-background-size: $property;
-    -moz-background-size: $property;
-    -o-background-size: $property;
-    background-size: $property;
+  -webkit-background-size: $property;
+  -moz-background-size: $property;
+  -o-background-size: $property;
+  background-size: $property;
 }
 
 @mixin rotate-transform($degree) {
-    -webkit-transform: rotate($degree);
-    -moz-transform: rotate($degree);
-    -o-transform: rotate($degree);
-    -ms-transform: rotate($degree);
-    transform: rotate($degree);
+  -webkit-transform: rotate($degree);
+  -moz-transform: rotate($degree);
+  -o-transform: rotate($degree);
+  -ms-transform: rotate($degree);
+  transform: rotate($degree);
 }
 
 @mixin transform-property($property) {
-    -webkit-transform: $property;
-    -moz-transform: $property;
-    -o-transform: $property;
-    -ms-transform: $property;
-    transform: $property;
+  -webkit-transform: $property;
+  -moz-transform: $property;
+  -o-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
 }
 
 @mixin filter-property($property) {
-    -webkit-filter: $property;
-    -moz-filter: $property;
-    -o-filter: $property;
-    -ms-filter: $property;
-    filter: $property;
+  -webkit-filter: $property;
+  -moz-filter: $property;
+  -o-filter: $property;
+  -ms-filter: $property;
+  filter: $property;
 }
 
 @font-face {
-    font-family: Avdira;
-    src: url('fonts/Riven.woff');
+  font-family: Avdira;
+  src: url('fonts/Riven.woff');
 }
 
 input {
-    font-family: 'Segoe UI';
+  font-family: 'Segoe UI';
 }
 
 p {
-    margin: 0 0 0px;
+  margin: 0 0 0px;
 }
 
 body {
-    background-color: $theme-background-color;
-    font-family: Avdira;
-    font-size: 18px;
+  background-color: $theme-background-color;
+  font-family: Avdira;
+  font-size: 18px;
 }
 
 /*Global Classes Begin*/
 .fullScreenWidth {
-    width: 100%;
+  width: 100%;
 }
 
 .contentContainer {
-    @include transition-mix(all, .2s);
+  @include transition-mix(all, .2s);
 }
 
 .blurredBack {
-    @include filter-property(blur(5px));
+  @include filter-property(blur(5px));
 }
 
 .darkTransparentBack {
-    background-color: rgba(0,0,0, .4);
+  background-color: rgba(0, 0, 0, .4);
 }
 
 .modal.scale .modal-dialog {
 
-    @include transition-transform-mixin(.3s, ease);
-    @include transform-property(scale(0));
+  @include transition-transform-mixin(.3s, ease);
+  @include transform-property(scale(0));
 }
 
 .modal.scale.in .modal-dialog {
-    @include transform-property(scale(1));
+  @include transform-property(scale(1));
 }
 
 .btn-pram-primary {
+  background-color: $theme-primary-color;
+  color: $theme-primary-font-color;
+  font-size: 18px;
+
+  &:hover {
+    background-color: #c61218;
+    color: $theme-primary-font-color;
+  }
+
+  &:active {
+    background-color: #b01015;
+    color: $theme-primary-font-color;
+  }
+
+  &:focus {
     background-color: $theme-primary-color;
     color: $theme-primary-font-color;
-    font-size: 18px;
-
-    &:hover {
-        background-color: #c61218;
-        color: $theme-primary-font-color;
-    }
-
-    &:active {
-        background-color: #b01015;
-        color: $theme-primary-font-color;
-    }
-
-    &:focus {
-        background-color: $theme-primary-color;
-        color: $theme-primary-font-color;
-        outline: none;
-    }
+    outline: none;
+  }
 }
+
 /*Global Classes End*/
 
+/* Header Styles Start*/
 .customNavBar {
-    background-color: $theme-primary-color;
-    border-bottom: 0;
-    box-shadow: $theme-shadow-color 0 0 5px;
-    height: 50px;
-    position: fixed;
-    z-index: 10;
+  background-color: $theme-primary-color;
+  border-bottom: 0;
+  box-shadow: $theme-shadow-color 0 0 5px;
+  height: 50px;
+  position: fixed;
+  top : 0;
+  left : 0;
+  right : 0;
+  z-index: 10;
 
-    a.navbar-brand {
-        color: $theme-primary-font-color;
-        text-decoration: none;
-        cursor: pointer;
-        font-size: 25px;
-        border-bottom: none;
+  .navSearch input{
+    margin-top : 8px;
+  }
+
+  a.navbar-brand {
+    color: $theme-primary-font-color;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 25px;
+    border-bottom: none;
+    @include transition-mix(all, $theme-fast-reaction);
+
+    &:hover{
+      color : $theme-primary-font-color;
+      border-bottom: 2px solid $theme-primary-font-color;
+    }
+  }
+
+  .visible-lg {
+
+    .navLinks > div > div {
+      display: inline-block;
+    }
+
+    .searchGlyphContainer {
+      height: 50px;
+      width: 22px;
+
+      font-size: $theme-glyphicon-size;
+      color: $theme-primary-font-color;
+
+      overflow: hidden;
+
+      .searchGlyphWrapper {
+        width: 22px;
+        postition: relative;
+
+        div {
+          line-height: 50px;
+          cursor: pointer;
+          height: 50px;
+        }
+
         @include transition-mix(all, $theme-fast-reaction);
+      }
     }
 
-    a.navbar-brand:hover {
+    .loginControlsContainer {
+      font-size: 20px;
+      color: $theme-primary-font-color;
+
+      overflow: hidden;
+
+      height: 50px;
+      width: 71px;
+
+      overflow: hidden;
+
+      .loginControlsWrapper {
+        width: 71px;
+
+        @include transition-mix(all, $theme-fast-reaction);
+
+        div {
+          height: 50px;
+          margin: 0 auto;
+
+          &.loginSpan {
+            padding: 14px 15px;
+
+            font-size: 20px;
+            line-height: 24px;
+
+            border-bottom: 2px solid $theme-primary-color;
+            @include transition-mix(all, $theme-fast-reaction);
+            cursor: pointer;
+
+            &:hover {
+              border-bottom: 2px solid $theme-primary-font-color;
+            }
+          }
+
+          &.userIcon {
+            cursor: pointer;
+            line-height: 40px;
+
+            font-family: $theme-secondary-font;
+
+            span {
+              line-height: 50px;
+              margin: 0 auto;
+
+              display: block;
+
+              width: 22px;
+              float: right;
+            }
+
+            .dropdown-menu {
+              right: 0;
+              left: auto;
+
+              display: block;
+
+              height: 180px;
+              display: block;
+
+              overflow: hidden;
+              @include transition-mix(all, .3s);
+
+              background-color: $theme-background-color;
+
+              &.noHeight {
+                padding: 0;
+                height: 0;
+                border: 0;
+              }
+
+              li {
+                a {
+                  text-align: right;
+
+                  &:hover {
+                    background-color: $theme-primary-color;
+                    color: $theme-primary-font-color;
+                  }
+                }
+
+                a.noHover {
+                  cursor: default;
+                  &:hover {
+                    background-color: $theme-background-color;
+                    color: #000;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .visible-xs{
+    position : relative;
+    .navLinks{
+      > div > div {
+        float : left;
+
+        &.searchGlyphContainer{
+          width : auto;
+          height : $theme-navbar-height;
+
+          margin-right : 5px;
+
+          font-family: 'Segoe UI';
+          font-size : $theme-glyphicon-size;
+          color : $theme-primary-font-color;
+
+          div {
+            height : $theme-navbar-height;
+            float : left;
+
+            position : relative;
+            top : 0;
+
+            line-height : $theme-navbar-height;
+          }
+        }
+
+        &.loginControlsContainer{
+          font-size: 20px;
+          color: $theme-primary-font-color;
+
+          overflow: hidden;
+
+          height: 50px;
+          width: 71px;
+
+          @include transition-mix(all, $theme-fast-reaction);
+
+          &.shrinked{
+            width : 32px;
+
+            .loginControlsWrapper{
+              width : 32px;
+
+              div{
+                height : 50px;
+                margin : 0 auto;
+
+                vertical-align: middle;
+                text-align : center;
+
+                &.userIcon{
+                  cursor : pointer;
+                  float : right;
+
+                  padding : 14px;
+
+                  .dropdown-menu {
+                    font-family: 'Segoe UI';
+                    right: 0;
+                    left: auto;
+
+                    display: block;
+
+                    height: 180px;
+                    display: block;
+
+                    overflow: hidden;
+                    @include transition-mix(all, .3s);
+
+                    background-color: $theme-background-color;
+
+                    &.noHeight {
+                      padding: 0;
+                      height: 0;
+                      border: 0;
+                    }
+
+                    li {
+                      a {
+                        text-align: right;
+
+                        &:hover {
+                          background-color: $theme-primary-color;
+                          color: $theme-primary-font-color;
+                        }
+                      }
+
+                      a.noHover {
+                        cursor: default;
+                        &:hover {
+                          background-color: $theme-background-color;
+                          color: #000;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .loginControlsWrapper {
+            width: 71px;
+
+            div{
+              height : 50px;
+              margin : 0 auto;
+
+              vertical-align: middle;
+              text-align : center;
+
+              &.loginSpan{
+                padding: 12px 15px;
+                font-size: 20px;
+
+                border-bottom: 2px solid $theme-primary-color;
+                @include transition-mix(all, $theme-fast-reaction);
+                cursor: pointer;
+
+                &:hover {
+                  border-bottom: 2px solid $theme-primary-font-color;
+                }
+              }
+            }
+
+            @include transition-mix(all, $theme-fast-reaction);
+          }
+
+
+        }
+      }
+    }
+
+    .overLappedRow{
+      position: absolute;
+      top: -200px;
+      background-color: $theme-primary-color;
+      padding: 8px;
+
+      @include transition-mix(all, .5s);
+
+      .remove {
         color: $theme-primary-font-color;
-        border-bottom: 2px solid $theme-primary-font-color;
+        font-size: $theme-glyphicon-size;
+      }
+
+      .centerGlyph {
+        padding-top: 5px;
+        text-align: center;
+      }
+
+      &.moveToNormalPosition {
+        top: 0;
+      }
     }
-
-    .navSearch input {
-        margin-top: 8px;
-    }
-
-    .navLinks {
-        span {
-            color: $theme-primary-font-color;
-            font-size: $theme-glyphicon-size;
-            line-height: 50px;
-            vertical-align: middle;
-
-            &.loginSpan{
-              line-height: 20px;
-              font-size: 20px;
-              display: inline-block;
-              padding: 14px 15px;
-              border-bottom: 2px solid $theme-primary-color;
-              @include transition-mix(all, $theme-fast-reaction);
-              cursor: pointer;
-
-              &:hover {
-                border-bottom: 2px solid $theme-primary-font-color;
-              }
-            }
-
-            &.userIcon{
-              cursor : pointer;
-              line-height : 40px;
-
-              font-family : $theme-secondary-font;
-
-              ul.dropdown-menu{
-                right : 0;
-                left : auto;
-
-                top : 114%;
-
-                height : 180px;
-                display: block;
-
-                overflow:  hidden;
-                @include transition-mix(all, .3s);
-
-                background-color: $theme-background-color;
-
-                &.noHeight{
-                  padding : 0;
-                  height : 0;
-                  border: 0;
-                }
-
-                li{
-                    a{
-                      text-align:  right;
-
-                      &:hover{
-                        background-color: $theme-primary-color;
-                        color: $theme-primary-font-color;
-                      }
-                    }
-
-                    a.noHover{
-                      cursor:  default;
-                      &:hover{
-                        background-color: $theme-background-color;
-                        color: #000;
-                      }
-                    }
-                }
-              }
-            }
-        }
-    }
-
-    .row.visible-xs {
-        position: relative;
-    }
-
-    .overLappedRow {
-        position: absolute;
-        top: -200px;
-        background-color: $theme-primary-color;
-        padding: 8px;
-
-        @include transition-mix(all, .5s);
-
-        .remove {
-            color: $theme-primary-font-color;
-            font-size: $theme-glyphicon-size;
-        }
-
-        .centerGlyph {
-            padding-top: 5px;
-            text-align: center;
-        }
-
-        &.moveToNormalPosition {
-            top: 0;
-        }
-    }
+  }
 }
+/* Header Styles End
 
 /*Login Modal Start*/
 .loginModal {
-    font-family : 'Segoe UI';
+  font-family: 'Segoe UI';
 
-    .collapsibleContent{
-        @include transition-mix(all, .3s);
-        height : 65px;
-        overflow : hidden;
+  .collapsibleContent {
+    @include transition-mix(all, .3s);
+    height: 65px;
+    overflow: hidden;
 
-        &.noHeight{
-            height : 0;
-        }
+    &.noHeight {
+      height: 0;
+    }
+  }
+
+  .collapsibleServerResponse {
+    @include transition-mix(all, .3s);
+    height: 40px;
+    margin-bottom: 6px;
+    font-size: 14px;
+
+    .bg-danger, .bg-success {
+      height: 40px;
+      line-height: 40px;
+      padding-left: 15px;
     }
 
-    .collapsibleServerResponse{
-        @include transition-mix(all, .3s);
-        height : 40px;
-        margin-bottom : 6px;
-        font-size : 14px;
-
-        .bg-danger, .bg-success{
-            height: 40px;
-            line-height : 40px;
-            padding-left : 15px;
-        }
-
-        &.bg-success, &.bg-danger{
-            background: none;
-        }
-
-        &.noHeight{
-            height : 0;
-            margin-bottom : 0;
-            overflow : hidden;
-
-            .noHeight{
-                height : 0;
-                overflow : hidden;
-            }
-        }
+    &.bg-success, &.bg-danger {
+      background: none;
     }
 
-    .collapsibleErrorMessage{
-        @include transition-mix(all, .3s);
-        height : 40px;
+    &.noHeight {
+      height: 0;
+      margin-bottom: 0;
+      overflow: hidden;
 
-        margin-bottom : 6px;
-        font-size : 14px;
+      .noHeight {
+        height: 0;
+        overflow: hidden;
+      }
+    }
+  }
 
-        &.noHeight{
-            height : 0;
-            margin-bottom : 0;
-            overflow : hidden;
+  .collapsibleErrorMessage {
+    @include transition-mix(all, .3s);
+    height: 40px;
 
-            .noHeight{
-                height : 0;
-                overflow : hidden;
-            }
-        }
+    margin-bottom: 6px;
+    font-size: 14px;
 
-        .bg-danger{
-            height : 40px;
-            line-height : 40px;
-            padding-left : 15px;
-            border-radius : 2px;
+    &.noHeight {
+      height: 0;
+      margin-bottom: 0;
+      overflow: hidden;
 
-            position: relative;
-
-            &:after {
-                content: " ";
-                top: -23px;
-                left: 12%;
-                border: 12px solid transparent;
-                height: 0;
-                width: 0;
-                position: absolute;
-                border-bottom-color: #f2dede;
-            }
-        }
+      .noHeight {
+        height: 0;
+        overflow: hidden;
+      }
     }
 
-    
-    .modal-header {
-        background-color: $theme-primary-color;
-        padding: 8px 15px 0 8px;
-        color: $theme-primary-font-color;
-        position: relative;
-        height : 45px;
+    .bg-danger {
+      height: 40px;
+      line-height: 40px;
+      padding-left: 15px;
+      border-radius: 2px;
 
-        ul.login-links{
-            padding-left: 0;
-            list-style : none;
+      position: relative;
 
-            margin-bottom : 0;
-
-            li{
-                display : inline-block;
-                padding : 4px 10px;
-                border : 2px solid $theme-primary-color;
-                border-bottom : none;
-
-                a{
-                    color : #fff;
-                    line-height : 10px;
-                    
-                    font-size : 20px;
-                    text-decoration : none;
-
-                    cursor : pointer;
-
-                    &:hover{
-                        color : #fff;
-                        text-decoration : none;
-                    }
-                }
-
-                &.active, &.active:hover{
-                    background-color : #9a0e12;
-                    border-color : #840c10;
-                    border-bottom : none;
-
-                    border-radius : 5px 5px 0 0;
-                    position : relative;
-
-                    &:after {
-                        content: " ";
-                        top: 100%;
-                        left: 38%;
-                        border: 10px solid transparent;
-                        height: 0;
-                        width: 0;
-                        position: absolute;
-                        border-top-color: #9a0e12;
-                    }
-                }
-
-                &:hover{
-                    background-color : #c61218;
-                    border-color :  #840c10;
-                    border-bottom : none;
-
-                    border-radius : 5px 5px 0 0;
-                }
-
-                &.close-icon{
-                    padding : 3px 0;
-                    font-size : 18px;
-                    border : 2px solid $theme-primary-color;
-                    cursor : pointer;
-
-                    &:hover{
-                        background-color : $theme-primary-color;
-                        border : 2px solid $theme-primary-color;
-                    }
-                }
-            }
-        }
+      &:after {
+        content: " ";
+        top: -23px;
+        left: 12%;
+        border: 12px solid transparent;
+        height: 0;
+        width: 0;
+        position: absolute;
+        border-bottom-color: #f2dede;
+      }
     }
+  }
 
-    .form-group {
-        margin-top: 10px;
+  .modal-header {
+    background-color: $theme-primary-color;
+    padding: 8px 15px 0 8px;
+    color: $theme-primary-font-color;
+    position: relative;
+    height: 45px;
 
-        .glyphicon {
-            color: #ccc;
-        }
+    ul.login-links {
+      padding-left: 0;
+      list-style: none;
 
-        input {
-            height: 40px;
-            line-height: 40px;
-        }
+      margin-bottom: 0;
 
-        .form-control-feedback {
-            top: 3px;
-        }
-    }
-
-    .btn-pram-primary {
-        font-size: 19px;
-        padding: 6px 12px;
-        font-family: 'Segoe UI';
-    }
-
-    .forgotPassword {
-        line-height: 41px;
+      li {
+        display: inline-block;
+        padding: 4px 10px;
+        border: 2px solid $theme-primary-color;
+        border-bottom: none;
 
         a {
-            color: #ccc;
-            text-decoration: none;
+          color: #fff;
+          line-height: 10px;
 
-            &:hover {
-                color: #ccc;
-                text-decoration: underline;
-            }
+          font-size: 20px;
+          text-decoration: none;
+
+          cursor: pointer;
+
+          &:hover {
+            color: #fff;
+            text-decoration: none;
+          }
         }
+
+        &.active, &.active:hover {
+          background-color: #9a0e12;
+          border-color: #840c10;
+          border-bottom: none;
+
+          border-radius: 5px 5px 0 0;
+          position: relative;
+
+          &:after {
+            content: " ";
+            top: 100%;
+            left: 38%;
+            border: 10px solid transparent;
+            height: 0;
+            width: 0;
+            position: absolute;
+            border-top-color: #9a0e12;
+          }
+        }
+
+        &:hover {
+          background-color: #c61218;
+          border-color: #840c10;
+          border-bottom: none;
+
+          border-radius: 5px 5px 0 0;
+        }
+
+        &.close-icon {
+          padding: 3px 0;
+          font-size: 18px;
+          border: 2px solid $theme-primary-color;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $theme-primary-color;
+            border: 2px solid $theme-primary-color;
+          }
+        }
+      }
     }
+  }
+
+  .form-group {
+    margin-top: 10px;
+
+    .glyphicon {
+      color: #ccc;
+    }
+
+    input {
+      height: 40px;
+      
+    }
+
+    .form-control-feedback {
+      top: 3px;
+    }
+  }
+
+  .btn-pram-primary {
+    font-size: 19px;
+    padding: 6px 12px;
+    font-family: 'Segoe UI';
+  }
+
+  .forgotPassword {
+    line-height: 41px;
+
+    a {
+      color: #ccc;
+      text-decoration: none;
+
+      &:hover {
+        color: #ccc;
+        text-decoration: underline;
+      }
+    }
+  }
 }
+
 /*Login Modal End*/
 
 /*Utility Classes*/
+.negativeTopMargin50{
+  margin-top : -50px;
+}
+
 .marRight5 {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .noLeftRightPadding {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .noLPad {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .noRPad {
-    padding-right: 0;
+  padding-right: 0;
 }
 
 .lpad0 {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .lpad30 {
-    padding-left: 30px;
+  padding-left: 30px;
 }
 
 .tpad5 {
-    padding-top: 5px;
+  padding-top: 5px;
 }
 
-.tpad7{
-  padding-top : 7px;
+.tpad7 {
+  padding-top: 7px;
 }
 
 .tpad15 {
-    padding-top: 15px;
+  padding-top: 15px;
 }
 
 .tpad30 {
-    padding-top: 30px;
+  padding-top: 30px;
 }
 
 .bpad5 {
-    padding-bottom: 5px;
+  padding-bottom: 5px;
 }
 
 .bpad30 {
-    padding-bottom: 30px;
+  padding-bottom: 30px;
 }
 
 .rpad0 {
-    padding-right: 0;
+  padding-right: 0;
 }
 
 .rpad3 {
-    padding-right: 3px;
+  padding-right: 3px;
 }
 
 .tpad50 {
-    padding-top: 50px;
+  padding-top: 50px;
 }
 
 .bpad13 {
-    padding-bottom: 13px;
+  padding-bottom: 13px;
 }
 
 .lpad5 {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 
 /*Home Page Styles*/
 .pizzaBack {
-    background: url("../images/pizza.jpg") no-repeat top center fixed;
+  background: url("../images/pizza.jpg") no-repeat top center fixed;
 
-    @include background-size-mix(cover);
-    height: 560px;
-    box-shadow: #333 0 0 15px;
+  @include background-size-mix(cover);
+  height: 560px;
+  box-shadow: #333 0 0 15px;
 }
 
 .welcomeText {
-    color: white;
-    margin-top: 125px;
-    padding-bottom: 25px;
-    text-align: center;
+  color: white;
+  margin-top: 125px;
+  padding-bottom: 25px;
+  text-align: center;
 
-    h1 {
-        font-size: 59px;
-    }
+  h1 {
+    font-size: 59px;
+  }
 }
 
 .bannerSearch {
-    font-family: $theme-secondary-font;
+  font-family: $theme-secondary-font;
 
-    input {
-        height: 50px;
-        font-size: 19px;
-        border-top-left-radius: 25px;
-        border-bottom-left-radius: 25px;
-        padding-left: 20px;
-        box-shadow: 0 0 15px #000;
+  input {
+    height: 50px;
+    font-size: 19px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding-left: 20px;
+    box-shadow: 0 0 15px #000;
 
-        &:focus {
-            box-shadow: 0 0 15px #000;
-        }
+    &:focus {
+      box-shadow: 0 0 15px #000;
     }
+  }
 
-    .input-group-btn {
-        button {
-            height: 50px;
-            font-size: 19px;
-            box-shadow: 0 0 15px #000;
-            width: 90px;
-        }
+  .input-group-btn {
+    button {
+      height: 50px;
+      font-size: 19px;
+      box-shadow: 0 0 15px #000;
+      width: 90px;
     }
+  }
 
-    .dropdown {
-        list-style: none;
-        background-color: $theme-background-color;
-        padding-left: 0;
-        margin-left: 21px;
-        margin-right: 90px;
+  .dropdown {
+    list-style: none;
+    background-color: $theme-background-color;
+    padding-left: 0;
+    margin-left: 21px;
+    margin-right: 90px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    li {
+      font-size: 16px;
+      padding: 5px 0 5px 5px;
+      margin-bottom: 2px;
+
+      &:hover {
+        background-color: $theme-primary-color;
+        color: $theme-primary-font-color;
+      }
+
+      &:last-child {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
-
-        li {
-            font-size: 16px;
-            padding: 5px 0 5px 5px;
-            margin-bottom: 2px;
-
-            &:hover {
-                background-color: $theme-primary-color;
-                color: $theme-primary-font-color;
-            }
-
-            &:last-child {
-                border-bottom-left-radius: 5px;
-                border-bottom-right-radius: 5px;
-            }
-        }
+      }
     }
+  }
 }
 
 button.kh-primary {
-    background-color: $theme-primary-color;
+  background-color: $theme-primary-color;
+  border: 1px solid $theme-primary-color;
+  color: $theme-primary-font-color;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding-right: 20px;
+  outline: 0;
+
+  &:hover, &:focus {
+    background-color: #C61218;
     border: 1px solid $theme-primary-color;
     color: $theme-primary-font-color;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    padding-right: 20px;
     outline: 0;
+  }
 
-    &:hover, &:focus {
-        background-color: #C61218;
-        border: 1px solid $theme-primary-color;
-        color: $theme-primary-font-color;
-        outline: 0;
-    }
-
-    &:active, &:focus {
-        outline: 0;
-    }
+  &:active, &:focus {
+    outline: 0;
+  }
 }
 
 .cuisinesContainer {
-    padding-top: 30px;
-    padding-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .cuisine {
-    position: relative;
-    height: 200px;
+  position: relative;
+  height: 200px;
+  margin-bottom: 30px;
+  overflow: hidden;
+
+  img {
     margin-bottom: 30px;
+    top: 0;
+    position: absolute;
+
+    @include transition-mix(all, 10s);
+  }
+
+  .image-container {
     overflow: hidden;
+    height: $theme-cuisine-lg-height;
+    position: relative;
+    cursor: pointer;
+  }
 
-    img {
-        margin-bottom: 30px;
-        top: 0;
-        position: absolute;
+  .cuisine-image {
+    height: $theme-cuisine-lg-height;
+    @include transition-mix(all, 10s);
+  }
 
-        @include transition-mix(all, 10s);
-    }
+  .cuisine-description {
+    position: relative;
+    cursor: pointer;
+    height: 60px;
+    top: -70px;
+    color: $theme-primary-font-color;
+    font-size: 20px;
+    line-height: 60px;
+    background-color: rgba(220, 20, 27, 0.3);
+    padding-left: 15px;
 
-    .image-container {
-        overflow: hidden;
-        height: $theme-cuisine-lg-height;
-        position: relative;
-        cursor: pointer;
-    }
+    @include transition-mix(all, .4s);
+  }
 
+  &:hover {
     .cuisine-image {
-        height: $theme-cuisine-lg-height;
-        @include transition-mix(all, 10s);
+      @include transform-property(scale(1.5));
     }
 
     .cuisine-description {
-        position: relative;
-        cursor: pointer;
-        height: 60px;
-        top: -70px;
-        color: $theme-primary-font-color;
-        font-size: 20px;
-        line-height: 60px;
-        background-color: rgba(220, 20, 27, 0.3);
-        padding-left: 15px;
-
-        @include transition-mix(all, .4s);
+      height: 100px;
+      line-height: 100px;
+      top: -110px;
+      font-size: 25px;
     }
-
-    &:hover {
-        .cuisine-image {
-            @include transform-property(scale(1.5));
-        }
-
-        .cuisine-description {
-            height: 100px;
-            line-height: 100px;
-            top: -110px;
-            font-size: 25px;
-        }
-    }
+  }
 }
 
 .localitiesContainer {
-    padding-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #e7e7e7;
+
+  .locationHeading {
     padding-bottom: 20px;
-    background-color: #e7e7e7;
+  }
 
-    .locationHeading {
-        padding-bottom: 20px;
+  .location {
+    padding-bottom: 10px;
+
+    a {
+      font-size: 18px;
+      color: #333;
+      text-decoration: none;
+
+      &:hover {
+        color: #333;
+        text-decoration: underline;
+      }
     }
-
-    .location {
-        padding-bottom: 10px;
-
-        a {
-            font-size: 18px;
-            color: #333;
-            text-decoration: none;
-
-            &:hover {
-                color: #333;
-                text-decoration: underline;
-            }
-        }
-    }
+  }
 }
 
 .footer {
-    background-color: $theme-footer-color;
-    padding: 20px 0;
+  background-color: $theme-footer-color;
+  padding: 20px 0;
 
-    .mainBar {
-        border-bottom: 1px solid #707070;
-        margin-bottom: 10px;
-    }
+  .mainBar {
+    border-bottom: 1px solid #707070;
+    margin-bottom: 10px;
+  }
 
-    .footerCompany {
+  .footerCompany {
+    color: #707070;
+    font-size: 24px;
+  }
+
+  .copyRight {
+    color: #5d5d5d;
+  }
+
+  ul.footerLinks {
+    padding-left: 0;
+    list-style: none;
+    line-height: 34px;
+
+    li {
+      float: right;
+
+      a {
+        padding: 0 10px;
         color: #707070;
-        font-size: 24px;
-    }
+        text-decoration: none;
 
-    .copyRight {
-        color: #5d5d5d;
-    }
-
-    ul.footerLinks {
-        padding-left: 0;
-        list-style: none;
-        line-height: 34px;
-
-        li {
-            float: right;
-
-            a {
-                padding: 0 10px;
-                color: #707070;
-                text-decoration: none;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
+        &:hover {
+          text-decoration: underline;
         }
+      }
     }
+  }
 }
 
 /*styles for restaurant details page*/
 
 .adminBody {
-    margin-top: 65px;
+  margin-top: 65px;
 }
 
 .borderMenu {
-    border-bottom: solid 1px grey;
+  border-bottom: solid 1px grey;
 }
 
 .categoryLabel {
-    float: left;
-    font-size: 18px;
+  float: left;
+  font-size: 18px;
 }
 
 .restaurantNameBlock {
-    background-color: gainsboro;
-    border-radius: 5px;
-    height: 85px;
+  background-color: gainsboro;
+  border-radius: 5px;
+  height: 85px;
 }
 
 /* admin home page styles */
 
 .adminBlock {
-    background-color: #DC141B;
-    border-radius: 155px;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
-    top: 0;
-    @include transition-mix(all, .5s);
+  background-color: #DC141B;
+  border-radius: 155px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
+  top: 0;
+  @include transition-mix(all, .5s);
 
-    &:hover {
-        box-shadow: 0 9px 10px 0 #555;
-        top: -1px;
-    }
+  &:hover {
+    box-shadow: 0 9px 10px 0 #555;
+    top: -1px;
+  }
 }
 
 .newsFeedBlock {
-    height: 90px;
-    background-color: gainsboro;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
-    top: 0;
+  height: 90px;
+  background-color: gainsboro;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
+  top: 0;
 
-    @include transition-mix(all, .5s);
+  @include transition-mix(all, .5s);
 
-    &:hover {
-        box-shadow: 0 9px 10px 0 #555;
-        top: -1px;
-    }
+  &:hover {
+    box-shadow: 0 9px 10px 0 #555;
+    top: -1px;
+  }
 }
 
 /* styles for search result page starts */
 
 .containerBlock {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .filterBlock {
-    height: auto;
-    padding-top: 12px;
-    padding-bottom: 13px;
-    border-bottom: solid 1px gray;
-    font-size: 20px;
+  height: auto;
+  padding-top: 12px;
+  padding-bottom: 13px;
+  border-bottom: solid 1px gray;
+  font-size: 20px;
 }
 
 .filterContent {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .filterButton {
-    border: solid 1px gray;
+  border: solid 1px gray;
 }
 
 .contentClass {
-    padding-left: 15px;
-    cursor: pointer;
+  padding-left: 15px;
+  cursor: pointer;
 }
 
 .resultBlock {
-    border: solid 1px rgb(236, 225, 225);
-    border-radius: 5px 5px 0 0;
-    height: auto;
-    background-color: white;
+  border: solid 1px rgb(236, 225, 225);
+  border-radius: 5px 5px 0 0;
+  height: auto;
+  background-color: white;
 }
 
 .repeatBlock {
-    padding-bottom: 5px;
+  padding-bottom: 5px;
 }
 
 .resultRepeatBlock {
-    padding-bottom: 40px;
+  padding-bottom: 40px;
 }
 
 .fixedBlock {
-    padding-left: 0;
-    padding-right: 10px;
+  padding-left: 0;
+  padding-right: 10px;
 }
 
 .filterGlyph {
-    font-size: 15px;
-    padding-right: 8px;
-    padding-top: 3px;
+  font-size: 15px;
+  padding-right: 8px;
+  padding-top: 3px;
 }
 
 .quickView {
-    background-color: gainsboro;
-    color: black;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
-    cursor: pointer;
+  background-color: gainsboro;
+  color: black;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
+  cursor: pointer;
 }
 
 .resultBlockRow {
-    margin-right: -18px;
-    margin-left: -15px;
+  margin-right: -18px;
+  margin-left: -15px;
 }
 
 .glyphDown {
-    padding-left: 1px;
-    padding-right: 1px;
-    background-color: ghostwhite;
-    border-radius: 15px;
-    height: 27px;
-    width: 27px;
-    padding-top: 5px;
-    color: gray;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: ghostwhite;
+  border-radius: 15px;
+  height: 27px;
+  width: 27px;
+  padding-top: 5px;
+  color: gray;
 }
 
 .restaurantIcon {
-    height: 140px;
-    width: 140px;
-    border-radius: 80px;
-    box-shadow: 0 4px 10px 0 #555;
+  height: 140px;
+  width: 140px;
+  border-radius: 80px;
+  box-shadow: 0 4px 10px 0 #555;
 }
 
 .orderButton {
-    font-size: 25px;
-    background-color: rgb(220, 20, 27);
-    border-radius: 4px;
-    color: white;
+  font-size: 25px;
+  background-color: rgb(220, 20, 27);
+  border-radius: 4px;
+  color: white;
 }
 
 .corouselBlock {
-    height: 250px;
+  height: 250px;
 }
 
 .restTitle {
-    padding-top: 15px;
-    font-size: 30px;
+  padding-top: 15px;
+  font-size: 30px;
 }
 
 .rating {
-    padding-top: 14px;
-    padding-right: 50px;
+  padding-top: 14px;
+  padding-right: 50px;
 }
 
 .ratingNumber {
-    font-size: 26px;
-    color: #333;
-    padding-left: 30px;
+  font-size: 26px;
+  color: #333;
+  padding-left: 30px;
 }
 
 .lpad8 {
-    padding-left: 8px;
+  padding-left: 8px;
 }
 
 .lpad15 {
-    padding-left: 15px;
+  padding-left: 15px;
 }
 
 .tpad10 {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .bpad8 {
-    padding-bottom: 8px;
+  padding-bottom: 8px;
 }
 
 /* styles for search result page ends */
@@ -929,70 +1127,75 @@ button.kh-primary {
 /* styles for check out page starts*/
 
 .reviewBlock {
-    border: solid 1px gray;
-    border-radius: 5px;
-    background-color: gainsboro;
-    padding-bottom: 5px;
-    padding-top: 5px;
+  border: solid 1px gray;
+  border-radius: 5px;
+  background-color: gainsboro;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .split {
-    border-right: solid 1px white;
+  border-right: solid 1px white;
 }
 
 .addressBlock {
-    padding-top: 13px;
-    background-color: white;
-    border-radius: 5px;
-    padding-bottom: 9px;
+  padding-top: 13px;
+  background-color: white;
+  border-radius: 5px;
+  padding-bottom: 9px;
 }
 
 .orderBlock {
-    background-color: white;
-    border-radius: 5px;
-    padding-top: 5px;
+  background-color: white;
+  border-radius: 5px;
+  padding-top: 5px;
 }
 
 .addressButton {
-    background-color: #DC141B;
-    color: white;
+  background-color: #DC141B;
+  color: white;
 }
 
 .tableFont {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .input-group-addon {
-    font-size: 18px;
+  font-size: 18px;
 }
 
-.paymentBlock{		
-  padding-top: 5px;		
-  padding-bottom: 5px;		
+.paymentBlock {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-.addressOk{		
-  padding-top: 10px;		
-}		
-.addressLineTitle1{		
-  background-color: #333;		
-  color: white;		
-}		
-.addressLineTitle2{		
-  background-color: green;		
-  color: white;		
-}		
-.addressLineContent{		
-  border: solid 1px gray;		
-}		
-.makingCenter{		
-  padding-bottom: 5px;		
+.addressOk {
+  padding-top: 10px;
 }
+
+.addressLineTitle1 {
+  background-color: #333;
+  color: white;
+}
+
+.addressLineTitle2 {
+  background-color: green;
+  color: white;
+}
+
+.addressLineContent {
+  border: solid 1px gray;
+}
+
+.makingCenter {
+  padding-bottom: 5px;
+}
+
 /* styles for check out page ends */
 
 /* styles for user restaurant home page starts */
 
-.bottomBorder{
+.bottomBorder {
   border-bottom: solid 1px gainsboro;
   padding-top: 7px;
   padding-bottom: 7px;
@@ -1000,206 +1203,212 @@ button.kh-primary {
   cursor: pointer;
   padding-left: 10px;
 }
+
 .nav-tabs {
-  position: fixed; 
+  position: fixed;
   z-index: 2;
   background-color: #FAF8FD
 }
-.tpad40{
+
+.tpad40 {
   padding-top: 40px;
 }
-.lpad10{
+
+.lpad10 {
   padding-left: 10px;
 }
-.dishList{
+
+.dishList {
   padding-top: 5px;
   padding-bottom: 5px;
   border-top: solid 1px gainsboro;
   cursor: pointer;
   color: green;
 }
-.dishPrice{
+
+.dishPrice {
   padding-top: 5px;
   padding-bottom: 5px;
   border-top: solid 1px gainsboro;
   cursor: pointer;
   color: #222;
 }
-.menuActiveClass{
+
+.menuActiveClass {
   background-color: wheat;
 }
-.restImage{
-    background: url("../images/restPic.jpg") no-repeat top center;
-    min-height: 300px;
-    margin-top: 7px;
-    width: 100%;
-    background-position-x: 15px;
-    margin-bottom: 45px;
- }
- .restTitleName{
-    color: white;
- }
+
+.restImage {
+  background: url("../images/restPic.jpg") no-repeat top center;
+  min-height: 300px;
+  margin-top: 7px;
+  width: 100%;
+  background-position-x: 15px;
+  margin-bottom: 45px;
+}
+
+.restTitleName {
+  color: white;
+}
 
 /* styles for user restaurant home page ends */
 
 @media (max-width: 480px) {
-    .welcomeText {
-        margin-top: 68px;
-    }
+  .welcomeText {
+    margin-top: 68px;
+  }
 }
 
 @media (max-width: 768px) {
-    .buttonCity {
-        width: 125px;
-    }
+  .buttonCity {
+    width: 125px;
+  }
 
-    .hiddenInput {
-        width: 200px;
-        font-size: 12px;
-        padding-left: 40px;
-    }
+  .hiddenInput {
+    width: 200px;
+    font-size: 12px;
+    padding-left: 40px;
+  }
 
-    .extendedInput {
-        width: 285px;
-        font-size: 14px;
-        padding-left: 28px;
-    }
+  .extendedInput {
+    width: 285px;
+    font-size: 14px;
+    padding-left: 28px;
+  }
 
-    h3 {
-        font-size: 18px;
-    }
+  h3 {
+    font-size: 18px;
+  }
 
-    .headerLocationInput {
-        padding-left: 30px;
-        padding-right: 0;
-    }
+  .headerLocationInput {
+    padding-left: 30px;
+    padding-right: 0;
+  }
 
-    .restaurantIcon {
-        height: 90px;
-        padding-top: 0;
-        width: 90px;
-    }
+  .restaurantIcon {
+    height: 90px;
+    padding-top: 0;
+    width: 90px;
+  }
 
-    .restTitle {
-        padding-top: 05px;
-        font-size: 18px;
-    }
+  .restTitle {
+    padding-top: 05px;
+    font-size: 18px;
+  }
 
-    .paraNoMargin {
-        margin: 0 0 0;
-        font-size: 14px;
-    }
+  .paraNoMargin {
+    margin: 0 0 0;
+    font-size: 14px;
+  }
 
-    .tpad5 {
-        padding-top: 5px;
-    }
+  .tpad5 {
+    padding-top: 5px;
+  }
 
-    .orderButton {
-        font-size: 21px;
-    }
+  .orderButton {
+    font-size: 21px;
+  }
 
-    .ordrBtnFLtRight {
-        float: right;
-    }
+  .ordrBtnFLtRight {
+    float: right;
+  }
 
-    .quickViewRow {
-        margin-left: -15px;
-        margin-right: -15px;
-    }
+  .quickViewRow {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
 
-    .rating {
-        padding-top: 5px;
-        padding-right: 10px;
-    }
+  .rating {
+    padding-top: 5px;
+    padding-right: 10px;
+  }
 
-    .glyphicon-heart {
-        font-size: 20px;
-        padding-left: 4px;
-    }
+  .glyphicon-heart {
+    font-size: 20px;
+    padding-left: 4px;
+  }
 
-    .ratingNumber {
-        font-size: 15px;
-        padding-left: 8px;
-    }
+  .ratingNumber {
+    font-size: 15px;
+    padding-left: 8px;
+  }
 
-    .filterBlock {
-        height: auto;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-size: 15px;
-    }
+  .filterBlock {
+    height: auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 15px;
+  }
 
-    .filterGlyph {
-        font-size: 9px;
-        padding-right: 15px;
-    }
+  .filterGlyph {
+    font-size: 9px;
+    padding-right: 15px;
+  }
 }
-
 
 @media (min-width: 992px) {
 
-    .restTitleContent {
-        padding-left: 26px;
-    }
+  .restTitleContent {
+    padding-left: 26px;
+  }
 }
 
 @media (min-width: 1200px) {
 
-    .restTitleContent {
-        padding-left: 7px;
-    }
+  .restTitleContent {
+    padding-left: 7px;
+  }
 }
-
 
 /*Animation*/
 .glyphicon-heart {
-    font-size: 34px;
-    color: red;
-    padding-left: 15px;
-    -webkit-animation-name: beat;
-    -webkit-animation-duration: 2.4s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-play-state: running;
+  font-size: 34px;
+  color: red;
+  padding-left: 15px;
+  -webkit-animation-name: beat;
+  -webkit-animation-duration: 2.4s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-play-state: running;
 }
 
 @-webkit-keyframes beat {
-    0% {
-        -webkit-transform: scale(1);
-    }
+  0% {
+    -webkit-transform: scale(1);
+  }
 
-    10% {
-        -webkit-transform: scale(1.1);
-    }
+  10% {
+    -webkit-transform: scale(1.1);
+  }
 
-    16% {
-        -webkit-transform: scale(.95);
-    }
+  16% {
+    -webkit-transform: scale(.95);
+  }
 
-    25% {
-        -webkit-transform: scale(1.2);
-    }
+  25% {
+    -webkit-transform: scale(1.2);
+  }
 
-    32% {
-        -webkit-transform: scale(1);
-    }
+  32% {
+    -webkit-transform: scale(1);
+  }
 
-    40% {
-        -webkit-transform: scale(.95);
-    }
+  40% {
+    -webkit-transform: scale(.95);
+  }
 
-    50% {
-        -webkit-transform: scale(1);
-    }
+  50% {
+    -webkit-transform: scale(1);
+  }
 
-    100% {
-        -webkit-transform: scale(1);
-    }
+  100% {
+    -webkit-transform: scale(1);
+  }
 }
 
 @media (min-width: 320px) {
 
-    .glyphicon-heart {
-        font-size: 15px;
-        padding-top: 4px;
-    }
+  .glyphicon-heart {
+    font-size: 15px;
+    padding-top: 4px;
+  }
 }

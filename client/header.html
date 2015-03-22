@@ -1,34 +1,5 @@
 <div class="fullScreenWidth customNavBar">
     <div class="container">
-        <div class="row hidden-xs visible-sm visible-md visible-lg">
-            <div class="col-sm-3 col-md-4 col-lg-4">
-                <a class="navbar-brand">PetuRaam</a>
-            </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-4 navSearch">
-                <input id="smSearchNavBar" class="form-control" placeholder="{{search.searchPlaceHolder}}" ng-if="getIsNotHomePage()" ng-model="search.searchtext" />
-            </div>
-
-            <div class="col-sm-3 col-md-4 col-lg-4 navLinks">
-                <div class="pull-right">
-                    <span class="glyphicon glyphicon-search marRight5" ng-if="isSearchForMealInactive()" ng-click="showSearch()"></span>
-                    <span class="glyphicon glyphicon-map-marker marRight5" ng-if="isSearchForLocationInactive()" ng-click="showLocationSearch()"></span>
-                    <span ng-if="!isUserLoggedIn()" class="loginSpan" ng-click="openLoginModal()">Login</span>
-                    <span ng-if="isUserLoggedIn()" class="userIcon" ng-click="toggleUserContextMenu()" >
-                        <a><span class="glyphicon glyphicon-user"></span></a>
-                        <ul class="dropdown-menu" ng-class="getClassForUserContext()">
-                            <li><a class="noHover" href="#">{{getUserName()}}</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Change Password</a></li>
-                            <li><a href="#">My Profile</a></li>
-                            <li><a href="#">My Orders</a></li>
-                            <li class="divider"></li>
-                            <li><a ng-click="logoutUser()">Logout</a></li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-        </div>
 
         <div class="row visible-xs hidden-sm hidden-md hidden-lg">
             <div class="col-xs-12">
@@ -37,23 +8,32 @@
                         <img src="images/Peturam.png" alt="Peturaam" title="PetuRam" />
                     </div>
 
-                    <div class="col-xs-7 col-xs-offset-2 navLinks">
+                    <div class="col-xs-9  navLinks">
                         <div class="pull-right">
-                            <span class="glyphicon glyphicon-search marRight5" title="Search" ng-if="isSearchForMealInactive()" ng-click="showOverLappedMealSearch()" ></span>
-                            <span class="glyphicon glyphicon-map-marker marRight5" title="Location Search" ng-if="isSearchForLocationInactive()" ng-click="showOverLappedLocationSearch()"></span>
-                            <span ng-if="!isUserLoggedIn()" class="loginSpan" ng-click="openLoginModal()">Login</span>
-                            <span ng-if="isUserLoggedIn()" class="userIcon" ng-click="toggleUserContextMenu()" >
-                                <a><span class="glyphicon glyphicon-user"></span></a>
-                                <ul class="dropdown-menu" ng-class="getClassForUserContext()">
-                                    <li><a class="noHover" href="#">{{getUserName()}}</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Change Password</a></li>
-                                    <li><a href="#">My Profile</a></li>
-                                    <li><a href="#">My Orders</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Logout</a></li>
-                                </ul>
-                            </span>
+                            <div class="searchGlyphContainer">
+                                <div class="glyphicon glyphicon-search marRight5" title="Search"  ng-click="showOverLappedMealSearch()" ></div>
+                                <div class="glyphicon glyphicon-map-marker marRight5" title="Location Search"  ng-click="showOverLappedLocationSearch()"></div>
+                            </div>
+
+                            <div class="loginControlsContainer" ng-class="getShrinkClass()">
+                                <div class="loginControlsWrapper" ng-class="adjustMargin('login')">
+
+                                    <div class="loginSpan" ng-click="openLoginModal()">Login</div>
+                                    <div class="userIcon">
+                                        <span class="glyphicon glyphicon-user" ng-click="toggleUserContextMenu()"></span>
+                                        <ul class="dropdown-menu" ng-class="getClassForUserContext()">
+                                            <li><a class="noHover" href="#">{{getUserName()}}</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Change Password</a></li>
+                                            <li><a href="#">My Profile</a></li>
+                                            <li><a href="#">My Orders</a></li>
+                                            <li class="divider"></li>
+                                            <li><a ng-click="logoutUser()">Logout</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -62,14 +42,61 @@
             <div id="overLappedRow" class="col-xs-12 overLappedRow">
                 <div class="row">
                     <div class="col-xs-10">
-                        <input id="xsSearchNavBar" class="form-control" ng-if="getIsNotHomePage()" placeholder="{{search.searchPlaceHolder}}" ng-model="search.searchText" />
+                        <input id="xsSearchNavBar" class="form-control" ng-if="isHomePageNotActive()" placeholder="{{search.searchPlaceHolder}}" ng-model="search.searchText" />
                     </div>
 
-                    <div class="col-xs-2 centerGlyph">
+                    <div class="col-xs-2 noLPad centerGlyph">
                         <span class="glyphicon glyphicon-remove remove" ng-click="restorePosition()"></span>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="visible-lg visible-md visible-sm hidden-xs">
+
+            <div class="col-sm-3 col-md-4 col-lg-4">
+                <a class="navbar-brand">PetooRaam</a>
+            </div>
+
+            <div class="col-xs-6 col-md-4 col-lg-4 navSearch">
+                <input id="smSearchNavBar" class="form-control" placeholder="{{search.searchPlaceHolder}}" ng-if="isHomePageNotActive()" ng-model="search.searchText" />
+            </div>
+
+            <div class="col-sm-3 col-md-4 col-lg-4 navLinks">
+                <div class="pull-right">
+
+                    <div class="searchGlyphContainer">
+                        <div class="searchGlyphWrapper" ng-class="adjustMargin('search')">
+
+                            <div class="glyphicon glyphicon-search marRight5" ng-click="makeMealSearchActive()"></div>
+                            <div class="glyphicon glyphicon-map-marker marRight5"ng-click="makeLocationSearchActive()" ></div>
+
+                        </div>
+                    </div>
+
+                    <div class="loginControlsContainer">
+                        <div class="loginControlsWrapper" ng-class="adjustMargin('login')">
+
+                            <div class="loginSpan" ng-click="openLoginModal()">Login</div>
+                            <div class="userIcon">
+                                <span class="glyphicon glyphicon-user" ng-click="toggleUserContextMenu()"></span>
+                                <ul class="dropdown-menu" ng-class="getClassForUserContext()">
+                                    <li><a class="noHover" href="#">{{getUserName()}}</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Change Password</a></li>
+                                    <li><a href="#">My Profile</a></li>
+                                    <li><a href="#">My Orders</a></li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="logoutUser()">Logout</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </div>

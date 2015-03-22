@@ -6,9 +6,18 @@ define( [], function() {
 	return TopController;
 } );
 
-function parentController($scope, $http, DataStore, AppConstants, RestRequests, $modal, $window) {
+function parentController($scope, $rootScope, $http, DataStore, AppConstants, RestRequests, $modal, $window, $timeout) {
 
-	console.log( 'In parent Controller ' );
+    /*$rootScope.$on('$locationChangeStart', function( event, next, current ){
+
+        var retrievedPath = next.split('#')[1];
+
+        if( retrievedPath !== '/'){
+            $scope.visibilityControl.isHomePage = false;
+        } else {
+            $scope.visibilityControl.isHomePage = true;
+        }
+    });*/
 
 	$scope.search = {
 		searchText : '',
@@ -23,6 +32,9 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 		'cityName' : 'lucknow'
 	};
 
+    /*                      Rest Requests Section                      */
+    /*==================================================================/
+     */
 	var requestString = AppConstants.httpServicePrefix + '/'
 			+ RestRequests.getDropDowns;
 
@@ -41,121 +53,10 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 		console.log( data );
 	} );
 
-	/* Header Controls */
-	$scope.visibilityControl = {
-		isHomePage : true,
-		isSearchActive : true,
-		isLocationSearchActive : false
-	};
-
-	/* Should Search Should Be Visible ? Due to Home Page */
-	$scope.getIsNotHomePage = function() {
-
-		return !$scope.visibilityControl.isHomePage;
-	}
-
-	/* Is Meal Search Currently Inactive */
-	$scope.isSearchForMealInactive = function() {
-
-		return $scope.visibilityControl.isHomePage ? 'false'
-				: !$scope.visibilityControl.isSearchActive;
-	};
-
-	/* Is locationSearch InaActive */
-	$scope.isSearchForLocationInactive = function() {
-
-		return $scope.visibilityControl.isHomePage ? 'false'
-				: !$scope.visibilityControl.isLocationSearchActive;
-	};
-
-	/* Activate Meal Search */
-	$scope.showSearch = function() {
-
-		/* We don't need you anymore searchText. */
-		$scope.resetSearchText();
-
-		$scope.visibilityControl.isSearchActive = true;
-		$scope.visibilityControl.isLocationSearchActive = false;
-
-		$scope.search.searchPlaceHolder = 'Looking for meals ?';
-		$scope.search.type = 'meal';
-
-		/* Someone needed a focus. */
-		var smSearchBar = document.getElementById( 'smSearchNavBar' );
-		smSearchBar.focus();
-	};
-
-    /* Activate Location Search */
-	$scope.showLocationSearch = function() {
-
-		/* We don't need you anymore searchText. */
-		$scope.resetSearchText();
-
-		$scope.visibilityControl.isSearchActive = false;
-		$scope.visibilityControl.isLocationSearchActive = true;
-
-		$scope.search.searchPlaceHolder = 'Lokking for locality ?';
-		$scope.search.type = 'loc';
-
-		/* Attention Seeker. */
-		var smSearchBar = document.getElementById( 'smSearchNavBar' );
-		smSearchBar.focus();
-	};
-
-	/* Search case on click on overlapper Meal Search */
-	$scope.showOverLappedMealSearch = function() {
-
-		$scope.search.searchPlaceHolder = 'Lokking for meal ?';
-		$scope.search.type = 'mea;';
-
-		$scope.dragOverLappedRow();
-	};
-
-	/* Search case on click on overLappedRow Location */
-	$scope.showOverLappedLocationSearch = function() {
-
-		$scope.search.searchPlaceHolder = 'Looging for locality ?';
-		$scope.search.type = 'loc';
-
-		$scope.dragOverLappedRow();
-	}
-
-	/* Restore overLappedRow above the navbar. */
-	$scope.restorePosition = function() {
-
-		var overLappedRow = angular.element( document
-				.getElementById( 'overLappedRow' ) );
-
-		overLappedRow.removeClass( 'moveToNormalPosition' );
-	};
-
-	/* Drag overLappedRow above the navbar. */
-	$scope.dragOverLappedRow = function() {
-
-		var overLappedRow = angular.element( document
-				.getElementById( 'overLappedRow' ) );
-		overLappedRow.addClass( 'moveToNormalPosition' );
-	};
-
-	/* Get Lost Search Text */
-	$scope.resetSearchText = function() {
-
-		$scope.search.searchText = '';
-	};
-
-	/* Set that we are at homepage and hide search. */
-	$scope.setIsHomePage = function() {
-
-		$scope.visibilityControl.isHomePage = true;
-	};
-
-	/* Set that we are not at hompage and show search. */
-	$scope.setIsOtherPage = function() {
-
-		$scope.visibilityControl.isHomePage = false;
-	}
-
-	/* User Home Page Style Determination */
+    /*                       Page Utility Section                      */
+    /*==================================================================/
+     */
+    /* User Home Page Style Determination */
 	$scope.getClassForLg = function(index) {
 
 		if ( index === 0 || index === 6 ) {
@@ -186,6 +87,17 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
 		return imgUrl[0] + '-lg.' + imgUrl[1];
     };
 
+    /*Delayed delete of the user. So the context menu does not shows up undefined.*/
+    $scope.delayedDelete = function () {
+        $timeout( function () {
+            DataStore.removeData( 'loggedInUser' );
+            delete $window.localStorage['user'];
+        }, 1000);
+    };
+
+    /*                 Page Core Functionality Section                 */
+    /*==================================================================/
+     */
     /*OpenLoginModal*/
     $scope.openLoginModal = function () {
         var modalInstance = $modal.open({
@@ -210,6 +122,87 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
         });
     };
 
+    /*                      Page Header Section                      */
+    /*==================================================================/
+     */
+
+    $scope.isUserContextMenuOpen = false;
+
+    $scope.visibilityController = {
+        isHomePage : false,
+        isLocationSearcNotActive : true
+    };
+
+    /* This method decides whether to show input box on the page.*/
+    $scope.isHomePageNotActive = function () {
+        return !$scope.visibilityController.isHomePage;
+    };
+
+    /* This method would provide the necessary style css for animation of search toggle. */
+    $scope.adjustMargin = function (type) {
+        return type==='search' ? ($scope.visibilityController.isLocationSearcNotActive ? 'negativeTopMargin50' : '' )
+            :
+            ( $scope.isUserLoggedIn() ? 'negativeTopMargin50' : '');
+    };
+
+    /* This method would provide necessary style css for login toggle. */
+    $scope.getShrinkClass = function ( ){
+        return $scope.isUserLoggedIn() ? 'shrinked' : '';
+    };
+
+    /* Search case on click on overlapper Meal Search */
+    $scope.showOverLappedMealSearch = function() {
+
+        $scope.search.searchPlaceHolder = 'Lokking for meal ?';
+        $scope.search.type = 'mea;';
+
+        $scope.dragOverLappedRow();
+    };
+
+    /* Search case on click on overLappedRow Location */
+    $scope.showOverLappedLocationSearch = function() {
+
+        $scope.search.searchPlaceHolder = 'Looking for locality ?';
+        $scope.search.type = 'loc';
+
+        $scope.dragOverLappedRow();
+    }
+
+    /* Restore overLappedRow above the navbar. */
+    $scope.restorePosition = function() {
+
+        var overLappedRow = angular.element( document
+            .getElementById( 'overLappedRow' ) );
+
+        overLappedRow.removeClass( 'moveToNormalPosition' );
+    };
+
+    /* Drag overLappedRow above the navbar. */
+    $scope.dragOverLappedRow = function() {
+
+        var overLappedRow = angular.element( document
+            .getElementById( 'overLappedRow' ) );
+        overLappedRow.addClass( 'moveToNormalPosition' );
+    };
+
+    /* This method actives meal search */
+    $scope.makeMealSearchActive = function () {
+        $scope.visibilityController.isLocationSearcNotActive = true;
+
+        $scope.search.searchText = '';
+        $scope.search.searchType = 'meal';
+        $scope.search.searchPlaceHolder = 'Looking for meal ?';
+    };
+
+    /* This method actives location search */
+    $scope.makeLocationSearchActive = function(){
+        $scope.visibilityController.isLocationSearcNotActive = false;
+
+        $scope.search.searchText = '';
+        $scope.search.searchType = 'loc';
+        $scope.search.searchPlaceHolder = 'Looking for locality ?';
+    };
+
     /* We have stored use login info in window.localStorage.
      * LocalStorage has advantages over others, as data will remain for infinite time.
      * We need to delete it manually.
@@ -232,12 +225,13 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
      * And while reading, parse it into an object.
      */
     $scope.getUserName = function () {
+        if( typeof DataStore.getData( 'loggedInUser' ) === 'undefined' && typeof $window.localStorage.user === 'undefined' ){
+            return '';
+        }
         var user = DataStore.getData( 'loggedInUser' ) || JSON.parse($window.localStorage.user);
 
         return user.name;
     };
-
-    $scope.isUserContextMenuOpen = false;
 
     $scope.toggleUserContextMenu = function () {
         $scope.isUserContextMenuOpen = !$scope.isUserContextMenuOpen;
@@ -248,17 +242,22 @@ function parentController($scope, $http, DataStore, AppConstants, RestRequests, 
     };
 
     $scope.logoutUser = function () {
+
+        $scope.isUserContextMenuOpen = false;
+
         $http.post( 'node' + '/' + 'user/logout' , {})
             .success( function ( data ) {
 
                 console.log( data.msg );
 
-                DataStore.removeData( 'loggedInUser' );
-                delete $window.localStorage['user'];
+                $scope.delayedDelete();
                 delete $window.localStorage['token'];
             })
             .error( function ( data ) {
                 console.log( data ) ;
+
+                $scope.delayedDelete();
+                delete $window.localStorage['token'];
             });
     };
 }
