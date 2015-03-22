@@ -38,11 +38,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/user/UserCheckOut.html',
                 '../../appResources/controller/userCheckOutController'
         ))
-        .when('/userRestaurantHome',
+        .when('/restaurant/:restSLug',
             routeConfig.config(
-                'views/user/userRestaurantHome.html',
-                '../../appResources/controller/userRestaurantHomeController'
-        ))
+                'views/user/restaurant/restaurantHome.html',
+                '../../appResources/controller/user/restaurant/restaurantDetailsController'
+        ));
         //Will use it later.
         //Will know how. 
         $httpProvider.interceptors.push("authInterceptor");
