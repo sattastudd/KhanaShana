@@ -756,7 +756,7 @@ button.kh-primary {
 .restaurantIcon {
   height: 140px;
   width: 140px;
-  border-radius: 80px;
+  border-radius: 6px;
   box-shadow: 0 4px 10px 0 #555; }
 
 .orderButton {
@@ -934,8 +934,8 @@ button.kh-primary {
     margin: 0 0 0;
     font-size: 14px; }
 
-  .tpad5 {
-    padding-top: 5px; }
+  .tpad15 {
+    padding-top: 15px; }
 
   .orderButton {
     font-size: 21px; }
