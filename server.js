@@ -12,10 +12,8 @@ var bodyParser 		= 	require( 'body-parser' );
 var methodOverRide 	= 	require( 'method-override' );
 var errorHandler 	= 	require( 'errorhandler' );
 var moment 		= 	require( 'moment' );
-var mongoose 		= 	require( 'mongoose' );
 
 /* Internal Modules */
-var credentials 	= 	require( './credentials' );
 var dbConfig 		= 	require( './config/DbConfigure' );
 
 /* Authentication and Authorization Modules */
@@ -25,8 +23,6 @@ var AuthorizationFilter =	require( './server/middleWares/AuthorizationFilter' );
 
 /* Retrieving Request Mapper Module */
 var requestMapper = require( './config/RequestMapper' );
-
-var jwt 		= 	require( 'jsonwebtoken' );
 
 /* Setting up DataBase Connections using Configure */
 dbConfig.configure();
@@ -54,6 +50,7 @@ router  = express.Router();
 
 var globalDataRoute = require( './server/routes/globalRoutes' );
 var loginRoute = require( './server/routes/loginRoutes' );
+var publicRestaurantRoute = require( './server/routes/restaurantRoute');
 
 /* Setting up modules to work on /admin and /user requests only. */
 app.use( ['/admin', '/user'], Authenticator, BlackListFilter, AuthorizationFilter);

@@ -1,8 +1,13 @@
 /* This is DBI file for public Restaurant Info Interaction*/
-var appConstants = require( '../../constants/ServerConstants' );
-
+var ServerConstants = require( '../../constants/ServerConstants' );
 var restaurantModelModule = require( '../../models/restaurant/restaurants' );
 
+/*                                  Publlic Methods                                 */
+/*==================================================================================*/
+
+/* This method is responsible for retrieving restaurant data by using the slug field
+ * Slug field represents alternate unique id to be used instead of id.
+ */
 var getRestaurrantInfoBySlug = function (cityName, slug, callback){
 
     console.log( 'In PublicRestaurantDBI | Starting Execution of getRestaurantInfoBySlug' );
@@ -20,12 +25,16 @@ var getRestaurrantInfoBySlug = function (cityName, slug, callback){
         _id : false
     };
 
-    RestaurantModel.find( query, projection, function( err, result ) {
+    RestaurantModel.findOne( query, projection, function( err, result ) {
 
         if( err ) {
             callback( err );
         } else {
-            callback( null, result );
+            if( null === result ) {
+                callback( ServerConstants.appErrors.noRecordFound );
+            } else {
+                callback( null, result );
+            }
         }
 
     });

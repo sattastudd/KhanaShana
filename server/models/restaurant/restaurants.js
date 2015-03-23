@@ -21,7 +21,7 @@ var restaurantSchema = new mongoose.Schema({
     detail : {
         timing : String,
         rating : Number,
-        total_vots : Number
+        total_votes : Number
     },
     menu : [
         {
@@ -42,7 +42,7 @@ var restaurantSchema = new mongoose.Schema({
 });
 
 var connection = null;
-var model = null
+var model = null;
 
 var setUpConnection = function( connectionToBeUsed ) {
     connection = connectionToBeUsed;

@@ -10,7 +10,8 @@ var appConstants = {
         userExists : 'UserExists',
         validationError : 'ValidationError',
         internalError : 'InternalError',
-        invalidCredentials : 'InvalidCredentials'
+        invalidCredentials : 'InvalidCredentials',
+        noRecordFound : 'NoRecordFound'
     },
 
 	errorMessage : {
@@ -21,7 +22,8 @@ var appConstants = {
         mandatory : 'Field can not be left empty.',
         contact : 'Invalid Contact Number.',
         fillDetails : 'Please correct all mistakes before proceeding.',
-        invalidCredentials : 'Invalid Credentials'
+        invalidCredentials : 'Invalid Credentials',
+        noRecordFound : 'No Such Record Exists'
 	},
 
     successMessage : 'Ok',
