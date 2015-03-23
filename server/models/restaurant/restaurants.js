@@ -58,5 +58,5 @@ var getRestaurantModel = function(){
     }
 };
 
-module.exports = setUpConnection = setUpConnection;
-module.exports.getRestaurantModel = getRestaurantModel;
+exports.setUpConnection = setUpConnection;
+exports.getRestaurantModel = getRestaurantModel;
