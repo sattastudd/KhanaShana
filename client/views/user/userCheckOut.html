@@ -10,151 +10,55 @@
             </div>
         </div>
         <div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 checkoutTabs bpad8" ng-click="reviewBlockClicked()">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 split">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <h3>Your Order</h3>
+                    <h3 class="lpad15">Review your Order</h3>
+                </div>
+            </div>
+            <div collapse="reviewCollapsed">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h3>Your Order</h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 orderBlock">
-                            <table class="table tableFont">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Dish</th>
-                                        <th>Qty</th>
-                                        <th>Price</th>
-                                        <th>Edit</th>
-                                    </tr>
-                                    <tbody>
-                                        <tr ng-repeat="list in order">
-                                            <td>{{list.no}}</td>
-                                            <td>{{list.name}}</td>
-                                            <td>{{list.quantity}}</td>
-                                            <td>{{list.price}}</td>
-                                            <td><i class="glyphicon glyphicon-trash"></i></td>
-                                        </tr>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 orderBlock">
+                                <table class="table tableFont">
+                                    <thead>
                                         <tr>
-                                            <td>Total</td>
-                                            <td>{{orderTotal}}</td>
+                                            <th>#</th>
+                                            <th>Dish</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Edit</th>
                                         </tr>
-                                    </tbody>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <h3>Any Requests</h3>
+                                        <tbody>
+                                            <tr ng-repeat="list in order">
+                                                <td>{{list.no}}</td>
+                                                <td>{{list.name}}</td>
+                                                <td>{{list.quantity}}</td>
+                                                <td>{{list.price}}</td>
+                                                <td><i class="glyphicon glyphicon-trash"></i></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td>{{orderTotal}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </thead>
+                                </table>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <textarea ng-model="checkOut.requests" style="width:100%" rows="4" placeholder="Type your requests">
-                                </textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 makingCenter" ng-repeat="list in address">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" 
-                                ng-click="addressSelected($index)" ng-class="{addressLineTitle1: addressDeActive, addressLineTitle2:
-                                addressActive}">
-                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                        <h4>{{list.name}}</h4>
-                                    </div>
-                                    <div class="col-xs-2 col-md-2 col-md-2 col-lg-2 addressOk">
-                                        <i class="glyphicon glyphicon-ok-sign" ng-show="addressActive"></i>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 addressLineContent" 
-                                ng-click="addressSelected()">
-                                    <p>{{list.destination}}</p>
-                                    <p>Contact No. : {{list.phone}}</p>
-                                    <p>E mail : {{list.mail}}</p>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h3>Any Requests</h3>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 makingCenter">
-                                <button type="button" class="btn btn-default" ng-hide="hideAddressBtn" ng-click="showAddress()">
-                                    Add an Address
-                                </button>
-                            </div>
-                        </div>
-                        <div collapse="isCollapsed">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 addressBlock">
-                                <div class="row">
-                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>House No. / Flat No.</label>
-                                    </div> -->
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">H no.</div>
-                                            <input type="text" ng-model="checkOut.houseNo" class="form-control" placeholder="Enter your House No. /  Flat No.">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>Locality</label>
-                                    </div> -->
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Area.</div>
-                                            <input type="text" ng-model="checkOut.area" class="form-control" placeholder="Enter your Area / Society Name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>Nearest LandMark</label>
-                                    </div> -->
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Land.</div>
-                                            <input type="text" ng-model="checkOut.landmark" class="form-control" placeholder="Enter your LandMark">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>Contact No.</label>
-                                    </div> -->
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">+91-</div>
-                                            <input type="text" ng-model="checkOut.contact" class="form-control" placeholder="Enter your Contact No.">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>Email ID.</label>
-                                    </div> -->
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad5">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">ID@</div>
-                                            <input type="text" ng-model="checkOut.mail" class="form-control" placeholder="Enter your Email ID">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="checkbox">
-                                            <label>
-                                              <input type="checkbox"> Dont save this address
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <button class="btn addressButton" type="button" ng-click="saveAddress()">Save Address</button>
-                                         <button class="btn addressCancelButton" type="button" ng-click="cancelAddress()">Cancel Address</button>
-                                    </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <textarea ng-model="checkOut.requests" style="width:100%" rows="4" placeholder="Type your requests">
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
@@ -162,14 +66,61 @@
                 </div>
             </div>
         </div>
+            <div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 checkoutTabs bpad8" ng-click="addressBlockClicked()">
+                    <div class="row">
+                        <h3 class="lpad15">Select Address</h3>
+                    </div>
+                </div>
+                <div collapse="addressCollapsed">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
+                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 makingCenter" ng-repeat="list in address">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" 
+                                    ng-click="addressSelected($index)" ng-class="{addressLineTitle1: addressDeActive, addressLineTitle2:
+                                    addressActive}">
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <h4>{{list.name}}</h4>
+                                        </div>
+                                        <div class="col-xs-2 col-md-2 col-md-2 col-lg-2 addressOk">
+                                            <i class="glyphicon glyphicon-ok-sign" ng-show="addressActive"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 addressLineContent" 
+                                    ng-click="addressSelected()">
+                                        <p>{{list.destination}}</p>
+                                        <p>Contact No. : {{list.phone}}</p>
+                                        <p>E mail : {{list.mail}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 makingCenter">
+                                    <button type="button" class="btn btn-default" ng-hide="hideAddressBtn" ng-click="showAddress()">
+                                        Add an Address
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 paymentBlock">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 checkoutTabs bpad8" ng-click="paymentBlockClicked()">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
-                        <h2>Payment Method</h2>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tpad10">
-                                
+                    <h3 class="lpad15">Payment Method</h3>
+                </div>
+            </div>
+            <div collapse="paymentCollapsed">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad8">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
+                            <h2>Payment Method</h2>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tpad10">
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
