@@ -8,19 +8,6 @@ function checkOutContoller ($scope) {
 
 	console.log("inside checkout controller");
 
-	$scope.isCollapsed = true;
-
-	$scope.showAddress = function(){
-		console.log("btn clicked");
-		$scope.hideAddressBtn = true;
-		$scope.isCollapsed = false;
-	}
-
-	$scope.cancelAddress = function(){
-		$scope.hideAddressBtn = false;
-		$scope.isCollapsed = true;
-	}
-
 	$scope.addressDeActive = true;
 
 	$scope.addressSelected = function(index){
@@ -35,7 +22,7 @@ function checkOutContoller ($scope) {
 
 	$scope.checkOut = {};
 
-	$scope.saveAddress = function(){
+	/*$scope.saveAddress = function(){
 		if(null !== $scope.checkOut || $scope.checkOut === "" || angular.isUndefined($scope.checkOut)){
 			$scope.address.push({
 				name: "Address X",
@@ -49,7 +36,7 @@ function checkOutContoller ($scope) {
 		}
 
 		$scope.checkOut = null;
-	}
+	}*/
 
 	$scope.order = [{no:"1", name:"Paneer Butter Masala", price:"100", quantity:"2"},
 					{no:"2", name:"Paneer Chilli", price:"240", quantity:"2"},

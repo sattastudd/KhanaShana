@@ -800,7 +800,8 @@ button.kh-primary {
   border-radius: 5px;
   background-color: gainsboro;
   padding-bottom: 5px;
-  padding-top: 5px; }
+  padding-top: 5px;
+  margin-top: 15px; }
 
 .split {
   border-right: solid 1px white; }
@@ -825,10 +826,6 @@ button.kh-primary {
 
 .input-group-addon {
   font-size: 18px; }
-
-.paymentBlock {
-  padding-top: 5px;
-  padding-bottom: 5px; }
 
 .addressOk {
   padding-top: 10px; }
