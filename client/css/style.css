@@ -797,14 +797,20 @@ button.kh-primary {
 /* styles for check out page starts*/
 .reviewBlock {
   border: solid 1px gray;
-  border-radius: 5px;
+  border-radius: 0px 0px 5px 5px;;
   background-color: gainsboro;
   padding-bottom: 5px;
   padding-top: 5px;
-  margin-top: 15px; }
+  margin-top: -15px; }
 
-.split {
-  border-right: solid 1px white; }
+.checkoutTabs{
+  background-color: rgb(7, 161, 109);;
+  margin-top: 15px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 15px;
+  border-radius: 5px 5px 0px 0px;
+}
 
 .addressBlock {
   padding-top: 13px;

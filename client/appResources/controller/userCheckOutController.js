@@ -38,6 +38,25 @@ function checkOutContoller ($scope) {
 		$scope.checkOut = null;
 	}*/
 
+	$scope.reviewCollapsed = true;
+
+	$scope.reviewBlockClicked = function(){
+		$scope.reviewCollapsed = !$scope.reviewCollapsed;		
+	}
+
+	$scope.addressCollapsed = false;
+
+	$scope.addressBlockClicked = function(){
+		$scope.addressCollapsed = !$scope.addressCollapsed;
+	}
+
+	$scope.paymentCollapsed = true;
+
+	$scope.paymentBlockClicked = function(){
+		$scope.paymentCollapsed = !$scope.paymentCollapsed;
+		console.log("payment block clicked");
+	}
+
 	$scope.order = [{no:"1", name:"Paneer Butter Masala", price:"100", quantity:"2"},
 					{no:"2", name:"Paneer Chilli", price:"240", quantity:"2"},
 					{no:"3", name:"kabab Masala", price:"220", quantity:"2"},
