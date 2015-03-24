@@ -16,6 +16,9 @@ body {
   font-size: 18px; }
 
 /*Global Classes Begin*/
+#main {
+  padding-top: 50px; }
+
 .fullScreenWidth {
   width: 100%; }
 
@@ -647,18 +650,6 @@ button.kh-primary {
 .adminBody {
   margin-top: 65px; }
 
-.borderMenu {
-  border-bottom: solid 1px grey; }
-
-.categoryLabel {
-  float: left;
-  font-size: 18px; }
-
-.restaurantNameBlock {
-  background-color: gainsboro;
-  border-radius: 5px;
-  height: 85px; }
-
 /* admin home page styles */
 .adminBlock {
   background-color: #DC141B;
@@ -690,6 +681,27 @@ button.kh-primary {
     box-shadow: 0 9px 10px 0 #555;
     top: -1px; }
 
+/*Style for restaurant Home*/
+.restaurantSnap {
+  height: 500px;
+  width: 100%; }
+
+.restaurantMenu ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  border-top: 1px solid #ccc;
+  font-family: "Segoe UI"; }
+  .restaurantMenu ul li {
+    float: left;
+    display: inline-block;
+    padding: 20px 30px;
+    cursor: pointer; }
+    .restaurantMenu ul li.active {
+      background-color: #DC141B;
+      color: #fff; }
+
+/*Style for restaurant Home End*/
 /* styles for search result page starts */
 .containerBlock {
   margin-top: 50px; }

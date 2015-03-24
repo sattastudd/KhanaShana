@@ -2,6 +2,16 @@
  */
 var mongoose = require( 'mongoose' );
 
+var dishSchema = new mongoose.Schema({
+    title : String,
+    type : String,
+    veg : Boolean,
+    price : {
+        half : Number,
+        full : Number
+    }
+});
+
 var restaurantSchema = new mongoose.Schema({
     name : String,
     address : {
@@ -27,18 +37,13 @@ var restaurantSchema = new mongoose.Schema({
         {
             title : String,
             items : [
-                {
-                    title : String,
-                    type : String,
-                    veg : Boolean,
-                    price : {
-                        half : Number,
-                        full : Number
-                    }
-                }
+                dishSchema
             ]
         }
-    ]
+    ],
+    img : {
+        full : String
+    }
 });
 
 var connection = null;
