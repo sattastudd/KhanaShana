@@ -17,27 +17,36 @@ var loginService = require( '../serviceLayer/login/LoginService' );
  * It sets up a waterfall call to loginUser first, then, pipes its result to getRoleForId and finally, pipes result
  * to combineAndSend.
  */
-var loginUser = function( req, res, next ) {
+var loginUser = function( req, res, next, adminLogin ) {
 	
-	console.log( 'In LoginController | Starting execution of loginUser' );
+	console.log( 'In LoginController | Starting execution of loginUser | loginAdminUser' );
 
 	var user = {
 		email : req.body.email,
 		credential : req.body.password
 	};
 
-	loginService.loginUser( user, function( err, result ){
+    console.log( adminLogin );
 
-		if( err ) {
-			res.status( 500 )
-				.json(result);
-		} else {
-			res.status( 200 )
-				.json(result);;
-		}
+    if( adminLogin ) {
+        user.role = 'admin'
+    } else {
+        user.role = 'user'
+    }
 
-	});
-	console.log( 'In oginController | Finished execution of loginUser' );
+    loginService.loginUser( user, function( err, result ){
+
+            if( err ) {
+                res.status( 500 )
+                    .json(result);
+            } else {
+                res.status( 200 )
+                    .json(result);;
+            }
+
+    });
+
+	console.log( 'In oginController | Finished execution of loginUser | loginAdminUser' );
 }
 
 /* This method checks if a user already exists with given email id.

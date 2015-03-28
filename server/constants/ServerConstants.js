@@ -11,7 +11,8 @@ var appConstants = {
         validationError : 'ValidationError',
         internalError : 'InternalError',
         invalidCredentials : 'InvalidCredentials',
-        noRecordFound : 'NoRecordFound'
+        noRecordFound : 'NoRecordFound',
+        intentionalBreak: 'IntentionalBreak'
     },
 
 	errorMessage : {

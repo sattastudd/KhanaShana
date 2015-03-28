@@ -3,8 +3,8 @@
     define( [ 'angular', '../require/route-config' ], function(angular,
             routeConfig, lazyDirectives) {
 
-        return angular.module('khanaShanaApp',
-                ['ngRoute', 'petooRamDirectives', 'ui.bootstrap'],
+        return angular.module('petooRam',
+                ['ngRoute', 'petooRamDirectives', 'ui.bootstrap', 'ngAnimate'],
                 function ($compileProvider, $controllerProvider) {
 
             routeConfig.setCompileProvider($compileProvider);
@@ -42,13 +42,10 @@
         })
         .service('ResponseMessage', function (){
             this.errorMessage = {
-                someError : 'Some Error Occurred. Please try after some time.',
-                userExists: 'User Already Exists.',
-                name : 'Invalid Name',
                 email : 'Invalid Email',
                 mandatory : 'Field can not be left empty.',
                 contact : 'Invalid Contact Number.'
-                }
+            };
         })
         .service( 'ValidationService', function(ResponseMessage, RegExProvider ){
             // True -> Validation Failed.

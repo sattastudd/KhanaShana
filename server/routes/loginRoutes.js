@@ -50,3 +50,14 @@ router.post( '/user/logout', function( req, res, next ){
 
     console.log( 'In loginRoutes | Completed Processing for ' + req.route.path);
 });
+
+/* Request-Name :/login, Type: Post, Allowed : admin*/
+/* This request would only be used by admin for logging in.
+ */
+router.post( '/login', function( req, res, next ){
+    console.log( 'In loginRoutes | Handling ' + req.route.path );
+
+    loginController.loginUser( req, res, next, true );
+
+    console.log( 'In loginRoutes | Completed Processing for ' + req.route.path );
+});

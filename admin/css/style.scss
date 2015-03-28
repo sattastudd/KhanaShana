@@ -1,0 +1,119 @@
+$theme-primary-background-color : #2b3238;
+$theme-primary-font-color : #fff;
+
+$theme-glyph-feedback-background-color : #363b41;
+$theme-glyph-color : #5f626b;
+
+$theme-input-background-color : #3b4148;
+$theme-input-font-color : #fff;
+$theme-input-border-radius : 4px;
+
+$theme-error-back-color : #7a2934;
+$theme-error-font-color : #ccc;
+
+$theme-input-box-height : 40px;
+$theme-input-font-size : 18px;
+
+$theme-fast-reaction : .3s;
+
+$theme-primary-button-color : #7b2d87;
+$theme-primary-button-hover-text-color : #fff;
+$theme-primary-button-hover-back-color : #932d87;
+
+/*Min-ins*/
+@mixin transition-mix($property, $duration) {
+  -moz-transition: $property $duration;
+  -o-transition: $property $duration;
+  -webkit-transition: $property $duration;
+  transition: $property $duration;
+}
+
+/* Global CSS Begin */
+@font-face {
+  font-family: Bree;
+  src: url('../fonts/bree-serif.otf');
+}
+
+body{
+  background-color : $theme-primary-background-color;
+
+  font-family: Bree;
+  color : $theme-primary-font-color;
+}
+
+.has-feedback{
+  input{
+    background-color : $theme-input-background-color;
+    color : $theme-input-font-color;
+
+    font-family: 'Calibri';
+    border : none;
+
+    font-size : $theme-input-font-size;
+
+    height : $theme-input-box-height;
+  }
+}
+
+.form-group{
+  span{
+    background-color : $theme-glyph-feedback-background-color;
+    height : $theme-input-box-height;
+    line-height: $theme-input-box-height;
+
+    color :$theme-glyph-color
+  }
+}
+
+.bg-danger{
+  height : $theme-input-box-height;
+  font-family: 'Calibri';
+
+  margin-bottom : 15px;
+  padding-left : 15px;
+
+  border-radius : $theme-input-border-radius;
+
+  font-size : $theme-input-font-size;
+  line-height : $theme-input-box-height;
+
+  color : $theme-error-font-color;
+
+  background-color : $theme-error-back-color;
+
+  @include transition-mix(all, $theme-fast-reaction);
+
+  &.ng-hide, &.ng-show-active{
+    height : 0;
+  }
+
+  &.ng-show, &.ng-hide-active{
+    height : $theme-input-box-height;
+  }
+}
+
+.btn-pr-primary{
+  background-color : $theme-primary-button-color;
+  height : $theme-input-box-height;
+
+  font-size : $theme-input-font-size;
+  @include transition-mix(all, $theme-fast-reaction);
+
+  &:hover, &:focus{
+    color : $theme-primary-button-hover-text-color;
+    background-color : $theme-primary-button-hover-back-color;
+  }
+}
+
+.formActions{
+  margin-top : 15px;
+}
+/* Global CSS End */
+
+/* Utility Classes */
+.tpad50{
+  padding-top : 50px;
+}
+
+/*Login Page Styles Begin*/
+/*Login Page Styles End*/

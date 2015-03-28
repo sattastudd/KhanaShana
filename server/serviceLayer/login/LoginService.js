@@ -50,7 +50,7 @@ var setUpError = function (err, errMsg, type, response) {
     user => user info sent from controller.
     callback => callback from controller.
  */
-var loginUser = function( user, callback ) {
+var loginUser = function( user, callback, role ) {
 	console.log( 'In LoginService | Starting Execution of loginUser' );
 
 	/*Perform validation here.

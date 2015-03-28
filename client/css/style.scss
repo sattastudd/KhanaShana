@@ -1,5 +1,6 @@
 $theme-background-color: #FAF8FD;
 $theme-primary-color: #DC141B;
+$theme-primary-hover-color : rgba(220, 20, 27, .7);
 
 $theme-secondary-font: 'Segoe UI', sans-serif;
 
@@ -986,8 +987,16 @@ button.kh-primary {
 
 /*Style for restaurant Home*/
 .restaurantSnap{
-  height : 500px;
+  height : 400px;
   width : 100%;
+}
+
+.restaurantName{
+  font-size : 30px;
+  line-height: 67px;
+  font-weight: bolder;
+
+  text-align : center;
 }
 
 .restaurantMenu{
@@ -996,22 +1005,66 @@ button.kh-primary {
     margin-left : 0;
     padding-left : 0;
 
-    border-top : 1px solid #ccc;
-
     font-family: "Segoe UI";
+    margin-bottom: 0;
 
     li{
-      float : left;
       display : inline-block;
+      float : left;
 
-      padding : 20px 30px;
+      padding : 21px 0;
       cursor : pointer;
+
+      @include transition-mix(all, $theme-fast-reaction);
+
+      a{
+        padding : 0 30px;
+        color : #000;
+        text-decoration:  none;
+        border-left : 1px solid #ccc;
+        font-size : 15px;
+        cursor : pointer;
+
+        @include transition-mix(all, $theme-fast-reaction);
+
+        &.first{
+          border-left : none;
+        }
+      }
 
       &.active{
         background-color: $theme-primary-color;
-        color : #fff;
+        a{
+          color : #fff;
+        }
+      }
+
+      &:hover{
+        background-color : $theme-primary-color;
+        a,a:hover{
+          color : #fff;
+        }
       }
     }
+  }
+}
+
+.tabbedContent{
+  position : relative;
+
+  > div{
+    border : 1px solid #ccc;
+    width : 100%;
+    float : left;
+    opacity : 0;
+    z-index : 3;
+
+    @include transition-mix(all, $theme-fast-reaction);
+    &.active{margin-left:0;z-index : 4 !important; opacity: 1}
+    &.menu{margin-left : 0}
+    &.gallery, &.reviews, &.location{margin-left : -100%}
+    /*&.reviews{margin-left : -200%}
+    &.location{margin-left: -300%}*/
   }
 }
 /*Style for restaurant Home End*/
@@ -1380,6 +1433,11 @@ button.kh-primary {
     padding-left: 7px;
   }
 }
+
+@media(max-width:767px){}
+@media(min-width:768px){}
+@media(min-width:992px){}
+@media(min-width:1200px){}
 
 /*Animation*/
 .glyphicon-heart {

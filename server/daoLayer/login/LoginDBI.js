@@ -4,6 +4,7 @@ var credentials = require( '../../../credentials' );
 var appConstants = require( '../../constants/ServerConstants' );
 
 var userModelModule = require( '../../models/login/usersModel' );
+var statsModelModule = require( '../../models/stats/stats' );
 
 var async = require( 'async' );
 var jwt = require( 'jwt-simple' );
@@ -92,6 +93,80 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 	
 	console.log( 'In LoginDBI | Finished Execution of insertUser' );
 };
+
+/* Private method to check if credentials provided for admin.
+ * Part of admin login.
+ */
+
+var areCredentialsValid = function( userInfo, callback ) {
+    console.log( 'In LoginDBI | Starting Execution of areCredentialsValid' );
+
+    var usersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
+
+    userModelModule.setUpConnection( usersDBConnection );
+    var UserModel = userModelModule.getUsersModel();
+
+    var query = {
+        email : createCaseInSensitiveRegexString( userInfo.email ),
+        credential : userInfo.credential,
+        role : userInfo.role
+    };
+
+    var projection = {
+        '_id' : false,
+        credential : false
+    };
+
+    UserModel.findOne( query, projection, function( err, result ) {
+
+        if( err ) {
+            callback( err, null );
+        } else {
+
+            if( null === result ) {
+                callback( appConstants.appErrors.invalidCredentials, null );
+            } else {
+
+                if( result.role === 'user' ){
+                	callback( appConstants.appErrors.intentionalBreak, result );
+                } else {
+                	callback( null, prepareObjectForResponse( result ) );
+                }
+            }
+        }
+    } );
+
+    console.log( 'In LoginDBI | Finished Execution of areCredentialsValid' );
+};
+
+/* Private Method to Retrieve Application Stats
+ */
+var retrievePostLoginData = function (user, callback ) {
+    console.log( 'In LoginDBI | Starting Execution of retrievePostLoginData' );
+
+    var globalDBConnection = utils.getDBConnection( appConstants.globalDataBase );
+
+    statsModelModule.setUpConnection( globalDBConnection );
+    var StatsModel = statsModelModule.getModel();
+
+    var query = {};
+    var projection = { '_id' : false };
+
+    StatsModel.findOne(query, projection, function( err, result ){
+       if( err ){
+           callback( err );
+       } else {
+           var toReturn = {
+               user : user,
+               stats : result
+           };
+
+           callback( null, toReturn );
+       }
+    });
+
+    console.log( 'In LoginDBI | Finished Execution of retrievePostLoginData' );
+};
 /*										Final Callback Methods											*/
 /*==================================================================================================*/
 
@@ -109,6 +184,26 @@ var finishSignUpProcess = function( serviceLayerCallBack, errorFromWaterFallenMe
 	}
 
 	console.log( 'In LoginDBI | Finishing Execution of finishSignUpProcess' );
+};
+
+/* This private method would be executed when admin Login Process is finally completed.
+ * We would send response to service layer in this method.
+ */
+var finshLoginProcess = function( serviceLayerCallback, errFromWaterFellMethod, resultFromWaterFellMethod ){
+    console.log( 'In LoginDBI | Starting Execution of finshLoginProcess' );
+
+    if( errFromWaterFellMethod ){
+        console.log( errFromWaterFellMethod );
+    	if( errFromWaterFellMethod === appConstants.appErrors.intentionalBreak){
+    		serviceLayerCallback( null, resultFromWaterFellMethod);
+    	} else {
+        	serviceLayerCallback( errFromWaterFellMethod );
+        }
+    } else {
+        serviceLayerCallback( null, resultFromWaterFellMethod );
+    }
+
+    console.log( 'In LoginDBI | Finishing Execution of finshLoginProcess' );
 };
 
 /*											Public Methods											*/
@@ -185,41 +280,15 @@ var isUserAlreadyInSystem = function( email, callback ) {
 	console.log( 'In LoginDBI | Finished Execution of isUserAlreadyInSystem' );
 };
 
-/* Public method.
- * It will check if provided credentials are valid.
- */
 var loginUser = function( user, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of loginUser' );
 
-    var usersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
-
-    userModelModule.setUpConnection( usersDBConnection );
-    var UserModel = userModelModule.getUsersModel();
-
-    var query = {
-        email : createCaseInSensitiveRegexString( user.email ),
-        credential : user.credential
-    };
-
-    var projection = {
-        '_id' : false,
-        credential : false
-    };
-
-    UserModel.findOne( query, projection, function( err, result ) {
-
-        if( err ) {
-            callback( err, null );
-        } else {
-            if( null === result ) {
-                callback( appConstants.appErrors.invalidCredentials, null );
-            } else {
-                console.log( result );
-                callback( null, prepareObjectForResponse( result ) );
-            }
-        }
-    } );
-
+	async.waterfall([
+		async.apply( areCredentialsValid, user ),
+		retrievePostLoginData
+	],
+		async.apply( finshLoginProcess, callback )
+	);
 	console.log( 'In LoginDBI | Finished Execution of loginUser' );
 };
 
