@@ -26,8 +26,6 @@ var loginUser = function( req, res, next, adminLogin ) {
 		credential : req.body.password
 	};
 
-    console.log( adminLogin );
-
     if( adminLogin ) {
         user.role = 'admin'
     } else {

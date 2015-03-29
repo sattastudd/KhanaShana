@@ -6,8 +6,6 @@
 
 var authorizeRequest = function( req, res, next ) {
 
-    console.log( req );
-	
 	if( utils.isAuthorized( req.originalUrl, req.method.toLowerCase(), req.user.role.toLowerCase()) ) {
 		next();
 	} else {

@@ -51,6 +51,7 @@ router  = express.Router();
 var globalDataRoute = require( './server/routes/globalRoutes' );
 var loginRoute = require( './server/routes/loginRoutes' );
 var publicRestaurantRoute = require( './server/routes/restaurantRoute');
+var adminRoutes = require( './server/routes/adminRoutes' );
 
 /* Setting up modules to work on /admin and /user requests only. */
 app.use( ['/admin', '/user'], Authenticator, BlackListFilter, AuthorizationFilter);

@@ -193,7 +193,7 @@ var finshLoginProcess = function( serviceLayerCallback, errFromWaterFellMethod, 
     console.log( 'In LoginDBI | Starting Execution of finshLoginProcess' );
 
     if( errFromWaterFellMethod ){
-        console.log( errFromWaterFellMethod );
+
     	if( errFromWaterFellMethod === appConstants.appErrors.intentionalBreak){
     		serviceLayerCallback( null, resultFromWaterFellMethod);
     	} else {

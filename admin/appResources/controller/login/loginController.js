@@ -4,7 +4,7 @@ define([], function() {
     return loginController;
 });
 
-function LoginController($scope, ValidationService, $http){
+function LoginController($scope, $http, $window, $location, AppConstants, RestRequests, ValidationService, AppUtils, DataStore){
 
     /*Variable Initialization*/
     $scope.user = {
@@ -41,8 +41,6 @@ function LoginController($scope, ValidationService, $http){
 
         var result = ValidationService.isEmailNotValid($scope.user.email, isMandatory);
 
-        console.log( result );
-
         if (result.result) {
             $scope.setUpError($scope.err, $scope.errMsg, 'email', result);
         } else {
@@ -50,24 +48,74 @@ function LoginController($scope, ValidationService, $http){
         }
     };
 
+    $scope.isPasswordNotValid = function (isMandatory){
+        if(!isMandatory) {
+            isMandatory = false;
+        }
+
+        if( $scope.user.password === '' && isMandatory){
+            $scope.hasAnyValidationFailed = true;
+
+            $scope.err.password = true;
+            $scope.errMsg.password = 'Field can not be left empty.';
+        } else {
+            $scope.err.password = false;
+
+            $scope.hasAnyValidationFailed = false;
+        }
+    };
+
     /*Action Methods*/
     $scope.loginUser = function (){
-        $http.post('node/login', $scope.user)
-            .success( function ( data ){
-                console.log( data );
-            })
-            .error( function ( data ) {
-                console.log( data );
-            });
+
+        $scope.isEmailNotValid( true );
+        $scope.isPasswordNotValid( true );
+
+        if( !$scope.hasAnyValidationFailed ) {
+
+            var requestPath = AppConstants.httpServicePrefix + '/' + RestRequests.login;
+
+            $http.post(requestPath, $scope.user)
+                .success(function (data) {
+
+                    $window.localStorage.token = data.user.user.token;
+
+                    delete data.user.user.token;
+                    $window.localStorage.user = JSON.stringify(data.user.user);
+
+                    DataStore.storeData('stats', data.user.stats);
+
+                    $location.path('/dashboard');
+                })
+                .error(function (data) {
+                    $scope.err.email = data.err.email;
+                    $scope.err.password = data.err.password;
+                    $scope.errMsg = data.errMsg;
+
+                    if (AppUtils.isObjectEmpty(data.err)) {
+                        $scope.isResponseFromServer = true;
+                        $scope.isServerError = true;
+                        $scope.serverResponse = data.msg;
+                    } else {
+                        $scope.isResponseFromServer = false;
+                        $scope.isServerError = false;
+                        $scope.serverResponse = '';
+                    }
+                });
+        }
     };
 
     /* Error Status Retriever Methods */
     $scope.hasEmailError = function () {
-        return $scope.err.email ;
-    }
+        return $scope.err.email ? '' : 'noHeight';
+    };
+
+    $scope.hasPasswordError = function (){
+        return $scope.err.password ? '' : 'noHeight';
+    };
 
     /* Server Message Status */
     $scope.haveReceivedResponseFromServer = function() {
-        return $scope.isResponseFromServer;
+        return $scope.isResponseFromServer ? '' : 'noHeight';
     };
 };

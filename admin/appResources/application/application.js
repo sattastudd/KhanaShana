@@ -8,6 +8,12 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/login/login.html',
                 '../../appResources/controller/login/loginController'
         ))
+            .when('/dashboard',
+            routeConfig.config(
+                'views/dashboard/dashboard.html',
+                '../../appResources/controller/dashboard/dashboardController'
+        ))
+
 
         .otherwise({
             redirectTo : '/login'

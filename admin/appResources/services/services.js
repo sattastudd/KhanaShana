@@ -13,15 +13,15 @@
         .constant('AppConstants', {
 
             appName : 'KhanaShana',
-            httpServicePrefix : 'node/public'
+            httpServicePrefix : 'node',
+            publicServicePrefix : 'node/public',
+            adminServicePrefix : 'node/admin'
 
         })
         .constant('RestRequests', {
 
-            getDropDowns : 'globalData',
-            checkUserExistence : 'email',
-            addNewUser : 'users',
-            login : 'login'
+            login : 'login',
+            stats : 'stats'
 
         })
         .constant('RegExProvider',  {
@@ -88,10 +88,16 @@
 
             var storedData = {};
 
+            this.isKeyDefined = function ( key ){
+                if( typeof storedData[key] !== 'undefined' )
+                    return true;
+                else
+                    return false;
+            };
+
             this.storeData = function(key, value) {
 
                 storedData[key] = value;
-                console.log( storedData );
             };
 
             this.getData = function(key) {
@@ -133,5 +139,44 @@
                     return $q.reject(rejection);
                 }
             };
+        })
+        .service( 'UserInfoProvider', function ( $window, $location ){
+
+            this.isUserLoggedIn = function (){
+                if( typeof $window.localStorage.user !== 'undefined' )
+                    return true;
+                else 
+                    return false;
+            };
+
+            this.getLoggedInUserName = function (){
+                if( this.isUserLoggedIn() ) {
+                    var user = JSON.parse( $window.localStorage.user );
+
+                    return user.name;
+                };
+                return null;
+            };
+
+            this.getLoggedInUserEmail = function () {
+                if( this.isUserLoggedIn() ){
+                    var user = JSON.parse( $window.localStorage.user );
+
+                    return user.email;
+                }
+
+                return null;
+            };
+
+            this.handleUserStatus = function () {
+                if( !this.isUserLoggedIn())
+                    $location.path( '/login');
+            };
+
+            this.logoutUser = function () {
+                delete $window.localStorage.user;
+                delete $window.localStorage.token;
+            };
         });
+
     } );

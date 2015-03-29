@@ -4,6 +4,9 @@ $theme-primary-font-color : #fff;
 $theme-glyph-feedback-background-color : #363b41;
 $theme-glyph-color : #5f626b;
 
+$theme-glyph-hover-color : #9aa1a4;
+$theme-glyph-active-color : #c7cccd;
+
 $theme-input-background-color : #3b4148;
 $theme-input-font-color : #fff;
 $theme-input-border-radius : 4px;
@@ -20,6 +23,20 @@ $theme-primary-button-color : #7b2d87;
 $theme-primary-button-hover-text-color : #fff;
 $theme-primary-button-hover-back-color : #932d87;
 
+$theme-sidebar-width : 50px;
+$theme-sidebar-collapsed-width : 50px;
+$theme-sidebar-expanded-width : 300px;
+$theme-sidebar-extra-pane-width : 250px;
+$theme-sidebar-background-color : $theme-input-background-color;
+$theme-sidebar-glyph-height : 60px;
+$theme-sidebar-active-back-color : #2b2b38;
+
+$theme-admin-nav-height : 60px;
+$theme-shadow-color : #444;
+$theme-admin-nav-back-color : $theme-sidebar-active-back-color;
+$theme-admin-font-size : 22px;
+
+$theme-body-back-color-light : #FAF8FD;
 /*Min-ins*/
 @mixin transition-mix($property, $duration) {
   -moz-transition: $property $duration;
@@ -39,6 +56,10 @@ body{
 
   font-family: Bree;
   color : $theme-primary-font-color;
+}
+
+.replaceableContent{
+  margin-left : 50px;
 }
 
 .has-feedback{
@@ -61,7 +82,7 @@ body{
     height : $theme-input-box-height;
     line-height: $theme-input-box-height;
 
-    color :$theme-glyph-color
+    color :$theme-glyph-color;
   }
 }
 
@@ -78,17 +99,15 @@ body{
   line-height : $theme-input-box-height;
 
   color : $theme-error-font-color;
+  overflow : hidden;
 
   background-color : $theme-error-back-color;
 
   @include transition-mix(all, $theme-fast-reaction);
 
-  &.ng-hide, &.ng-show-active{
+  &.noHeight {
     height : 0;
-  }
-
-  &.ng-show, &.ng-hide-active{
-    height : $theme-input-box-height;
+    margin-bottom : 0;
   }
 }
 
@@ -106,7 +125,24 @@ body{
 }
 
 .formActions{
-  margin-top : 15px;
+}
+
+.sidebar{
+  position : fixed;
+
+  width : 50px;
+  height : 100%;
+
+  left : 0;
+
+  overflow : hidden;
+
+  background-color : $theme-sidebar-active-back-color;
+  @include transition-mix(all, $theme-fast-reaction);
+
+  &.expanded{
+    width : $theme-sidebar-expanded-width;
+  }
 }
 /* Global CSS End */
 
@@ -115,5 +151,141 @@ body{
   padding-top : 50px;
 }
 
-/*Login Page Styles Begin*/
-/*Login Page Styles End*/
+/*SideBar Page Styles Begin*/
+.icon-container, .control-actions-container{
+  float : left;
+}
+
+.icon-container{
+  width : $theme-sidebar-collapsed-width;
+  background-color : $theme-sidebar-background-color;
+  height : 100%;
+
+  ul.adminControls{
+    list-style:none;
+    margin-left: 0;
+    padding-left: 0;
+
+    li{
+      cursor: pointer;
+
+      @include transition-mix(all, $theme-fast-reaction);
+
+      span{
+        display : block;
+
+        font-size : $theme-input-font-size;
+
+        height : $theme-sidebar-glyph-height;
+        width : 100%;
+        line-height : $theme-sidebar-glyph-height;
+
+        text-align : center;
+
+        color : $theme-glyph-color;
+      }
+
+      &:hover{ span {color : $theme-glyph-hover-color }}
+      &.active, &.active:hover{ span {background-color : $theme-sidebar-active-back-color; color : $theme-glyph-active-color} }
+    }
+  }
+}
+
+.control-actions-container{
+  width : $theme-sidebar-extra-pane-width;
+  background-color : $theme-sidebar-active-back-color;
+  height : 100%;
+
+  position : relative;
+
+  ul{
+    list-style : none;
+    height : 100%;
+
+    position : absolute;
+
+    top : 0;
+    opacity : 0;
+
+    z-index : 1;
+
+    @include transition-mix(all, $theme-fast-reaction);
+
+    padding-top : 50px;
+    padding-left : 15px;
+
+    li{
+      font-size : 18px;
+      line-height : 40px;
+    }
+
+    &.active{
+      opacity : 1;
+      z-index : 2;
+    }
+  }
+}
+/*SideBar Page Styles End*/
+
+/*Header Page Styles Begin*/
+.adminNav{
+  height : $theme-admin-nav-height;
+  box-shadow: $theme-shadow-color 0 0 5px;
+
+  background-color : $theme-admin-nav-back-color;
+
+  .row > div{
+    height : $theme-admin-nav-height;
+    line-height : $theme-admin-nav-height;
+
+    font-size : $theme-admin-font-size;
+
+    .glyphicon{
+      cursor : pointer;
+    }
+
+    .dropdown-menu {
+      right: 0;
+      left: auto;
+      top : 110%;
+
+      display: block;
+
+      height: 110px;
+      display: block;
+
+      font-family: 'Segoe UI';
+
+      overflow: hidden;
+      @include transition-mix(all, .3s);
+
+      background-color: $theme-body-back-color-light;
+
+      &.noHeight {
+        padding: 0;
+        height: 0;
+        border: 0;
+      }
+
+      li {
+        a {
+          text-align: right;
+
+          &:hover {
+            background-color: $theme-primary-background-color;
+            color: $theme-primary-font-color;
+          }
+        }
+
+        a.noHover {
+          cursor: default;
+          &:hover {
+            background-color: $theme-body-back-color-light;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+}
+/*Header Page Styles End*/
