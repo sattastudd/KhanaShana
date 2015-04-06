@@ -4,7 +4,7 @@ define([], function() {
     return loginController;
 });
 
-function LoginController($scope, $http, $window, $location, AppConstants, RestRequests, ValidationService, AppUtils, DataStore){
+function LoginController($scope, $http, $window, $location, AppConstants, RestRequests, ValidationService, AppUtils, DataStore, UserInfoProvider){
 
     /*Variable Initialization*/
     $scope.user = {
@@ -17,6 +17,17 @@ function LoginController($scope, $http, $window, $location, AppConstants, RestRe
 
     $scope.hasAnyValidationFailed = false;
     $scope.isResponseFromServer = false;
+
+    UserInfoProvider.handleLoggedInUser();
+
+    if( UserInfoProvider.isSessionExpired()) {
+         var userData = UserInfoProvider.getSessionExpiredUserData();
+
+         $scope.user.email = userData.user;
+         $scope.isResponseFromServer = true;
+
+         $scope.serverResponse = userData.msg;
+    }
 
     /* Utility Methods */
     $scope.setUpError = function (err, errMsg, type, resultFromValidation) {

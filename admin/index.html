@@ -16,7 +16,7 @@
     <body ng-controller="ParentController" ng-click="broadCastCloseEvents()">
         <div ng-if="isUserLoggedIn()" class="sidebar" ng-include="'sideBar.html'"></div>
 
-        <div class="replaceableContent" ng-view >
+        <div id="ngViewContent" ng-view >
         </div>
     </body>
 </html>

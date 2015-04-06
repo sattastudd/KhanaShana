@@ -37,12 +37,27 @@ $theme-admin-nav-back-color : $theme-sidebar-active-back-color;
 $theme-admin-font-size : 22px;
 
 $theme-body-back-color-light : #FAF8FD;
+
+$theme-page-list-heading-font-size : 19px;
+$theme-page-list-border : 1px solid #3f4952;
+
+$theme-add-new-tabs-back : #32404b;
+$theme-add-new-tabs-disabled : #6f7981;
+$theme-add-new-tabs-completed : #46535d;
+
 /*Min-ins*/
 @mixin transition-mix($property, $duration) {
   -moz-transition: $property $duration;
   -o-transition: $property $duration;
   -webkit-transition: $property $duration;
   transition: $property $duration;
+}
+
+@mixin transform-mix($property){
+  -moz-transform: $property;
+  -o-transform: $property;
+  -webkit-transform: $property;
+  transform : $property
 }
 
 /* Global CSS Begin */
@@ -56,10 +71,16 @@ body{
 
   font-family: Bree;
   color : $theme-primary-font-color;
+  overflow-x: hidden;
 }
 
-.replaceableContent{
+#ngViewContent{
   margin-left : 50px;
+  @include transition-mix( all, $theme-fast-reaction);
+  overflow : hidden;
+
+  position : relative;
+  left : 0;
 }
 
 .has-feedback{
@@ -149,6 +170,92 @@ body{
 /* Utility Classes */
 .tpad50{
   padding-top : 50px;
+}
+
+.tMar30{
+  margin-top : 30px;
+}
+
+.tMar20{
+  margin-top : 20px;
+}
+
+.bMar10{
+  margin-bottom : 10px;
+}
+
+.bMar20{
+  margin-bottom: 20px;
+}
+
+.bottomBorder{
+  border-bottom : 2px solid #fff;
+}
+
+.bottomBorderThin{
+  border-bottom: 1px solid #fff;
+}
+
+.collapseController{
+  float : left;
+  width : 27px;
+
+  height : 27px;
+
+  margin: 20px 5px 20px 0;
+  position : relative;
+
+  span{
+    height : 5px;
+    width : 27px;
+    position : absolute;
+    top : 26%;
+
+    background-color : #fff;
+
+    display: block;
+    margin-top : 5px;
+
+    @include transition-mix(all, $theme-fast-reaction);
+  }
+}
+
+.makeRightAngle{
+  @include transform-mix(rotate(90deg));
+}
+
+.petoo-form{
+  font-family: Calibri;
+
+  .form-group{
+    label{
+      font-size : 20px;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+
+    input{
+      background-color : $theme-input-background-color;
+      color : $theme-input-font-color;
+
+      font-family: 'Calibri';
+      border : none;
+
+      font-size : $theme-input-font-size;
+
+      height : $theme-input-box-height;
+    }
+  }
+}
+
+.noLeftRightMargin{
+  margin-left : 0;
+  margin-right : 0;
+}
+
+.noLeftRightPadding{
+  padding-left : 0;
+  padding-right : 0;
 }
 
 /*SideBar Page Styles Begin*/
@@ -289,3 +396,123 @@ body{
   }
 }
 /*Header Page Styles End*/
+
+/*UserList Page*/
+.userList{
+  font-size : $theme-page-list-heading-font-size;
+
+  .heading{
+    text-align:  center;
+
+    border : 1px solid #fff;
+  }
+}
+
+/*Restaurant List page*/
+.restaurantList{
+  font-size : $theme-page-list-heading-font-size;
+  border : $theme-page-list-border;
+
+  border-bottom : none;
+
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+
+  > div {
+    border-right : $theme-page-list-border;
+    border-bottom : $theme-page-list-border;
+  }
+
+  input{
+    background-color : $theme-input-background-color;
+    color : $theme-input-font-color;
+
+    font-family: 'Calibri';
+    border : none;
+
+    font-size : $theme-input-font-size;
+
+    height : $theme-input-box-height;
+  }
+
+  .heading{
+    padding : 5px 5px 10px 5px;
+
+    div{
+
+      &.text{
+        margin-left : 3px;
+      }
+
+      &.search{
+        margin-top : 5px;
+        margin-bottom : 4px;
+      }
+    }
+  }
+}
+
+/* New Restaurant Page */
+ul.newRestaurantAddition{
+  padding-left : 15px;
+  list-style : none;
+
+  li{
+    float : left;
+    padding : 20px 0px;
+    background-color : $theme-add-new-tabs-back;
+
+    text-align : center;
+
+    font-size : 18px;
+    color : #fff;
+    cursor : pointer;
+
+    border-right : 1px solid #46535d;
+
+    &.last{
+      border-right : none;
+    }
+
+    &:disabled{
+      background-color : $theme-add-new-tabs-disabled;
+    }
+
+    &.completed{
+      background-color : $theme-add-new-tabs-completed;
+    }
+
+    a, a:hover{
+      color : #fff;
+      text-decoration : none;
+    }
+  }
+}
+
+.tabbedContent{
+  position : relative;
+
+  > div{
+
+    width : 100%;
+    float : left;
+    opacity : 0;
+    z-index : 3;
+
+    @include transition-mix(all, $theme-fast-reaction);
+    &.active{margin-left:0;z-index : 4 !important; opacity: 1}
+    &.menu{margin-left : 0}
+    &.deliveryArea, &.cuisineArea, &.menuArea, &.pictureArea, &.pictureArea{margin-left: -100%}
+  }
+}
+
+.optionsContainer{
+  .box{
+    height : 500px;
+    width : 100%;
+
+    ul{
+      padding-left : 5px;
+    }
+  }
+}

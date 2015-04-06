@@ -3,7 +3,33 @@
 
 var LocationModelModule = require( '../../../models/locations/locationsModel' );
 
-/* This public method is used to add a new cuisine into system.
+/* This public method is used to get all the Locations from the system.
+ */
+var getAllLocations = function( cityName, callback ){
+  console.log( 'In AdminRestaurantDBI | Starting Execution of getAllLocations' );
+
+  var cityDBConnection = utils.getDBConnection( cityName );
+
+  LocationModelModule.setUpConnection( cityDBConnection );
+  var LocationModel = LocationModelModule.getLocationModel();
+
+  var query = {};
+  var projection = {
+  	'_id' : false
+  };
+
+  LocationModel.find( query, projection, function( err, result ){
+  	if( err ){
+  		callback( err );
+  	} else {
+  		callback( null, result );
+  	}
+  });
+
+  console.log( 'In AdminRestaurantDBI | Finished Execution of getAllLocations' );
+};
+
+/* This public method is used to add a new location into system.
  */
 var addNewLocation = function( cityName, locationName, callback ){
     console.log( 'In AdminRestaurantDBI | Starting Execution of addNewLocation' );
@@ -114,11 +140,14 @@ var isLocationNotPresent = function ( cityName, locationName, callback ) {
 
 };
 
+
+
 /*
  console.log( 'In AdminRestaurantDBI | Starting Execution of methodName' );
  console.log( 'In AdminRestaurantDBI | Finished Execution of methodName' );
  */
 
+exports.getAllLocations = getAllLocations;
 exports.addNewLocation = addNewLocation;
 exports.editLocationByName = editLocationByName;
 exports.deleteLocationByName = deleteLocationByName;

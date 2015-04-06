@@ -1,0 +1,169 @@
+<div ng-include="'views/header.html'"></div>
+<div ng-controller="NewRestaurantController">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="bottomBorder">Add a new Restaurant</h2>
+            </div>
+        </div>
+
+        <div class="row" petoo-tab target="tabbedContent">
+
+            <ul class="newRestaurantAddition col-xs-12" petoo-tab target="tabbedContent">
+                <li class="col-xs-3"><a>Restaurant Basic Details</a></li>
+                <li class="col-xs-2"><a>Delivery Areas</a></li>
+                <li class="col-xs-3"><a>Offered Cuisines</a></li>
+                <li class="col-xs-2"><a>Menu</a></li>
+                <li class="col-xs-2 last"><a>Pictures</a></li>
+            </ul>
+
+        </div>
+
+        <div class="tabbedContent">
+            <div class="basicDetails active">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!--<div class="collapseController">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar" ng-class="isExpanded('basicInfo')"></span>
+                        </div>-->
+                        <h3 class="bottomBorderThin bMar20">Restaurant Basic Info</h3>
+                    </div>
+
+                    <div class="petoo-form">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Restaurant Name</label>
+                                <input type="text" ng-model="restaurant.name" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Restaurant Slug</label>
+                                <input type="text" ng-model="restaurant.slug" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="bottomBorderThin bMar20">Address</h3>
+                    </div>
+
+                    <div class="petoo-form">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Street</label>
+                                <input type="text" ng-model="restaurant.address.street" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Locality</label>
+                                <input type="text" ng-model="restaurant.address.locality" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Town</label>
+                                <input type="text" ng-model="restaurant.address.town" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" ng-model="restaurant.address.city" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Postal Code</label>
+                                <input type="text" ng-model="restaurant.address.postal_code" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="bottomBorderThin bMar20">Restaurant Co-ordinates</h3>
+                    </div>
+
+                    <div class="petoo-form">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Google Map Longitude </label>
+                                <input type="text" ng-model="restaurant.address.co_ord.longitude" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Google Map Latitude </label>
+                                <input type="text" ng-model="restaurant.address.co_ord.latitude" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="deliveryArea">
+                <!--Delivery Area Begin-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="bottomBorderThin bMar20">Delivery Areas</h3>
+                    </div>
+
+                    <div class="petoo-form">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label>Enter Locality Name to filter</label>
+                                <input type="text" ng-model="localFilter" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row optionsContainer">
+                    <div class="col-xs-5">
+                        <div class="box">
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-2 actionContainer">
+
+                    </div>
+
+                    <div class="col-xs-5">
+                        <div class="box">
+
+                        </div>
+                    </div>
+                </div>
+                <!--Delivery Area End-->
+            </div>
+
+            <div class="cuisineArea">
+
+            </div>
+
+            <div class="menuArea">
+
+            </div>
+
+            <div class="pictureArea">
+
+            </div>
+        </div>
+
+    </div>
+</div>

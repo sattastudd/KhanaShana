@@ -1,2 +1,23 @@
 <div ng-include="'views/header.html'"></div>
-<div class="col-xs-12" ng-controller="DashboardController"></div>
+<div ng-controller="DashboardController">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                 <div circular-progress obj="users_canvas"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                 <div circular-progress obj="restaurant_canvas"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                 <div circular-progress obj="reviews_canvas"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                 <div circular-progress obj="orders_canvs"></div>
+            </div>
+
+        </div>
+    </div>
+</div>

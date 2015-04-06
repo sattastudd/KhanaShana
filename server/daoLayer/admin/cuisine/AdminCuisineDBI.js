@@ -3,6 +3,32 @@
 
 var CuisinesModelModule = require( '../../../models/cuisines/cuisinesModel' );
 
+/* This public method is used to retrieve all cuisines from system.
+ */
+var getAllCuisines = function(cityName, callback){
+    console.log( 'In AdminCuisineDBI | Starting Execution of getAllCuisines' );
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    CuisinesModelModule.setUpConnection( cityName );
+    var CuisinesModel = CuisinesModelModule.getCuisinesModel();
+
+    var query = {};
+    var projection = {
+        '_id' : false
+    };
+
+    CuisinesModel.find( query, projection, function( err, result ){
+        if( err ) {
+            callback ( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    console.log( 'In AdminCuisineDBI | Finished Execution of getAllCuisines' );
+};
+
 /* This public method is used to add a new cuisine into system.
  */
 var addNewCuisine = function( cityName, cuisine, callback ){

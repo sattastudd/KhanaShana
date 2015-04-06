@@ -44,7 +44,8 @@
             this.errorMessage = {
                 email : 'Invalid Email',
                 mandatory : 'Field can not be left empty.',
-                contact : 'Invalid Contact Number.'
+                contact : 'Invalid Contact Number.',
+                sessionExpired : 'Your session has expired.'
             };
         })
         .service( 'ValidationService', function(ResponseMessage, RegExProvider ){
@@ -104,6 +105,17 @@
                 return storedData[key];
             };
 
+            this.readAndRemove = function( key ) {
+                var value = null;
+
+                if( this.isKeyDefined( key )){
+                    value = this.getData( key );
+                    this.removeData( key );
+                };
+
+                return value;
+            };
+
             this.removeData = function(key) {
 
                 delete storedData[key];
@@ -114,7 +126,7 @@
                 return storedData;
             };
         } )
-        .service( 'authInterceptor', function ($rootScope, $q, $window) {
+        .service( 'authInterceptor', function ($rootScope, $q, $window, $location, UserInfoProvider, DataStore, ResponseMessage) {
             return {
                 request : function( config ) {
                     config.headers = config.headers || {};
@@ -136,11 +148,23 @@
                 responseError : function( rejection ){
                     console.log( rejection ) ;
 
+                    if( rejection.status === 401 && rejection.data.data === 'TE' ){
+                        /* Logging out user so as to avoid redirection.*/
+                        UserInfoProvider.logoutUser();
+
+                        DataStore.storeData( 'userStatus', {
+                            user : rejection.data.user,
+                            msg : ResponseMessage.errorMessage.sessionExpired
+                        });
+
+                        $location.path( '/login' );
+                    }
+
                     return $q.reject(rejection);
                 }
             };
         })
-        .service( 'UserInfoProvider', function ( $window, $location ){
+        .service( 'UserInfoProvider', function ( $window, $location, DataStore ){
 
             this.isUserLoggedIn = function (){
                 if( typeof $window.localStorage.user !== 'undefined' )
@@ -173,9 +197,26 @@
                     $location.path( '/login');
             };
 
+            this.handleLoggedInUser = function () {
+                if( this.isUserLoggedIn()){
+                    $location.path( '/dashboard' );
+                }
+            };
+
             this.logoutUser = function () {
                 delete $window.localStorage.user;
                 delete $window.localStorage.token;
+            };
+
+            this.isSessionExpired = function () {
+                return DataStore.isKeyDefined( 'userStatus' );
+            };
+
+            this.getSessionExpiredUserData = function () {
+                var user =  DataStore.getData( 'userStatus' );
+                DataStore.removeData( 'userStatus' );
+
+                return user;
             };
         });
 

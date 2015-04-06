@@ -6,23 +6,27 @@ define( [], function() {
 	return TopController;
 } );
 
-function ParentController($scope, $rootScope, $http, UserInfoProvider, DataStore, AppConstants, RestRequests, $modal, $window, $timeout, $location) {
+function ParentController($scope, $rootScope, UserInfoProvider, $location) {
     //Click listener on body.
 
 
 
     $scope.$on( 'closeUserContextMenu', function (){
-        console.log( 'Caught Event' );
+        
         $scope.visibilityControl.isUserContextMenuOpen = false;
     });
 
     $scope.broadCastCloseEvents = function () {
-        console.log( 'On CLick ');
+        
         $rootScope.$broadcast('closeSideBar');
     };
 
     $scope.isUserLoggedIn = function (){
       return UserInfoProvider.isUserLoggedIn();
+    };
+
+    $scope.moveToLocation = function( path ) {
+        $location.path( path );
     };
 
 

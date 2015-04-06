@@ -45,7 +45,8 @@ var validateToken = function( req, res, next ) {
                         err : {},
                         errMsg : {},
                         data : 'TE',
-                        msg : 'Token Expired'
+                        msg : 'Token Expired',
+                        user : decoded.email
 				});
 			} else {
 				req.user = decoded;
