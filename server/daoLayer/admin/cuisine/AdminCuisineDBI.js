@@ -10,12 +10,15 @@ var getAllCuisines = function(cityName, callback){
 
     var cityDBConnection = utils.getDBConnection( cityName );
 
-    CuisinesModelModule.setUpConnection( cityName );
+    CuisinesModelModule.setUpConnection( cityDBConnection );
     var CuisinesModel = CuisinesModelModule.getCuisinesModel();
 
     var query = {};
     var projection = {
-        '_id' : false
+        '_id' : false,
+        img : false,
+        showOnHomePage : false,
+        slug : false
     };
 
     CuisinesModel.find( query, projection, function( err, result ){
@@ -178,6 +181,7 @@ var isSlugNameNotPresent = function ( cityName, cuisineSlug, callback ) {
     console.log( 'In AdminCuisineDBI | Finished Execution of methodName' );
  */
 
+exports.getAllCuisines = getAllCuisines;
 exports.addNewCuisine = addNewCuisine;
 exports.editCuisineBySlug = editCuisineBySlug;
 exports.deleteCuisineBySlug = deleteCuisineBySlug;

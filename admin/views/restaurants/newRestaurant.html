@@ -135,31 +135,160 @@
                 <div class="row optionsContainer">
                     <div class="col-xs-5">
                         <div class="box">
-
+                            <ul>
+                                <li ng-repeat="location in deliveryAreas | filter : localFilter"
+                                    ng-class="isLocationSelected(location)"
+                                    ng-click="toggleLocationSelection(location)">
+                                        {{location.name}}
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
-                    <div class="col-xs-2 actionContainer">
-
+                    <div class="col-xs-2 actionContainer tpad50">
+                        <button type="button" class="btn btn-block btn-pr-secondary" ng-click="makeSelectionFinal()">
+                            <span class="glyphicon glyphicon-forward"></span>
+                        </button>
                     </div>
 
                     <div class="col-xs-5">
                         <div class="box">
-
+                            <ul class="right">
+                                <li ng-repeat="location in finalDeliveryAreas">
+                                    <span>{{location.name}}</span>
+                                    <span class="glyphicon glyphicon-remove pull-right" ng-click="removeLocationFromSelection(location)"></span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
                 <!--Delivery Area End-->
             </div>
 
+            <!--Cuisine Area-->
             <div class="cuisineArea">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="bottomBorderThin bMar20">Offered Cuisines</h3>
+                    </div>
 
+                    <div class="petoo-form">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label>Enter Cuisine Name to filter</label>
+                                <input type="text" ng-model="cuisineFilter" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row optionsContainer">
+                    <div class="col-xs-5">
+                        <div class="box">
+                            <ul>
+                                <li ng-repeat="cuisine in offeredCuisines | filter : cuisineFilter"
+                                    ng-class="isCuisineSelected(cuisine)"
+                                    ng-click="toggleSelectionForCuisine(cuisine)">
+                                    {{cuisine.name}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-2 actionContainer tpad50">
+                        <button type="button" class="btn btn-block btn-pr-secondary" ng-click="makeCuisineSelectionFinal()">
+                            <span class="glyphicon glyphicon-forward"></span>
+                        </button>
+                    </div>
+
+                    <div class="col-xs-5">
+                        <div class="box">
+                            <ul class="right">
+                                <li ng-repeat="cuisine in finalSelectedCuisines">
+                                    <span>{{cuisine.name}}</span>
+                                    <span class="glyphicon glyphicon-remove pull-right" ng-click="removeCuisineFromSelection(cuisine)"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!--Cuisine Area End-->
 
+            <!--Menu Start-->
             <div class="menuArea">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="bottomBorderThin bMar20">Restaurant Menu</h3>
+                    </div>
+                </div>
 
+                <div class="petoo-form bottomBorderThin " ng-repeat="menu in restMenu" ng-class="{'tMar20' : !$first}">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label>Category Title</label>
+                                <input type="text" ng-model="menu.title" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="dish in menu.items" class="bottomMarginLight" ng-class="{'tMar20' : !$first}">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label>Dish Title</label>
+                                    <input type="text" ng-model="dish.title" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label>Dish Type</label>
+                                    <input type="text" ng-model="dish.type" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label style="display: block">Vegetarian ?</label>
+                                    <input type="checkbox" ng-model="dish.veg"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label>Price Full Plate</label>
+                                    <input type="text" ng-model="dish.price.full" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label>Price Half Plate</label>
+                                    <input type="text" ng-model="dish.price.half" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-3 tMar20 bMar20">
+                            <button type="button" class="btn btn-block btn-pr-secondary" ng-click="addNewItemInCategory(menu)">Add Category Item</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row tMar20">
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-block btn-pr-secondary" ng-click="addNewCategory()">Add Menu Category</button>
+                    </div>
+                </div>
             </div>
-
+            <!--Menu End-->
             <div class="pictureArea">
 
             </div>

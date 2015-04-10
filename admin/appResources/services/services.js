@@ -21,7 +21,8 @@
         .constant('RestRequests', {
 
             login : 'login',
-            stats : 'stats'
+            stats : 'stats',
+            options : 'options'
 
         })
         .constant('RegExProvider',  {
