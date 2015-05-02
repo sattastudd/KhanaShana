@@ -38,13 +38,24 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/user/UserCheckOut.html',
                 '../../appResources/controller/userCheckOutController'
         ))
+        .when('/404',
+            routeConfig.config(
+                'views/user/error404.html',
+                '../../appResources/controller/errorPageController'
+        ))
         .when('/restaurant/:restSLug',
             routeConfig.config(
                 'views/user/restaurant/restaurantHome.html',
                 '../../appResources/controller/user/restaurant/restaurantDetailsController'
-        ));
+        ))
+        .otherwise({
+            redirectTo: '/404'
+        });
+
         //Will use it later.
         //Will know how. 
+
+
         $httpProvider.interceptors.push("authInterceptor");
 
         return app;
