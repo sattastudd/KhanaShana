@@ -48,6 +48,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/user/restaurant/restaurantHome.html',
                 '../../appResources/controller/user/restaurant/restaurantDetailsController'
         ))
+        .when('/changePwd',
+            routeConfig.config(
+                'views/user/userChangePwd.html',
+                '../../appResources/controller/user/userChangePwdController'
+        ))
         .otherwise({
             redirectTo: '/404'
         });
