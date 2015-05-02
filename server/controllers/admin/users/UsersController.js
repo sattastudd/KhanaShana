@@ -66,8 +66,28 @@ var resetUserPassword = function( req, res, next ) {
         }
     });
     console.log( 'In UsersController | Finsihed Execution of resetUserPassword ' );
+};
+
+/* Public Controller Method to blacklist a user.*/
+var blackListUser = function( req, res, next ) {
+    console.log('In UsersController | Starting Execution of blackListUser' );
+
+    var email = req.body.email;
+    var toBlackList = req.body.toBlackList;
+
+    UserService.blackListUser(email, toBlackList, function( err, result ) {
+        if( err ) {
+            res.status( 500 ) 
+                .json( result );
+        } else {
+            res.status( 200 )
+                .json( result );
+        }
+    });
+    console.log('In UsersController | Finished Execution of blackListUser' );
 }
 
 exports.getUserList = getUserList;
 exports.createOrEditUser = createOrEditUser;
 exports.resetUserPassword = resetUserPassword;
+exports.blackListUser = blackListUser;

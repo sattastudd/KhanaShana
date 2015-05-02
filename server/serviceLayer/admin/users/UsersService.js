@@ -287,6 +287,50 @@ var resetUserPassword = function( userEmail, callback ) {
     console.log( 'In UsersService | Finished Execution of resetUserPassword' );
 };
 
+/* Public Method to Reset a Users' Password */
+var blackListUser = function(email, blackList, callback ) {
+    console.log( 'In UsersService | Starting Execution of blackListUser' );
+
+    var err = {};
+    var errMsg = {};
+
+    var responseFromValidatorForEmail = Validator.isEmailNotValid( userEmail, true );
+
+    if( responseFromValidatorForEmail.result ) {
+        err.email = true;
+        errMsg.email = responseFromValidatorForEmail.message;
+
+        callback( appConstants.appErrors.ValidationError, {
+            err : err,
+            errMsg : errMsg,
+            data : null,
+            msg :  appConstants.errorMessage.email
+        } );
+    } else {
+        UsersDBI.blackListUser( userEmail, blackList, function( err, result ) {
+            if( err ) {
+                console.log( err );
+                callback( appConstants.appErrors.someError, {
+                    err : {},
+                    errMsg : {},
+                    data : null,
+                    msg : appConstants.errorMessage.someError
+                } );
+            } else {
+                callback( null, {
+                    err : {},
+                    errMsg : {},
+                    data : result,
+                    msg : blackList ? appConstants.userBlackListed : appConstants.userPermitted
+                });
+            }
+        });
+    }
+
+    console.log( 'In UsersService | Finished Execution of blackListUser' );
+};
+
 exports.getUserList = getUserList;
 exports.createOrEditUser = createOrEditUser;
 exports.resetUserPassword = resetUserPassword;
+exports.blackListUser = blackListUser;

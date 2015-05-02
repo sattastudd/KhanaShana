@@ -64,3 +64,13 @@ router.post( '/admin/user/reset', function( req, res, next ) {
 
     console.log( 'In adminRoutes | Finsihed' + req.route.path );
 });
+
+/* Request-Name : /admin/user/blacklist, Type: Post, Allowed : admin*/
+/* This request would be used by admin to blacklist a user. */
+router.post( '/admin/user/blacklist', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    usersController.blackListUser( req, res, next );
+
+    console.log( 'In adminRoutes | Finsihed' + req.route.path );
+});

@@ -234,6 +234,33 @@ var resetUserPassword = function( userEmail, callback ){
     console.log( 'In UsersDBI | Finished Execution of resetUserPassword' );
 };
 
+/* Public Method to BlackList a User*/
+var blackListUser = function( userEmail, blackList, callback ) {
+    console.log( 'In UsersDBI | Starting Execution of blackListUser' );
+
+    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDBConnection );
+    UsersModelModule.setUpConnection( appUsersDBConnection );
+
+    var UsersModel = UsersModelModule.getUsersModel();
+
+    var query = { email : userEmail };
+    var update = { $set : {
+            isBlackListed : blackList
+        }
+    };
+
+    UsersModel.update(query, update, function( err , result ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    console.log( 'In UsersDBI | Finsihed Execution of blackListUser' );
+};
+
 exports.getUserList = getUserList;
 exports.createOrEditUser = createOrEditUser;
 exports.resetUserPassword = resetUserPassword;
+exports.blackListUser = blackListUser;
