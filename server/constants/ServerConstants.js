@@ -25,7 +25,10 @@ var appConstants = {
         fillDetails : 'Please correct all mistakes before proceeding.',
         invalidCredentials : 'Invalid Credentials',
         noRecordFound : 'No Such Record Exists',
-        noSearchCriteria : 'Please enter at least one search criteria.'
+        noSearchCriteria : 'Please enter at least one search criteria.',
+        number : 'Invalid Number',
+        dropdown : 'Please select a value from dropdown',
+        roleError : 'Invalid Role'
 	},
 
     successMessage : 'Ok',

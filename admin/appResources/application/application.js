@@ -32,6 +32,12 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 '../../appResources/controller/users/userListController'
             ))
 
+            .when('/newUser',
+            routeConfig.config(
+                'views/users/createEditUser.html',
+                '../../appResources/controller/users/createOrEditUserController'
+            ))
+
             .otherwise({
                 redirectTo: '/login'
             });

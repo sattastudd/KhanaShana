@@ -67,6 +67,58 @@ var isReceivedFieldNotValid = function( fieldValue, isMandatory ) {
     return isFieldNotValid( fieldValue, isMandatory, mandatoryMessage );
 };
 
+var isNumberNotValid = function( number, isMandatory ) {
+    return isFieldNotValid( number, isMandatory, mandatoryMessage, RegExProvider.number, ServerConstants.errorMessage.number );
+};
+
+var isFieldNotValidByType = function( fieldValue, isMandatory, type ) {
+    if( type === 'name' ) {
+        return isNameNotValid( fieldValue, isMandatory );
+    } else if( type === 'email ' ) {
+        return isNameNotValid( fieldValue, isMandatory );
+    } else if( type === 'contact' ) {
+        return isContactNotValid( fieldValue, isMandatory );
+    } else if( type === 'number' ) {
+        return isNumberNotValid( fieldValue, isMandatory );
+    }
+
+    return null;
+};
+
+var isRoleDropDownNotValid = function( receivedValue, isMandatory ) {
+    if (isMandatory && (receivedValue === '' || null == receivedValue)) {
+        return {
+            result : true,
+            message : mandatoryMessage
+        };
+    } else if (receivedValue === '' || receivedValue == null) {
+        return {
+            result : false
+        };
+    }
+
+    var possibleRoles = ['user', 'restManage'];
+    var matchFound = false;
+
+    for( var i=0; i<possibleRoles.length; i++){
+        if( receivedValue === possibleRoles[i]){
+            matchFound = true;
+            break;
+        }
+    }
+
+    if( matchFound ) {
+        return {
+            result : false
+        };
+    } else {
+        return {
+            result : true,
+            message : ServerConstants.errorMessage.roleError
+        }
+    }
+};
+
 var isFieldEmpty = function( fieldValue ){
     if( fieldValue === '' || fieldValue == null || typeof fieldValue === 'undefined' ){
         return true;
@@ -80,3 +132,6 @@ exports.isEmailNotValid = isEmailNotValid;
 exports.isPasswordNotValid = isPasswordNotValid;
 exports.isContactNotValid = isContactNotValid;
 exports.isReceivedFieldNotValid = isReceivedFieldNotValid;
+
+exports.isFieldNotValidByType = isFieldNotValidByType;
+exports.isRoleDropDownNotValid = isRoleDropDownNotValid;

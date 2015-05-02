@@ -26,4 +26,29 @@ var getUserList = function( req, res, next ) {
     console.log( 'In UsersController | Finished Execution of getUserList' );
 };
 
+var createOrEditUser = function( req, res, next ) {
+    console.log( 'In UsersController | Starting Execution of createOrEditUser' );
+
+    var userInfo = {
+        name : req.body.name,
+        email : req.body.email,
+        credential : req.body.credential,
+        contact : req.body.contact,
+        orders : req.body.orders,
+        revenueGenerated : req.body.revenueGenerated
+    };
+
+    UserService.createOrEditUser( userInfo, function( err, result ) {
+        if( err ) {
+            res.status( 500 )
+                .json( result );
+        } else {
+            res.status( 200 ) 
+                .json( result );
+        }
+    });
+    console.log( 'In UsersController | Finished Execution of createOrEditUser' );
+};
+
 exports.getUserList = getUserList;
+exports.createOrEditUser = createOrEditUser;

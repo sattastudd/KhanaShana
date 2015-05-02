@@ -80,7 +80,9 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 		credential : userInfo.credential,
 		contact : userInfo.contact,
 		role : 'user',
-        profile_created_date : (new Date()).getTime()
+        	profile_created_date : (new Date()).getTime(),
+        	orders : 0,
+        	revenueGenerated : 0
 	});
 
 	User.save( function( err, result ) {

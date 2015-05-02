@@ -9,6 +9,16 @@ var async = require( 'async' );
 
 /*                              Private Methods                         */
 /*======================================================================*/
+/* Private method to strip properties unnecessary properties like id and details.
+ */
+var stripObjectProperties = function (newUser) {
+    var toReturn = {};
+
+    toReturn.name = newUser.name;
+    toReturn.email = newUser.email;
+
+    return toReturn;
+};
 
 /*Private method to execute query.
  *This would only be executed if there is we have first time search.
@@ -130,4 +140,66 @@ var getUserList = function( searchParam, pagingParams, callback ){
     console.log( 'In UsersDBI | Finished Execution of getUserList' );
 };
 
+/* Public Method to create or edit a user. */
+var createOrEditUser = function( userInfo, isInsert, callback ) {
+    console.log( 'In UsersDBI | Starting Execution of createOrEditUser' );
+
+    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
+    UsersModelModule.setUpConnection( appUsersDBConnection );
+
+    var UsersModel = UsersModelModule.getUsersModel();
+
+    if( isInsert ) {
+        var User = new UsersModel({
+            name : userInfo.name,
+            email : userInfo.email.toLowerCase(),
+            credential : userInfo.credential,
+            contact : userInfo.contact,
+            role : userInfo.role,
+            profile_created_date : (new Date()).getTime(),
+            orders : 0,
+            revenueGenerated : 0
+        });
+
+        User.save( function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, stripObjectProperties( result) );
+            }
+        });
+    } else {
+        var query = {
+            email : userInfo.email
+        };
+
+        var update = {};
+
+        var isNameNotEmpty = ! DBUtils.isFieldEmpty( userInfo.name );
+
+        var propArray = ['name', 'contact', 'role', 'orders', 'revenueGenerated' ];
+        var propArrayLength = propArray.length;
+
+        for( var i=0; i<propArrayLength; i++ ){
+            var propName = propArray[ i ];
+
+            var isFieldNotEmpty = ! DBUtils.isFieldEmpty( userInfo[ propName ] );
+
+            if( isFieldNotEmpty ) {
+                update[ propName ] = userInfo[ propName ];
+            }
+        }
+
+        UsersModel.update( query, { $set : update }, function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        });
+    }
+    console.log( 'In UsersDBI | Finished Execution of createOrEditUser' );
+};
+
 exports.getUserList = getUserList;
+exports.createOrEditUser = createOrEditUser;

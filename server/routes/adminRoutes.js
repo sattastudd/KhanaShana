@@ -33,7 +33,7 @@ router.post('/admin/restaurant', function( req, res, next ) {
     adminRestController.createOrEditRestaurant(req, res, next );
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
-})
+});
 
 /* Request-Name : /admin/users, Type: Post, Allowed : admin*/
 /* This request would be used by admin to get and search users in the system.*/
@@ -43,4 +43,14 @@ router.post( '/admin/users', function( req, res, next ) {
     usersController.getUserList( req, res, next );
 
     console.log( 'In adminRoutes | Finsihed ' + req.route.path );
-})
+});
+
+/* Request-Name : /admin/user, Type: Post, Allowed : admin*/
+/* This request would be used by admin to create a new user.*/
+router.post( '/admin/user', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    usersController.createOrEditUser( req, res, next );
+
+    console.log( 'In adminRoutes | Finsihed ' + req.route.path );
+});
