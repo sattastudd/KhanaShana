@@ -54,3 +54,13 @@ router.post( '/admin/user', function( req, res, next ) {
 
     console.log( 'In adminRoutes | Finsihed ' + req.route.path );
 });
+
+/* Request-Name : /admin/user/reset, Type: Post, Allowed : admin*/
+/* This request would be used by admin to reset password of a user.*/
+router.post( '/admin/user/reset', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    usersController.resetUserPassword( req, res, next );
+
+    console.log( 'In adminRoutes | Finsihed' + req.route.path );
+});

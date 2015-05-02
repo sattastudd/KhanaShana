@@ -244,5 +244,49 @@ var createOrEditUser = function( userInfo, callback ) {
     console.log( 'In UsersService | Finished Execution of createOrEditUser' );
 };
 
+/* Public Method to Reset a Users' Password */
+var resetUserPassword = function( userEmail, callback ) {
+    console.log( 'In UsersService | Starting Execution of resetUserPassword' );
+
+    var err = {};
+    var errMsg = {};
+
+    var responseFromValidatorForEmail = Validator.isEmailNotValid( userEmail, true );
+
+    if( responseFromValidatorForEmail.result ) {
+        err.email = true;
+        errMsg.email = responseFromValidatorForEmail.message;
+
+        callback( appConstants.appErrors.ValidationError, {
+            err : err,
+            errMsg : errMsg,
+            data : null,
+            msg :  appConstants.errorMessage.email
+        } );
+    } else {
+        UsersDBI.resetUserPassword( userEmail, function( err, result ) {
+            if( err ) {
+                console.log( err );
+                callback( appConstants.appErrors.someError, {
+                    err : {},
+                    errMsg : {},
+                    data : null,
+                    msg : appConstants.errorMessage.someError
+                } );
+            } else {
+                callback( null, {
+                    err : {},
+                    errMsg : {},
+                    data : result,
+                    msg : appConstants.successMessage
+                });
+            }
+        });
+    }
+
+    console.log( 'In UsersService | Finished Execution of resetUserPassword' );
+};
+
 exports.getUserList = getUserList;
 exports.createOrEditUser = createOrEditUser;
+exports.resetUserPassword = resetUserPassword;

@@ -50,5 +50,24 @@ var createOrEditUser = function( req, res, next ) {
     console.log( 'In UsersController | Finished Execution of createOrEditUser' );
 };
 
+/* Public Controller Method to reset password of a user*/
+var resetUserPassword = function( req, res, next ) {
+    console.log( 'In UsersController | Starting Execution of resetUserPassword ' );
+
+    var email = req.body.email;
+
+    UserService.resetUserPassword( email, function( err, result ) {
+        if( err ) {
+            res.status( 500 )
+                .json( result );
+        } else {
+            res.status( 200 )
+                .json( result );
+        }
+    });
+    console.log( 'In UsersController | Finsihed Execution of resetUserPassword ' );
+}
+
 exports.getUserList = getUserList;
 exports.createOrEditUser = createOrEditUser;
+exports.resetUserPassword = resetUserPassword;

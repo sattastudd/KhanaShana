@@ -20,6 +20,13 @@ var stripObjectProperties = function (newUser) {
     return toReturn;
 };
 
+/* Private method to generate password. */
+/* Does nothing right now.*/
+/* Need to return a password. */
+var getSecureRandomPassword = function() {
+    return 'tata@1234';
+};
+
 /*Private method to execute query.
  *This would only be executed if there is we have first time search.
  */
@@ -201,5 +208,32 @@ var createOrEditUser = function( userInfo, isInsert, callback ) {
     console.log( 'In UsersDBI | Finished Execution of createOrEditUser' );
 };
 
+/* Public Method to Reset User Password */
+var resetUserPassword = function( userEmail, callback ){
+    console.log( 'In UsersDBI | Starting Execution of resetUserPassword' );
+
+    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDBConnection );
+    UsersModelModule.setUpConnection( appUsersDBConnection );
+
+    var UsersModel = UsersModelModule.getUsersModel();
+
+    var query = { email : userEmail };
+    var update = { $set : {
+            credential : getSecureRandomPassword()
+        }
+    };
+
+    UsersModel.update(query, update, function( err , result ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    console.log( 'In UsersDBI | Finished Execution of resetUserPassword' );
+};
+
 exports.getUserList = getUserList;
 exports.createOrEditUser = createOrEditUser;
+exports.resetUserPassword = resetUserPassword;
