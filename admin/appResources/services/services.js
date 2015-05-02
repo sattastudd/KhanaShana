@@ -22,7 +22,8 @@
 
             login : 'login',
             stats : 'stats',
-            options : 'options'
+            options : 'options',
+            userList : 'users'
 
         })
         .constant('RegExProvider',  {
@@ -40,13 +41,22 @@
                     return true;
                 return false;
             };
+
+            this.isFieldBlank = function( value ) {
+              if( value === '' || null == value || typeof value === 'undefined' ){
+                  return true;
+              }
+              return false;
+            };
         })
         .service('ResponseMessage', function (){
             this.errorMessage = {
+                name : 'Invalid Name',
                 email : 'Invalid Email',
                 mandatory : 'Field can not be left empty.',
                 contact : 'Invalid Contact Number.',
-                sessionExpired : 'Your session has expired.'
+                sessionExpired : 'Your session has expired.',
+                noSearchCriteria : 'Please enter at least one search criteria.'
             };
         })
         .service( 'ValidationService', function(ResponseMessage, RegExProvider ){

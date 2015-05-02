@@ -24,7 +24,8 @@ var appConstants = {
         contact : 'Invalid Contact Number.',
         fillDetails : 'Please correct all mistakes before proceeding.',
         invalidCredentials : 'Invalid Credentials',
-        noRecordFound : 'No Such Record Exists'
+        noRecordFound : 'No Such Record Exists',
+        noSearchCriteria : 'Please enter at least one search criteria.'
 	},
 
     successMessage : 'Ok',

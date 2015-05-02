@@ -4,7 +4,7 @@ define([], function ($scope) {
     return newRestaurantController;
 });
 
-function NewRestaurantController($scope, $http, DataStore, AppConstants, RestRequests) {
+function NewRestaurantController($scope, $http, $modal, DataStore, AppConstants, RestRequests) {
     $scope.collapseController = {
         basicInfo: false,
         address: true,
@@ -205,4 +205,81 @@ function NewRestaurantController($scope, $http, DataStore, AppConstants, RestReq
 
         menu.items.push( dish );
     };
+
+    $scope.files = [];
+
+    $scope.$on("selectedFile", function (event, args) {
+        $scope.$apply(function () {
+            console.log('File Selected');
+            //add the file object to the scope's files collection
+            $scope.files = [];
+            $scope.files.push(args.file);
+            console.log( $scope.files );
+        });
+
+        var modalInstance = $modal.open({
+            templateUrl : '../../views/restaurants/BannerCropModal.html',
+            controller : ImageCropController,
+            size : 'lg',
+            backdrop : 'static',
+            resolve : {
+                fileToRead : function(){
+                    return $scope.files[0];
+                }
+            }
+        });
+
+        modalInstance.result.then(
+            function( data ){
+                console.log( data );
+
+                $scope.imageData = data;
+            },
+
+            function( data ){
+                console.log( data );
+            }
+        )
+    });
+
+    $scope.try = function () {
+        console.log( $scope.restMenu );
+        $http({
+            method: 'POST',
+            url: "node/admin/restaurant",
+            headers: { 'Content-Type': undefined },
+            transformRequest: function (data) {
+                var formData = new FormData();
+                formData.append("model", angular.toJson(data.model));
+
+                for (var i = 0; i < data.files.length; i++) {
+                    formData.append("file" + i, data.files[i]);
+                }
+
+                return formData;
+            },
+
+            data: { model: $scope.imageData, files: $scope.files }
+        }).
+            success(function (data, status, headers, config) {
+                alert("success!");
+            }).
+            error(function (data, status, headers, config) {
+                alert("failed!");
+            });
+    };
+};
+
+function ImageCropController( $scope, $modalInstance, fileToRead ){
+    $scope.fileToRead = fileToRead;
+
+    $scope.getCroppedInfoFromDirective = function(){
+        console.log('BroadCasting Event' );
+        $scope.$broadcast('emitCroppedInfo');
+        //$modalInstance.close();
+    };
+
+    $scope.$on('emittedCoOrdinates', function( $event, args ){
+        $modalInstance.close( args );
+    });
 };

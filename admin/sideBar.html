@@ -1,6 +1,6 @@
 <div class="icon-container">
     <ul class="adminControls">
-        <li class="active" petoo-side-bar-tab active="true"><span class="glyphicon glyphicon-home"></span></li>
+        <li class="active" petoo-side-bar-tab active="true" ng-click="moveToLocation('dashboard')"><span class="glyphicon glyphicon-home"></span></li>
         <li petoo-side-bar-tab target="user-controls"><span class="glyphicon glyphicon-user"></span></li>
         <li petoo-side-bar-tab target="restaurant-controls" ><span class="glyphicon glyphicon-cutlery"></span></li>
         <li petoo-side-bar-tab target="order-controls"><span class="glyphicon glyphicon-piggy-bank"></span></li>
@@ -12,7 +12,7 @@
 
 <div class="control-actions-container">
     <ul class="user-controls">
-        <li>All Users</li>
+        <li><a ng-click="moveToLocation('users')">All Users</a></li>
         <li>Add a new User</li>
         <li>Delete a User</li>
     </ul>

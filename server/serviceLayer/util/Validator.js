@@ -61,12 +61,20 @@ var isPasswordNotValid = function (credential, isMandatory) {
 
 var isContactNotValid = function (contact, isMandatory) {
     return isFieldNotValid(contact, isMandatory, mandatoryMessage, RegExProvider.contactNumber, ServerConstants.errorMessage.contact);
-}
+};
 
 var isReceivedFieldNotValid = function( fieldValue, isMandatory ) {
     return isFieldNotValid( fieldValue, isMandatory, mandatoryMessage );
 };
 
+var isFieldEmpty = function( fieldValue ){
+    if( fieldValue === '' || fieldValue == null || typeof fieldValue === 'undefined' ){
+        return true;
+    }
+    return false;
+};
+
+exports.isFieldEmpty = isFieldEmpty;
 exports.isNameNotValid = isNameNotValid;
 exports.isEmailNotValid = isEmailNotValid;
 exports.isPasswordNotValid = isPasswordNotValid;

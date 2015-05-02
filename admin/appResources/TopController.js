@@ -6,7 +6,7 @@ define( [], function() {
 	return TopController;
 } );
 
-function ParentController($scope, $rootScope, UserInfoProvider, $location) {
+function ParentController($scope, $rootScope, UserInfoProvider, $location, DataStore) {
     //Click listener on body.
 
 
@@ -30,7 +30,7 @@ function ParentController($scope, $rootScope, UserInfoProvider, $location) {
     };
 
 
-
+    DataStore.storeData( 'globalPageSize', 10 );
 };
 
 function HeaderController($scope, $http, $timeout, $location, UserInfoProvider ){

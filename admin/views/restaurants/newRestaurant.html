@@ -290,7 +290,33 @@
             </div>
             <!--Menu End-->
             <div class="pictureArea">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="bottomBorderThin bMar20">Restaurant Pictures</h3>
+                    </div>
+                </div>
 
+                <div class="petoo-form">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Restaurant Banner Image</label>
+
+                                <div class="uploadContainerDiv">
+                                    <input type="file" id="restBanner"/>
+                                </div>
+
+                                <input type="text" file-upload-view target="restBanner" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-block btn-pr-secondary" ng-click="try()">Upload</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

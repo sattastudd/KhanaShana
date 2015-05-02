@@ -45,6 +45,7 @@ $theme-add-new-tabs-back : #32404b;
 $theme-add-new-tabs-disabled : #6f7981;
 $theme-add-new-tabs-completed : #46535d;
 
+$theme-glyph-btn-width : 34px;
 /*Min-ins*/
 @mixin transition-mix($property, $duration) {
   -moz-transition: $property $duration;
@@ -152,9 +153,35 @@ body{
   font-size :$theme-input-font-size;
   @include  transition-mix(all, $theme-fast-reaction);
 
-  &:hover, &:focus{
+  &:hover{
     color : $theme-primary-button-hover-text-color;
     background-color : #5e6873;
+  }
+}
+
+.input-group-btn{
+  width :$theme-glyph-btn-width;
+
+  .btn-glyph{
+    width : $theme-glyph-btn-width;
+
+    background-color : $theme-glyph-feedback-background-color;
+
+    color :$theme-glyph-color;
+
+    height : $theme-input-box-height;
+    line-height: $theme-input-box-height;
+
+    @include  transition-mix(all, $theme-fast-reaction);
+    span {
+      height : $theme-input-box-height;
+      line-height: $theme-input-box-height;
+    }
+
+    &:hover, &:focus{
+      color : $theme-primary-button-hover-text-color;
+      background-color : #5e6873;
+    }
   }
 }
 
@@ -178,6 +205,60 @@ body{
     width : $theme-sidebar-expanded-width;
   }
 }
+
+.glyphicon-search{
+  cursor : pointer;
+}
+
+/* Global Pagination CSS */
+ul.pagination{
+  font-family: 'Calibri';
+  li {
+
+    a{
+      border : none;
+      background-color : $theme-input-background-color;
+
+      height : $theme-input-box-height;
+
+      font-size : $theme-input-font-size;
+      padding: 8px 14px;
+
+      color : #aaa;
+      margin-left : 5px;
+
+      @include  transition-mix(all, $theme-fast-reaction);
+
+      &:hover, &:focus{
+        color : $theme-primary-button-hover-text-color;
+        background-color : #5e6873;
+      }
+    }
+
+    &.disabled{
+      a{
+        background-color : $theme-input-background-color;
+
+        &:hover, &:focus{
+          background-color : $theme-input-background-color;
+        }
+      }
+    }
+
+    &.active {
+      a{
+        background-color : $theme-primary-button-color;
+
+        @include transition-mix(all, $theme-fast-reaction);
+
+        &:hover, &:focus{
+          color : $theme-primary-button-hover-text-color;
+          background-color : $theme-primary-button-hover-back-color;
+        }
+      }
+    }
+  }
+}
 /* Global CSS End */
 
 /* Utility Classes */
@@ -195,6 +276,12 @@ body{
 
 .bMar10{
   margin-bottom : 10px;
+}
+
+.uploadContainerDiv{
+  height : 0;
+  overflow : hidden;
+  visibility: hidden;
 }
 
 .bMar20{
@@ -423,6 +510,18 @@ body{
 
     border : 1px solid #fff;
   }
+
+  .dataCell{
+    border-left : $theme-page-list-border;
+    border-bottom : $theme-page-list-border;
+
+    padding: 5px 20px;
+    font-family: 'Calibri';
+
+    &.top{
+      border-top : $theme-page-list-border;
+    }
+  }
 }
 
 /*Restaurant List page*/
@@ -436,7 +535,6 @@ body{
   border-top-right-radius: 4px;
 
   > div {
-    border-right : $theme-page-list-border;
     border-bottom : $theme-page-list-border;
   }
 
@@ -464,6 +562,7 @@ body{
       &.search{
         margin-top : 5px;
         margin-bottom : 4px;
+        width: 100%;
       }
     }
   }
@@ -567,3 +666,23 @@ ul.newRestaurantAddition{
     }
   }
 }
+
+.bannerCropModel{
+  background-color : $theme-primary-background-color;
+}
+
+.modal-backdrop.in{
+  height : 100%;
+}
+
+.imageCrop{
+  position: relative;
+
+  .croppedArea{
+    border : 1px dashed #fff;
+    position: absolute;
+    top : 0;
+    left : 0;
+  }
+}
+
