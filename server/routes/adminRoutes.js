@@ -2,6 +2,7 @@ var statsController = require( '../controllers/admin/stats/StatsController' );
 var optionsController = require( '../controllers/admin/options/OptionsController' );
 var adminRestController = require( '../controllers/admin/restaurant/restaurantController' );
 var usersController = require( '../controllers/admin/users/UsersController' );
+var restaurantController = require( '../controllers/admin/restaurant/restaurantController' );
 
 /* Request-Name : /admin/stats, Type : Get, Allowed : admin*/
 /* This request would be used by admin to get application stats. */
@@ -71,6 +72,19 @@ router.post( '/admin/user/blacklist', function( req, res, next ) {
     console.log( 'In adminRoutes | Handling ' + req.route.path );
 
     usersController.blackListUser( req, res, next );
+
+    console.log( 'In adminRoutes | Finsihed' + req.route.path );
+});
+
+
+/* Restaurant Related Routes */
+/*==========================================================*/
+/* Request-Name : /admin/restaurants, Type: Post, Allowed : admin*/
+/* This request would be used by admin to search and list all restaurants. */
+router.post( '/admin/restaurants', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    restaurantController.getRestaurantList( req, res, next );
 
     console.log( 'In adminRoutes | Finsihed' + req.route.path );
 });

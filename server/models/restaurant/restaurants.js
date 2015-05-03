@@ -14,13 +14,14 @@ var dishSchema = new mongoose.Schema({
 
 var restaurantSchema = new mongoose.Schema({
     name : String,
+    createDate : Date,
     address : {
         co_ord : String,
         street : String,
         locality : String,
         town : String,
         city : String,
-        postal_code : String,
+        postal_code : String
     },
     delivery : [String],
     cuisines : [String],
@@ -31,7 +32,9 @@ var restaurantSchema = new mongoose.Schema({
     detail : {
         timing : String,
         rating : Number,
-        total_votes : Number
+        total_votes : Number,
+        total_orders : Number,
+        total_revenue_earned : Number
     },
     menu : [
         {
@@ -55,7 +58,7 @@ var setUpConnection = function( connectionToBeUsed ) {
     model = connection.model('Restaurants', restaurantSchema, 'Restaurants' );
 };
 
-var getRestaurantModel = function(){
+var getModel = function(){
     if( connection!= null && model != null ){
         return model;
     } else {
@@ -64,4 +67,4 @@ var getRestaurantModel = function(){
 };
 
 exports.setUpConnection = setUpConnection;
-exports.getRestaurantModel = getRestaurantModel;
+exports.getModel = getModel;

@@ -26,7 +26,9 @@
             userList : 'users',
             blackListUser : 'user/blacklist',
             createEditUser : 'user',
-            userPasswordReset : 'user/reset'
+            userPasswordReset : 'user/reset',
+
+            restaurantList : 'restaurants'
         })
         .constant('RegExProvider',  {
 

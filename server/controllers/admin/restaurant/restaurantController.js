@@ -6,6 +6,8 @@ var formidable = require( 'formidable' );
 var easyImg = require( 'easyimage' );
 var fs = require( 'fs' );
 
+var RestaurantService = require( '../../../serviceLayer/admin/restaurant/AdminRestaurantService' );
+
 var createOrEditRestaurant = function( req, res, next ){
 
     var reqBody = {};
@@ -98,4 +100,31 @@ var createOrEditRestaurant = function( req, res, next ){
     console.log( 'In restaurantController | Finished Execution of createOrEditRestaurant' );
 };
 
+/* Public Method to getOrSearch Restaurants */
+var getRestaurantList = function( req, res, next ){
+    console.log( 'In restaurantController | Starting Execution of getRestaurantList' );
+
+    var searchParams = {
+        name : req.body.name,
+        locality : req.body.locality
+    };
+
+    var pagingParams = {
+        startIndex : req.body.startIndex
+    };
+
+    RestaurantService.getRestaurantList( searchParams, pagingParams, function( err, result ){
+        if( err ){
+            res.status( 500 )
+                .json( result );
+        } else {
+            res.status( 200 )
+                .json( result );
+        }
+    });
+
+    console.log( 'In restaurantController | Finished Execution of getRestaurantList' );
+};
+
 exports.createOrEditRestaurant = createOrEditRestaurant;
+exports.getRestaurantList = getRestaurantList;
