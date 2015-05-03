@@ -188,6 +188,8 @@ var signUpUser = function( userInfo, callback ) {
     }
     /*Finished Validations*/
 
+    userInfo.role = 'user';
+
 	loginDBI.signUpUser( userInfo, function( err, result ) {
 		
 		if( err ) {

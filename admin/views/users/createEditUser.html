@@ -1,0 +1,126 @@
+<div ng-include="'views/header.html'"></div>
+<div class="container" ng-controller="CreateOrEditUserController" ng-init="init()">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="bottomBorder">{{pageHeading}}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="bg-danger" ng-class="haveReceivedErrorFromServer()">
+                {{errorMessage}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="bg-success" ng-class="haveReceivedSuccessFromServer()">
+                {{successMessage}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="petoo-form">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label>User Role</label>
+
+
+                    <div class="radio">
+                        <label class="radio">
+                            <input class="radio" type="radio" name="optionsRadios" ng-model="user.role" value="restOwn" ng-disabled="isEdit"/>
+                            Restaurant Owner
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="radio">
+                            <input class="radio" type="radio" name="optionsRadios" ng-model="user.role" value="user" ng-disabled="isEdit">
+                            Customer
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="petoo-form">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" ng-model="user.name" class="form-control"/>
+                </div>
+
+                <div class="collapsibleErrorMessage" ng-class="hasFieldError('name')">
+                    <div class="bg-danger" ng-class="hasFieldError('name')">
+                        {{errMsg.name}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label>User Email</label>
+                    <input type="text" ng-model="user.email" class="form-control"/>
+                </div>
+
+                <div class="collapsibleErrorMessage" ng-class="hasFieldError('email')">
+                    <div class="bg-danger" ng-class="hasFieldError('email')">
+                        {{errMsg.email}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="!isEdit">
+        <div class="petoo-form">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="text" ng-model="user.credential" class="form-control"/>
+                </div>
+
+                <div class="collapsibleErrorMessage" ng-class="hasFieldError('password')">
+                    <div class="bg-danger" ng-class="hasFieldError('name')">
+                        {{errMsg.password}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="petoo-form">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="text" ng-model="user.contact" class="form-control"/>
+                </div>
+
+                <div class="collapsibleErrorMessage" ng-class="hasFieldError('contact')">
+                    <div class="bg-danger" ng-class="hasFieldError('name')">
+                        {{errMsg.contact}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row tMar20">
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+            <button class="btn btn-block btn-pr-primary" ng-click="createOrEditUser()">{{buttonText}}</button>
+        </div>
+
+        <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3" ng-if="isEdit">
+            <button class="btn btn-pr-secondary btn-block" ng-click="resetUserPassword()">Reset User Password</button>
+        </div>
+
+        <div class="col-xs-4 col-sm-6 col-md-4 col-lg-2">
+            <button class="btn btn-pr-secondary btn-block">Cancel</button>
+        </div>
+    </div>
+</div>

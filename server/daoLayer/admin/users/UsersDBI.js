@@ -4,6 +4,8 @@
 var appConstants = require( '../../../constants/ServerConstants' );
 var UsersModelModule = require( '../../../models/login/usersModel' );
 
+var LoginDBI = require( '../../login/LoginDBI' );
+
 var DBUtils = require( '../../util/DBIUtil' );
 var async = require( 'async' );
 
@@ -60,7 +62,11 @@ var getUserListForFirstTime = function( searchParam, pagingParams, query, projec
     UsersModelModule.setUpConnection( appUsersDBConnection );
     var UsersModel = UsersModelModule.getUsersModel();
 
-    var options = {};
+    var options = {
+        sort : {
+            profile_created_date : 'desc'
+        }
+    };
 
     if( pagingParams.startIndex != null ){
         options.skip = pagingParams.startIndex;
@@ -84,7 +90,7 @@ var getUserList = function( searchParam, pagingParams, callback ){
     console.log( 'In UsersDBI | Starting Execution of getUserList' );
 
     var query = {
-        role : 'user'
+        role : searchParam.role
     };
 
     var isNameNotEmpty = !DBUtils.isFieldEmpty( searchParam.name );
@@ -104,7 +110,8 @@ var getUserList = function( searchParam, pagingParams, callback ){
         credential : false,
         '_id' : false,
         "__v": false,
-        role : false
+        role : false,
+        profile_created_date : false
     };
 
     console.log( query );
@@ -131,7 +138,10 @@ var getUserList = function( searchParam, pagingParams, callback ){
 
         var options = {
             skip : ( pagingParams.startIndex - 1),
-            limit : 10
+            limit : 10,
+            sort : {
+                profile_created_date : 'desc'
+            }
         };
 
         console.log( options.skip );
@@ -156,35 +166,15 @@ var createOrEditUser = function( userInfo, isInsert, callback ) {
 
     var UsersModel = UsersModelModule.getUsersModel();
 
-    if( isInsert ) {
-        var User = new UsersModel({
-            name : userInfo.name,
-            email : userInfo.email.toLowerCase(),
-            credential : userInfo.credential,
-            contact : userInfo.contact,
-            role : userInfo.role,
-            profile_created_date : (new Date()).getTime(),
-            orders : 0,
-            revenueGenerated : 0
-        });
-
-        User.save( function( err, result ) {
-            if( err ) {
-                callback( err );
-            } else {
-                callback( null, stripObjectProperties( result) );
-            }
-        });
-    } else {
         var query = {
-            email : userInfo.email
+            email : userInfo.oldEmail
         };
 
         var update = {};
 
         var isNameNotEmpty = ! DBUtils.isFieldEmpty( userInfo.name );
 
-        var propArray = ['name', 'contact', 'role', 'orders', 'revenueGenerated' ];
+        var propArray = ['name', 'email', 'contact', 'role', 'orders', 'revenueGenerated' ];
         var propArrayLength = propArray.length;
 
         for( var i=0; i<propArrayLength; i++ ){
@@ -197,6 +187,9 @@ var createOrEditUser = function( userInfo, isInsert, callback ) {
             }
         }
 
+        console.log( query );
+        console.log( update );
+
         UsersModel.update( query, { $set : update }, function( err, result ) {
             if( err ) {
                 callback( err );
@@ -204,7 +197,7 @@ var createOrEditUser = function( userInfo, isInsert, callback ) {
                 callback( null, result );
             }
         });
-    }
+
     console.log( 'In UsersDBI | Finished Execution of createOrEditUser' );
 };
 
@@ -212,7 +205,7 @@ var createOrEditUser = function( userInfo, isInsert, callback ) {
 var resetUserPassword = function( userEmail, callback ){
     console.log( 'In UsersDBI | Starting Execution of resetUserPassword' );
 
-    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDBConnection );
+    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
     UsersModelModule.setUpConnection( appUsersDBConnection );
 
     var UsersModel = UsersModelModule.getUsersModel();
@@ -238,12 +231,12 @@ var resetUserPassword = function( userEmail, callback ){
 var blackListUser = function( userEmail, blackList, callback ) {
     console.log( 'In UsersDBI | Starting Execution of blackListUser' );
 
-    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDBConnection );
+    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
     UsersModelModule.setUpConnection( appUsersDBConnection );
 
     var UsersModel = UsersModelModule.getUsersModel();
 
-    var query = { email : userEmail };
+    var query = { email : userEmail.trim() };
     var update = { $set : {
             isBlackListed : blackList
         }
@@ -253,7 +246,12 @@ var blackListUser = function( userEmail, blackList, callback ) {
         if( err ) {
             callback( err );
         } else {
-            callback( null, result );
+
+            if( result != 1 ){
+                callback( appConstants.appErrors.someError );
+            } else {
+                callback( null, blackList );
+            }
         }
     });
 

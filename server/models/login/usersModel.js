@@ -9,9 +9,10 @@ var usersSchema = new mongoose.Schema({
 	credential : String,
 	contact : String,
 	role : String,
-    profile_created_date : String,
+    profile_created_date : Date,
     orders : Number,
-    revenueGenerated : Number
+    revenueGenerated : Number,
+    isBlackListed : Boolean
 });
 
 var connection = null;

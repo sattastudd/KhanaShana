@@ -36,7 +36,9 @@ var appConstants = {
     loginSuccessful : 'Login Successful',
     logoutSuccessful : 'Logout Successful',
     userBlackListed : 'User BlackListed Successfully.',
-    userPermitted : 'User Permiited.'
+    userPermitted : 'User Permitted.',
+    userUpdated : 'User Details Updated.',
+    passwordReset : 'User Password has been updated successfully.'
 };
 
 module.exports = appConstants;

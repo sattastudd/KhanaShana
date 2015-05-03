@@ -14,6 +14,9 @@ $theme-input-border-radius : 4px;
 $theme-error-back-color : #7a2934;
 $theme-error-font-color : #ccc;
 
+$theme-success-back-color : #3c6c24;
+$theme-success-font-color : #eee;
+
 $theme-input-box-height : 40px;
 $theme-input-font-size : 18px;
 
@@ -108,7 +111,7 @@ body{
   }
 }
 
-.bg-danger{
+.bg-danger, .bg-success{
   height : $theme-input-box-height;
   font-family: 'Calibri';
 
@@ -131,6 +134,11 @@ body{
     height : 0;
     margin-bottom : 0;
   }
+}
+
+.bg-success{
+  background-color : $theme-success-back-color;
+  color : $theme-success-font-color;
 }
 
 .btn-pr-primary{
@@ -259,6 +267,55 @@ ul.pagination{
     }
   }
 }
+
+/* Global Fields Error Message*/
+.collapsibleErrorMessage {
+  @include transition-mix(all, .3s);
+  height: 40px;
+
+  margin-bottom: 6px;
+  font-size: 14px;
+  overflow : visible;
+
+  &.noHeight {
+    height: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+
+    .noHeight {
+      height: 0;
+      overflow: hidden;
+    }
+  }
+
+  .bg-danger {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 15px;
+    border-radius: 2px;
+
+    font-size : 14px;
+
+    position: relative;
+    overflow : visible;
+
+    &:after {
+      content: " ";
+      top: -23px;
+      left: 12%;
+      border: 12px solid transparent;
+      height: 0;
+      width: 0;
+      position: absolute;
+      border-bottom-color: $theme-error-back-color;
+    }
+  }
+}
+
+.noHeight{
+  overflow: hidden;
+  height : 0;
+}
 /* Global CSS End */
 
 /* Utility Classes */
@@ -336,6 +393,10 @@ ul.pagination{
       font-size : 20px;
       margin-bottom: 8px;
       font-weight: normal;
+
+      &.radio{
+        font-size : 18px;
+      }
     }
 
     input{
@@ -348,6 +409,10 @@ ul.pagination{
       font-size : $theme-input-font-size;
 
       height : $theme-input-box-height;
+
+      &.radio{
+        height : 18px;
+      }
     }
   }
 }
@@ -518,8 +583,24 @@ ul.pagination{
     padding: 5px 20px;
     font-family: 'Calibri';
 
+    span{
+      font-size : 16px;
+      cursor: pointer;
+
+      color : $theme-glyph-color;
+      margin-right : 10px;
+
+      &.active {
+        color : #cfcfd2;
+      }
+    }
+
     &.top{
       border-top : $theme-page-list-border;
+    }
+
+    &.right{
+      border-right : $theme-page-list-border;
     }
   }
 }
@@ -685,4 +766,3 @@ ul.newRestaurantAddition{
     left : 0;
   }
 }
-

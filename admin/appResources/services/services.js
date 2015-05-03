@@ -23,8 +23,10 @@
             login : 'login',
             stats : 'stats',
             options : 'options',
-            userList : 'users'
-
+            userList : 'users',
+            blackListUser : 'user/blacklist',
+            createEditUser : 'user',
+            userPasswordReset : 'user/reset'
         })
         .constant('RegExProvider',  {
 

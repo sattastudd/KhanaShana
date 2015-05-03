@@ -6,6 +6,8 @@ var appConstants = require( '../../constants/ServerConstants' );
 var userModelModule = require( '../../models/login/usersModel' );
 var statsModelModule = require( '../../models/stats/stats' );
 
+var AccountPostResponseTasks = require( '../../daoLayer/postResponseTasks/account/AccountTasks' );
+
 var async = require( 'async' );
 var jwt = require( 'jwt-simple' );
 
@@ -69,6 +71,11 @@ var stripObjectProperties = function (newUser) {
 var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 	console.log( 'In LoginDBI | Starting Execution of insertUser' );
 
+    if( isUserAlreadyInSystem ) {
+        callback( appConstants.appErrors.userExists );
+        return;
+    }
+
 	var userDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
 
 	userModelModule.setUpConnection( userDBConnection );
@@ -79,10 +86,11 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 		email : userInfo.email.toLowerCase(),
 		credential : userInfo.credential,
 		contact : userInfo.contact,
-		role : 'user',
+		role : userInfo.role,
         	profile_created_date : (new Date()).getTime(),
         	orders : 0,
-        	revenueGenerated : 0
+        	revenueGenerated : 0,
+        isBlackListed : false
 	});
 
 	User.save( function( err, result ) {
@@ -90,6 +98,8 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 			callback( err );
 		} else {
 			callback( null, stripObjectProperties( result) );
+
+            AccountPostResponseTasks.updateAppStats();
 		}
 	});
 	
@@ -249,14 +259,18 @@ var isUserAlreadyInSystem = function( email, callback ) {
 	var UserModel = userModelModule.getUsersModel();
 
 	var query = {
-		email : createCaseInSensitiveRegexString(email),
+		email : createCaseInSensitiveRegexString(email)
 	};
 
 	var projection = {
 		'_id' : false
 	};
 
+    console.log( query );
+
 	UserModel.findOne( query, projection, function( err, result ) {
+        console.log( err );
+        console.log( result );
 		if( err ) {
 			if( isBeingUsedAsUtility ){
 				return {msg : err};

@@ -74,12 +74,14 @@ var isNumberNotValid = function( number, isMandatory ) {
 var isFieldNotValidByType = function( fieldValue, isMandatory, type ) {
     if( type === 'name' ) {
         return isNameNotValid( fieldValue, isMandatory );
-    } else if( type === 'email ' ) {
-        return isNameNotValid( fieldValue, isMandatory );
+    } else if( type === 'email' ) {
+        return isEmailNotValid( fieldValue, isMandatory );
     } else if( type === 'contact' ) {
         return isContactNotValid( fieldValue, isMandatory );
     } else if( type === 'number' ) {
         return isNumberNotValid( fieldValue, isMandatory );
+    } else if( type === 'password' ) {
+        return isPasswordNotValid( fieldValue, isMandatory );
     }
 
     return null;
@@ -97,7 +99,7 @@ var isRoleDropDownNotValid = function( receivedValue, isMandatory ) {
         };
     }
 
-    var possibleRoles = ['user', 'restManage'];
+    var possibleRoles = ['user', 'restOwn'];
     var matchFound = false;
 
     for( var i=0; i<possibleRoles.length; i++){

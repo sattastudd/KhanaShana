@@ -6,7 +6,8 @@ var getUserList = function( req, res, next ) {
 
     var searchParams = {
         name : req.body.name,
-        email : req.body.email
+        email : req.body.email,
+        role : req.body.role
     };
     var pagingParams = {
         startIndex : req.body.startIndex
@@ -35,7 +36,10 @@ var createOrEditUser = function( req, res, next ) {
         credential : req.body.credential,
         contact : req.body.contact,
         orders : req.body.orders,
-        revenueGenerated : req.body.revenueGenerated
+        revenueGenerated : req.body.revenueGenerated,
+        isInsert : req.body.isInsert,
+        role : req.body.role,
+        oldEmail : req.body.oldEmail
     };
 
     UserService.createOrEditUser( userInfo, function( err, result ) {
@@ -55,6 +59,8 @@ var resetUserPassword = function( req, res, next ) {
     console.log( 'In UsersController | Starting Execution of resetUserPassword ' );
 
     var email = req.body.email;
+
+    console.log( email );
 
     UserService.resetUserPassword( email, function( err, result ) {
         if( err ) {

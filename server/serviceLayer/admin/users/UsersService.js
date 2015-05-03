@@ -4,6 +4,8 @@
 var appConstants = require( '../../../constants/ServerConstants' );
 var UsersDBI = require( '../../../daoLayer/admin/users/UsersDBI' );
 
+var LoginDBI = require( '../../../daoLayer/login/LoginDBI' );
+
 var Validator = require( '../../util/Validator' );
 
 /* This is private utility method to set up error flag and error msg in the received maps.
@@ -149,34 +151,43 @@ var createOrEditUser = function( userInfo, callback ) {
         }
 
         if( hasAnyValidationFailed ) {
-            callback( appConstants.appErrors.ValidationError, {
+            callback( appConstants.appErrors.validationError, {
                 err : err,
                 errMsg : errMsg,
                 data : null, 
-                msg : ServerConstants.errorMessage.fillDetails
+                msg : appConstants.errorMessage.fillDetails
             });
         } else {
-            UsersDBI( userInfo, true, function( err, result ) {
+            LoginDBI.signUpUser( userInfo, function( err, result ) {
                 if( err ) {
                     console.log( err );
-                    callback( appConstants.appErrors.someError, {
-                        err : {},
-                        errMsg : {},
-                        data : null,
-                        msg : ServerConstants.errorMessage.someError
-                    });
+                    if( err === appConstants.appErrors.userExists ){
+                        callback( appConstants.appErrors.userExists , {
+                            err : {},
+                            errMsg : {},
+                            data : null,
+                            msg : appConstants.errorMessage.userExists
+                        });
+                    } else {
+                        callback( appConstants.appErrors.someError, {
+                            err : {},
+                            errMsg : {},
+                            data : null,
+                            msg : appConstants.errorMessage.someError
+                        });
+                    }
                 } else {
                     callback( null, {
                         err : {},
                         errMsg : {},
                         data : result,
-                        msg : ServerConstants.successMessage
+                        msg : appConstants.userCreated
                     });
                 }
             });
         }
     } else {
-        var propArray = ['name', 'email', 'orders', 'number | revenueGenerated', 'contact' ];
+        var propArray = ['name', 'email', 'number | orders', 'number | revenueGenerated', 'contact' ];
         var propArrLen = propArray.length;
 
         for( var i = 0; i<propArrLen ; i++ ){
@@ -212,28 +223,28 @@ var createOrEditUser = function( userInfo, callback ) {
         }
 
         if( hasAnyValidationFailed ) {
-            callback( appConstants.appErrors.ValidationError, {
+            callback( appConstants.appErrors.validationError, {
                 err : err,
                 errMsg : errMsg,
                 data : null, 
-                msg : ServerConstants.errorMessage.fillDetails
+                msg : appConstants.errorMessage.fillDetails
             });
         } else {
-            UsersDBI( userInfo, false, function( err, result ) {
+            UsersDBI.createOrEditUser( userInfo, false, function( err, result ) {
                 if( err ) {
                     console.log( err );
                     callback( appConstants.appErrors.someError, {
                         err : {},
                         errMsg : {},
                         data : null,
-                        msg : ServerConstants.errorMessage.someError
+                        msg : appConstants.errorMessage.someError
                     });
                 } else {
                     callback( null, {
                         err : {},
                         errMsg : {},
                         data : result,
-                        msg : ServerConstants.successMessage
+                        msg : appConstants.userUpdated
                     });
                 }
             });
@@ -257,7 +268,7 @@ var resetUserPassword = function( userEmail, callback ) {
         err.email = true;
         errMsg.email = responseFromValidatorForEmail.message;
 
-        callback( appConstants.appErrors.ValidationError, {
+        callback( appConstants.appErrors.validationError, {
             err : err,
             errMsg : errMsg,
             data : null,
@@ -278,7 +289,7 @@ var resetUserPassword = function( userEmail, callback ) {
                     err : {},
                     errMsg : {},
                     data : result,
-                    msg : appConstants.successMessage
+                    msg : appConstants.passwordReset
                 });
             }
         });
@@ -294,7 +305,7 @@ var blackListUser = function(email, blackList, callback ) {
     var err = {};
     var errMsg = {};
 
-    var responseFromValidatorForEmail = Validator.isEmailNotValid( userEmail, true );
+    var responseFromValidatorForEmail = Validator.isEmailNotValid( email, true );
 
     if( responseFromValidatorForEmail.result ) {
         err.email = true;
@@ -307,7 +318,7 @@ var blackListUser = function(email, blackList, callback ) {
             msg :  appConstants.errorMessage.email
         } );
     } else {
-        UsersDBI.blackListUser( userEmail, blackList, function( err, result ) {
+        UsersDBI.blackListUser( email, blackList, function( err, result ) {
             if( err ) {
                 console.log( err );
                 callback( appConstants.appErrors.someError, {
