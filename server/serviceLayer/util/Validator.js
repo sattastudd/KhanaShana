@@ -1,4 +1,4 @@
-﻿/* This moudle would act as Validtor Service.
+﻿/* This module would act as Validtor Service.
  * Developer is responsible to make sure that method are named in such a way that following conditions are met.
  * True => Validation Failed.
  * False => Validation Passed.

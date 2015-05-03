@@ -111,7 +111,8 @@ var areCredentialsValid = function( userInfo, callback ) {
     var query = {
         email : createCaseInSensitiveRegexString( userInfo.email ),
         credential : userInfo.credential,
-        role : userInfo.role
+        role : userInfo.role,
+        isBlackListed : false
     };
 
     var projection = {
