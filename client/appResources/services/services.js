@@ -21,7 +21,8 @@
             getDropDowns : 'globalData',
             checkUserExistence : 'email',
             addNewUser : 'users',
-            login : 'login'
+            login : 'login',
+            searchResult : 'result'
 
         })
         .constant('RegExProvider',  {

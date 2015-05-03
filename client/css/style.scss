@@ -1071,7 +1071,7 @@ button.kh-primary {
 /* styles for search result page starts */
 
 .containerBlock {
-  margin-top: 50px;
+  margin-top: 15px;
 }
 
 .filterBlock {
@@ -1325,6 +1325,43 @@ button.kh-primary {
 }
 
 /* styles for user restaurant home page ends */
+
+
+*/ styles for change pwd starts */
+
+
+.pwdLabelBlock{
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.pwdLabel{
+  margin-top: 15px;
+}
+.pwdBtnBlock{
+  margin-bottom: 50px;
+}
+.pwdBtnSecondary{
+  font-size: 19px;
+  padding: 6px 12px;
+  font-family: 'Segoe UI';
+}
+.pwdBtnPrimary{
+  font-size: 19px;
+  background-color: #DC141B;
+  color: #fff;
+  padding: 6px 12px;
+  font-family: 'Segoe UI';
+}
+.pwdkeyImage{
+  margin-left: 140px;
+  margin-top: 40px;
+  width: 320px;
+}
+
+*/ styles for change pwd ends */
+
+
+
 
 @media (max-width: 480px) {
   .welcomeText {
