@@ -28,7 +28,10 @@
             createEditUser : 'user',
             userPasswordReset : 'user/reset',
 
-            restaurantList : 'restaurants'
+            approvedRestaurants : 'restaurants/approved',
+            pendingApprovalRestaurants : 'restaurants/unapproved',
+
+            restaurants : 'restaurants'
         })
         .constant('RegExProvider',  {
 

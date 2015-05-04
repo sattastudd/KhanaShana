@@ -61,13 +61,9 @@ var getRestaurantListForFirstTime = function( searchParam, pagingParams, query, 
 /*                              Public Methods                         */
 /*======================================================================*/
 
-/* Thhis method would be used to extract restaurant info.*/
-var getRestaurantList = function( searchParam, pagingParams, callback ){
+/* This method would be used to extract restaurant info.*/
+var getRestaurantList = function( searchParam, pagingParams, query, callback ){
     console.log( 'In AdminRestaurantDBI | Starting Execution of getRestaurantList' );
-
-    var query = {
-        role : searchParam.role
-    };
 
     var isNameNotEmpty = !DBUtils.isFieldEmpty( searchParam.name );
 
@@ -78,8 +74,10 @@ var getRestaurantList = function( searchParam, pagingParams, callback ){
     var isLocalityNotEmpty = !DBUtils.isFieldEmpty( searchParam.locality );
 
     if( isLocalityNotEmpty ) {
-        query.email = DBUtils.createCaseInsensitiveLikeString( searchParam.locality );
+        query.delivery = DBUtils.createCaseInsensitiveLikeString( searchParam.locality );
     }
+
+    console.log( query );
 
 
     var projection = {
@@ -110,6 +108,7 @@ var getRestaurantList = function( searchParam, pagingParams, callback ){
             if( err ){
                 callback( err );
             } else {
+
                 callback( null, results );
             }
         });
@@ -149,26 +148,35 @@ var addNewRestaurant = function( cityName, restaurantToInsert, callback ) {
     var cityDBConnection = utils.getDBConnection( cityName );
 
     RestaurantModelModule.setUpConnection( cityDBConnection );
-    var RestaurantModel = RestaurantModelModule.getRestaurantModel();
+    var RestaurantModel = RestaurantModelModule.getModel();
 
-    var Restaurant = new RestaurantModel({
-        name : restaurantToInsert.name,
-        address : restaurantToInsert.address,
-        delivery : restaurantToInsert.delivery,
-        cuisines : restaurantToInsert.cuisines,
-        cost : restaurantToInsert.cost,
-        detail : restaurantToInsert.detail,
-        menu : restaurantToInsert.menu,
-        slug : restaurantToInsert.slug
-    });
+    var stage = restaurantToInsert.stage;
 
-    Restaurant.save( function ( err, result ) {
-        if( err ) {
-            callback ( err );
-        } else {
-            callback( null, result );
-        }
-    });
+    if( stage === 'basicDetails' ){
+
+        var Restaurant = new RestaurantModel({
+            name : restaurantToInsert.name,
+            slug : restaurantToInsert.slug,
+
+            'address.street' : restaurantToInsert.address.street,
+            'address.locality' : restaurantToInsert.address.locality,
+            'address.town' : restaurantToInsert.address.town,
+            'address.city' : restaurantToInsert.address.city,
+            'address.postal_code' : restaurantToInsert.address.postal_code,
+            'address.co_ord' : restaurantToInsert.address.co_ord,
+
+            owner : '',
+            approved : false
+        });
+
+        Restaurant.save( function ( err, result ) {
+            if( err ) {
+                callback ( err );
+            } else {
+                callback( null, result );
+            }
+        });
+    }
     console.log( 'In RestaurantModelModule | Finished Execution of addNewRestaurant' );
 };
 

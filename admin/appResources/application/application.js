@@ -20,6 +20,12 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 '../../appResources/controller/restaurants/restaurantListController'
             ))
 
+            .when('/pendingRestaurants',
+            routeConfig.config(
+                'views/restaurants/pendingRestaurantList.html',
+                '../../appResources/controller/restaurants/pendingRestaurantListController'
+            ))
+
             .when('/newRestaurant',
             routeConfig.config(
                 'views/restaurants/newRestaurant.html',
