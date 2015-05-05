@@ -15,7 +15,7 @@ var getRestaurrantInfoBySlug = function (cityName, slug, callback){
     var cityDBConnection = utils.getDBConnection( cityName );
 
     restaurantModelModule.setUpConnection( cityDBConnection );
-    var RestaurantModel = restaurantModelModule.getRestaurantModel();
+    var RestaurantModel = restaurantModelModule.getModel();
 
     var query = {
         slug : slug
