@@ -38,33 +38,59 @@ var createOrEditRestaurant = function( req, res, next ){
 
         var reqContent = JSON.parse( reqBody.model );
 
+        var newRestaurant = {};
+
         if( reqContent.stage === 'basicDetails' ) {
             if( typeof reqContent.address === 'undefined' ){
                 reqContent.address = {};
             }
-            var newRestaurant = {
+            newRestaurant = {
                 stage: 'basicDetails',
                 name: reqContent.name,
                 slug: reqContent.slug,
-                address: {
-                    street: reqContent.street,
-                    locality: reqContent.locality,
-                    town: reqContent.town,
-                    city: reqContent.city,
-                    postal_code: reqContent.postal_code
-                }
+                
+                street: reqContent.street,
+                locality: reqContent.locality,
+                town: reqContent.town,
+                city: reqContent.city,
+                postal_code: reqContent.postal_code
+                
             };
-
-            RestaurantService.addNewRestaurant(newRestaurant, function (err, result) {
-                if (err) {
-                    res.status(500)
-                        .json(result);
-                } else {
-                    res.status(200)
-                        .json(result);
-                }
-            });
+        } else if( reqContent.stage === 'deliveryAreas' ) {
+            newRestaurant = {
+                stage: 'deliveryAreas',
+                slug : reqContent.slug,
+                locations : reqContent.deliveryAreas
+            };
+        } else if( reqContent.stage === 'cuisineArea' ) {
+            newRestaurant = {
+                stage: 'deliveryAreas',
+                slug : reqContent.slug,
+                cuisines : reqContent.cuisines
+            };
+        } else if( reqContent.stage === 'restMenu' ) {
+            newRestaurant = {
+                stage: 'deliveryAreas',
+                slug : reqContent.slug,
+                cuisines : reqContent.cuisines
+            };
+        } else if( reqContent.stage === 'imgUpload' ) {
+            newRestaurant = {
+                stage: 'imgUpload',
+                slug : reqContent.slug,
+                cuisines : reqContent.image
+            };
         }
+
+        RestaurantService.addNewRestaurant(newRestaurant, function (err, result) {
+            if (err) {
+                res.status(500)
+                    .json(result);
+            } else {
+                res.status(200)
+                    .json(result);
+            }
+        });
     });
 
     form.parse( req );
@@ -124,6 +150,22 @@ var getUnapprovedRestaurantList = function( req, res, next ) {
     console.log( 'In AdminRestaurantController | Finished Execution of getUnapprovedRestaurantList' );
 };
 
+/* This method would be used to fetch the data of the restaurant using its slug. */
+var getRestaurantInfoBySlug = function( req, res, next ) {
+    console.log( 'In AdminRestaurantController | Starting Execution of getRestaurantInfoBySlug' );
+
+    var slug = req.params.slug;
+    console.log( slug );
+
+    res.status( 200 )
+        .json( {} );
+
+
+    console.log( 'In AdminRestaurantController | Finished Execution of getRestaurantInfoBySlug' );
+};
+
 exports.createOrEditRestaurant = createOrEditRestaurant;
+exports.getRestaurantInfoBySlug = getRestaurantInfoBySlug;
+
 exports.getApprovedRestaurantList = getApprovedRestaurantList;
 exports.getUnapprovedRestaurantList = getUnapprovedRestaurantList;

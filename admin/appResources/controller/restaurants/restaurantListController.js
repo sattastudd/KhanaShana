@@ -101,6 +101,14 @@ function RestaurantListController($scope, $http, AppConstants, AppUtils, RestReq
         $scope.search();
     };
 
+    $scope.editRestaurant = function( restaurant ) {
+        user.role = $scope.roleSelected;
+        DataStore.storeData( 'isRestaurantEdit', true );
+        DataStore.storeData( 'toEditRestaurant', restaurant );
+
+        $location.path( 'newRestaurant' );
+    };
+
     /* Getters */
     $scope.haveReceivedErrorFromServer = function() {
         return $scope.isServerError ? '' : 'noHeight';

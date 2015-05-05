@@ -7,8 +7,44 @@ var RestaurantDBI = require( '../../../daoLayer/admin/restaurant/AdminRestaurant
 var Validator = require( '../../util/Validator' );
 
 var setUpError = function (err, errMsg, type, response) {
-    err[type] = response.result;
-    errMsg[type] = response.message;
+
+    if( type.split( '.' ).length > 1) {
+
+        var splitArray = type.split('.');
+        var splitArrayLength = splitArray.length;
+
+        if( splitArrayLength === 2 ){
+            var firstPart = splitArray[0];
+            var secondPart = splitArray[1];
+
+            if( typeof err[ firstPart ] === 'undefined' ) {
+                err[ firstPart ]  = {};
+            }
+
+            var tempOne = err[ firstPart ];
+            tempOne[ secondPart ] = response.result;
+
+            if( typeof errMsg[ firstPart ] === 'undefined' ) {
+                errMsg[ firstPart ] = {};
+            }
+
+            var tempTwo = errMsg[ firstPart ];
+            tempTwo[ secondPart ] = response.message;;
+
+        }
+
+
+    } else {
+        err[type] = response.result;
+        errMsg[type] = response.message;
+    }
+};
+
+/* Private method to return appropriate success method depending upon stage of restaurant. */
+var getSuccessMessage = function( stage ) {
+    if( stage === 'basicDetails' ) {
+        return appConstants.basicDetailsAdded
+    }
 };
 
 /* This is public utility method to search and retrieve approved restaurant list from application.*/
@@ -211,7 +247,7 @@ var addNewRestaurant = function( newRestaurant, callback ){
     var errMsg = {};
 
     if( newRestaurant.stage === 'basicDetails' ){
-        var propArray = ['name', 'name | slug', 'name | address.street', 'name | address.locality', 'name | address.town', 'name | address.city', 'number | address.postal_code', ];
+        var propArray = ['name', 'name | slug', 'name | street', 'name | locality', 'name | town', 'name | city', 'number | postal_code'];
         var propArrLen = propArray.length;
 
         for( var i=0; i<propArrLen; i++){
@@ -224,20 +260,9 @@ var addNewRestaurant = function( newRestaurant, callback ){
                 type = propName.split( '|' )[0].trim();
                 propertyStoredIn = propName.split( '|' )[1].trim();
 
-                if( propertyStoredIn.split( '.').length > 1){
-                    var splitArray = propertyStoredIn.split( '.' );
-                    var splitArrayLength = splitArray.length;
-
-                    var temp = newRestaurant;
-
-                    for( var j=0; j<splitArrayLength; j++){
-                        temp = temp[ splitArray[j] ];
-                    }
-
-                    propValue = temp;
-                } else {
-                    propValue = newRestaurant[ propertyStoredIn ];
-                }
+                
+                propValue = newRestaurant[ propertyStoredIn ];
+                
             } else {
                 type = propName;
                 propertyStoredIn = propName;
@@ -253,6 +278,269 @@ var addNewRestaurant = function( newRestaurant, callback ){
                 setUpError( err, errMsg, propertyStoredIn, responseFromValidatorForField );
             }
         }
+
+        if( !hasAnyValidationFailed ) {
+            newRestaurant.address = {
+                street : newRestaurant.street,
+                town : newRestaurant.town,
+                city : newRestaurant.city,
+                postal_code : newRestaurant.postal_code
+            }
+        }
+    } else if( newRestaurant.stage === 'deliveryAreas' ) {
+        var locationsArray = newRestaurant.locations;
+        var locationsArrLength = locationArray.length;
+
+        if( locationsArrLength === 0 ) {
+            err.locations = true;
+            errMsg.locations = appConstants.errorMessage.noDeliveryArea
+
+            callback( appConstants.appErrors.validationError, {
+                err : err,
+                errMsg : errMsg,
+                data : null,
+                msg : appConstants.appErrors.removeError
+            } );
+
+            return;
+        }
+
+        var isAnyLocationInvalid = false;
+
+        for( var i=0; i<locationsArrLength; i++) {
+
+            var locationName = locationsArray[ i ];
+
+            var responseFromValidatorForLocNmae = Validator.isNameNotValid( locationName, true );
+
+            if( responseFromValidatorForLocNmae.result ) {
+                isAnyLocationInvalid = true;
+                break;
+            }
+        }
+
+        if( isAnyLocationInvalid ) {
+
+            err.locations = true;
+            errMsg.locations = appConstants.errorMessage.deliveryAreaInvalid
+
+            callback( appConstants.appErrors.validationError, {
+                err : err,
+                errMsg : errMsg,
+                data : null,
+                msg : appConstants.appErrors.removeError
+            } );
+
+            return
+        }
+    } else if( stage === 'cuisineArea' ){
+        var cuisineArray = newRestaurant.cuisines;
+        var cuisineArrLength = cuisineArray.length;
+
+        if( cuisineArrLength === 0 ) {
+            err.cuisines = true;
+            errMsg.cuisines = appConstants.errorMessage.noCuisineSelected
+
+            callback( appConstants.appErrors.validationError, {
+                err : err,
+                errMsg : errMsg,
+                data : null,
+                msg : appConstants.appErrors.removeError
+            } );
+
+            return;
+        }
+
+        var isAnyCuisineInvalid = false;
+
+        for( var i=0; i<cuisineArrLength; i++) {
+
+            var cuisineName = cuisineArray[ i ];
+
+            var responseFromValidatorForCuisineName = Validator.isNameNotValid( cuisineName, true );
+
+            if( responseFromValidatorForCuisineName.result ) {
+                isAnyCuisineInvalid = true;
+                break;
+            }
+        }
+
+        if( isAnyCuisineInvalid ) {
+
+            err.cuisines = true;
+            errMsg.cuisines = appConstants.errorMessage.cuisineNameInvalid
+
+            callback( appConstants.appErrors.validationError, {
+                err : err,
+                errMsg : errMsg,
+                data : null,
+                msg : appConstants.appErrors.removeError
+            } );
+
+            return
+        }
+    } else if( stage === 'restMenu' ) {
+        var restMenu = newRestaurant.menu;
+
+        if( !Array.isArray( restMenu) || restMenu.length === 0 ){
+
+            callback( appConstants.appErrors.validationError, {
+                err : {},
+                errMsg : {},
+                data : null,
+                msg : appConstants.appError.noMenuPresent
+            } );
+            return;
+        } else {
+            var restMenuLength = restMenu.length;
+
+            err.menu = [];
+            errMsg.menu = [];
+
+            hasAnyValidationFailed = false;
+
+            for( var i=0; i<restMenuLength; i++) {
+                var category = restMenu[ i ];
+
+                var categoryError = {};
+                var categoryErrorMsg = {};
+
+                /* Category Title Validation */
+                var categoryTitle = category.title;
+
+                var responseFromValidatorForCatTitle = Validator.isNameNotValid( categoryTitle, true );
+
+                if( responseFromValidatorForCatTitle.result ) {
+
+                    hasAnyValidationFailed = true;
+
+                    categoryError.title = true;
+                    categoryErrorMsg.title = responseFromValidatorForCatTitle.message;
+                }
+
+                /* Cateogry Items Validation */
+                var items = category.items;
+
+                categoryError.items = [];
+                categoryErrorMsg.items = [];
+
+                if( !Array.isArray( items ) || items.length === 0 ) {
+                    categoryError.items = true;
+                    categoryErrorMsg.items = appConstants.appErrors.noItemInCategory;
+                } else {
+
+                    var itemsLength = items.length;
+
+                    for( var j=0; j<itemsLength; j++) {
+                        var itemAt = items[ j ];
+
+                        var itemErr = {
+                            price : {}
+                        };
+
+                        var itemErrMsg = {
+                            price : {}
+                        };
+
+                        var itemTitle = itemAt.title;
+                        var itemType = item.type;
+
+                        var itemPriceHalf = item.price.half;
+                        var itemPriceFull = item.price.full;
+
+                        var responseFromValidatorForTitle = Validator.isNameNotValid( itemTitle, true);
+                        var responseFromValidatorForType = Validator.isNameNotValid( itemType, true);
+
+                        var responseFromValidatorForHalfPrice = Validator.isNumberNotValid( itemPriceHelf, true );
+                        var responseFromValidatorForFullPrice = Validator.isNumberNotValid( itemPriceFull, true);
+
+                        if( responseFromValidatorForTitle.result ) {
+                            hasAnyValidationFailed = true;
+
+                            itemErr.title = true;
+                            itemErrMsg.title = responseFromValidatorForTitle.message;
+                        }
+
+                        if( responseFromValidatorForType.result ) {
+                            hasAnyValidationFailed = true;
+
+                            itemErr.type = true;
+                            itemErrMsg.type = responseFromValidatorForTitle.message;
+                        }
+
+                        if( responseFromValidatorForHalfPrice.result ) {
+                            hasAnyValidationFailed = true;
+
+                            itemErr.price.half = true;
+                            itemErrMsg.price.half = responseFromValidatorForTitle.message;
+                        }
+
+                        if( responseFromValidatorForFullPrice.result ) {
+                            hasAnyValidationFailed = true;
+
+                            itemErr.price.full = true;
+                            itemErrMsg.price.full = responseFromValidatorForTitle.message;
+                        }
+
+                        categoryError.item.push( itemErr );
+                        categoryErrorMsg.items.push( itemErrMsg );
+                    }
+                }
+
+                err.menu.push( categoryError );
+                errMsg.menu.push( categoryErrorMsg );
+            }
+        }
+    } else if( stage === 'imgUpload' ) {
+
+        /* AddRegex and Validator method for imagep path. [a-zA-Z_-]+.(jpg|jpeg|png)*/
+
+            err = {
+                image : {}
+            };
+
+        errMsg : {
+            image : {}
+        };
+
+        var lgPath = newRestaurant.image.lgPath;
+        var mdPath = newRestaurant.image.mdPath;
+        var smPath = newRestaurant.image.smPath;
+        var xsPath = newRestaurant.image.xsPath;
+
+        var responseFromValidatorForLgPath = Validator.isImageFileNameNotValid( lgPath, true );
+        var responseFromValidatorForMdPath = Validator.isImageFileNameNotValid( mdPath, true );
+        var responseFromValidatorForSmPath = Validator.isImageFileNameNotValid( smPath, true );
+        var responseFromValidatorForXsPath = Validator.isImageFileNameNotValid( xsPath, true );
+
+        if( responseFromValidatorForLgPath.result ) {
+            hasAnyValidationFailed = true;
+
+            err.image.lg = true;
+            errMsg.image.lg = responseFromValidatorForLgPath.message;
+        }
+
+        if( responseFromValidatorForMdPath.result ) {
+            hasAnyValidationFailed = true;
+
+            err.image.md = true;
+            errMsg.image.md = responseFromValidatorForMdPath.message;
+        }
+
+        if( responseFromValidatorForSmPath.result ) {
+            hasAnyValidationFailed = true;
+
+            err.image.sm = true;
+            errMsg.image.sm = responseFromValidatorForSmPath.message;
+        }
+
+        if( responseFromValidatorForXsPath.result ) {
+            hasAnyValidationFailed = true;
+
+            err.image.xs = true;
+            errMsg.image.xs = responseFromValidatorForXsPath.message;
+        }
+
     }
 
     if( hasAnyValidationFailed ){
@@ -266,19 +554,30 @@ var addNewRestaurant = function( newRestaurant, callback ){
         var cityName = 'lucknow';
         RestaurantDBI.addNewRestaurant( cityName, newRestaurant, function( err, result ){
             if( err ){
-                console.log( err );
-                callback( err, {
-                    err : {},
-                    errMsg : {},
-                    data : null,
-                    msg : appConstants.errorMessage.someError
-                });
+                if( err === appConstants.appErrors.intentionalBreak ) {
+                    console.log( err + ' Slug already in use.' );
+
+                    callback( appConstants.appErrors.intentionalBreak, {
+                        err : { slug : true},
+                        errMsg: { slug : appConstants.errorMessage.slugInUse },
+                        data : null,
+                        msg : appConstants.errorMessage.removeError
+                    });
+                } else {
+                    console.log( err );
+                    callback( err, {
+                        err : {},
+                        errMsg : {},
+                        data : null,
+                        msg : appConstants.errorMessage.someError
+                    });
+                }
             } else {
                 callback( null, {
                     err : {},
                     errMsg : {},
                     data : result,
-                    msg :appConstants.successMessage
+                    msg :getSuccessMessage( newRestaurant.stage )
                 });
             }
         });
@@ -287,6 +586,46 @@ var addNewRestaurant = function( newRestaurant, callback ){
     console.log( 'In AdminRestaurantService | Finished Execution of addNewRestaurant' );
 };
 
+/* This method would be used to fetch the data of the restaurant using its slug. */
+var getRestaurantInfoBySlug = function( slug, callback ) {
+    console.log( 'In AdminRestaurantService | Starting Execution of getRestaurantInfoBySlug' );
+
+    var responseFromValidatorForSlug = Validator.isSlugNotValid( slug, true );
+
+    if( responseFromValidatorForSlug.result ) {
+        callback( appConstants.appErrors.validationError, {
+            err : {},
+            errMsg : {},
+            data : null,
+            msg : responseFromValidatorForSlug.message
+        });
+    } else {
+        var cityName = 'lucknow';
+
+        RestaurantDBI.getRestaurantInfoBySlug( cityName, slug, function( err, result ) {
+            if( err ) {
+                console.log( err );
+            } else {
+                if( result == null ) {
+                    callback( appConstants.appErrors.noRecordFound, {
+                        err : {},
+                        errMsg : {},
+                        data : null,
+                        msg : appConstants.errorMessage.noRecordFound
+                    });
+                } else {
+                    callback( null, result );
+                }
+            }
+        });
+    }
+
+
+    console.log( 'In AdminRestaurantService | Starting Execution of getRestaurantInfoBySlug' );
+};
+
 exports.addNewRestaurant = addNewRestaurant;
+exports.getRestaurantInfoBySlug = getRestaurantInfoBySlug;
+
 exports.getApprovedRestaurantList = getApprovedRestaurantList;
 exports.getUnapprovedRestaurantList = getUnapprovedRestaurantList;

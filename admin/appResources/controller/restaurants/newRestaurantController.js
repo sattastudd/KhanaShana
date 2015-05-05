@@ -4,7 +4,7 @@ define([], function ($scope) {
     return newRestaurantController;
 });
 
-function NewRestaurantController($scope, $http, $modal, DataStore, AppConstants, RestRequests) {
+function NewRestaurantController($scope, $http, DataStore, AppConstants, RestRequests) {
     $scope.collapseController = {
         basicInfo: false,
         address: true,
@@ -20,6 +20,35 @@ function NewRestaurantController($scope, $http, $modal, DataStore, AppConstants,
     $scope.offeredCuisines= [];
 
     $scope.restaurant = {};
+
+    $scope.err = {address : {}};
+    $scope.errMsg = {};
+
+    $scope.isServerError = false;
+
+    $scope.isServerSuccess = false;
+    $scope.successMessage = '';
+
+    $scope.errorMessage = '';
+
+    /* Init method */
+    $scope.init = function () {
+        if( DataStore.readAndRemove( 'isRestaurantEdit' )) {
+            $scope.restaurant.slug = DataStore.readAndRemove( 'toEditRestaurant ');
+
+            if( angular.isDefined( $scope.restaurant.slug )) {
+                var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.restaurant + '/' + $scope.restaurant.slug;
+
+                $http.get(requestName)
+                    .success(function (data) {
+                        console.log(data);
+                    })
+                    .error(function (data) {
+                        console.log(data);
+                    })
+            }
+        }
+    };
 
     $scope.isExpanded = function (type) {
         return $scope.collapseController[type] ? 'makeRightAngle' : '';
@@ -260,10 +289,61 @@ function NewRestaurantController($scope, $http, $modal, DataStore, AppConstants,
             data: { model: $scope.restaurant, files: $scope.files }
         }).
             success(function (data, status, headers, config) {
-                alert("success!");
+                $scope.isServerError = false;
+                $scope.isServerSuccess = true;
+
+                $scope.successMessage = data.msg;
+
+                $scope.err = data.err;
+                $scope.errMsg = data.errMsg;
             }).
             error(function (data, status, headers, config) {
-                alert("failed!");
+                $scope.isServerError = true;
+                $scope.isServerSuccess = false;
+
+                $scope.errorMessage = data.msg;
+
+                $scope.err = data.err;
+                $scope.errMsg = data.errMsg;
+
+                if( $scope.restaurant.stage === 'basicDetails' ){
+                    delete $scope.restaurant.stage;
+                }
             });
+    };
+
+
+    /* Error Getter */
+    /* Validation Getters */
+    $scope.hasFieldError = function ( type ) {
+        console.log( type );
+        if( type.split('.').length === 1 )
+            return $scope.err[ type ] ? '' : 'noHeight';
+        else {
+            var splitArray = type.split( '.' );
+
+            var firstPart = splitArray[ 0 ];
+            var secondPart = splitArray[ 1 ];
+
+            var temp = $scope.err[ firstPart ];
+            return temp[secondPart] ? '' : 'noHeight';
+        }
+    };
+
+    $scope.isStageValid = function() {
+        if( angular.isUndefined( $scope.restaurant.stage ) && $scope.restaurant.stage !== ''){
+            return false;
+        }
+
+        return true;
+
+    };
+
+    $scope.haveReceivedErrorFromServer = function() {
+        return $scope.isServerError ? '' : 'noHeight';
+    };
+
+    $scope.haveReceivedSuccessFromServer = function(){
+        return $scope.isServerSuccess ? '' : 'noHeight';
     };
 };

@@ -19,6 +19,22 @@
 
         </div>
 
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="bg-danger" ng-class="haveReceivedErrorFromServer()">
+                    {{errorMessage}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="bg-success" ng-class="haveReceivedSuccessFromServer()">
+                    {{successMessage}}
+                </div>
+            </div>
+        </div>
+
         <div class="tabbedContent">
             <div class="basicDetails active">
 
@@ -37,12 +53,24 @@
                                 <label>Restaurant Name</label>
                                 <input type="text" ng-model="restaurant.name" class="form-control"/>
                             </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError('name')">
+                                <div class="bg-danger" ng-class="hasFieldError('name')">
+                                    {{errMsg.name}}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-group">
                                 <label>Restaurant Slug</label>
-                                <input type="text" ng-model="restaurant.slug" class="form-control"/>
+                                <input type="text" ng-model="restaurant.slug" class="form-control" ng-disabled="isStageValid()"/>
+                            </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError('slug')">
+                                <div class="bg-danger" ng-class="hasFieldError('slug')" >
+                                    {{errMsg.slug}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -59,12 +87,24 @@
                                 <label>Street</label>
                                 <input type="text" ng-model="restaurant.street" class="form-control"/>
                             </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError('street')">
+                                <div class="bg-danger" ng-class="hasFieldError('street')">
+                                    {{errMsg.street}}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-group">
                                 <label>Locality</label>
                                 <input type="text" ng-model="restaurant.locality" class="form-control"/>
+                            </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError('locality')">
+                                <div class="bg-danger" ng-class="hasFieldError('locality')">
+                                    {{errMsg.locality}}
+                                </div>
                             </div>
                         </div>
 
@@ -73,6 +113,12 @@
                                 <label>Town</label>
                                 <input type="text" ng-model="restaurant.town" class="form-control"/>
                             </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError('town')">
+                                <div class="bg-danger" ng-class="hasFieldError('town')">
+                                    {{errMsg.town}}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -80,12 +126,24 @@
                                 <label>City</label>
                                 <input type="text" ng-model="restaurant.city" class="form-control"/>
                             </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError('city')">
+                                <div class="bg-danger" ng-class="hasFieldError('city')">
+                                    {{errMsg.city}}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-group">
                                 <label>Postal Code</label>
                                 <input type="text" ng-model="restaurant.postal_code" class="form-control"/>
+                            </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError('postal_code')">
+                                <div class="bg-danger" ng-class="hasFieldError('postal_code')">
+                                    {{errMsg.postal_code}}
+                                </div>
                             </div>
                         </div>
                     </div>

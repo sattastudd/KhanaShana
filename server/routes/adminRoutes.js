@@ -97,3 +97,13 @@ router.post('/admin/restaurants', function( req, res, next ) {
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 });
+
+/* Request-Name : /admin/restaurant, Type: Get, Allowed : admin*/
+/* This request would be used by admin to get restaurant info */
+router.post('/admin/restaurant/:restaurantSlug', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    adminRestController.getRestaurantInfoBySlug(req, res, next );
+
+    console.log( 'In adminRoutes | Finished ' + req.route.path );
+});

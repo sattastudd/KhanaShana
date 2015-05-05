@@ -31,7 +31,8 @@
             approvedRestaurants : 'restaurants/approved',
             pendingApprovalRestaurants : 'restaurants/unapproved',
 
-            restaurants : 'restaurants'
+            restaurants : 'restaurants',
+            restaurant : 'restaurant'
         })
         .constant('RegExProvider',  {
 

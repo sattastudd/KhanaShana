@@ -14,9 +14,15 @@ var dishSchema = new mongoose.Schema({
 
 var restaurantSchema = new mongoose.Schema({
     name : String,
+
+    slug : String,
     createDate : Date,
+
+    stage : String,
+
     owner :String,
     approved : Boolean,
+
     address : {
         co_ord : String,
         street : String,
@@ -25,8 +31,10 @@ var restaurantSchema = new mongoose.Schema({
         city : String,
         postal_code : String
     },
+
     delivery : [String],
     cuisines : [String],
+
     cost : {
         avg : Number,
         min : Number

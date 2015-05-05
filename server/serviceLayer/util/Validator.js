@@ -9,10 +9,18 @@
  * }
  */
 
-var RegExProvider = require( '../../constants/RegExProvider' );
 var ServerConstants = require('../../constants/ServerConstants');
 
 var mandatoryMessage = ServerConstants.errorMessage.mandatory;
+
+var RegExProvider = {
+    name: /^[a-zA-Z ]{1,}$/,
+    email: /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/,
+    contactNumber : /^[1-9][0-9]{9,10}$/,
+    number : /^[0-9]{1,}$/,
+    slug : /^[a-zA-Z-]+$/
+};
+
 
 var isFieldNotValid = function (value, isMandatory, mandatoryMessage, regEx, inValidMessage){
 
@@ -52,7 +60,7 @@ var isNameNotValid = function (name, isMandatory) {
 };
 
 var isEmailNotValid = function (email, isMandatory) {
-    return isFieldNotValid(email, isMandatory, mandatoryMessage, RegExProvider.email, ServerConstants.errorMessage.email);
+    return isFieldNotValid(email, isMandatory, mandatoryMessage, RegExProvider.RegExProvider.name, ServerConstants.errorMessage.email);
 };
 
 var isPasswordNotValid = function (credential, isMandatory) {
@@ -61,6 +69,10 @@ var isPasswordNotValid = function (credential, isMandatory) {
 
 var isContactNotValid = function (contact, isMandatory) {
     return isFieldNotValid(contact, isMandatory, mandatoryMessage, RegExProvider.contactNumber, ServerConstants.errorMessage.contact);
+};
+
+var isSlugNotValid = function( value, isMandatory ) {
+    return isFieldNotValid( value, isMandatory, mandatoryMessage, RegExProvider.slug, ServerConstants.errorMessage.invalidSlug );
 };
 
 var isReceivedFieldNotValid = function( fieldValue, isMandatory ) {
@@ -130,8 +142,12 @@ var isFieldEmpty = function( fieldValue ){
 
 exports.isFieldEmpty = isFieldEmpty;
 exports.isNameNotValid = isNameNotValid;
+
 exports.isEmailNotValid = isEmailNotValid;
 exports.isPasswordNotValid = isPasswordNotValid;
+
+exports.isSlugNotValid = isSlugNotValid;
+
 exports.isContactNotValid = isContactNotValid;
 exports.isReceivedFieldNotValid = isReceivedFieldNotValid;
 

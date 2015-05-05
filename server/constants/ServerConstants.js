@@ -3,9 +3,9 @@
  */
 
 var appConstants = {
-	globalDataBase 		:	'globalDB',
+    globalDataBase 		:	'globalDB',
     appUsersDataBase	: 'appUsers',
-    
+
     appErrors : {
         userExists : 'UserExists',
         validationError : 'ValidationError',
@@ -15,8 +15,8 @@ var appConstants = {
         intentionalBreak: 'IntentionalBreak'
     },
 
-	errorMessage : {
-		someError : 'Some Error Occurred. Please try after some time.',
+    errorMessage : {
+        someError : 'Some Error Occurred. Please try after some time.',
         userExists: 'User Already Exists.',
         name : 'Invalid Name',
         email : 'Invalid Email',
@@ -28,8 +28,26 @@ var appConstants = {
         noSearchCriteria : 'Please enter at least one search criteria.',
         number : 'Invalid Number',
         dropdown : 'Please select a value from dropdown',
-        roleError : 'Invalid Role'
-	},
+        roleError : 'Invalid Role',
+        noDeliveryArea : 'Please select a delivery area',
+        deliveryAreaInvalid : 'Invalid delivery area name',
+
+        noCuisineSelected : 'Please select a cuisine offered',
+        cuisineNameInvalid : 'Invalid delivery area name',
+
+        noMenuPresent : 'Please provide menu details',
+        invalidMenu : 'Menu has invalid entry.',
+
+        noItemInCategory : 'Please provide item in category',
+        invalidItem : 'Item has invalid details',
+
+        removeError : 'Please remove all errors before procedding',
+
+        invalidSlug : 'Invalid Restaurant Slug',
+        slugInUse : 'Slug field is already used'
+
+
+    },
 
     successMessage : 'Ok',
     userCreated : 'User Created Successfully.',
@@ -38,7 +56,9 @@ var appConstants = {
     userBlackListed : 'User BlackListed Successfully.',
     userPermitted : 'User Permitted.',
     userUpdated : 'User Details Updated.',
-    passwordReset : 'User Password has been updated successfully.'
+    passwordReset : 'User Password has been updated successfully.',
+
+    basicDetailsAdded : 'Basic Restaurant Details have been saved.'
 };
 
 module.exports = appConstants;
