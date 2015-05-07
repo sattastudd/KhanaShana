@@ -27,8 +27,7 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-            <div class="tabbedContent">
+           <!--  <div class="tabbedContent">
                 <div class="menu active">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="menu in rest.menus">
                         {{menu}}
@@ -47,8 +46,56 @@
                     Location
                 </div>
 
+            </div> -->
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mtop10">
+                <div class="row">
+                    <div class="col-xs-3 col-sm-3 col-md-3 mol-lg-3">
+                        <div class="row marginRight20">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 menuCategory" ng-repeat="menu in rest.menus" ng-click="menuSelected(menu)">
+                                <label class="hand">{{menu.title}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 mol-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                 <h2>{{menuName}}</h2>
+
+                            </div>
+                        </div>
+                        <div class="row mtop10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 itemList hand" ng-repeat="item in menu.items" ng-click="itemAdded(item)">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <p>{{item.title}}</p>
+                                </div>
+                                <div ng-show="item.itemClicked" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 noLeftRightPadding">
+                                            <i align="center" class="glyphicon glyphicon-plus glyphPlusMinus pull-right" ng-click="quantityIncreased(item)" style="margin-top:3px;"></i>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <input class="form-control" type="text" ng-model="quantity">
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 noLeftRightPadding">
+                                            <i align="center" class="glyphicon glyphicon-minus glyphPlusMinus" ng-click="quantityDecreased(item)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-hide="item.itemClicked" class="col-xs-5 col-sm-5 col-md-5 col-lg-5"></div>
+                                <div class="col-xs-3 col-sm-3 col-sm-3 col-lg-3">
+                                    <p class="pull-right">{{item.price.full}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 mol-lg-3">
+                         <h4>total</h4>
+
+                    </div>
+                    <div></div>
+                </div>
             </div>
-        </div>
 
     </div>
 </div>
