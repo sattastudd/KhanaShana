@@ -35,6 +35,11 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams){
     $scope.itemAdded = function(item){
         console.log("item clicked");
         item.itemClicked = true;
+        if($scope.hideAddItem === true){
+            item.itemClicked = false;
+            $scope.quantity = 1;
+        }
+        $scope.hideAddItem = false;
     }
 
     $scope.quantity = 1;
@@ -45,7 +50,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams){
     $scope.quantityDecreased = function(item){
         $scope.quantity = $scope.quantity - 1;
         if($scope.quantity === null || $scope.quantity === 0){
-            item.itemClicked = false;
+            $scope.hideAddItem = true;
         }
     }
 
