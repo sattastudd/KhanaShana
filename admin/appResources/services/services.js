@@ -28,8 +28,7 @@
             createEditUser : 'user',
             userPasswordReset : 'user/reset',
 
-            approvedRestaurants : 'restaurants/approved',
-            pendingApprovalRestaurants : 'restaurants/unapproved',
+            searchRestaurants : 'restaurants/search',
 
             restaurants : 'restaurants',
             restaurant : 'restaurant'

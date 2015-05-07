@@ -60,7 +60,7 @@ var isNameNotValid = function (name, isMandatory) {
 };
 
 var isEmailNotValid = function (email, isMandatory) {
-    return isFieldNotValid(email, isMandatory, mandatoryMessage, RegExProvider.RegExProvider.name, ServerConstants.errorMessage.email);
+    return isFieldNotValid(email, isMandatory, mandatoryMessage, RegExProvider.email, ServerConstants.errorMessage.email);
 };
 
 var isPasswordNotValid = function (credential, isMandatory) {

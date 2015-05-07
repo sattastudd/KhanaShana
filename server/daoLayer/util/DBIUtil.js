@@ -14,8 +14,12 @@ var createCaseInsensitiveLikeString = function( value ) {
     return new RegExp( '' +   value, 'i' );
 };
 
+/* Public Method to create ObjectId object from String ID. */
+var createMongoObjectId = function( stringId ) {
+    return mongoose.Types.ObjectId( stringId );
+};
 
-/*                          Public Valition Like Methods.                   */
+/*                          Public Validation Like Methods.                   */
 /* Public Method to check if a field is empty. */
 
 var isFieldEmpty = function( value ) {
@@ -28,5 +32,7 @@ var isFieldEmpty = function( value ) {
 
 exports.createCaseInSensitiveRegexString = createCaseInSensitiveRegexString;
 exports.createCaseInsensitiveLikeString = createCaseInsensitiveLikeString;
+
+exports.createMongoObjectId = createMongoObjectId;
 
 exports.isFieldEmpty = isFieldEmpty;

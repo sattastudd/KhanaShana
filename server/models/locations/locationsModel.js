@@ -14,7 +14,7 @@ var setUpConnection = function(connectionToBeUsed) {
 
 	connection = connectionToBeUsed;
 
-	LocationModel = connectionToBeUsed.model( 'locations', locationsSchema );
+	LocationModel = connectionToBeUsed.model( 'Locations', locationsSchema, 'Locations' );
 };
 
 var getLocationModel = function() {

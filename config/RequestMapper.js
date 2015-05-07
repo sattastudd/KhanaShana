@@ -8,12 +8,16 @@ var fs = require( 'fs' );
 var pathReceived = credentials.routeLocation;
 var jsPattern = /.js$/;
 var requestInfoPattern = /\/\*Request-Name:\/[a-zA-Z\/]{1,},Type:[Post,Get]{1,},Allowed:[a-zA-Z,]{1,}\*\//g;
+var additionRequestIntoPattern = /\/\*Request-Name:\/[a-zA-Z\/]{1,}:[a-zA-Z]+,Type:[Post,Get]{1,},Allowed:[a-zA-Z,]{1,}\*\//g;
 
 var requestNamePattern = /Request-Name:\/[a-zA-Z\/]{1,}/g;
 var requestTypePattern = /Type:[a-zA-Z]{1,}/g;
 var allowedRolesPattern = /Allowed:[a-zA-Z,]{1,}/g;
 
+var additionalParamRequestNamePatter = /Request-Name:\/[a-zA-Z\/]{1,}:[a-zA-Z]+/g;
+
 var addMapping = utils.addMapping;
+var addMappingToNamedRequests = utils.addMappingToNamedRequests;
 var showAllMappings = utils.showAllMappings;
 
 var createRequestMap = function() {
@@ -48,7 +52,19 @@ var createRequestMap = function() {
 
 					addMapping( retrievedRequestName, retrivedRequestType
 							.toLowerCase(), retrivedRoles );
-				}
+				} else if( additionRequestIntoPattern.test( compressedLine )) {
+
+                    var retrievedRequestName = compressedLine.match( additionalParamRequestNamePatter )[0]
+                                                                .split( "Request-Name:")[1]
+                                                                .replace( /:[a-zA-Z]{1,}/, '');
+                    var retrivedRequestType = compressedLine
+                        .match( requestTypePattern )[0].split( ':' )[1];
+
+                    var retrivedRoles = compressedLine
+                        .match( allowedRolesPattern )[0].split( ':' )[1];
+
+                    addMappingToNamedRequests( retrievedRequestName, retrivedRequestType.toLowerCase(), retrivedRoles );
+                }
 			} );
 		}
 	} );

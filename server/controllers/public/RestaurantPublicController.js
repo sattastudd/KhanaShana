@@ -9,7 +9,7 @@
 
 var RestaurantPublicService = require('../../serviceLayer/public/RestaurantPublicService' );
 
-/*This method would restaurant info by slug field.
+/* This method would restaurant info by slug field.
  */
 var getRestaurantInfoBySlug = function( req, res, next ) {
     console.log( 'In RestaurantPublicController | Starting Execution of getRestaurantInfoBySlug' );

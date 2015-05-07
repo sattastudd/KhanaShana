@@ -68,42 +68,34 @@ router.post( '/admin/user/blacklist', function( req, res, next ) {
 
 /* Restaurant Related Routes */
 /*==========================================================*/
-/* Request-Name : /admin/restaurants/approved, Type: Post, Allowed : admin*/
-/* This request would be used by admin to search and list all restaurants. */
-router.post( '/admin/restaurants/approved', function( req, res, next ) {
-    console.log( 'In adminRoutes | Handling ' + req.route.path );
-
-    adminRestController.getApprovedRestaurantList( req, res, next );
-
-    console.log( 'In adminRoutes | Finished' + req.route.path );
-});
-
-/* Request-Name : /admin/restaurants/unapproved, Type : Post, Allowed : admin*/
-/* This request would be used by admin to search and list all unapproved restaurants*/
-router.post( '/admin/restaurants/unapproved', function( req, res, next ) {
-    console.log( 'In adminRoutes | Handling ' + req.route.path );
-
-    adminRestController.getUnapprovedRestaurantList( req, res, next );
-
-    console.log( 'In adminRoutes | Finished' + req.route.path );
-});
 
 /* Request-Name : /admin/restaurants, Type: Post, Allowed : admin*/
 /* This request would be used by admin to create new Restaurant */
 router.post('/admin/restaurants', function( req, res, next ) {
     console.log( 'In adminRoutes | Handling ' + req.route.path );
 
-    adminRestController.createOrEditRestaurant(req, res, next );
+    adminRestController.addNewRestaurant(req, res, next );
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 });
 
-/* Request-Name : /admin/restaurant, Type: Get, Allowed : admin*/
-/* This request would be used by admin to get restaurant info */
-router.post('/admin/restaurant/:restaurantSlug', function( req, res, next ) {
+/* Request-Name : /admin/restaurants/search, Type: Post, Allowed : admin*/
+/* This request would be used by admin to create new Restaurant */
+router.post('/admin/restaurants/search', function( req, res, next ) {
     console.log( 'In adminRoutes | Handling ' + req.route.path );
 
-    adminRestController.getRestaurantInfoBySlug(req, res, next );
+    adminRestController.searchRestaurants(req, res, next );
+
+    console.log( 'In adminRoutes | Finished ' + req.route.path );
+});
+
+/* Request-Name : /admin/restaurant/:restSlug, Type : Get, Allowed : admin*/
+/* This request would be used by admin to retrieve all data of restaurant.*/
+router.get( '/admin/restaurant/:restSlug', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    req.body.slug = req.params.restSlug;
+    adminRestController.readRestaurantSpecificData(req, res, next );
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 });

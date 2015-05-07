@@ -85,7 +85,7 @@
         </div>
 
         <div class="col-xs-7 col-sm-4 col-md-3 dataCell">
-            {{restaurant.delivery.join()}}
+            {{restaurant.delivery.join() || 'No Location Tagged'}}
         </div>
 
         <div class="col-xs-2 hidden-xs dataCell">

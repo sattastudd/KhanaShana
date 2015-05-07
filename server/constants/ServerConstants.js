@@ -12,7 +12,8 @@ var appConstants = {
         internalError : 'InternalError',
         invalidCredentials : 'InvalidCredentials',
         noRecordFound : 'NoRecordFound',
-        intentionalBreak: 'IntentionalBreak'
+        intentionalBreak: 'IntentionalBreak',
+        someError : 'SomeError'
     },
 
     errorMessage : {

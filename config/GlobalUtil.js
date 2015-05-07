@@ -31,6 +31,14 @@ var configure = function() {
 	 * [Roles-Allowed]}];
 	 */
 	global.requestAuthMap = {};
+
+    /* Setting up an extra global Request Authorization Map.
+     * This map differs from global.requestAuthMap as this map would contain named requests.
+     * Given the current architecture and authorization mode, it would be difficult to accommodate in current map.
+     * Structure would be same as the previous map.
+     */
+    global.nammedRequestAuthMap = {};
+
 	/* Getter method to retrieve a global Event Handler Reference*/
 	global.utils.getGlobalEventHandler = function() {
 		return global.eventHandler;
@@ -72,22 +80,50 @@ var configure = function() {
 		 */
 
 		try{
-			var allowedRoles = global.requestAuthMap[ requestName ][ requestType ];
+            if( typeof global.requestAuthMap[ requestName ] !== 'undefined' ) {
+                var allowedRoles = global.requestAuthMap[requestName][requestType];
 
-			if( typeof allowedRoles === 'undefined' ) {
-				return false;
-			} else {
-				if( allowedRoles.indexOf( 'public' ) >= 0 ) {
-					return true;
-				} else if( allowedRoles.indexOf( role ) >= 0 ) {
-					return true;
-				}
-				return false;
-			}
+                if (typeof allowedRoles === 'undefined') {
+                    return false;
+                } else {
+                    if (allowedRoles.indexOf('public') >= 0) {
+                        return true;
+                    } else if (allowedRoles.indexOf(role) >= 0) {
+                        return true;
+                    }
+                    return false;
+                }
+            } else {
 
+                /* If we are in this section, then it is possible that we are dealing with named parameter requests.
+                 * Since, our namedRequestMap doesn't stores named params, we would have to remove string that comes
+                 * after last "/" in the request name.
+                 */
+
+                var reducedRequestName = requestName.substr(0, requestName.lastIndexOf( '/' ) + 1);
+
+                if( typeof global.nammedRequestAuthMap[ reducedRequestName ] !== 'undefined' ) {
+
+                    var allowedRoles = global.nammedRequestAuthMap[ reducedRequestName ][ requestType ];
+
+                    if (typeof allowedRoles === 'undefined') {
+                        return false;
+                    } else {
+                        if (allowedRoles.indexOf('public') >= 0) {
+                            return true;
+                        } else if (allowedRoles.indexOf(role) >= 0) {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                }
+
+                return false;
+            }
 		}
 		catch ( err ) {
-			console.log( err )
+			console.log( err );
 			return false;
 		}
 	};
@@ -107,6 +143,22 @@ var configure = function() {
 
 		console.log('Added { ' + requestName + ' : ' + ' { ' + requestType + ' : ' + role + ' } }');
 	};
+
+    // Setter to add a request to namedRequestAuthorization Map.
+    global.utils.addMappingToNamedRequests = function( requestName, requestType, role ) {
+
+        var currRequest;
+
+        if ( typeof global.nammedRequestAuthMap[ requestName ] === 'undefined' ) {
+            currRequest = global.nammedRequestAuthMap[ requestName ] = {};
+        } else {
+            currRequest = global.nammedRequestAuthMap[ requestName ];
+        }
+
+        currRequest[ requestType ] = role;
+
+        console.log( 'Added to Named Requests { ' + requestName + ' : ' + ' { ' + requestType + ' : ' + role + ' } }');
+    };
 
 	// Getter to list all the mappings in the map
 	global.utils.showAllMappings = function() {

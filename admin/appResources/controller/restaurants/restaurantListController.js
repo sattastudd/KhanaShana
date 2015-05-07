@@ -6,7 +6,7 @@ define([], function($scope) {
 });
 
 function RestaurantListController($scope, $http, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
-    var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.approvedRestaurants;
+    var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.searchRestaurants;;
 
     $scope.restaurantList = [];
 
@@ -14,7 +14,9 @@ function RestaurantListController($scope, $http, AppConstants, AppUtils, RestReq
         currentPage : 1
     };
 
-    $scope.searchParams = {};
+    $scope.searchParams = {
+        approved : true
+    };
 
     $scope.isServerError = false;
 

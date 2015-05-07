@@ -31,22 +31,54 @@ function NewRestaurantController($scope, $http, DataStore, AppConstants, RestReq
 
     $scope.errorMessage = '';
 
+    var optionsRequest = AppConstants.adminServicePrefix + '/' + RestRequests.options;
+
     /* Init method */
     $scope.init = function () {
         if( DataStore.readAndRemove( 'isRestaurantEdit' )) {
-            $scope.restaurant.slug = DataStore.readAndRemove( 'toEditRestaurant ');
+            $scope.restaurant.slug = DataStore.readAndRemove( 'toEditRestaurant');
 
             if( angular.isDefined( $scope.restaurant.slug )) {
                 var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.restaurant + '/' + $scope.restaurant.slug;
 
                 $http.get(requestName)
                     .success(function (data) {
-                        console.log(data);
+                        $scope.restaurant = data.data
+
+                        $scope.restaurant.street = $scope.restaurant.address.street;
+                        $scope.restaurant.locality = $scope.restaurant.address.locality;
+                        $scope.restaurant.town = $scope.restaurant.address.town;
+
+                        $scope.restaurant.city = $scope.restaurant.address.city;
+                        $scope.restaurant.postal_code = $scope.restaurant.address.postal_code;
+
                     })
                     .error(function (data) {
-                        console.log(data);
+                        $scope.isServerError = true;
+                        $scope.isServerSuccess = false;
+
+                        $scope.errorMessage = data.msg;
                     })
             }
+        }
+
+        if( !DataStore.isKeyDefined( 'cuisines')) {
+
+        $http.get(optionsRequest)
+            .success(function (data) {
+                DataStore.storeData('cuisines', data.data.cuisines);
+                DataStore.storeData('locations', data.data.locations);
+
+                $scope.deliveryAreas = data.data.locations;
+                $scope.offeredCuisines = data.data.cuisines;
+
+            })
+            .error(function (data) {
+                console.log(data);
+            });
+        } else {
+            $scope.deliveryAreas = DataStore.getData( 'locations' );
+            $scope.offeredCuisines = DataStore.getData( 'cuisines' );
         }
     };
 
@@ -58,7 +90,7 @@ function NewRestaurantController($scope, $http, DataStore, AppConstants, RestReq
         $scope.collapseController[type] = !$scope.collapseController[type];
     };
 
-    var optionsRequest = AppConstants.adminServicePrefix + '/' + RestRequests.options;
+
 
     /* Left Panes */
     
@@ -197,19 +229,6 @@ function NewRestaurantController($scope, $http, DataStore, AppConstants, RestReq
         $scope.offeredCuisines.push( cuisine );
     };
 
-    $http.get(optionsRequest)
-        .success(function (data) {
-            DataStore.storeData('cuisines', data.data.cuisines);
-            DataStore.storeData('locations', data.data.locations);
-
-            $scope.deliveryAreas = data.data.locations;
-            $scope.offeredCuisines = data.data.cuisines;
-
-        })
-        .error(function (data) {
-            console.log(data);
-        });
-
 
     /* Restaurant Menu */
     $scope.restMenu = [];
@@ -239,30 +258,35 @@ function NewRestaurantController($scope, $http, DataStore, AppConstants, RestReq
 
     $scope.files = [];
 
-    $scope.try = function () {
-        console.log( $scope.restMenu );
-        $http({
-            method: 'POST',
-            url: "node/admin/restaurant",
-            headers: { 'Content-Type': undefined },
-            transformRequest: function (data) {
-                var formData = new FormData();
-                formData.append("model", angular.toJson(data.model));
+    /* This method would be used to create restaurants and would be accessible on basic details tab.
+     * On others, it would be like updating details of existing restaurant.
+     */
+    $scope.createRestaurant = function () {
 
-                for (var i = 0; i < data.files.length; i++) {
-                    formData.append("file" + i, data.files[i]);
+        var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.restaurants;
+
+        $http.post( requestName, $scope.restaurant)
+            .success(function (data, status, headers, config) {
+                $scope.isServerError = false;
+                $scope.isServerSuccess = true;
+
+                $scope.successMessage = data.msg;
+
+                $scope.err = data.err;
+                $scope.errMsg = data.errMsg;
+            })
+            .error(function (data, status, headers, config) {
+                $scope.isServerError = true;
+                $scope.isServerSuccess = false;
+
+                $scope.errorMessage = data.msg;
+
+                $scope.err = data.err;
+                $scope.errMsg = data.errMsg;
+
+                if( $scope.restaurant.stage === 'basicDetails' ){
+                    delete $scope.restaurant.stage;
                 }
-
-                return formData;
-            },
-
-            data: { model: $scope.imageData, files: $scope.files }
-        }).
-            success(function (data, status, headers, config) {
-                alert("success!");
-            }).
-            error(function (data, status, headers, config) {
-                alert("failed!");
             });
     };
 
@@ -316,7 +340,7 @@ function NewRestaurantController($scope, $http, DataStore, AppConstants, RestReq
     /* Error Getter */
     /* Validation Getters */
     $scope.hasFieldError = function ( type ) {
-        console.log( type );
+
         if( type.split('.').length === 1 )
             return $scope.err[ type ] ? '' : 'noHeight';
         else {
@@ -330,14 +354,6 @@ function NewRestaurantController($scope, $http, DataStore, AppConstants, RestReq
         }
     };
 
-    $scope.isStageValid = function() {
-        if( angular.isUndefined( $scope.restaurant.stage ) && $scope.restaurant.stage !== ''){
-            return false;
-        }
-
-        return true;
-
-    };
 
     $scope.haveReceivedErrorFromServer = function() {
         return $scope.isServerError ? '' : 'noHeight';
