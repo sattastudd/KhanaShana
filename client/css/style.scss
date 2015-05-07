@@ -1324,6 +1324,47 @@ button.kh-primary {
   color: white;
 }
 
+.hand {
+    cursor:pointer;
+}
+.login {
+    float: right;
+    padding-right: 20px;
+}
+.marginRight20 {
+    margin-right:20px;
+    margin-top: 60px;
+}
+.mtop10 {
+    margin-top:10px;
+}
+.menuCategory {
+    border-bottom: 1px solid gainsboro;
+    color: red;
+    margin-bottom: 3px;
+    margin-top: 3px;
+    padding-bottom: 6px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.itemList {
+    border-bottom: 1px solid gainsboro;
+    margin-top: 10px;
+    margin-left: 15px;
+    font-size: 22px;
+    padding-bottom: 15px;
+}
+.glyphPlusMinus{
+  font-size: 21px;
+  margin-top: 3px;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  color: white;
+  background-color: green;
+  height: 26px;
+  width: 32px;
+}
+
 /* styles for user restaurant home page ends */
 
 

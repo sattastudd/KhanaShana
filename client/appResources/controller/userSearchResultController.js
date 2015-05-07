@@ -10,7 +10,7 @@ function searchResultController ($scope){
 
     $scope.searchValue = 'all';
 
-    var requestPath = AppConstants.httpServicePrefix + '/' + RestRequests.searchResult;
+   /* var requestPath = AppConstants.httpServicePrefix + '/' + RestRequests.searchResult;
 
     $http.post(requestPath, $scope.searchValue)
     .success(function (data) {
@@ -22,7 +22,7 @@ function searchResultController ($scope){
         console.log('inside result post error');
     });
 
-
+*/
 
 
     $scope.sort = [{name:'Manish Eating Point', img:'../images/pizza4.jpg'}, {name:'Waah ji Waah', img:'../images/northIndian.jpg'},
