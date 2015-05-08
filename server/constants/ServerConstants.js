@@ -59,6 +59,8 @@ var appConstants = {
     userUpdated : 'User Details Updated.',
     passwordReset : 'User Password has been updated successfully.',
 
+    restaurantDetailsUpdated : 'Restaurant Details have been updated.',
+
     basicDetailsAdded : 'Basic Restaurant Details have been saved.'
 };
 

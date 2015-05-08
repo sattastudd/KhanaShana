@@ -161,6 +161,11 @@ var addNewRestaurant = function (newRestaurant, callback) {
 
 /*                       Restaurant Search Section Begin                     */
 /*===========================================================================*/
+
+/* This public method would handle all searchRelated functionality as well as data read functionality.
+ * If any search criteria is provided, search would be done,
+ * otherwise, plain data retrieval would be performed.
+ */
 var searchRestaurants = function( searchParams, pagingParams, callback ) {
     console.log('In AdminRestaurantService | Finished Execution of searchRestaurants');
 
@@ -263,6 +268,10 @@ var searchRestaurants = function( searchParams, pagingParams, callback ) {
 
 /*                 Restaurant Specific Data Read Section Start               */
 /*===========================================================================*/
+
+/* This method would be used to retrieve a particular restaurant's data.
+ * We are going to identify a restaurant by its slug field.
+ */
 var readRestaurantSpecificData = function( slug, callback ) {
     console.log('In AdminRestaurantService | Finished Execution of readRestaurantSpecificData');
 
@@ -321,9 +330,114 @@ var readRestaurantSpecificData = function( slug, callback ) {
 /*                 Restaurant Specific Data Read Section End               */
 /*===========================================================================*/
 
+/*                       Restaurant Update Section Begin                     */
+/*===========================================================================*/
+
+/* This public method would be used to update restaurant info in the system.
+ * Restaurant would be identified by its slug field.
+ * Restaurant details update would be performed in various stages.
+ */
+var updateRestaurantDetails = function( slug, restaurant, callback ) {
+    console.log('In AdminRestaurantService | Starting Execution of updateRestaurantDetails');
+
+    var err = {};
+    var errMsg = {};
+
+    var hasAnyValidationFailed = false;
+
+    /* Case if user wishes to update basic details itself. */
+    if( restaurant.stage === 'basicDetails') {
+
+        var propArray = ['name', 'name | slug', 'name | street', 'name | locality', 'name | town', 'name | city', 'number | postal_code'];
+        var propArrLen = propArray.length;
+
+        for (var i = 0; i < propArrLen; i++) {
+            var propName = propArray[i];
+
+            var canBeSplit = propName.split('| ').length > 1;
+            var type, propertyStoredIn, propValue = '';
+
+            if (canBeSplit) {
+                type = propName.split('|')[0].trim();
+                propertyStoredIn = propName.split('|')[1].trim();
+
+
+                propValue = restaurant[ propertyStoredIn ];
+
+            } else {
+                type = propName;
+                propertyStoredIn = propName;
+
+                propValue = restaurant[ propertyStoredIn ];
+            }
+
+            var responseFromValidatorForField = Validator.isFieldNotValidByType(propValue, true, type);
+
+            if (responseFromValidatorForField.result) {
+                hasAnyValidationFailed = true;
+
+                setUpError(err, errMsg, propertyStoredIn, responseFromValidatorForField);
+            }
+        }
+    }
+
+    if( hasAnyValidationFailed ) {
+        callback( appConstants.appErrors.validationError, {
+            err : err,
+            errMsg : errMsg,
+            data : null,
+            msg : appConstants.errorMessage.fillDetails
+        });
+    } else {
+        restaurant.address = {
+            street: restaurant.street,
+            town: restaurant.town,
+            city: restaurant.city,
+            postal_code: restaurant.postal_code
+        };
+
+        var cityName = 'lucknow';
+
+        RestaurantDBI.updateRestaurantDetails( cityName, slug, restaurant, function( err, updateCount ) {
+            if( err ) {
+                console.log( err );
+
+                callback( appConstants.appErrors.someError, {
+                    err : {},
+                    errMsg : {},
+                    data : null,
+                    msg : appConstants.errorMessage.someError
+                });
+            } else {
+                if( updateCount === 1 ){
+                    callback( null, {
+                        err : {},
+                        errMsg : {},
+                        data : true,
+                        msg : appConstants.restaurantDetailsUpdated
+                    });
+                } else {
+                    callback( appConstants.appErrors.someError, {
+                        err : {},
+                        errMsg : {},
+                        data : null,
+                        msg : appConstants.errorMessage.someError
+                    });
+                }
+            }
+        } );
+    }
+
+    console.log('In AdminRestaurantService | Finished Execution of updateRestaurantDetails');
+};
+
+/*                         Restaurant Update Section End                     */
+/*===========================================================================*/
+
 /*                                 Module Export                             */
 /*===========================================================================*/
 exports.addNewRestaurant = addNewRestaurant;
 exports.searchRestaurants = searchRestaurants;
+exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData;

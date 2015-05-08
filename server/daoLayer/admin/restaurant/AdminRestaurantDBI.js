@@ -111,7 +111,7 @@ var addNewRestaurant = function( cityName, restaurantToInsert, callback ) {
 
     async.waterfall([
             async.apply(isSlugAlreadyBeingUsed, cityName, slug),
-            async.apply(insertBasicDetails, cityName, restaurantToInsert)
+            async.apply(insertBasicDetails, cityName, restaurant)
         ],
 
         function (err, result) {
@@ -188,8 +188,6 @@ var getRestaurantListForFirstTime = function( searchParam, pagingParams, query, 
     console.log( 'In AdminRestaurantDBI | Finished Execution of getRestaurantListForFirstTime' );
 };
 
-/*              Public Methods             */
-/*=========================================*/
 /*                              Public Methods                         */
 /*======================================================================*/
 
@@ -323,9 +321,102 @@ var readRestaurantSpecificData = function( cityName, slug, callback ) {
 /*                 Restaurant Specific Data Read Section End               */
 /*===========================================================================*/
 
+/*                       Restaurant Update Section Begin                     */
+/*===========================================================================*/
+
+/*              Private Methods             */
+/*==========================================*/
+
+/*               Public Methods             */
+/*==========================================*/
+
+/* This public method would be used to update the fields of restaurants in multiple stages.
+ * This method would delegate execution to other private methods to update location and cuisine details.
+ */
+var updateRestaurantDetails = function( cityName, slug, restaurant, callback ) {
+
+    console.log( 'In AdminRestaurantDBI | Starting Execution of updateRestaurantDetails' );
+
+    /* Case if user wishes to update basic details itself. */
+    if( restaurant.stage === 'basicDetails') {
+
+        var query = { slug : slug };
+
+        var updateQuery = { $set : {} };
+
+        var options = { multi: false };
+
+        var isNameNotEmpty = !DBUtils.isFieldEmpty( restaurant.name );
+        var isSlugNotEmpty = !DBUtils.isFieldEmpty( restaurant.slug );
+
+        var isStreetNotEmpty = !DBUtils.isFieldEmpty( restaurant.address.street );
+        var isLocalityNotEmpty = !DBUtils.isFieldEmpty( restaurant.address.locality );
+        var isTownNotEmpty = !DBUtils.isFieldEmpty( restaurant.address.town );
+        var isCityNotEmpty = !DBUtils.isFieldEmpty( restaurant.address.city );
+        var isPostalCodeNotEmpty = !DBUtils.isFieldEmpty( restaurant.address.postal_code );
+        var isCoOrdNotEmpty = !DBUtils.isFieldEmpty( restaurant.address.co_ord );
+
+        if( isNameNotEmpty ) {
+            updateQuery.$set[ 'name' ] =  restaurant.name ;
+        }
+
+        if( isSlugNotEmpty ) {
+            updateQuery.$set[ 'slug' ] = restaurant.slug;
+        }
+
+        if( isStreetNotEmpty ) {
+            updateQuery.$set['address.street' ] =  restaurant.address.street;
+        }
+
+        if( isLocalityNotEmpty ) {
+            updateQuery.$set['address.locality'] = restaurant.address.locality;
+        }
+
+        if( isTownNotEmpty ) {
+            updateQuery.$set['address.town'] =  restaurant.address.town;
+        }
+
+        if( isCityNotEmpty ) {
+            updateQuery.$set['address.city'] =  restaurant.address.city;
+        }
+
+        if( isPostalCodeNotEmpty ) {
+            updateQuery.$set['address.postal_code'] = restaurant.address.postal_code;
+        }
+
+        if( isCoOrdNotEmpty ) {
+            updateQuery.$set['address.co_ord'] =  restaurant.address.co_ord;
+        }
+
+        var cityDBConnection = utils.getDBConnection( cityName );
+
+        RestaurantModelModule.setUpConnection( cityDBConnection );
+        var RestaurantModel = RestaurantModelModule.getModel();
+
+        console.log( query );
+        console.log( updateQuery );
+
+
+        RestaurantModel.update( query, updateQuery, options, function( err, updateCount ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, updateCount );
+            }
+        });
+
+    }
+
+    console.log( 'In AdminRestaurantDBI | Finished Execution of updateRestaurantDetails' );
+};
+
+/*                        Restaurant Update Section End                      */
+/*===========================================================================*/
+
 /*                                 Module Export                             */
 /*===========================================================================*/
 exports.addNewRestaurant = addNewRestaurant;
 exports.getRestaurantList = getRestaurantList;
+exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData;

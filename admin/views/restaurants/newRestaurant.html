@@ -10,11 +10,11 @@
         <div class="row" petoo-tab target="tabbedContent">
 
             <ul class="newRestaurantAddition col-xs-12" petoo-tab target="tabbedContent">
-                <li class="col-xs-3"><a>Restaurant Basic Details</a></li>
-                <li class="col-xs-2"><a>Delivery Areas</a></li>
-                <li class="col-xs-3"><a>Offered Cuisines</a></li>
-                <li class="col-xs-2"><a>Menu</a></li>
-                <li class="col-xs-2 last"><a>Pictures</a></li>
+                <li class="col-xs-3 active" ng-disabled="isTabDisabled( 'basicDetails' )"><a>Restaurant Basic Details</a></li>
+                <li class="col-xs-2" ng-disabled="isTabDisabled( 'deliveryAreas' )"><a>Delivery Areas</a></li>
+                <li class="col-xs-3" ng-disabled="isTabDisabled( 'cuisineArea' )"><a>Offered Cuisines</a></li>
+                <li class="col-xs-2" ng-disabled="isTabDisabled( 'restMenu' )"><a></a>Menu</a></li>
+                <li class="col-xs-2 last" ng-disabled="isTabDisabled( 'imgUpload' )"><a></a>Pictures</a></li>
             </ul>
 
         </div>
@@ -134,6 +134,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-group">
                                 <label>Postal Code</label>
@@ -173,7 +175,7 @@
 
                 <div class="row">
                     <div class="col-xs-3">
-                        <button type="button" class="btn btn-pr-primary btn-block" ng-click="createRestaurant()">Create Restaurant</button>
+                        <button type="button" class="btn btn-pr-primary btn-block" ng-click="createRestaurant()">{{getMessageForBasicDetailsButton()}}</button>
                     </div>
                 </div>
 

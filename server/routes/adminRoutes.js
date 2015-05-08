@@ -99,3 +99,15 @@ router.get( '/admin/restaurant/:restSlug', function( req, res, next ) {
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 });
+
+/* Request-Name : /admin/restaurant/:restSlug, Type : Put, Allowed : admin*/
+/* This request would be used by admin to update existing restaurant details. */
+router.put( '/admin/restaurant/:restSlug', function( req, res, next ) {
+
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+    
+    adminRestController.updateRestaurantDetails(req, res, next );
+
+    console.log( 'In adminRoutes | Finished ' + req.route.path );
+
+});

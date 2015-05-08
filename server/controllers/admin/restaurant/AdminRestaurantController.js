@@ -112,15 +112,95 @@ var readRestaurantSpecificData = function( req, res, next ) {
                 .json( result );
         }
     });
+
     console.log('In AdminRestaurantController | Finished Execution of readRestaurantSpecificData');
 };
 
 /*                 Restaurant Specific Data Read Section End               */
 /*===========================================================================*/
 
+/*                         Restaurant Update Section Begin                   */
+/*===========================================================================*/
+
+/* Method to update restaurant details.
+ * Sole purpose of this method is to retrieve values from request and put in the object,
+ * to be used in serviceLayer.
+ */
+var updateRestaurantDetails = function( req, res, next ) {
+
+    console.log('In AdminRestaurantController | Starting Execution of updateRestaurantDetails');
+
+    var reqBody = {};
+    var files = [];
+
+    var form = new formidable.IncomingForm();
+    form.multiples = true;
+
+    form.on( 'field', function( field, value ) {
+        reqBody[field] = value;
+    });
+
+    form.on( 'file' , function(name, file ){
+        files.push(
+            {name : file }
+        );
+    });
+
+    form.on( 'end', function(){
+
+        var reqContent = JSON.parse( reqBody.model );
+
+        var restaurant = {};
+
+        if( reqContent.stage === 'basicDetails' ) {
+            restaurant = {
+                stage: 'basicDetails',
+                name: reqContent.name,
+                slug: reqContent.slug,
+
+                street: reqContent.street,
+                locality: reqContent.locality,
+                town: reqContent.town,
+                city: reqContent.city,
+                postal_code: reqContent.postal_code
+
+            };
+        }
+
+        var slugReceivedInRequest = req.params.restSlug;
+
+        RestaurantService.updateRestaurantDetails( slugReceivedInRequest, restaurant, function( err, result ) {
+            if( err ) {
+                if( err === appConstants.appErrors.validationError ) {
+                    res.status( 400 )
+                        .json( result );
+                } else {
+                    res.status( 500 )
+                        .json( result );
+                }
+            } else {
+                res.status( 200 )
+                    .json( result );
+            }
+        });
+
+    });
+
+    /* Start parsing form. */
+    form.parse( req );
+    console.log('In AdminRestaurantController | Finished Execution of updateRestaurantDetails');
+
+};
+
+
+/*                         Restaurant Update Section End                     */
+/*===========================================================================*/
+
+
 /*                                 Module Export                             */
 /*===========================================================================*/
 exports.addNewRestaurant = addNewRestaurant;
 exports.searchRestaurants = searchRestaurants;
+exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData;

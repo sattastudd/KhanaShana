@@ -45,6 +45,7 @@ $theme-page-list-heading-font-size : 19px;
 $theme-page-list-border : 1px solid #3f4952;
 
 $theme-add-new-tabs-back : #32404b;
+$theme-add-new-tabs-active : #2c6084;
 $theme-add-new-tabs-disabled : #6f7981;
 $theme-add-new-tabs-completed : #46535d;
 
@@ -667,12 +668,17 @@ ul.newRestaurantAddition{
 
     border-right : 1px solid #46535d;
 
+    &.active{
+      background-color : $theme-add-new-tabs-active;
+    }
+
     &.last{
       border-right : none;
     }
 
-    &:disabled{
+    &[disabled]{
       background-color : $theme-add-new-tabs-disabled;
+      cursor : not-allowed;
     }
 
     &.completed{
