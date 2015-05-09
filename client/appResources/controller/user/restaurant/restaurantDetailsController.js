@@ -9,6 +9,8 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams){
 
     $scope.rest = {};
 
+    $scope.dishShortlisted = [];
+
     console.log('alpha to charlie');
 
     $http.get('node/public/restaurant/' + $routeParams.restSLug)
@@ -18,6 +20,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams){
             $scope.rest.name = data.data.name;
             //$scope.rest.img = data.data.img.full;
             $scope.rest.menus = data.data.menu;
+
         })
         .error( function ( data ) {
             console.log( data );
@@ -30,19 +33,39 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams){
         console.log(menu);
         $scope.menu = menu;
         $scope.menuName = menu.title;
+        console.log(menu.items);
+        //if (menu.items.price) {};
     }
 
-    $scope.itemAdded = function(item){
-        console.log("item clicked");
-        item.itemClicked = true;
-        if($scope.hideAddItem === true){
-            item.itemClicked = false;
-            $scope.quantity = 1;
+    $scope.count = 1;
+
+    $scope.itemAddedHalf = function(item){
+        console.log(item.title);
+        console.log(item.price.half);
+
+        var objectToPush = {
+            dish : item.title,
+            price : item.price.half,
+            quantity : 1
         }
-        $scope.hideAddItem = false;
+        
+        $scope.dishShortlisted.push( objectToPush );
+
+        
+    }
+    $scope.itemAddedFull = function(item){
+        console.log(item);
+
+        var objectToPush = {
+            dish : item.title,
+            price : item.price.full,
+            quantity : 1
+        }
+        
+        $scope.dishShortlisted.push( objectToPush );
     }
 
-    $scope.quantity = 1;
+    /*$scope.quantity = 1;
     $scope.quantityIncreased = function(){
         console.log('quantity increased');
         $scope.quantity = $scope.quantity + 1;
@@ -53,5 +76,5 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams){
             $scope.hideAddItem = true;
         }
     }
-
+*/
 };
