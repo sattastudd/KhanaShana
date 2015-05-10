@@ -34,6 +34,7 @@
  */
 
 var Validator = require('../util/Validator');
+var Mailer = require('../mailer/MailerModule');
 
 var ServerConstants = require('../../constants/ServerConstants');
 
@@ -215,7 +216,9 @@ var signUpUser = function( userInfo, callback ) {
                 })
             }
 		} else {
-            /* Yes, user created. Lets share the news. */
+            /* Yes, user created. Lets share the news.
+             * And let him know as well. */
+            Mailer.sendRegistrationMail(userInfo);
             callback(null, {
                 err : {},
                 errMsg : {},
