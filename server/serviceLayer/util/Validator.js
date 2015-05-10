@@ -18,9 +18,9 @@ var RegExProvider = {
     email: /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/,
     contactNumber : /^[1-9][0-9]{9,10}$/,
     number : /^[0-9]{1,}$/,
-    slug : /^[a-zA-Z-]+$/
+    slug : /^[a-zA-Z-]+$/,
+    fileName : /^[a-zA-Z0-9-]+.[jpg,jpeg,png]+$/
 };
-
 
 var isFieldNotValid = function (value, isMandatory, mandatoryMessage, regEx, inValidMessage){
 
@@ -81,6 +81,21 @@ var isReceivedFieldNotValid = function( fieldValue, isMandatory ) {
 
 var isNumberNotValid = function( number, isMandatory ) {
     return isFieldNotValid( number, isMandatory, mandatoryMessage, RegExProvider.number, ServerConstants.errorMessage.number );
+};
+
+var isFileNameNotValid = function (value) {
+    var result = !RegExProvider.fileName.test(value);
+    
+    if (result) {
+        return {
+            result : result,
+            message : ServerConstants.errorMessage.unSupportedFile
+        }
+    } else {
+        return {
+            result : result
+        }
+    }
 };
 
 var isFieldNotValidByType = function( fieldValue, isMandatory, type ) {
@@ -147,9 +162,12 @@ exports.isEmailNotValid = isEmailNotValid;
 exports.isPasswordNotValid = isPasswordNotValid;
 
 exports.isSlugNotValid = isSlugNotValid;
+exports.isNumberNotValid = isNumberNotValid;
 
 exports.isContactNotValid = isContactNotValid;
 exports.isReceivedFieldNotValid = isReceivedFieldNotValid;
 
 exports.isFieldNotValidByType = isFieldNotValidByType;
 exports.isRoleDropDownNotValid = isRoleDropDownNotValid;
+
+exports.isFileNameNotValid = isFileNameNotValid;

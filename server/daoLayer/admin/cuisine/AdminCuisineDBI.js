@@ -11,7 +11,7 @@ var getAllCuisines = function(cityName, callback){
     var cityDBConnection = utils.getDBConnection( cityName );
 
     CuisinesModelModule.setUpConnection( cityDBConnection );
-    var CuisinesModel = CuisinesModelModule.getCuisinesModel();
+    var CuisinesModel = CuisinesModelModule.getModel();
 
     var query = {};
     var projection = {

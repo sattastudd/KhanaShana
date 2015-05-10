@@ -98,7 +98,9 @@ function RestaurantListController($scope, $http, AppConstants, AppUtils, RestReq
 
     /* Reset Search */
     $scope.resetSearch = function(){
-        $scope.searchParams = {};
+        $scope.searchParams = {
+            approved : true
+        };
 
         $scope.search();
     };

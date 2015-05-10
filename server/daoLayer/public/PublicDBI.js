@@ -53,7 +53,7 @@ var getLocationsFromDB = function( dbName, callback ) {
 	var dbConnection = utils.getDBConnection( dbName );
 
 	locationsModule.setUpConnection( dbConnection );
-	var LocationsModel = locationsModule.getLocationModel();
+    var LocationsModel = locationsModule.getModel();
 
 	LocationsModel.find( query, projection, function( err, locations ) {
 		
@@ -76,7 +76,7 @@ var getCuisinesFromDB = function( dbName, callback ) {
 	var dbConnection = utils.getDBConnection( dbName );
 
 	cuisinesModule.setUpConnection( dbConnection );
-	var CuisinesModel = cuisinesModule.getCuisinesModel();
+	var CuisinesModel = cuisinesModule.getModel();
 
 	CuisinesModel.find( query, projection, function( err, cuisines ) {
 		

@@ -55,7 +55,10 @@ var restaurantSchema = new mongoose.Schema({
         }
     ],
     img : {
-        full : String
+        xs : String,
+        md : String,
+        sm : String,
+        lg : String
     }
 });
 

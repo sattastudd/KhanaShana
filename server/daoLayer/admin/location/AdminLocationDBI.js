@@ -11,7 +11,7 @@ var getAllLocations = function( cityName, callback ){
   var cityDBConnection = utils.getDBConnection( cityName );
 
   LocationModelModule.setUpConnection( cityDBConnection );
-  var LocationModel = LocationModelModule.getLocationModel();
+  var LocationModel = LocationModelModule.getModel();
 
   var query = {};
   var projection = {

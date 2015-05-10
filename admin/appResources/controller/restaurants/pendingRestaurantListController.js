@@ -97,7 +97,9 @@ function PendingRestaurantListController( $scope, $http, $location, AppConstants
 
     /* Reset Search */
     $scope.resetSearch = function(){
-        $scope.searchParams = {};
+        $scope.searchParams = {
+            approved : false
+        };
 
         $scope.search();
     };

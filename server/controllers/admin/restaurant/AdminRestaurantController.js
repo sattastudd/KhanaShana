@@ -131,7 +131,12 @@ var updateRestaurantDetails = function( req, res, next ) {
     console.log('In AdminRestaurantController | Starting Execution of updateRestaurantDetails');
 
     var reqBody = {};
-    var files = [];
+    var files = {
+        sm : '',
+        md : '',
+        xs : '',
+        lg : ''
+    };
 
     var form = new formidable.IncomingForm();
     form.multiples = true;
@@ -141,9 +146,7 @@ var updateRestaurantDetails = function( req, res, next ) {
     });
 
     form.on( 'file' , function(name, file ){
-        files.push(
-            {name : file }
-        );
+        files[ name ] = file;        
     });
 
     form.on( 'end', function(){
@@ -165,6 +168,32 @@ var updateRestaurantDetails = function( req, res, next ) {
                 postal_code: reqContent.postal_code
 
             };
+        } else if (reqContent.stage === 'deliveryAreas') {
+            restaurant = {
+                stage : 'deliveryAreas',
+                locations : reqContent.locations
+            }
+        } else if (reqContent.stage === 'cuisineArea') {
+            restaurant = {
+                stage : 'cuisineArea',
+                cuisines : reqContent.cuisines
+            }
+        } else if (reqContent.stage === 'restMenu') {
+            restaurant = {
+                stage : 'restMenu',
+                menu : reqContent.menu
+            };
+        } else if (reqContent.stage === 'imgUpload') {
+            restaurant = {
+                stage : 'imgUpload',
+
+                imagPaths : {
+                    xs : files.xs.name,
+                    md : files.md.name,
+                    sm : files.sm.name,
+                    lg : files.lg.name
+                }
+            };
         }
 
         var slugReceivedInRequest = req.params.restSlug;
@@ -179,6 +208,22 @@ var updateRestaurantDetails = function( req, res, next ) {
                         .json( result );
                 }
             } else {
+                if (restaurant.stage === 'imgUpload') {
+                    var directoryPathForRestaurant = appConstants.restaurantImagesPath + slugReceivedInRequest;
+
+                    fs.mkdir(directoryPathForRestaurant, function (err, result) {
+                        var array = ['xs', 'md', 'sm', 'lg'];
+                        var arrLength = array.length;
+
+                        for (var i = 0; i < arrLength; i++) {
+                            var fileObj = files[array[i]];
+
+                            var toRename = appConstants.restaurantImagesPath + slugReceivedInRequest + '/' + slugReceivedInRequest + '-' + array[i] + fileObj.name.substr(fileObj.name.indexOf('.'));
+                            fs.rename(fileObj.path, toRename);
+                        }
+
+                    });
+                }
                 res.status( 200 )
                     .json( result );
             }

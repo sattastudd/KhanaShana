@@ -58,7 +58,9 @@ var insertBasicDetails = function( cityName, restaurant, isSlugAlreadyBeingUsed,
         RestaurantModelModule.setUpConnection( cityDBConnection );
         var RestaurantModel = RestaurantModelModule.getModel();
 
-        var Restaurant = new RestaurantModel( restaurant );
+        var Restaurant = new RestaurantModel(restaurant);
+        
+        console.log(restaurant);
 
         Restaurant.save( function ( err, result ) {
             if( err ) {
@@ -327,6 +329,193 @@ var readRestaurantSpecificData = function( cityName, slug, callback ) {
 /*              Private Methods             */
 /*==========================================*/
 
+/* Private method to check if all received locations are present in the DB.
+ * If are, only then, we can proceed to insert data into system.
+ * Else, we will throw an error.
+ *
+ * locations => array of locations,
+ * callback => passed by async.
+ */
+var areAllLocationsPresentInSystem = function (cityName, locations, callback) {
+    console.log('In AdminRestaurantDBI | Starting Execution of areAllLocationsPresentInSystem');
+    
+    if (Array.isArray(locations) && locations.length > 0) {
+        var cityDBConnection = utils.getDBConnection(cityName);
+        LocationsModelModule.setUpConnection(cityDBConnection);
+        
+        var LocationsModel = LocationsModelModule.getModel();
+        
+        var locationsLength = locations.length;
+        
+        var innerQuery = [];
+        
+        for (var i = 0; i < locationsLength; i++) {
+            var valueAt = locations[i];
+            var obj = {
+                name : new RegExp(valueAt, 'i')
+            };
+            
+            innerQuery.push(obj);
+        }
+        
+        var query = {
+            $or : innerQuery
+        };
+        
+        LocationsModel.count(query, function (err, resultCount) {
+            if (err) {
+                callback(err);
+            } else {
+                if (resultCount === locationsLength) {
+                    callback(null, true);
+                } else {
+                    callback(appConstants.appErrors.validationError);
+                }
+            }
+        });
+
+    } else {
+        callback(appConstants.appErrors.validationError);
+    }
+    
+    console.log('In AdminRestaurantDBI | Finished Execution of areAllLocationsPresentInSystem');
+};
+
+/* Private Method to update locations info of restaurant.
+ * This method would be executed after areAllLocationsPresentInSystem,
+ * which ensures that all locations are valid.
+ */
+var updateLocationsInfoOfRestaurant = function (cityName, restSlug, locations, areAllLocationsPresentInSystem, callback) {
+    console.log('In AdminRestaurantDBI | Starting Execution of updateLocationsInfoOfRestaurant');
+    
+    if (areAllLocationsPresentInSystem) {
+        
+        var cityDBConnection = utils.getDBConnection(cityName);
+        
+        RestaurantModelModule.setUpConnection(cityDBConnection);
+        var RestaurantModel = RestaurantModelModule.getModel();
+        
+        var query = {
+            slug : restSlug
+        };
+        
+        var update = {
+            $set : {
+                'delivery' : locations,
+                stage : 'deliveryAreas'
+            }
+        };
+        
+        RestaurantModel.update(query, update, function (err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, result);
+            }
+        });
+
+    } else {
+        callback(appConstants.appErrors.validationError);
+    }
+    
+    console.log('In AdminRestaurantDBI | Finished Execution of updateLocationsInfoOfRestaurant');
+};
+
+/* Private Method to check if all received cuisines are present in the DB.
+ * If are, only then, we can proceed to insert data into system.
+ * Else, we will throw an error.
+ *
+ * cuisines => array of cuisines,
+ * callback => passed by async.
+ */
+var areAllCuisinesPresentInSystem = function (cityName, cuisines, callback) {
+    console.log('In AdminRestaurantDBI | Starting Execution of areAllCuisinesPresentInSystem');
+    
+    if (Array.isArray(cuisines) && cuisines.length > 0) {
+        var cityDBConnection = utils.getDBConnection(cityName);
+        CuisineModelModule.setUpConnection(cityDBConnection);
+        
+        var CuisineModel = CuisineModelModule.getModel();
+        
+        var cuisineLength = cuisines.length;
+        
+        var innerQuery = [];
+        
+        for (var i = 0; i < cuisineLength; i++) {
+            var valueAt = cuisines[i];
+            var obj = {
+                name : new RegExp(valueAt, 'i')
+            };
+            
+            innerQuery.push(obj);
+        }
+        
+        var query = {
+            $or : innerQuery
+        };
+        
+        CuisineModel.count(query, function (err, resultCount) {
+            if (err) {
+                callback(err);
+            } else {
+                if (resultCount === cuisineLength) {
+                    callback(null, true);
+                } else {
+                    callback(appConstants.appErrors.validationError);
+                }
+            }
+        });
+
+    } else {
+        callback(appConstants.appErrors.validationError);
+    }
+    
+    console.log('In AdminRestaurantDBI | Finished Execution of areAllCuisinesPresentInSystem');
+};
+
+/* Private Method to update cuisines info of restaurant.
+ * This method would be executed after areAllCuisinesPresentInSystem,
+ * which ensures that all locations are valid.
+ */
+var updateCuisinesInfoOfRestaurant = function (cityName, restSlug, cuisines, areAllCuisinesPresentInSystem, callback) {
+    console.log('In AdminRestaurantDBI | Starting Execution of updateCuisinesInfoOfRestaurant');
+    
+    if (areAllCuisinesPresentInSystem) {
+        
+        var cityDBConnection = utils.getDBConnection(cityName);
+        
+        RestaurantModelModule.setUpConnection(cityDBConnection);
+        var RestaurantModel = RestaurantModelModule.getModel();
+        
+        var query = {
+            slug : restSlug
+        };
+        
+        var update = {
+            $set : {
+                'cuisines' : cuisines,
+                stage : 'cuisineArea'
+            }
+        };
+        
+        console.log(query);
+        console.log(update);
+        
+        RestaurantModel.update(query, update, function (err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, result);
+            }
+        });
+
+    } else {
+        callback(appConstants.appErrors.validationError);
+    }
+    
+    console.log('In AdminRestaurantDBI | Finished Execution of updateCuisinesInfoOfRestaurant');
+};
+
 /*               Public Methods             */
 /*==========================================*/
 
@@ -388,23 +577,107 @@ var updateRestaurantDetails = function( cityName, slug, restaurant, callback ) {
             updateQuery.$set['address.co_ord'] =  restaurant.address.co_ord;
         }
 
-        var cityDBConnection = utils.getDBConnection( cityName );
-
-        RestaurantModelModule.setUpConnection( cityDBConnection );
+        console.log(query);
+        console.log(updateQuery);
+        
+        var cityDBConnection = utils.getDBConnection(cityName);
+        
+        RestaurantModelModule.setUpConnection(cityDBConnection);
         var RestaurantModel = RestaurantModelModule.getModel();
-
-        console.log( query );
-        console.log( updateQuery );
-
-
-        RestaurantModel.update( query, updateQuery, options, function( err, updateCount ) {
-            if( err ) {
-                callback( err );
+        
+        RestaurantModel.update(query, updateQuery, options, function (err, updateCount) {
+            if (err) {
+                callback(err);
             } else {
-                callback( null, updateCount );
+                callback(null, updateCount);
             }
         });
 
+    } else if (restaurant.stage === 'deliveryAreas') {
+        
+        var locations = restaurant.selectedLocations;        
+
+        async.waterfall([
+            async.apply(areAllLocationsPresentInSystem, cityName, locations),
+            async.apply(updateLocationsInfoOfRestaurant, cityName, slug, locations)
+        ],
+            function (err, result) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, result);
+            }
+        });
+    } else if (restaurant.stage === 'cuisineArea') {
+
+        var cuisines = restaurant.selectedCuisines;
+
+        async.waterfall([
+            async.apply(areAllCuisinesPresentInSystem, cityName, cuisines), 
+            async.apply(updateCuisinesInfoOfRestaurant, cityName, slug, cuisines)
+        ],
+            function (err, result) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, result);
+                }
+        });
+    } else if (restaurant.stage === 'restMenu') {
+
+        var cityDBConnection = utils.getDBConnection(cityName);
+        
+        RestaurantModelModule.setUpConnection(cityDBConnection);
+        var RestaurantModel = RestaurantModelModule.getModel();
+        
+        var query = {
+            slug : slug
+        };
+        
+        var update = {
+            $set : {
+                menu : restaurant.menu,
+                stage : 'restMenu'
+            }
+        };
+        
+        RestaurantModel.update(query, update, function (err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, result === 1);
+            }
+        });
+
+    } else if (restaurant.stage === 'imgUpload') {
+        var paths = restaurant.paths;
+
+        var cityDBConnection = utils.getDBConnection(cityName);
+        
+        RestaurantModelModule.setUpConnection(cityDBConnection);
+        var RestaurantModel = RestaurantModelModule.getModel();
+        
+        var query = {
+            slug : slug
+        };
+
+        var update = {
+            'img.lg' : paths.lg,
+            'img.md' : paths.md,
+            'img.sm' : paths.sm,
+            'img.xs' : paths.xs
+        };
+        
+        console.log(query);
+        console.log(update);
+
+        RestaurantModel.update(query, update, function (err, updateCount) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, updateCount);
+            }
+        })
     }
 
     console.log( 'In AdminRestaurantDBI | Finished Execution of updateRestaurantDetails' );

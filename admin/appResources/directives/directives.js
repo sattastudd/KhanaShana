@@ -292,28 +292,13 @@ define(["angular", "services"], function (angular, services) {
         }
     });
 
-    app.directive('fileUpload', function () {
-        return {
-            scope: true,        //create a new scope
-            link: function (scope, el, attrs) {
-                el.bind('change', function (event) {
-                    var files = event.target.files;
-                    //iterate files since 'multiple' may be specified on the element
-                    for (var i = 0;i<files.length;i++) {
-                        //emit event upward
-                        scope.$emit("fileSelected", { file: files[i] });
-                    }
-                });
-            }
-        };
-    });
-
     app.directive( 'fileUploadView', function(){
        return {
            restrict : 'A',
            scope : {
                /*The target represents id of the file upload control.*/
-               target : '@'
+               target : '@',
+               type : '@'
            },
 
            link: function( scope, element, attrs ){
@@ -326,7 +311,7 @@ define(["angular", "services"], function (angular, services) {
                    var files = $event.target.files;
 
                    for( var i=0; i<files.length;i++){
-                        scope.$emit( 'selectedFile', { file : files[i]});
+                        scope.$emit( 'selectedFile', { type : scope.type, file : files[i]});
                    }
                };
 
@@ -337,104 +322,5 @@ define(["angular", "services"], function (angular, services) {
                scope.fileUploadControlJqLite.on( 'change', scope.fileSelected );
            }
        }
-    });
-
-
-    app.directive('canvasCrop', function( $document ){
-        return {
-            restrict : 'A',
-            scope : {
-                file : '=',
-                cropWidth : '=',
-                cropHeight: '='
-            },
-            link : function( scope, element, attrs ){
-                
-                var startX = startY = x = y = 0;
-
-                var image  = new Image();
-
-                var imageElement = element.find('img').eq(0);
-                console.log( imageElement );
-                var croppedArea = element.find( 'div' ).eq( 0 );
-
-                reader = new FileReader();
-                reader.onload = ( function( tFile ) {
-                    return function( evt ) {
-                        
-                        image.src = evt.target.result;
-                        imageElement.attr('src', evt.target.result );
-                    };
-                }(scope.file));
-
-                image.onload = function(){
-                    console.log( this.height );
-                    console.log( this.width ) ;
-
-                    var ratioOfImageContainerToSizeWidth = this.width/868;
-                    var ratioOfImageContainerToSizeHeight = this.height/400;
-
-                    scope.ratioOfImageContainerToSizeWidth = ratioOfImageContainerToSizeWidth;
-                    scope.ratioOfImageContainerToSizeHeight = ratioOfImageContainerToSizeHeight;
-
-                    croppedArea.css( 'width' , (scope.cropWidth/ratioOfImageContainerToSizeWidth) + 'px' );
-                    croppedArea.css( 'height', (scope.cropHeight/ratioOfImageContainerToSizeHeight) + 'px' );
-
-                    croppedArea.css( 'left', '0' );
-                    croppedArea.css( 'top' , '0' ) ;
-                };
-
-                reader.readAsDataURL( scope.file );
-
-                croppedArea.on( 'mousedown', function( $event ){
-                    $event.preventDefault();
-
-                    startX = $event.screenX - x;
-                    startY = $event.screenY - y;
-
-                    $document.on( 'mousemove', mousemove );
-                    $document.on( 'mouseup', mouseup );
-                });
-
-                function mousemove( $event ) {
-                    y = $event.screenY - startY;
-                    x = $event.screenX - startX;
-
-                    croppedArea.css({
-                        top : y + 'px',
-                        left : x + 'px'
-                    });
-                };
-
-                function mouseup( $event ){
-                    $document.off('mousemove', mousemove);
-                    $document.off('mouseup', mouseup);
-                };
-
-                scope.$on('emitCroppedInfo', function(){
-
-                    
-
-                    console.log( 'Caught Emit Evenet' );
-
-                    var coOrdinateToEmit = {
-                        top : parseInt( croppedArea.css( 'top' )),
-                        left : parseInt( croppedArea.css( 'left' )),
-                        ratioX : scope.ratioOfImageContainerToSizeWidth,
-                        ratioY : scope.ratioOfImageContainerToSizeHeight
-                    };
-
-                    crop_canvas = document.createElement('canvas');
-                       crop_canvas.width = 1140;
-                       crop_canvas.height = 400;
-                       
-                       crop_canvas.getContext('2d').drawImage(imageElement[0], parseInt(coOrdinateToEmit.ratioX * coOrdinateToEmit.left), parseInt( coOrdinateToEmit.ratioY * coOrdinateToEmit.top ), 1140, 400, 0, 0, 1140, 400);
-                       window.open(crop_canvas.toDataURL("image/png"));
-
-
-                    scope.$emit('emittedCoOrdinates', coOrdinateToEmit);
-                });
-            }
-        }
     });
 });

@@ -20,7 +20,7 @@ var setUpConnection = function(connectionToBeUsed) {
 	model = connectionToBeUsed.model( 'Cuisines', cuisinesSchema, 'Cuisines' );
 };
 
-var getCuisinesModel = function() {
+var getModel = function() {
 
 	if ( connection !== null && model !== null ) {
 		return model;
@@ -30,4 +30,4 @@ var getCuisinesModel = function() {
 };
 
 exports.setUpConnection = setUpConnection;
-exports.getCuisinesModel = getCuisinesModel;
+exports.getModel = getModel;

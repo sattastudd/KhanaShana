@@ -10,11 +10,11 @@
         <div class="row" petoo-tab target="tabbedContent">
 
             <ul class="newRestaurantAddition col-xs-12" petoo-tab target="tabbedContent">
-                <li class="col-xs-3 active" ng-disabled="isTabDisabled( 'basicDetails' )"><a>Restaurant Basic Details</a></li>
-                <li class="col-xs-2" ng-disabled="isTabDisabled( 'deliveryAreas' )"><a>Delivery Areas</a></li>
-                <li class="col-xs-3" ng-disabled="isTabDisabled( 'cuisineArea' )"><a>Offered Cuisines</a></li>
-                <li class="col-xs-2" ng-disabled="isTabDisabled( 'restMenu' )"><a></a>Menu</a></li>
-                <li class="col-xs-2 last" ng-disabled="isTabDisabled( 'imgUpload' )"><a></a>Pictures</a></li>
+                <li class="col-xs-3 active" ng-disabled="isTabDisabled( 'basicDetails' )" ng-click="isTabDisabled( 'basicDetails' ) || setRestaurantStage( 'basicDetails' )"><a>Restaurant Basic Details</a></li>
+                <li class="col-xs-2" ng-disabled="isTabDisabled( 'deliveryAreas' )" ng-click="isTabDisabled( 'deliveryAreas' ) || setRestaurantStage( 'deliveryAreas' )"><a>Delivery Areas</a></li>
+                <li class="col-xs-3" ng-disabled="isTabDisabled( 'cuisineArea' )" ng-click="isTabDisabled( 'cuisineArea' ) || setRestaurantStage( 'cuisineArea' )"><a>Offered Cuisines</a></li>
+                <li class="col-xs-2" ng-disabled="isTabDisabled( 'restMenu' )" ng-click="isTabDisabled( 'restMenu' ) || setRestaurantStage( 'restMenu' )"><a></a>Menu</a></li>
+                <li class="col-xs-2 last" ng-disabled="isTabDisabled( 'imgUpload' )" ng-click="isTabDisabled( 'imgUpload' ) || setRestaurantStage( 'imgUpload' )"><a></a>Pictures</a></li>
             </ul>
 
         </div>
@@ -173,7 +173,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row bMar10">
                     <div class="col-xs-3">
                         <button type="button" class="btn btn-pr-primary btn-block" ng-click="createRestaurant()">{{getMessageForBasicDetailsButton()}}</button>
                     </div>
@@ -228,6 +228,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row tMar20">
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-pr-primary btn-block" ng-click="saveAndContinue()">Save Delivery Areas</button>
+                    </div>
+                </div>
                 <!--Delivery Area End-->
             </div>
 
@@ -278,6 +284,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row tMar20">
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-pr-primary btn-block" ng-click="saveAndContinue()">Save Delivery Areas</button>
+                    </div>
+                </div>
             </div>
             <!--Cuisine Area End-->
 
@@ -296,6 +308,12 @@
                                 <label>Category Title</label>
                                 <input type="text" ng-model="menu.title" class="form-control"/>
                             </div>
+
+                            <div class="collapsibleErrorMessage" ng-class="hasFieldError(menu.err.title, true)">
+                                <div class="bg-danger" ng-class="hasFieldError(menu.err.title, true)">
+                                    {{menu.errMsg.title}}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -306,6 +324,12 @@
                                     <label>Dish Title</label>
                                     <input type="text" ng-model="dish.title" class="form-control"/>
                                 </div>
+
+                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.title, true)">
+                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.title, true)">
+                                        {{dish.errMsg.title}}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-xs-3">
@@ -313,12 +337,24 @@
                                     <label>Dish Type</label>
                                     <input type="text" ng-model="dish.type" class="form-control"/>
                                 </div>
+
+                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.type, true)">
+                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.type, true)">
+                                        {{dish.errMsg.type}}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-xs-3">
-                                <div class="form-group">
+                                <div class="form-group bMar9">
                                     <label style="display: block">Vegetarian ?</label>
-                                    <input type="checkbox" ng-model="dish.veg"/>
+                                    <input type="checkbox" ng-model="dish.veg" />
+                                </div>
+
+                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.veg, true)">
+                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.veg, true)">
+                                        {{dish.errMsg.veg}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -329,12 +365,24 @@
                                     <label>Price Full Plate</label>
                                     <input type="text" ng-model="dish.price.full" class="form-control"/>
                                 </div>
+                                
+                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.price.full, true)">
+                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.price.full, true)">
+                                        {{dish.errMsg.price.full}}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label>Price Half Plate</label>
                                     <input type="text" ng-model="dish.price.half" class="form-control"/>
+                                </div>
+
+                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.price.half, true)">
+                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.price.half, true)">
+                                        {{dish.errMsg.price.half}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -350,7 +398,13 @@
 
                 <div class="row tMar20">
                     <div class="col-xs-3">
-                        <button type="button" class="btn btn-block btn-pr-secondary" ng-click="addNewCategory()">Add Menu Category</button>
+                        <button type="button" class="btn btn-block btn-pr-primary" ng-click="addNewCategory()">Add Menu Category</button>
+                    </div>
+                </div>
+
+                <div class="row bMar20 tMar20">
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-pr-primary btn-block" ng-click="saveAndContinue()">Save Delivery Areas</button>
                     </div>
                 </div>
             </div>
@@ -364,22 +418,72 @@
 
                 <div class="petoo-form">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-5">
                             <div class="form-group">
-                                <label>Restaurant Banner Image</label>
+                                <label>Restaurant Banner Image for large screen.</label>
 
                                 <div class="uploadContainerDiv">
-                                    <input type="file" id="restBanner"/>
+                                    <input type="file" id="lgScreen"/>
                                 </div>
 
-                                <input type="text" file-upload-view target="restBanner" class="form-control"/>
+                                <div class="fileUploadBox" file-upload-view target="lgScreen" type="lg" ng-class="isFileNotSelected('lg')"></div>
+
+                                <div class="fileActionsContainer" ng-class="isFileSelected('lg')">
+                                    <div class="fileUploadBox">{{getFileName('lg')}}</div>
+                                    <div class="fileDelete" ng-click="removeFile( 'lg' )"><span class="glyphicon glyphicon-trash"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Restaurant Banner Image for medium screen.</label>
+
+                                <div class="uploadContainerDiv">
+                                    <input type="file" id="mdScreen" />
+                                </div>
+
+                                <div class="fileUploadBox" file-upload-view target="mdScreen" type="md" ng-class="isFileNotSelected('md')"></div>
+
+                                <div class="fileActionsContainer" ng-class="isFileSelected('md')">
+                                    <div class="fileUploadBox">{{getFileName('md')}}</div>
+                                    <div class="fileDelete" ng-click="removeFile( 'md' )"><span class="glyphicon glyphicon-trash"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Restaurant Banner Image for small screen.</label>
+
+                                <div class="uploadContainerDiv">
+                                    <input type="file" id="smScreen" />
+                                </div>
+
+                                <div class="fileUploadBox" file-upload-view target="smScreen" type="sm" ng-class="isFileNotSelected('sm')"></div>
+
+                                <div class="fileActionsContainer" ng-class="isFileSelected('sm')">
+                                    <div class="fileUploadBox">{{getFileName('sm')}}</div>
+                                    <div class="fileDelete" ng-click="removeFile( 'sm' )"><span class="glyphicon glyphicon-trash"></span></div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Restaurant Banner Image for xtra small screen.</label>
+
+                                <div class="uploadContainerDiv">
+                                    <input type="file" id="xsScreen" />
+                                </div>
+
+                                <div class="fileUploadBox" file-upload-view target="xsScreen" type="xs" ng-class="isFileNotSelected('xs')"></div>
+
+                                <div class="fileActionsContainer" ng-class="isFileSelected('xs')">
+                                    <div class="fileUploadBox">{{getFileName('xs')}}</div>
+                                    <div class="fileDelete" ng-click="removeFile( 'xs' )"><span class="glyphicon glyphicon-trash"></span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-3">
-                            <button type="button" class="btn btn-block btn-pr-secondary" ng-click="try()">Upload</button>
+                            <button type="button" class="btn btn-block btn-pr-primary" ng-click="saveAndContinue()">Save Details</button>
                         </div>
                     </div>
                 </div>

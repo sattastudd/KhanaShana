@@ -119,7 +119,10 @@
                 storedData[key] = value;
             };
 
-            this.getData = function(key) {
+            this.getData = function (key) {
+                if (Array.isArray(storedData[key])) {
+                    return storedData[key].slice();
+                }
                 return storedData[key];
             };
 

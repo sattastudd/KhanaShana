@@ -44,8 +44,8 @@ $theme-body-back-color-light : #FAF8FD;
 $theme-page-list-heading-font-size : 19px;
 $theme-page-list-border : 1px solid #3f4952;
 
-$theme-add-new-tabs-back : #32404b;
-$theme-add-new-tabs-active : #2c6084;
+$theme-add-new-tabs-back : #2c6084;
+$theme-add-new-tabs-active : #32404b;
 $theme-add-new-tabs-disabled : #6f7981;
 $theme-add-new-tabs-completed : #46535d;
 
@@ -219,6 +219,66 @@ body{
   cursor : pointer;
 }
 
+.fileUploadBox{
+    background-color : $theme-input-background-color;
+    color : $theme-input-font-color;
+
+    font-family: 'Calibri';
+    border : none;
+
+    font-size : $theme-input-font-size;
+
+    height : $theme-input-box-height;
+
+    cursor : pointer;
+
+    @include transition-mix(all, $theme-fast-reaction);
+}
+
+.fileActionsContainer{
+
+    margin-top : 5px;
+    margin-bottom : 5px;
+
+    > div {
+        float : left;
+        width : 70%;
+
+        &.fileDelete{
+            height : $theme-input-box-height;            
+            width : 30%;
+
+            background-color : $theme-error-back-color;
+
+            text-align : center;
+
+            cursor : pointer;
+
+            span {                
+                color : $theme-error-font-color;
+                height : 39px;
+                background-color : $theme-error-back-color;
+
+                
+            }
+        }
+
+        &.fileUploadBox{
+            cursor : auto;
+
+            line-height : $theme-input-box-height;
+
+            padding-left : 15px;
+        }
+    }
+
+    &.noHeight {
+        margin-top : 0;
+        height : 0;
+        overflow : hidden;
+    }
+}
+
 /* Global Pagination CSS */
 ul.pagination{
   font-family: 'Calibri';
@@ -326,6 +386,10 @@ ul.pagination{
 
 .tMar30{
   margin-top : 30px;
+}
+
+.bMar9{
+    margin-bottom : 9px;
 }
 
 .tMar20{
@@ -733,6 +797,8 @@ ul.newRestaurantAddition{
       li{
         padding : 5px 15px;
         font-size : 16px;
+
+        cursor : pointer;
 
         &.active{
           background-color : $theme-sidebar-active-back-color;

@@ -5,6 +5,9 @@
 var appConstants = {
     globalDataBase 		:	'globalDB',
     appUsersDataBase	: 'appUsers',
+    
+    restaurantImagesPath : 'client/images/restaurants/',
+    imagePrefixPath : '/images/restaurants/',
 
     appErrors : {
         userExists : 'UserExists',
@@ -13,7 +16,8 @@ var appConstants = {
         invalidCredentials : 'InvalidCredentials',
         noRecordFound : 'NoRecordFound',
         intentionalBreak: 'IntentionalBreak',
-        someError : 'SomeError'
+        someError : 'SomeError',
+        noMenuPresent : 'No Menu Entries Provided.'
     },
 
     errorMessage : {
@@ -45,9 +49,9 @@ var appConstants = {
         removeError : 'Please remove all errors before procedding',
 
         invalidSlug : 'Invalid Restaurant Slug',
-        slugInUse : 'Slug field is already used'
+        slugInUse : 'Slug field is already used',
 
-
+        unSupportedFile : 'Unsupported File'
     },
 
     successMessage : 'Ok',
