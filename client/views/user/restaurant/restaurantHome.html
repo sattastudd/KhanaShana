@@ -65,11 +65,11 @@
                             </div>
                         </div>
                         <div class="row mtop10">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 itemList hand" ng-repeat="item in menu.items" ng-click="itemAdded(item)">
-                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                    <p>{{item.title}}</p>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 itemList" ng-repeat="item in menu.items">
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <p><b>{{item.title}}</b></p>
                                 </div>
-                                <div ng-show="item.itemClicked" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                     <div class="row">
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 noLeftRightPadding">
                                             <i align="center" class="glyphicon glyphicon-plus glyphPlusMinus pull-right" ng-click="quantityIncreased(item)" style="margin-top:3px;"></i>
@@ -78,20 +78,58 @@
                                             <input class="form-control" type="text" ng-model="quantity">
                                         </div>
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 noLeftRightPadding">
-                                            <i align="center" class="glyphicon glyphicon-minus glyphPlusMinus" ng-click="quantityDecreased(item)"></i>
+                                            
+                                        </div>
+                                    </div> 
+                                </div> -->
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-sm-5 col-lg-5">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="item.price.half!==0">
+                                            <i align="center" ng-click="itemAddedHalf(item)" class="glyphicon glyphicon-plus pull-left glyphPlusMinus hand"></i>
+                                            <p>Half</p>
+                                            <p class="pull-right mtop28">Rs{{item.price.half}}</p>
+                                        </div>
+                                        <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <i align="center" ng-click="itemAddedFull(item)" class="glyphicon glyphicon-plus pull-left glyphPlusMinus hand"></i>
+                                            <p>Full</p>
+                                            <p class="pull-right mtop28">Rs{{item.price.full}}</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div ng-hide="item.itemClicked" class="col-xs-5 col-sm-5 col-md-5 col-lg-5"></div>
-                                <div class="col-xs-3 col-sm-3 col-sm-3 col-lg-3">
-                                    <p class="pull-right">{{item.price.full}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 mol-lg-3">
-                         <h4>total</h4>
-
+                         <h3 align="center"><b>BILL</b></h3>
+                         <div class="row billOutline"> 
+                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 billList" ng-repeat="dish in dishShortlisted">
+                                <div class="row">
+                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                        <p>{{dish.dish}}</p>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        <p>Rs-{{dish.price}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <p align="center">Quantity - {{dish.quantity}}</p>
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                 <div class="row">
+                                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                       <p class="pull-left">Total</p>
+                                    </div>
+                                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                        <p class="pull-right">Rs-900</p>
+                                    </div>
+                                </div>
+                             </div>
+                         </div>
                     </div>
                     <div></div>
                 </div>

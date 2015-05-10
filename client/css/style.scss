@@ -1338,6 +1338,9 @@ button.kh-primary {
 .mtop10 {
     margin-top:10px;
 }
+.mtop28{
+  margin-top: -28px;
+}
 .menuCategory {
     border-bottom: 1px solid gainsboro;
     color: red;
@@ -1351,18 +1354,29 @@ button.kh-primary {
     border-bottom: 1px solid gainsboro;
     margin-top: 10px;
     margin-left: 15px;
-    font-size: 22px;
-    padding-bottom: 15px;
+    font-size: 19px;
+    margin-left: -15px;
 }
 .glyphPlusMinus{
-  font-size: 21px;
+  font-size: 19px;
   margin-top: 3px;
   border: 1px solid gainsboro;
   border-radius: 5px;
   color: white;
   background-color: green;
-  height: 26px;
-  width: 32px;
+  height: 23px;
+  width: 21px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.billList{
+  border-bottom: 1px solid gainsboro;
+  margin-top: 10px;
+  padding-bottom: 15px;
+}
+.billOutline{
+  border: 1px solid gainsboro;
+  margin-top: 40px;
 }
 
 /* styles for user restaurant home page ends */
