@@ -1,6 +1,8 @@
 *.dat
 *.njsproj
 credentials.js
+Credentials.js
+*.*~
 CodeOrganizer*
 /bin/
 /obj/

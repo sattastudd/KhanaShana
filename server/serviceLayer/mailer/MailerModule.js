@@ -1,11 +1,11 @@
 ﻿/* This moudle is responsible for sending mail.
  * Module would require credentials.js for successful operation.
  */
-var mailer = require('nodemailer');
+var Mailgun = require('mailgun-js');
 
 var NewRegistrationTemplate = require('./mail-templates/NewRegistration');
 
-var Credentials = require('../../../Credentials');
+var Credentials = require('../../../credentials');
 
 var smtpTransport = mailer.createTransport({
     service: 'Gmail',
@@ -16,18 +16,21 @@ var smtpTransport = mailer.createTransport({
 });
 
 var sendMail = function (to, subject, content) {
+    var mailgun = new Mailgun({
+        apiKey: Credentials.mailer.apiKey, 
+        domain: Credentials.mailer.domain
+    });
+
     var mailObj = {
-        from : Credentials.mailer.user,
+        from : Credentials.mailer.from,
         to : to,
         subject : subject,
         html: content
     };
-    smtpTransport.sendMail(mailObj, function (err, info) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(info);
-        }
+
+    mailgun.messages().send(mailObj, function (err, body) {
+        console.log( err );
+        console.log( body );
     });
 };
 
