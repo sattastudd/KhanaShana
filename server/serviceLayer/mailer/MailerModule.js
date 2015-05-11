@@ -7,28 +7,20 @@ var NewRegistrationTemplate = require('./mail-templates/NewRegistration');
 
 var Credentials = require('../../../credentials');
 
-var smtpTransport = mailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: Credentials.mailer.user,
-        pass: Credentials.mailer.pass
-    }
-});
-
 var sendMail = function (to, subject, content) {
-    var mailgun = new Mailgun({
+    var mailGun = new Mailgun({
         apiKey: Credentials.mailer.apiKey, 
         domain: Credentials.mailer.domain
     });
 
     var mailObj = {
         from : Credentials.mailer.from,
-        to : to,
+        to : ( Credentials.environSetUp === 'development' ? 'peturaam.mail@gmail.com' : to ),
         subject : subject,
         html: content
     };
 
-    mailgun.messages().send(mailObj, function (err, body) {
+    mailGun.messages().send(mailObj, function (err, body) {
         console.log( err );
         console.log( body );
     });

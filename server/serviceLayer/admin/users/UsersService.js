@@ -8,6 +8,8 @@ var LoginDBI = require( '../../../daoLayer/login/LoginDBI' );
 
 var Validator = require( '../../util/Validator' );
 
+var Mailer = require( '../../mailer/MailerModule');
+
 /* This is private utility method to set up error flag and error msg in the received maps.
  */
 var setUpError = function (err, errMsg, type, response) {
@@ -183,6 +185,8 @@ var createOrEditUser = function( userInfo, callback ) {
                         data : result,
                         msg : appConstants.userCreated
                     });
+                    if( userInfo.role === 'user' )
+                    Mailer.sendRegistrationMail( userInfo );
                 }
             });
         }
