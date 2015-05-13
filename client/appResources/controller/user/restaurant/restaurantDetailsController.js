@@ -44,6 +44,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         console.log(item.price.half);
         $scope.cartLoaded = true;
 
+        if(typeof $scope.dishShortlisted.quantity === 'undefined'){
         var objectToPush = {
             dish : item.title,
             price : item.price.half,
@@ -53,6 +54,9 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         }
         
         $scope.dishShortlisted.push( objectToPush );
+    }else{
+        console.log("its in else part");
+    }
 
         
     }
