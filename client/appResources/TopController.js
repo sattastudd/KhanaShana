@@ -267,7 +267,7 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
     };
 }
 
-function LoginModalController($scope, $modalInstance, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
+function LoginModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
 	$scope.user = {
 		name : '',
 		email : '',
@@ -304,6 +304,13 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
             return 'noHeight';
         return '';
     };
+
+    //fogot password function
+    $scope.showForgotPwd = true;
+    $scope.forgotPwd = function(){
+        $location.path('/forgotPassword');
+        $scope.closeLoginModal();
+    }
     
     /*Switch over to other form type.*/
     $scope.changeFormType = function (type) {
@@ -324,8 +331,14 @@ function LoginModalController($scope, $modalInstance, DataStore, $window, $http,
                 $scope.hasRecievedResponseFromServer = false;
                 $scope.isServerError = false;
                 $scope.serverResponse = '';
+
+                //forgot password
+                $scope.showForgotPwd = true;
             }
         } else {
+            //forgot password
+            $scope.showForgotPwd = false;
+
             if (!$scope.isSignUpFormNotActive) { return; }
             else {
                 $scope.isSignUpFormNotActive = false;

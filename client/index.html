@@ -100,6 +100,12 @@
                         </div>
                     </div>
 
+                    <div class="col-xs-12" ng-if="showForgotPwd">
+                        <p class="hand" style="font-size:12px;margin-top:-15px;margin-bottom:15px;color:#DC141B" ng-click="forgotPwd()">
+                            Forgot password?
+                        </p>
+                    </div>
+
                     <div class="col-xs-12 tpad7">
                         <div class="col-xs-6 noLPad">
                             <button class="btn btn-block btn-pram-primary" ng-click="loginSignUpUser()">{{getButtonText()}}</button>

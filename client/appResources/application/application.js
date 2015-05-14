@@ -51,7 +51,12 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         .when('/changePwd',
             routeConfig.config(
                 'views/user/userChangePwd.html',
-                '../../appResources/controller/user/userChangePwdController'
+                '../../appResources/controller/userChangePwdController'
+        ))
+        .when('/forgotPassword',
+            routeConfig.config(
+                'views/user/userForgotPwd.html',
+                '../../appResources/controller/userForgotPwdController'
         ))
         .otherwise({
             redirectTo: '/404'
