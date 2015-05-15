@@ -22,6 +22,8 @@ var restaurantSchema = new mongoose.Schema({
 
     owner :String,
     approved : Boolean,
+    
+    allStagesCompleted : Boolean,
 
     address : {
         co_ord : String,
