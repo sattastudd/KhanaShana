@@ -14,24 +14,6 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 '../../appResources/controller/dashboard/dashboardController'
             ))
 
-            .when('/restaurants',
-            routeConfig.config(
-                'views/restaurants/restaurantList.html',
-                '../../appResources/controller/restaurants/restaurantListController'
-            ))
-
-            .when('/pendingRestaurants',
-            routeConfig.config(
-                'views/restaurants/pendingRestaurantList.html',
-                '../../appResources/controller/restaurants/pendingRestaurantListController'
-            ))
-
-            .when('/newRestaurant',
-            routeConfig.config(
-                'views/restaurants/newRestaurant.html',
-                '../../appResources/controller/restaurants/newRestaurantController'
-            ))
-
             .when('/users',
             routeConfig.config(
                 'views/users/userList.html',
@@ -42,6 +24,30 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
             routeConfig.config(
                 'views/users/createEditUser.html',
                 '../../appResources/controller/users/createOrEditUserController'
+            ))
+
+            .when( '/restaurants/approved',
+            routeConfig.config(
+                'views/restaurants/approvedRestaurantList.html',
+                '../../appResources/controller/restaurants/approvedRestaurantListController'
+            ))
+
+            .when( '/restaurants/pendingApproval',
+            routeConfig.config(
+                'views/restaurants/pendingApprovalRestaurantList.html',
+                '../../appResources/controller/restaurants/pendingApprovalRestaurantListController'
+            ))
+
+            .when( '/restaurants/pendingDetails',
+            routeConfig.config(
+                'views/restaurants/pendingDetailsRestaurantList.html',
+                '../../appResources/controller/restaurants/pendingDetailsRestaurantListController'
+            ))
+
+            .when( '/restaurants/new',
+            routeConfig.config(
+                'views/restaurants/addNewRestaurant.html',
+                '../../appResources/controller/restaurants/newRestaurantController'
             ))
 
             .otherwise({

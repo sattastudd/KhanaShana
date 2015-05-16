@@ -1,10 +1,11 @@
-define([], function( $scope ) {
-    function pendingRestaurantListController(){
+define([], function($scope) {
+    function approvedRestaurantListController() {
     };
-    return pendingRestaurantListController;
+
+    return approvedRestaurantListController;
 });
 
-function PendingRestaurantListController( $scope, $http, $location, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
+function ApprovedRestaurantListController($scope, $http, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
     var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.searchRestaurants;;
 
     $scope.restaurantList = [];
@@ -14,7 +15,7 @@ function PendingRestaurantListController( $scope, $http, $location, AppConstants
     };
 
     $scope.searchParams = {
-        approved : false
+        approved : true
     };
 
     $scope.isServerError = false;
@@ -98,18 +99,16 @@ function PendingRestaurantListController( $scope, $http, $location, AppConstants
     /* Reset Search */
     $scope.resetSearch = function(){
         $scope.searchParams = {
-            approved : false
+            approved : true
         };
 
         $scope.search();
     };
 
     $scope.editRestaurant = function( restaurant ) {
-
-        console.log( restaurant );
-
+        user.role = $scope.roleSelected;
         DataStore.storeData( 'isRestaurantEdit', true );
-        DataStore.storeData( 'toEditRestaurant', restaurant.slug );
+        DataStore.storeData( 'toEditRestaurant', restaurant );
 
         $location.path( 'newRestaurant' );
     };

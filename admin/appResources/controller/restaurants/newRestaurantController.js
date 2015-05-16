@@ -5,7 +5,7 @@ define([], function ($scope) {
 });
 
 function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore, AppConstants, RestRequests) {
-    
+
     /* Flag to detect if we are editing an already existing restaurant or creating a new.*/
     $scope.isEdit = false;
 
@@ -69,16 +69,16 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                         $scope.restaurant.town = $scope.restaurant.address.town;
 
                         $scope.restaurant.city = $scope.restaurant.address.city;
-                        $scope.restaurant.postal_code = $scope.restaurant.address.postal_code;                    
+                        $scope.restaurant.postal_code = $scope.restaurant.address.postal_code;
 
                         $scope.restaurantStageIndex = $scope.restaurantStages.indexOf($scope.restaurant.stage);
-                    
+
                         if ($scope.restaurantStageIndex !== ($scope.restaurantStages.length - 1)) {
                             $scope.restaurant.stage = $scope.restaurantStages[ ++$scope.restaurantStageIndex ];
                         }
-                    
+
                         $rootScope.$broadcast('moveToPetooTab', $scope.restaurantStageIndex);
-                    
+
                         $scope.restaurantOldSlug = data.data.slug;
 
                         if ($scope.restaurant.delivery.length > 0) {
@@ -90,6 +90,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                         }
 
                         $scope.restMenu = data.data.menu;
+                        $scope.paths = data.data.img;
                     })
                     .error(function (data) {
                         $scope.isServerError = true;
@@ -128,7 +129,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
     /*                       Controls of delivery Area Stage                       */
     /*=============================================================================*/
     /* Left Panes */
-    
+
     /* This method is used to return a class for the left pane of delivery areas.
      * We maintain a seprate list of selectedLocations,
      * if the passed location is present in the list,
@@ -249,7 +250,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
      * We will push cuisines into finalSelectedCuisines, so, we also need to remove selectedCuisines from inital list as well.
      * And flush down selectedCuisines as well. */
     $scope.makeCuisineSelectionFinal = function  (){
- 
+
         var selectedCuisinesLength = $scope.selectedCuisines.length;
 
         for( var i=0;i< selectedCuisinesLength; i++){
@@ -324,23 +325,36 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
     /*=============================================================================*/
 
     $scope.files = {};
-    
+    $scope.paths = {};
+
     $scope.$on('selectedFile', function ($event, args) {
         $scope.$apply($scope.files[args.type] = args.file);
     });
-    
-    $scope.isFileNotSelected = function (type) {        
-        return typeof $scope.files[type] === 'undefined' ? '' : 'noHeight';
+
+    $scope.isFileNotSelected = function (type) {
+        if( typeof $scope.paths[ type ] === 'undefined' ) {
+            return typeof $scope.files[ type ] === 'undefined' ? '' : 'noHeight';
+        } else {
+            return 'noHeight';
+        }
     };
-    
+
     $scope.isFileSelected = function (type) {
-        return typeof $scope.files[type] !== 'undefined' ? '' : 'noHeight';
+        if ( typeof $scope.paths[ type ] === 'undefined' ) {
+            return typeof $scope.files[ type ] !== 'undefined' ? '' : 'noHeight';
+        } else {
+            return '';
+        }
     };
-    
-    $scope.getFileName = function (type) {        
-        return typeof $scope.files[type] !== 'undefined' ? $scope.files[type].name : '';
+
+    $scope.getFileName = function (type) {
+        if( typeof $scope.paths[ type ] === 'undefined' ) {
+            return typeof $scope.files[ type ] !== 'undefined' ? $scope.files[ type ].name : '';
+        } else {
+            return $scope.paths[type ].substr( $scope.paths[type ].lastIndexOf('/'));
+        }
     };
-    
+
     $scope.removeFile = function (type) {
         delete $scope.files[type];
     };
@@ -388,16 +402,16 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                     $scope.errorMessage = data.msg;
 
                     $scope.err = data.err;
-                    $scope.errMsg = data.errMsg;                   
+                    $scope.errMsg = data.errMsg;
                 });
         }
     };
 
     /* SaveAndContinue would help in saving restaurant in stages. */
-    $scope.saveAndContinue = function () {        
+    $scope.saveAndContinue = function () {
 
         var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.restaurant + '/' + $scope.restaurantOldSlug;
-        
+
         if ($scope.restaurant.stage === 'deliveryAreas') {
             $scope.restaurant.locations = [];
 
@@ -411,12 +425,12 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
 
             for (var i = 0; i < $scope.finalSelectedCuisines.length; i++) {
                 var cuisineAt = $scope.finalSelectedCuisines[i];
-                
+
                 $scope.restaurant.cuisines.push(cuisineAt.name);
             }
         } else if ($scope.restaurant.stage === 'restMenu') {
             var restMenuLength = $scope.restMenu.length;
-            
+
             for (var i = 0; i < restMenuLength; i++) {
                 var category = $scope.restMenu[i];
 
@@ -444,15 +458,15 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
             transformRequest: function (data) {
                 var formData = new FormData();
                 formData.append("model", angular.toJson(data.model));
-                
+
                 if ($scope.restaurant.stage === 'imgUpload') {
                     var arr = ['lg', 'md', 'sm', 'xs'];
-                    
+
                     for (var i = 0; i < arr.length ; i++) {
                         if (typeof $scope.files[ arr[i]] !== 'undefined') {
                             formData.append( arr[i], $scope.files[ arr[i] ]);
                         }
-                    }                    
+                    }
                 }
 
                 return formData;
@@ -475,7 +489,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                 if( $scope.restaurantStageIndex !== ($scope.restaurantStages.length -1 )) {
                     $scope.restaurant.stage = $scope.restaurantStages[ ++$scope.restaurantStageIndex ];
                 }
-            
+
                 /* With this, we would be able to move to next tab automatically. */
                 $rootScope.$broadcast('moveToPetooTab', $scope.restaurantStageIndex);
 
@@ -485,13 +499,13 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                 $scope.isServerError = true;
                 $scope.isServerSuccess = false;
 
-                $scope.errorMessage = data.msg;                
-                
+                $scope.errorMessage = data.msg;
+
                 if ($scope.restaurant.stage === 'restMenu') {
-                        if( data.data != null ) {
-                            $scope.restaurant.menu = data.data;
-                            $scope.restMenu = data.data;
-                        }
+                    if( data.data != null ) {
+                        $scope.restaurant.menu = data.data;
+                        $scope.restMenu = data.data;
+                    }
                 } else {
                     $scope.err = data.err;
                     $scope.errMsg = data.errMsg;
@@ -503,9 +517,9 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
     /* Error Getter */
     /* Validation Getters */
     $scope.hasFieldError = function ( type, isFieldValue ) {
-        
+
         if( isFieldValue ) {
-            
+
             return type ? '' : 'noHeight';
 
         } else {
@@ -513,10 +527,10 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                 return $scope.err[ type ] ? '' : 'noHeight';
             else {
                 var splitArray = type.split('.');
-                
+
                 var firstPart = splitArray[ 0 ];
                 var secondPart = splitArray[ 1 ];
-                
+
                 var temp = $scope.err[ firstPart ];
                 return temp[secondPart] ? '' : 'noHeight';
             }
@@ -531,7 +545,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
     $scope.haveReceivedSuccessFromServer = function(){
         return $scope.isServerSuccess ? '' : 'noHeight';
     };
-    
+
     /* Method to determine if a current tag is disabled.
      * We identify it using stages' index in the location.
      * All tabs having index lower than current stage index would be enabled.
@@ -547,12 +561,12 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
             return false;
         }
     };
-    
+
     /* On tab click, we want stage to be automatically updated.
      * But we still have to move to next tab on success.
      */
     $scope.setRestaurantStage = function (stage) {
-        
+
         $scope.restaurant.stage = stage;
 
         if (stage === 'deliveryAreas') {
@@ -577,7 +591,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
      */
     $scope.adjustLocations = function (restaurantLocationsFromDB) {
         var receivedLocationsLength = restaurantLocationsFromDB.length;
-        
+
         console.log(DataStore.getData('locations'));
 
         for (var i = 0; i < receivedLocationsLength; i++) {
@@ -621,6 +635,18 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                     break;
                 }
             }
+        }
+    };
+
+    /*Function to opwn banner image in next tab */
+    $scope.openImage = function( type ) {
+        console.log(type);
+
+        if( $scope.paths[ type ] !== 'undefined' ) {
+            var path = 'client' + $scope.paths[ type ];
+            console.log( path );
+
+            window.open( 'node/public/restaurants/image' + '?slug=khana&type=lg' );
         }
     };
 };

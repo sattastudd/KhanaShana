@@ -61,7 +61,8 @@ var searchRestaurants = function( req, res, next ) {
     var searchParams = {
         name : req.body.name,
         locality : req.body.locality,
-        approved : req.body.approved
+        approved : req.body.approved,
+        allStagesCompleted : req.body.allStagesCompleted
     };
 
     var pagingParams = {
@@ -241,6 +242,51 @@ var updateRestaurantDetails = function( req, res, next ) {
 /*                         Restaurant Update Section End                     */
 /*===========================================================================*/
 
+/*                Restaurant Banner Image Path Retrieval Begin               */
+/*===========================================================================*/
+
+var getRestaurantBannerImagePath = function( req, res, next ) {
+    console.log('In AdminRestaurantController | Starting Execution of getRestaurantBannerImagePath');
+
+    var slugName = req.query.slug;
+    var type = req.query.type;
+
+    console.log( req.params );
+
+    RestaurantService.getRestaurantBannerImagePath( slugName, type, function( err, result ) {
+        if( err ) {
+            if( err === appConstants.appErrors.validationError ) {
+                res.status( 400 )
+                    .json( result );
+            } else {
+                res.status( 500 )
+                    .json( result );
+            }
+        } else {
+            var imgPath = 'client/' + result;
+
+            console.log( result );
+
+            fs.readFile( imgPath, function( err, result ) {
+                if( err ) {
+                    console.log( err );
+
+                    res.status( 500 )
+                        .json( err );
+                } else {
+                    res.writeHead(200, {'Content-Type': 'image/jpeg'});
+                    res.end(data); // Send the file data to the browser.
+                }
+            });
+        }
+    });
+
+    console.log('In AdminRestaurantController | Starting Execution of getRestaurantBannerImagePath');
+};
+
+/*                 Restaurant Banner Image Path Retrieval End                */
+/*===========================================================================*/
+
 
 /*                                 Module Export                             */
 /*===========================================================================*/
@@ -249,3 +295,4 @@ exports.searchRestaurants = searchRestaurants;
 exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData;
+exports.getRestaurantBannerImagePath = getRestaurantBannerImagePath;

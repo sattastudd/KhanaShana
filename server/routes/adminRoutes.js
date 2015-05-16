@@ -111,3 +111,13 @@ router.put( '/admin/restaurant/:restSlug', function( req, res, next ) {
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 
 });
+
+/* Request-Name : /public/restaurants/image, Type : Put, Allowed : public */
+/* This request would be used by admin to update existing restaurant details. */
+router.get( '/public/restaurants/image', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    adminRestController.getRestaurantBannerImagePath(req, res, next );
+
+    console.log( 'In adminRoutes | Finished ' + req.route.path );
+});

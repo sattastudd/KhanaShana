@@ -217,12 +217,21 @@ var getRestaurantList = function( searchParam, pagingParams, callback ){
     }
 
     var isApprovedNotEmpty = !DBUtils.isFieldEmpty( searchParam.approved );
+    var isAllStagesCompletedNotEmpty = !DBUtils.isFieldEmpty( searchParam.allStagesCompleted );
 
-    if( isApprovedNotEmpty ) {
-        //query.approved = searchParam.approved;
-        query.$and.push( {
-            approved : searchParam.approved
-        });
+    if( isApprovedNotEmpty || isAllStagesCompletedNotEmpty ) {
+
+        if( isApprovedNotEmpty ) {
+            query.$and.push( {
+                approved : searchParam.approved
+            });
+        }
+
+        if( isAllStagesCompletedNotEmpty ) {
+            query.$and.push( {
+                allStagesCompleted : searchParam.allStagesCompleted
+            });
+        }
 
         if( isNameNotEmpty || isLocalityNotEmpty ) {
             query.$and.push(orQuery);
@@ -665,7 +674,8 @@ var updateRestaurantDetails = function( cityName, slug, restaurant, callback ) {
             'img.lg' : paths.lg,
             'img.md' : paths.md,
             'img.sm' : paths.sm,
-            'img.xs' : paths.xs
+            'img.xs' : paths.xs,
+            allStagesCompleted : true
         };
         
         console.log(query);
@@ -686,6 +696,45 @@ var updateRestaurantDetails = function( cityName, slug, restaurant, callback ) {
 /*                        Restaurant Update Section End                      */
 /*===========================================================================*/
 
+/*                Restaurant Banner Image Path Retrieval Begin               */
+/*===========================================================================*/
+
+/* Public Method to retrieve banner image path of a restaurant.
+ * We store file path instead of file in the db.
+ * And the file path stored is relative to client side module.
+ * So, we can only send the image data from controller after making up complete file path.
+ */
+var getRestaurantBannerImagePath = function( cityName, slug, type, callback ) {
+    console.log('In AdminRestaurantDBI | Starting Execution of getRestaurantBannerImagePath');
+
+    var cityDBConnection = utils.getDBConnection(cityName);
+
+    RestaurantModelModule.setUpConnection(cityDBConnection);
+    var RestaurantModel = RestaurantModelModule.getModel();
+
+    var query = {
+        slug : slug
+    };
+
+    var imgType = 'img.' + type;
+
+    var projection = {};
+    projection[ imgType ] = true;
+
+    RestaurantModel.find( query, projection, function( err, result ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result ) ;
+        }
+    });
+
+    console.log('In AdminRestaurantDBI | Finished Execution of getRestaurantBannerImagePath');
+};
+
+/*                 Restaurant Banner Image Path Retrieval End                */
+/*===========================================================================*/
+
 /*                                 Module Export                             */
 /*===========================================================================*/
 exports.addNewRestaurant = addNewRestaurant;
@@ -693,3 +742,4 @@ exports.getRestaurantList = getRestaurantList;
 exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData;
+exports.getRestaurantBannerImagePath = getRestaurantBannerImagePath;

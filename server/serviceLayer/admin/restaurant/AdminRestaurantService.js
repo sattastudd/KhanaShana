@@ -172,6 +172,7 @@ var searchRestaurants = function (searchParams, pagingParams, callback) {
     var name = searchParams.name;
     var locality = searchParams.locality;
     var approved = searchParams.approved;
+    var allStagesCompleted = searchParams.allStagesCompleted;
     
     var hasAnyValidationFailed = false;
     var responseMessage = '';
@@ -179,6 +180,7 @@ var searchRestaurants = function (searchParams, pagingParams, callback) {
     var isNameBlank = Validator.isFieldEmpty(name);
     var islocalityBlank = Validator.isFieldEmpty(locality);
     var isApprovalBlank = Validator.isFieldEmpty(approved);
+    var isAllStagesBlank = Validator.isFieldEmpty( allStagesCompleted );
     
     if (isNameBlank) {
         delete searchParams.name;
@@ -212,6 +214,17 @@ var searchRestaurants = function (searchParams, pagingParams, callback) {
             searchParams.approved = false;
         } else
             delete searchParams.approved;
+    }
+
+    if ( isAllStagesBlank ) {
+        delete searchParams.allStagesCompleted;
+    } else {
+        if (searchParams.allStagesCompleted === 'true' || searchParams.allStagesCompleted) {
+            searchParams.allStagesCompleted = true;
+        } else if (searchParams.allStagesCompleted === 'false' || !searchParams.allStagesCompleted) {
+            searchParams.allStagesCompleted = false;
+        } else
+            delete searchParams.allStagesCompleted;
     }
     
     if (hasAnyValidationFailed) {
@@ -699,10 +712,78 @@ var updateRestaurantDetails = function (slug, restaurant, callback) {
 /*                         Restaurant Update Section End                     */
 /*===========================================================================*/
 
+/*                Restaurant Banner Image Path Retrieval Begin               */
+/*===========================================================================*/
+
+/* Public method to retrieve restaurant banner image of a particular restaurant with its slug name and type info.
+ * We only store path. It can't be used directly to read image.
+ * A little bit of pre-processing is required.
+ */
+var getRestaurantBannerImagePath = function( slug, type, callback  ) {
+    console.log('In AdminRestaurantService | Finished Execution of getRestaurantBannerImagePath');
+
+    var err = {};
+    var errMsg = {};
+
+    var hasAnyValidationFailed = false;
+
+    var responseFromValidatorForSlug = Validator.isNameNotValid( slug );
+
+    if( responseFromValidatorForSlug.result ) {
+        hasAnyValidationFailed = true;
+
+        err.slug = true;
+        errMsg.slug = responseFromValidatorForSlug.message;
+    }
+
+    console.log( type );
+
+    var possibleTypeArray = ['xs','md','lg', 'sm'];
+
+    if( possibleTypeArray.indexOf( type ) == -1 ) {
+        hasAnyValidationFailed = true;
+
+        err.type = true;
+        errMsg.type = 'Please choose a valid type.';
+    }
+
+    if( hasAnyValidationFailed ) {
+        callback( appConstants.appErrors.validationError,  {
+            err : err,
+            errMsg : errMsg,
+            data : null,
+            msg : appConstants.errorMessage.fillDetails
+        });
+    } else {
+        var cityName = 'lucknow';
+
+        RestaurantDBI.getRestaurantBannerImagePath( cityName, slug,  type, function( err, result ) {
+            if( err ) {
+                console.log( err );
+
+                callback( appConstants.appErrors.someError, {
+                    err : err,
+                    errMsg : errMsg,
+                    data : null,
+                    msg : appConstants.errorMessage.someError
+                });
+            } else {
+                callback( null, result );
+            }
+        });
+    }
+
+    console.log('In AdminRestaurantService | Finished Execution of getRestaurantBannerImagePath');
+};
+
+/*                 Restaurant Banner Image Path Retrieval End                */
+/*===========================================================================*/
+
 /*                                 Module Export                             */
 /*===========================================================================*/
 exports.addNewRestaurant = addNewRestaurant;
 exports.searchRestaurants = searchRestaurants;
 exports.updateRestaurantDetails = updateRestaurantDetails;
 
-exports.readRestaurantSpecificData = readRestaurantSpecificData;
+exports.readRestaurantSpecificData = readRestaurantSpecificData
+exports.getRestaurantBannerImagePath = getRestaurantBannerImagePath;

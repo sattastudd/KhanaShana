@@ -1,11 +1,11 @@
 define([], function($scope) {
-    function restaurantController() {
+    function pendingApprovalRestaurantListController() {
     };
 
-    return restaurantController;
+    return pendingApprovalRestaurantListController;
 });
 
-function RestaurantListController($scope, $http, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
+function PendingRestaurantListController($scope, $http, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
     var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.searchRestaurants;;
 
     $scope.restaurantList = [];
@@ -15,7 +15,8 @@ function RestaurantListController($scope, $http, AppConstants, AppUtils, RestReq
     };
 
     $scope.searchParams = {
-        approved : true
+        allStagesCompleted : true,
+        approved : false
     };
 
     $scope.isServerError = false;
