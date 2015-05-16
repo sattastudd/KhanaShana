@@ -61,7 +61,7 @@ function homeController($scope, $modal, $location, DataStore, $window, $http, Ap
 
 			//$scope.openLocationModal = function () {
 	        	var modalInstance = $modal.open({
-	            templateUrl : 'locationSelectModal.html',
+	            templateUrl : '../../views/user/locationSelectModal.html',
 	            controller : 'locationSelectModalController',
 	            backdrop : 'static',
 	            windowClass    : 'darkTransparentBack',

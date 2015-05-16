@@ -39,7 +39,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
 
     //$scope.count = 1;
 
-    $scope.itemAddedHalf = function(item){
+    $scope.itemAddedHalf = function(item,index){
         console.log(item.title);
         console.log(item.price.half);
         $scope.cartLoaded = true;
@@ -55,7 +55,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         
         $scope.dishShortlisted.push( objectToPush );
 
-        console.log($scope.dishShortlisted);
+        console.log($scope.dishShortlisted[0].dish);
     }
 
     $scope.itemAddedFull = function(item){
