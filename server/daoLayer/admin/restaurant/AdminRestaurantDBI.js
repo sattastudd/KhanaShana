@@ -721,10 +721,11 @@ var getRestaurantBannerImagePath = function( cityName, slug, type, callback ) {
     var projection = {};
     projection[ imgType ] = true;
 
-    RestaurantModel.find( query, projection, function( err, result ) {
+    RestaurantModel.findOne( query, projection, function( err, result ) {
         if( err ) {
             callback( err );
         } else {
+            console.log( result );
             callback( null, result ) ;
         }
     });

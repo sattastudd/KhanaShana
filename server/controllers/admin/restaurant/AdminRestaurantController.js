@@ -4,6 +4,7 @@
 
 var formidable = require( 'formidable' );
 var fs = require( 'fs' );
+var mv = require( 'mv' );
 var appConstants = require('../../../constants/ServerConstants');
 
 var RestaurantService = require( '../../../serviceLayer/admin/restaurant/AdminRestaurantService' );
@@ -220,7 +221,10 @@ var updateRestaurantDetails = function( req, res, next ) {
                             var fileObj = files[array[i]];
 
                             var toRename = appConstants.restaurantImagesPath + slugReceivedInRequest + '/' + slugReceivedInRequest + '-' + array[i] + fileObj.name.substr(fileObj.name.indexOf('.'));
-                            fs.rename(fileObj.path, toRename);
+                            mv(fileObj.path, toRename, function( err, result ) {
+                                console.log( err );
+                                console.log( result );
+                            });
                         }
 
                     });
@@ -263,7 +267,7 @@ var getRestaurantBannerImagePath = function( req, res, next ) {
                     .json( result );
             }
         } else {
-            var imgPath = 'client/' + result;
+            var imgPath = 'client/' + result.img.lg;
 
             console.log( result );
 
@@ -275,7 +279,7 @@ var getRestaurantBannerImagePath = function( req, res, next ) {
                         .json( err );
                 } else {
                     res.writeHead(200, {'Content-Type': 'image/jpeg'});
-                    res.end(data); // Send the file data to the browser.
+                    res.end(result); // Send the file data to the browser.
                 }
             });
         }

@@ -638,7 +638,7 @@ var updateRestaurantDetails = function (slug, restaurant, callback) {
                 err[arr[i]]=  true;
                 errMsg[arr[i]] = responseFromValidatorForFileName.message;
             } else {
-                paths[arr[i]] = appConstants.imagePrefixPath + slug + '-' + arr[i] + paths[arr[i]].substr(paths[arr[i]].lastIndexOf('.'));
+                paths[arr[i]] = appConstants.imagePrefixPath + slug + '/' + slug + '-' + arr[i] + paths[arr[i]].substr(paths[arr[i]].lastIndexOf('.'));
             }
         }
 

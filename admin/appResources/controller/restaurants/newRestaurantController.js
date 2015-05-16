@@ -356,6 +356,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
     };
 
     $scope.removeFile = function (type) {
+        delete $scope.paths[type];
         delete $scope.files[type];
     };
 
