@@ -6,7 +6,7 @@ define( [], function() {
 	return userHomeController;
 } );
 
-function homeController($scope, $http, DataStore, AppConstants, RestRequests) {
+function homeController($scope, $modal, $location, DataStore, $window, $http, AppConstants, RestRequests) {
 
 	$scope.search = {
 		searchText : ''
@@ -55,6 +55,19 @@ function homeController($scope, $http, DataStore, AppConstants, RestRequests) {
 		$scope.firstClickHandled = false;
 
 		bannerSearch.focus();
+
+		if(menu.type === 'loc'){
+			console.log("inside loc");
+
+			//$scope.openLocationModal = function () {
+	        	var modalInstance = $modal.open({
+	            templateUrl : 'locationSelectModal.html',
+	            controller : 'locationSelectModalController',
+	            backdrop : 'static',
+	            windowClass    : 'darkTransparentBack',
+	            size : 'sm'
+	        });
+		//}
 	};
 
 	/*
@@ -74,6 +87,16 @@ function homeController($scope, $http, DataStore, AppConstants, RestRequests) {
 		}
 	} );
 
-	var request = AppConstants.httpServicePrefix + '/'
+		var request = AppConstants.httpServicePrefix + '/'
 			+ RestRequests.getDropDowns;
-}
+	}
+
+};
+
+
+function locationSelectModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants){
+
+
+	console.log("inside modal location");
+
+};

@@ -44,7 +44,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         console.log(item.price.half);
         $scope.cartLoaded = true;
 
-        if(typeof $scope.dishShortlisted.quantity === 'undefined'){
+
         var objectToPush = {
             dish : item.title,
             price : item.price.half,
@@ -54,12 +54,10 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         }
         
         $scope.dishShortlisted.push( objectToPush );
-    }else{
-        console.log("its in else part");
+
+        console.log($scope.dishShortlisted);
     }
 
-        
-    }
     $scope.itemAddedFull = function(item){
         console.log(item);
         $scope.cartLoaded = true;
@@ -82,12 +80,19 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
 
         dish.quantity = dish.quantity + 1;
         dish.totalPrice = dish.quantity * dish.price;
+
     }
     $scope.quantityDecreased = function(dish){
 
         dish.quantity = dish.quantity - 1;
         dish.totalPrice = dish.quantity * dish.price;
     }
+    $scope.removeDish = function(index){
+        
+        $scope.dishShortlisted.splice(index, 1);
+        console.log($scope.dishShortlisted);
+    }
+
     $scope.proceeded = function(){
         $location.path('/CheckOut');
     }

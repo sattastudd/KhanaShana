@@ -414,7 +414,7 @@ function LoginModalController($scope, $modalInstance, $location, DataStore, $win
 
                         setTimeout( function() {
                                 $scope.closeLoginModal();
-                        }, 2000 );
+                        }, 1000 );
 
                     })
                     .error( function( data ) {
