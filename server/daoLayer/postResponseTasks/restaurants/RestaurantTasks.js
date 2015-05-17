@@ -10,7 +10,7 @@ var RestaurantModelModule = require( '../../../models/restaurant/restaurants' );
 var async = require( 'async' );
 
 /* Public method to find count of approved restaurants in the system. */
-var getApprovedRestaurantCount = function( cityName ) {
+var getApprovedRestaurantCount = function( cityName, callback ) {
     console.log( 'In RestaurantTasks | Starting execution of getApprovedRestaurantCount' );
 
     var cityDBConnection = utils.getDBConnection(cityName);
@@ -63,7 +63,12 @@ var updateApprovedRestaurantCountInSystem = function( totalCount, callback ) {
 var updateRestaurantStats = function( cityName ) {
     console.log( 'In RestaurantTasks | Finished execution of updateRestaurantStats' );
 
-    a
+    async.waterfall([
+        async.apply( getApprovedRestaurantCount, cityName ),
+        updateApprovedRestaurantCountInSystem
+    ]);
 
     console.log( 'In RestaurantTasks | Finished execution of updateRestaurantStats' );
 };
+
+exports.updateRestaurantStats = updateRestaurantStats;
