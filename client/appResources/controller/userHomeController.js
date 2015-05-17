@@ -94,9 +94,21 @@ function homeController($scope, $modal, $location, DataStore, $window, $http, Ap
 };
 
 
-function locationSelectModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants){
+function locationSelectModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
 
-
+	$scope.closeLoginModal = function (){
+        $modalInstance.close();
+    };
 	console.log("inside modal location");
+
+	$scope.locations = ['PatrakarPuram','Chinhat','Gomti nagar','Alambagh','Aliganj',
+						'Charbagh','Hazratganj', 'Alamnagar','Tedhi Puliya','Bhootnath',
+						'RabindraPalli','Polytechnic','Munsi Puliya','Vaibhav Khand','Vibhuti Khand',
+						'PatrakarPuram','Chinhat','Gomti nagar','Alambagh','Aliganj',
+						'Charbagh','Hazratganj', 'Alamnagar','Tedhi Puliya','Bhootnath',
+						'RabindraPalli','Polytechnic','Munsi Puliya','Vaibhav Khand','Vibhuti Khand',
+						'PatrakarPuram','Chinhat','Gomti nagar','Alambagh','Aliganj',
+						'Charbagh','Hazratganj', 'Alamnagar','Tedhi Puliya','Bhootnath',
+						'RabindraPalli','Polytechnic','Munsi Puliya','Vaibhav Khand','Vibhuti Khand',];
 
 };
