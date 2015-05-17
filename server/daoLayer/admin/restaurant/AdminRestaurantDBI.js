@@ -2,9 +2,12 @@
 var RestaurantModelModule = require( '../../../models/restaurant/restaurants' );
 var LocationsModelModule = require( '../../../models/locations/locationsModel.js' );
 var CuisineModelModule = require( '../../../models/cuisines/cuisinesModel.js' );
+var UsersModelModule = require( '../../../models/login/usersModel' );
 
 var DBUtils = require( '../../util/DBIUtil' );
 var appConstants = require( '../../../constants/ServerConstants' );
+
+var RestaurantPostResponsdTasks = require( '../../postResponseTasks/restaurants/RestaurantTasks' );
 
 var async = require( 'async' );
 
@@ -31,7 +34,7 @@ var isSlugAlreadyBeingUsed = function( cityName, slug, callback ) {
         if( err ) {
             callback( err );
         } else {
-            console.log( 'SLug Count ' + result );
+
             if( result != 0 ){
                 callback( appConstants.appErrors.intentionalBreak );
             } else {
@@ -60,8 +63,6 @@ var insertBasicDetails = function( cityName, restaurant, isSlugAlreadyBeingUsed,
 
         var Restaurant = new RestaurantModel(restaurant);
         
-        console.log(restaurant);
-
         Restaurant.save( function ( err, result ) {
             if( err ) {
                 callback ( err );
@@ -108,7 +109,16 @@ var addNewRestaurant = function( cityName, restaurantToInsert, callback ) {
         owner: '',
         approved: false,
 
-        stage: restaurantToInsert.stage
+        stage: restaurantToInsert.stage,
+
+        owner : {
+            name : null,
+            email : null
+        },
+
+        img : {
+
+        }
     };
 
     async.waterfall([
@@ -243,7 +253,7 @@ var getRestaurantList = function( searchParam, pagingParams, callback ){
     console.log( query );
 
     var projection = {
-
+        "_id" : false,
         "__v": false,
         createDate : false,
         address : false,
@@ -316,9 +326,14 @@ var readRestaurantSpecificData = function( cityName, slug, callback ) {
         slug : slug
     };
 
-    console.log( query );
+    var projection = {
+        "_id" : false,
+        "__v" : false,
+        owner : false,
+        approved : false
+    };
 
-    RestaurantModel.findOne( query, function( err, result ) {
+    RestaurantModel.findOne( query, projection, function( err, result ) {
         if( err ) {
             callback( err );
         } else {
@@ -506,10 +521,7 @@ var updateCuisinesInfoOfRestaurant = function (cityName, restSlug, cuisines, are
                 stage : 'cuisineArea'
             }
         };
-        
-        console.log(query);
-        console.log(update);
-        
+
         RestaurantModel.update(query, update, function (err, result) {
             if (err) {
                 callback(err);
@@ -586,9 +598,6 @@ var updateRestaurantDetails = function( cityName, slug, restaurant, callback ) {
             updateQuery.$set['address.co_ord'] =  restaurant.address.co_ord;
         }
 
-        console.log(query);
-        console.log(updateQuery);
-        
         var cityDBConnection = utils.getDBConnection(cityName);
         
         RestaurantModelModule.setUpConnection(cityDBConnection);
@@ -677,9 +686,20 @@ var updateRestaurantDetails = function( cityName, slug, restaurant, callback ) {
             'img.xs' : paths.xs,
             allStagesCompleted : true
         };
-        
-        console.log(query);
-        console.log(update);
+
+        var imageArray = ['xs', 'sm', 'md', 'lg'];
+
+        for( var i=0; i<imageArray.length;i++) {
+            var type = imageArray[ i ];
+
+            var isTypeEmpty = DBUtils.isFieldEmpty( paths[ type ]);
+
+            if( isTypeEmpty ){
+                var imgPathStored = 'img.' + type;
+
+                delete update[ imgPathStored ];
+            }
+        }
 
         RestaurantModel.update(query, update, function (err, updateCount) {
             if (err) {
@@ -725,7 +745,6 @@ var getRestaurantBannerImagePath = function( cityName, slug, type, callback ) {
         if( err ) {
             callback( err );
         } else {
-            console.log( result );
             callback( null, result ) ;
         }
     });
@@ -736,6 +755,250 @@ var getRestaurantBannerImagePath = function( cityName, slug, type, callback ) {
 /*                 Restaurant Banner Image Path Retrieval End                */
 /*===========================================================================*/
 
+/*                          Restaurant Approval Begin                        */
+/*===========================================================================*/
+
+/*              Private Methods             */
+/*==========================================*/
+
+/* Private method to check if restaurant already has an owner.
+ * It is necessary to avoid errors as our application works as independent REST API.
+ * We can consume requests originated from non-browser applications.
+ * In that case, we need to ensure that we get required functionality enforced.
+ */
+var doesRestaurantAlreadyHasAnOwner = function( cityName, slug, callback ) {
+    console.log('In AdminRestaurantDBI | Starting Execution of doesRestaurantAlreadyHasAnOwner');
+
+    var cityDBConnection = utils.getDBConnection(cityName);
+
+    RestaurantModelModule.setUpConnection(cityDBConnection);
+    var RestaurantModel = RestaurantModelModule.getModel();
+
+    /* With this query, we are trying to find a restaurant who doesn't has anything stored in its ownwer field.
+     * So, if count is one, result is false.
+     * Otherwise, it is true.
+     */
+    var query = {
+        $and : [
+            { slug : slug },
+            { owner : { $exists : true }},
+            {
+                $or : [
+                    { 'owner.email' : { $type : 10 }},
+                    { 'owner.email' : '' }
+                ]
+            }
+        ]
+    };
+
+    RestaurantModel.count( query, function( err, count ) {
+
+        if( err ) {
+            callback( err );
+        } else {
+            if( count === 1 )
+                callback( null, false );
+            else
+                callback( null, true );
+        }
+    });
+
+    console.log('In AdminRestaurantDBI | Finished Execution of doesRestaurantAlreadyHasAnOwner');
+};
+
+/* Private method to update owner info in restaurant document.
+ * This function would be executed after doesRestaurantAlreadyHasAnOwner.
+ */
+var insertOwnerInfoInRestaurant = function( cityName, slug, ownerInfo, doesRestaurantAlreadyHasAnOwner, callback ) {
+    console.log('In AdminRestaurantDBI | Finished Execution of insertOwnerInfoInRestaurant');
+
+    if( doesRestaurantAlreadyHasAnOwner  ) {
+        callback( appConstants.appErrors.alreadyHasAnOwner );
+    } else {
+
+        var cityDBConnection = utils.getDBConnection(cityName);
+
+        RestaurantModelModule.setUpConnection(cityDBConnection);
+        var RestaurantModel = RestaurantModelModule.getModel();
+
+        var query = {
+            slug : slug
+        };
+
+        var update = {
+            $set : {
+                'owner.name' : ownerInfo.name,
+                'owner.email' : ownerInfo.email,
+                approved : true
+            }
+        };
+
+        RestaurantModel.update( query, update, function( err, updateCount ) {
+
+            if( err ) {
+                callback( err );
+            } else {
+                if( updateCount !== 1 ) {
+                    callback( appConstants.appErrors.someError )
+                } else {
+                    callback( null, updateCount );
+                }
+            }
+        });
+    }
+
+    console.log('In AdminRestaurantDBI | Finished Execution of insertOwnerInfoInRestaurant');
+};
+
+/* Private method that would execute doesRestaurantAlreadyHasAnOwner and insertOwnerInfoInRestaurant in waterfall fahsion.*/
+var updateRestaurantInfo = function( cityName, slug, userInfo, callback ) {
+    console.log('In AdminRestaurantDBI | Finished Execution of updateRestaurantInfo');
+
+    async.waterfall([
+        async.apply(doesRestaurantAlreadyHasAnOwner, cityName, slug ),
+        async.apply(insertOwnerInfoInRestaurant, cityName, slug, userInfo )
+    ],
+        function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        }
+    );
+
+    console.log('In AdminRestaurantDBI | Finished Execution of updateRestaurantInfo');
+};
+
+/* Private method up check whether user is already assigned to a restaurant.
+ * This is again necessary to check given nature of our REST API.
+ */
+var hasUserBeenAlreadyAssignedRestaurant = function( userInfo, callback ) {
+    console.log('In AdminRestaurantDBI | Startinng Execution of hasUserBeenAlreadyAssignedRestaurant');
+
+    var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
+
+    UsersModelModule.setUpConnection( appUsersDBConnection );
+    var UsersModel = UsersModelModule.getUsersModel();
+
+    var query = {
+        $and : [
+            { role : 'restOwn' },
+            { email : userInfo.email },
+            { restaurantAssigned : { $exists : true }},
+            { $or : [
+                { 'restaurantAssigned.slug'  : { $type : 10 }},
+                { 'restaurantAssigned.slug' : '' }
+            ]}
+        ]
+    };
+
+    UsersModel.count( query, function( err, count ) {
+
+        if ( err ) {
+            callback( err ) ;
+        } else {
+            callback( null, count );
+        }
+    });
+
+    console.log('In AdminRestaurantDBI | Finished Execution of hasUserBeenAlreadyAssignedRestaurant');
+};
+
+/* Private method to update assigned restaurant info in user document */
+var updateAssignedRestaurantInfoInUserDocument = function( userInfo, restInfo, hasUserBeenAlreadyAssignedRestaurant, callback ) {
+    console.log('In AdminRestaurantDBI | Finished Execution of updateAssignedRestaurantInfoInUserDocument');
+
+    if( hasUserBeenAlreadyAssignedRestaurant !== 1 ){
+        callback( appConstants.appErrors.userAlreadyAssigned );
+    } else {
+
+        var appUsersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
+
+        UsersModelModule.setUpConnection( appUsersDBConnection );
+        var UsersModel = UsersModelModule.getUsersModel();
+
+        var query = {
+            email : userInfo.email
+        };
+
+        var update = {
+            $set : {
+                'restaurantAssigned.name' : restInfo.name,
+                'restaurantAssigned.slug' : restInfo.slug
+            }
+        };
+
+        UsersModel.update( query, update, function( err, udpateCount ) {
+
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, udpateCount );
+            }
+        });
+    }
+
+    console.log('In AdminRestaurantDBI | Finished Execution of updateAssignedRestaurantInfoInUserDocument');
+};
+
+
+/* Private method to update userInfo for respective assigned restaurant.
+ * This method would execute hasUserBeenAlreadyAssignedRestaurant,  updateAssignedRestaurantInfoInUserDocument in waterfall fashion
+ */
+var updateAssignedRestaurantInfo = function( userInfo, restInfo, callback ) {
+    console.log('In AdminRestaurantDBI | Starting Execution of updateAssignedRestaurantInfo');
+
+    async.waterfall([
+        async.apply( hasUserBeenAlreadyAssignedRestaurant, userInfo ),
+        async.apply( updateAssignedRestaurantInfoInUserDocument, userInfo, restInfo )
+    ],
+        function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        });
+
+
+    console.log('In AdminRestaurantDBI | Finished Execution of updateAssignedRestaurantInfo');
+};
+
+/*               Public Methods             */
+/*==========================================*/
+var approveRestaurant = function( cityName, restInfo, userInfo, callback ) {
+    console.log('In AdminRestaurantDBI | Finished Execution of approveRestaurant');
+
+    async.parallel(
+        {
+            updateRestaurant : async.apply( updateRestaurantInfo, cityName, restInfo.slug, userInfo ),
+            updateUser : async.apply( updateAssignedRestaurantInfo, userInfo, restInfo )
+        },
+
+        function( err, result ) {
+
+            if( err ) {
+                callback( err );
+            } else {
+                if( result.updateRestaurant && result.updateUser ) {
+                    callback( null, result );
+                } else {
+                    callback( appConstants.appErrors.someError )
+                }
+            }
+        }
+    );
+
+    /* Updating approved restaurant count in the system. */
+    RestaurantPostResponsdTasks.updateRestaurantStats( cityName );
+
+    console.log('In AdminRestaurantDBI | Finished Execution of approveRestaurant');
+};
+
+/*                           Restaurant Approval End                         */
+/*===========================================================================*/
+
 /*                                 Module Export                             */
 /*===========================================================================*/
 exports.addNewRestaurant = addNewRestaurant;
@@ -744,3 +1007,4 @@ exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData;
 exports.getRestaurantBannerImagePath = getRestaurantBannerImagePath;
+exports.approveRestaurant = approveRestaurant;

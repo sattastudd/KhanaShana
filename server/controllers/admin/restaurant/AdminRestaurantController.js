@@ -220,11 +220,16 @@ var updateRestaurantDetails = function( req, res, next ) {
                         for (var i = 0; i < arrLength; i++) {
                             var fileObj = files[array[i]];
 
-                            var toRename = appConstants.restaurantImagesPath + slugReceivedInRequest + '/' + slugReceivedInRequest + '-' + array[i] + fileObj.name.substr(fileObj.name.indexOf('.'));
-                            mv(fileObj.path, toRename, function( err, result ) {
-                                console.log( err );
-                                console.log( result );
-                            });
+                            console.log( array[i]);
+                            console.log( typeof fileObj );
+
+                            if( typeof files[array[i]] !== 'undefined' && typeof files[ array[i]] !== 'string') {
+                                var toRename = appConstants.restaurantImagesPath + slugReceivedInRequest + '/' + slugReceivedInRequest + '-' + array[i] + fileObj.name.substr(fileObj.name.indexOf('.'));
+                                mv(fileObj.path, toRename, function( err, result ) {
+                                    console.log( err );
+                                    console.log( result );
+                                });
+                            }
                         }
 
                     });
@@ -267,9 +272,7 @@ var getRestaurantBannerImagePath = function( req, res, next ) {
                     .json( result );
             }
         } else {
-            var imgPath = 'client/' + result.img.lg;
-
-            console.log( result );
+            var imgPath = 'client/' + result.img[ type ];
 
             fs.readFile( imgPath, function( err, result ) {
                 if( err ) {
@@ -285,10 +288,43 @@ var getRestaurantBannerImagePath = function( req, res, next ) {
         }
     });
 
-    console.log('In AdminRestaurantController | Starting Execution of getRestaurantBannerImagePath');
+    console.log('In AdminRestaurantController | Finished Execution of getRestaurantBannerImagePath');
 };
 
 /*                 Restaurant Banner Image Path Retrieval End                */
+/*===========================================================================*/
+
+/*                          Restaurant Approval Begin                        */
+/*===========================================================================*/
+
+/* Function to approve restaurant.
+ */
+
+var approveRestaurant = function( req, res, next ) {
+    console.log('In AdminRestaurantController | Starting Execution of approveRestaurant');
+
+    var restInfo = req.body.restInfo;
+    var userInfo = req.body.userInfo;
+
+    RestaurantService.approveRestaurant( userInfo, restInfo, function( err, result ) {
+       if( err ) {
+           if( err === appConstants.appErrors.validationError ) {
+               res.status( 400 )
+                   .json( result );
+           } else {
+               res.status( 500 )
+                   .json( result );
+           }
+       } else  {
+           res.status( 200 )
+               .json( result );
+       }
+    });
+
+    console.log('In AdminRestaurantController | Finished Execution of approveRestaurant');
+};
+
+/*                           Restaurant Approval End                         */
 /*===========================================================================*/
 
 
@@ -300,3 +336,4 @@ exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData;
 exports.getRestaurantBannerImagePath = getRestaurantBannerImagePath;
+exports.approveRestaurant = approveRestaurant;

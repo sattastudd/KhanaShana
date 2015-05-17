@@ -20,7 +20,11 @@ var restaurantSchema = new mongoose.Schema({
 
     stage : String,
 
-    owner :String,
+    owner : {
+        name : String,
+        email : String
+    },
+
     approved : Boolean,
     
     allStagesCompleted : Boolean,

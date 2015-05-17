@@ -630,15 +630,19 @@ var updateRestaurantDetails = function (slug, restaurant, callback) {
         for (var i = 0; i < arrLength; i++) {
             var fileName = paths[ arr[i] ];
 
-            var responseFromValidatorForFileName = Validator.isFileNameNotValid(fileName);
+            if( !Validator.isFieldEmpty( paths[ arr[ i ]]) ) {
+                var responseFromValidatorForFileName = Validator.isFileNameNotValid( fileName );
 
-            if (responseFromValidatorForFileName.result) {
-                hasAnyValidationFailed = true;
+                if ( responseFromValidatorForFileName.result ) {
+                    hasAnyValidationFailed = true;
 
-                err[arr[i]]=  true;
-                errMsg[arr[i]] = responseFromValidatorForFileName.message;
+                    err[ arr[ i ] ] = true;
+                    errMsg[ arr[ i ] ] = responseFromValidatorForFileName.message;
+                } else {
+                    paths[ arr[ i ] ] = appConstants.imagePrefixPath + slug + '/' + slug + '-' + arr[ i ] + paths[ arr[ i ] ].substr( paths[ arr[ i ] ].lastIndexOf( '.' ) );
+                }
             } else {
-                paths[arr[i]] = appConstants.imagePrefixPath + slug + '/' + slug + '-' + arr[i] + paths[arr[i]].substr(paths[arr[i]].lastIndexOf('.'));
+                delete paths[ arr[ i ]];
             }
         }
 
@@ -779,6 +783,102 @@ var getRestaurantBannerImagePath = function( slug, type, callback  ) {
 /*                 Restaurant Banner Image Path Retrieval End                */
 /*===========================================================================*/
 
+
+/*                          Restaurant Approval Begin                        */
+/*===========================================================================*/
+
+var approveRestaurant = function( userInfo, restInfo, callback ) {
+    console.log('In AdminRestaurantService | Finished Execution of approveRestaurant');
+
+    var err = {};
+    var errMsg = {};
+
+    var hasAnyValidationFailed = false;
+
+    if( typeof userInfo === 'undefined' || typeof restInfo === 'undefined' ) {
+        callback( appConstants.appErrors.validationError, {
+            err : {},
+            errMsg : {},
+            data : null,
+            msg : appConstants.errorMessage.fillDetails
+        });
+
+        return;
+    }
+
+    var userName = userInfo.name;
+    var userEmail = userInfo.email;
+
+    var restName = restInfo.name;
+    var restSlug = restInfo.slug;
+
+    var responseFromValidatorForUserName = Validator.isNameNotValid( userName, true );
+
+    if( responseFromValidatorForUserName.result ) {
+        hasAnyValidationFailed = true;
+
+        setUpError(err, errMsg, 'name', responseFromValidatorForUserName );
+    }
+
+    var responseFromValidatorForUserEmail = Validator.isEmailNotValid( userEmail, true );
+
+    if( responseFromValidatorForUserEmail.result ) {
+        hasAnyValidationFailed = true;
+
+        setUpError(err, errMsg, 'email', responseFromValidatorForUserEmail );
+    }
+
+    var responseFromValidatorForRestName = Validator.isNameNotValid( restName, true );
+
+    if( responseFromValidatorForRestName.result ) {
+        hasAnyValidationFailed = true;
+
+        setUpError( err, errMsg, 'restName', responseFromValidatorForRestName );
+    }
+
+    var responseFromValidatorForRestSlug = Validator.isSlugNotValid( restSlug,true );
+
+    if( responseFromValidatorForRestSlug.result ) {
+        hasAnyValidationFailed = true;
+
+        setUpError(err, errMsg, 'restSlug', responseFromValidatorForRestSlug );
+    }
+
+    if( hasAnyValidationFailed ) {
+        callback( appConstants.appErrors.validationError, {
+            err : err,
+            errMsg : errMsg,
+            data : null,
+            msg : appConstants.errorMessage.removeError
+        });
+    } else {
+        var cityName = 'lucknow';
+
+        RestaurantDBI.approveRestaurant( cityName, restInfo, userInfo, function( err, result ) {
+            if( err ) {
+                callback( appConstants.appErrors.someError, {
+                    err : {},
+                    errMsg : {},
+                    data : null,
+                    msg : appConstants.errorMessage.someError
+                });
+            } else {
+                callback( null, {
+                    err : {},
+                    errMsg : {},
+                    data : result,
+                    msg : appConstants.restaurantApproved
+                });
+            }
+        } );
+    }
+
+    console.log('In AdminRestaurantService | Finished Execution of approveRestaurant');
+};
+
+/*                           Restaurant Approval End                         */
+/*===========================================================================*/
+
 /*                                 Module Export                             */
 /*===========================================================================*/
 exports.addNewRestaurant = addNewRestaurant;
@@ -787,3 +887,4 @@ exports.updateRestaurantDetails = updateRestaurantDetails;
 
 exports.readRestaurantSpecificData = readRestaurantSpecificData
 exports.getRestaurantBannerImagePath = getRestaurantBannerImagePath;
+exports.approveRestaurant = approveRestaurant;

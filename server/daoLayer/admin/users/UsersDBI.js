@@ -93,6 +93,22 @@ var getUserList = function( searchParam, pagingParams, callback ){
         role : searchParam.role
     };
 
+    if ( searchParam.role === 'restOwn' ) {
+        var isAssignedNotEmpty = !DBUtils.isFieldEmpty( searchParam.isAssigned );
+
+        if( isAssignedNotEmpty ) {
+            var isAssigned = searchParam.isAssigned;
+
+            if( isAssigned === 'true' || isAssigned ) {
+                query.isAssigned = true;
+            } else if( isAssigned === 'false' || !isAssigned ) {
+                query.isAssigned = false;
+            }
+        }
+    }
+
+    console.log( query );
+
     var isNameNotEmpty = !DBUtils.isFieldEmpty( searchParam.name );
 
     if( isNameNotEmpty ) {

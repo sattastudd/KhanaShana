@@ -12,7 +12,13 @@ var usersSchema = new mongoose.Schema({
     profile_created_date : Date,
     orders : Number,
     revenueGenerated : Number,
-    isBlackListed : Boolean
+    isBlackListed : Boolean,
+
+    isAssigned : Boolean,
+    restaurantAssigned : {
+        name : String,
+        slug : String
+    }
 });
 
 var connection = null;

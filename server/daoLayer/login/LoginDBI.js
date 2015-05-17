@@ -81,17 +81,30 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 	userModelModule.setUpConnection( userDBConnection );
 	var UserModel = userModelModule.getUsersModel();
 
-	var User = new UserModel({
-		name : userInfo.name,
-		email : userInfo.email.toLowerCase(),
-		credential : userInfo.credential,
-		contact : userInfo.contact,
-		role : userInfo.role,
-        	profile_created_date : (new Date()).getTime(),
-        	orders : 0,
-        	revenueGenerated : 0,
+    var userObj = {
+        name : userInfo.name,
+        email : userInfo.email.toLowerCase(),
+        credential : userInfo.credential,
+        contact : userInfo.contact,
+        role : userInfo.role,
+        profile_created_date : (new Date()).getTime(),
+        orders : 0,
+        revenueGenerated : 0,
         isBlackListed : false
-	});
+    };
+
+    if( userObj.role === 'restOwn' ) {
+        userObj.restaurantAssigned = {
+            name : null,
+            slug : null
+        };
+
+        userObj.isAssigned = false;
+    }
+
+    console.log( userObj );
+
+	var User = new UserModel( userObj );
 
 	User.save( function( err, result ) {
 		if( err ) {

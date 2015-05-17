@@ -1,4 +1,4 @@
-/* This moudle is supposed to carry out tasks, that should be performed after response has been sent to the client.
+/* This module is supposed to carry out tasks, that should be performed after response has been sent to the client.
  * These tasks involve updation of user account stats.
  */
 

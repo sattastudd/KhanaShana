@@ -50,6 +50,12 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 '../../appResources/controller/restaurants/newRestaurantController'
             ))
 
+            .when( '/restaurants/approve',
+            routeConfig.config(
+                'views/restaurants/approveRestaurant.html',
+                '../../appResources/controller/restaurants/restaurantApprovalController'
+            ))
+
             .otherwise({
                 redirectTo: '/login'
             });

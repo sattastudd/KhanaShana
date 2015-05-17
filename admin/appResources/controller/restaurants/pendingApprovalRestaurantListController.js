@@ -5,7 +5,7 @@ define([], function($scope) {
     return pendingApprovalRestaurantListController;
 });
 
-function PendingRestaurantListController($scope, $http, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
+function PendingRestaurantListController($scope, $http, $location, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
     var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.searchRestaurants;;
 
     $scope.restaurantList = [];
@@ -106,12 +106,11 @@ function PendingRestaurantListController($scope, $http, AppConstants, AppUtils, 
         $scope.search();
     };
 
-    $scope.editRestaurant = function( restaurant ) {
-        user.role = $scope.roleSelected;
-        DataStore.storeData( 'isRestaurantEdit', true );
-        DataStore.storeData( 'toEditRestaurant', restaurant );
+    $scope.approveRestaurant = function( restaurant ) {
+        console.log( restaurant );
 
-        $location.path( 'newRestaurant' );
+        DataStore.storeData( 'approvalForRestaurant', restaurant );
+        $location.path( '/restaurants/approve' );
     };
 
     /* Getters */

@@ -80,7 +80,8 @@ var getUserList = function( searchParams, pagingParams, callback ){
                 msg : appConstants.errorMessage.someError
             });
         } else {
-            if( null === result ){
+
+            if( null === result || result.result.length == 0 ){
                 callback( appConstants.appErrors.noRecordFound, {
                     err : {},
                     errMsg : {},

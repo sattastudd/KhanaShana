@@ -89,8 +89,13 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                             $scope.adjustCuisines($scope.restaurant.cuisines);
                         }
 
-                        $scope.restMenu = data.data.menu;
-                        $scope.paths = data.data.img;
+                        if( typeof data.data.menu !== 'undefined' ) {
+                            $scope.restMenu = data.data.menu;
+                        }
+
+                        if( typeof data.data.img !== 'undefined' ) {
+                            $scope.paths = data.data.img;
+                        }
                     })
                     .error(function (data) {
                         $scope.isServerError = true;
@@ -311,7 +316,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
         var dish = {
             title : '',
             type : '',
-            veg : '',
+            veg : false,
             price : {
                 half : '',
                 full : ''
@@ -450,7 +455,16 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
             }
 
             $scope.restaurant.menu = $scope.restMenu;
-        };
+        } else if( $scope.restaurant.stage === 'imgUpload' ) {
+            var filesTypeArray = ['xs', 'sm', 'md', 'lg'];
+
+            for( var i=0; i<filesTypeArray.length; i++) {
+                var type = filesTypeArray[ i ];
+                if( typeof $scope.paths[ type ] !== 'undefined' ) {
+                    delete $scope.files[ type ];
+                }
+            }
+        }
 
         $http({
             method: 'PUT',
@@ -493,8 +507,6 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
 
                 /* With this, we would be able to move to next tab automatically. */
                 $rootScope.$broadcast('moveToPetooTab', $scope.restaurantStageIndex);
-
-                $scope.restaurantOldSlug = data.data.slug;
             }).
             error(function (data, status, headers, config) {
                 $scope.isServerError = true;
@@ -644,10 +656,10 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
         console.log(type);
 
         if( $scope.paths[ type ] !== 'undefined' ) {
-            var path = 'client' + $scope.paths[ type ];
-            console.log( path );
 
-            window.open( 'node/public/restaurants/image' + '?slug=khana&type=lg' );
+            var path = 'node/public/restaurants/image?slug=' + $scope.restaurant.slug + '&type=' + type;
+
+            window.open( path );
         }
     };
 };

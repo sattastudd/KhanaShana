@@ -264,7 +264,7 @@ body{
         }
 
         &.fileUploadBox{
-            cursor : auto;
+            cursor : pointer;
 
             line-height : $theme-input-box-height;
 
@@ -647,6 +647,9 @@ ul.pagination{
 
     padding: 5px 20px;
     font-family: 'Calibri';
+
+    text-overflow : ellipsis;
+    overflow : hidden;
 
     span{
       font-size : 16px;

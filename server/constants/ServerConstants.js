@@ -17,7 +17,9 @@ var appConstants = {
         noRecordFound : 'NoRecordFound',
         intentionalBreak: 'IntentionalBreak',
         someError : 'SomeError',
-        noMenuPresent : 'No Menu Entries Provided.'
+        noMenuPresent : 'No Menu Entries Provided.',
+        alreadyHasAnOwner : 'ExistingOwner',
+        userAlreadyAssigned : 'ExistingAssignment'
     },
 
     errorMessage : {
@@ -46,12 +48,15 @@ var appConstants = {
         noItemInCategory : 'Please provide item in category',
         invalidItem : 'Item has invalid details',
 
-        removeError : 'Please remove all errors before procedding',
+        removeError : 'Please remove all errors before proceeding',
 
         invalidSlug : 'Invalid Restaurant Slug',
         slugInUse : 'Slug field is already used',
 
-        unSupportedFile : 'Unsupported File'
+        unSupportedFile : 'Unsupported File',
+
+        alreadyHasAnOwner : 'Restaurant Already has an owner.',
+        userAlreadyAssigned : 'User already has an assigned restaurant'
     },
 
     successMessage : 'Ok',
@@ -65,7 +70,9 @@ var appConstants = {
 
     restaurantDetailsUpdated : 'Restaurant Details have been updated.',
 
-    basicDetailsAdded : 'Basic Restaurant Details have been saved.'
+    basicDetailsAdded : 'Basic Restaurant Details have been saved.',
+
+    restaurantApproved : 'Restaurant has been approved.'
 };
 
 module.exports = appConstants;

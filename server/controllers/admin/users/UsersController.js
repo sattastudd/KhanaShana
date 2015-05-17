@@ -7,7 +7,8 @@ var getUserList = function( req, res, next ) {
     var searchParams = {
         name : req.body.name,
         email : req.body.email,
-        role : req.body.role
+        role : req.body.role,
+        isAssigned : req.body.isAssigned
     };
     var pagingParams = {
         startIndex : req.body.startIndex

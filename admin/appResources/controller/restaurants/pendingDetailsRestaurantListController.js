@@ -14,7 +14,7 @@ function PendingDetailsRestaurantListController( $scope, $http, $location, AppCo
     };
 
     $scope.searchParams = {
-        approved : false
+        allStagesCompleted : false
     };
 
     $scope.isServerError = false;

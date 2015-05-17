@@ -121,3 +121,13 @@ router.get( '/public/restaurants/image', function( req, res, next ) {
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 });
+
+/* Request-Name : /admin/restaurants/approve, Type : Post, Allowed : admin*/
+/* THis request would be admin to approve a restaurant. */
+router.post( '/admin/restaurants/approve', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    adminRestController.approveRestaurant(req, res, next );
+
+    console.log( 'In adminRoutes | Finished ' + req.route.path );
+});

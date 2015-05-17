@@ -444,7 +444,7 @@
                                 <div class="fileUploadBox" file-upload-view target="mdScreen" type="md" ng-class="isFileNotSelected('md')"></div>
 
                                 <div class="fileActionsContainer" ng-class="isFileSelected('md')">
-                                    <div class="fileUploadBox">{{getFileName('md')}}</div>
+                                    <div class="fileUploadBox" ng-click="openImage( 'md' )">{{getFileName('md')}}</div>
                                     <div class="fileDelete" ng-click="removeFile( 'md' )"><span class="glyphicon glyphicon-trash"></span></div>
                                 </div>
                             </div>
@@ -459,7 +459,7 @@
                                 <div class="fileUploadBox" file-upload-view target="smScreen" type="sm" ng-class="isFileNotSelected('sm')"></div>
 
                                 <div class="fileActionsContainer" ng-class="isFileSelected('sm')">
-                                    <div class="fileUploadBox">{{getFileName('sm')}}</div>
+                                    <div class="fileUploadBox" ng-click="openImage( 'sm' )">{{getFileName('sm')}}</div>
                                     <div class="fileDelete" ng-click="removeFile( 'sm' )"><span class="glyphicon glyphicon-trash"></span></div>
                                 </div>
                             </div>
@@ -474,14 +474,14 @@
                                 <div class="fileUploadBox" file-upload-view target="xsScreen" type="xs" ng-class="isFileNotSelected('xs')"></div>
 
                                 <div class="fileActionsContainer" ng-class="isFileSelected('xs')">
-                                    <div class="fileUploadBox">{{getFileName('xs')}}</div>
+                                    <div class="fileUploadBox" ng-click="openImage( 'xs' )">{{getFileName('xs')}}</div>
                                     <div class="fileDelete" ng-click="removeFile( 'xs' )"><span class="glyphicon glyphicon-trash"></span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row tMar20">
                         <div class="col-xs-3">
                             <button type="button" class="btn btn-block btn-pr-primary" ng-click="saveAndContinue()">Save Details</button>
                         </div>
