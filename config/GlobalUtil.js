@@ -8,7 +8,14 @@
 var events = require( 'events' );
 var EventEmitter = events.EventEmitter;
 
+var logger = require( './PetuLogger' );
+
 var configure = function() {
+
+    /* Setting up a global logger in the application. */
+    global.logger = logger;
+
+
 	console.log( 'Global Variables Configuration Started' );
 
 	/* Setting up a global Event Handler */
