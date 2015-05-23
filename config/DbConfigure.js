@@ -29,7 +29,7 @@ eventHandler.on( 'ConnectionEstablished', function( totalCount ) {
 });
 
 var configure = function() {
-	console.log( 'Global DB Connections Configuration Started ');
+	logger.info( 'Global DB Connections Configuration Started ');
 
 	var globalDataBaseConnection = mongoose.createConnection(
 		credentials.connectionString.global_data );
@@ -42,10 +42,10 @@ var configure = function() {
 	var DbConnectionModal = globalDataBaseConnection.model( 'usedDBs', dbConnectionSchema, 'usedDBs' );
 
 	globalDataBaseConnection.on( 'open', function() {
-		console.log( 'Connection to GlobalDB has been opened' );
+		logger.info( 'Connection to GlobalDB has been opened' );
 
 		DbConnectionModal.find( function( err, toBeUsedDbs ){
-			console.log( 'Total Available DBs to connect to ' + toBeUsedDbs.length );
+			logger.info( 'Total Available DBs to connect to ' + toBeUsedDbs.length );
 
 			if( toBeUsedDbs.length === 0 ) {
 				throw new Error( 'No DBs entries found in DataBase' );
@@ -88,7 +88,7 @@ var configure = function() {
 					connectionObject.connection.on( 'open', function() {
 						global.globalDBConnections.push( connectionObject );
 
-						console.log( 'Connection opened for ' + connectionObject.dbName + ' database' );
+						logger.info( 'Connection opened for ' + connectionObject.dbName + ' database' );
 
 						eventHandler.emit( 'ConnectionEstablished', toBeUsedDbs.length );
 					});
@@ -97,7 +97,7 @@ var configure = function() {
 		});
 	});
 
-	console.log( 'Global DB Connections Configuration finished' );
+	logger.info( 'Global DB Connections Configuration finished' );
 };
 
 exports.configure = configure;

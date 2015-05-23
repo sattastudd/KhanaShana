@@ -34,7 +34,7 @@ requestMapper.createRequestMap();
 
 /* MiddleWare to log all Requests, No matter what is their fate.*/
 app.use( function( req, res, next ) {
-	console.log( '%s user from %s at %s', 
+	logger.access( '%s user from %s at %s',
 			req.headers['x-forwarded-for'] || req.connection.remoteAddress,
 			req.headers['user-agent'],
 			moment( Date.now() ).format() );
@@ -83,10 +83,11 @@ var eventHandler = utils.getGlobalEventHandler();
 
 eventHandler.on( 'PleaseStartServerNow', function() {
 	
-	console.log( 'DB Connections established to all DBs' );
-	console.log( 'Starting Server' );
+	logger.info( 'DB Connections established to all DBs' );
+	logger.info( 'Starting Server' );
 
 	app.listen( app.get( 'port'), function(){
-		console.log( 'Experss Server listening on port %d in %s mode', this.address().port, app.settings.env );
+        var msgString = 'Express Server listening on port ' + this.address().port + ' in ' + app.settings.env + '  mode.';
+		logger.info( msgString );
 	});
 });

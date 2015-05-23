@@ -15,8 +15,7 @@ var configure = function() {
     /* Setting up a global logger in the application. */
     global.logger = logger;
 
-
-	console.log( 'Global Variables Configuration Started' );
+	logger.info( 'Global Variables Configuration Started' );
 
 	/* Setting up a global Event Handler */
 	global.eventHandler = new EventEmitter();
@@ -130,7 +129,7 @@ var configure = function() {
             }
 		}
 		catch ( err ) {
-			console.log( err );
+			logger.error( err );
 			return false;
 		}
 	};
@@ -148,7 +147,7 @@ var configure = function() {
 
 		currRequest[requestType] = role;
 
-		console.log('Added { ' + requestName + ' : ' + ' { ' + requestType + ' : ' + role + ' } }');
+		logger.info('Added { ' + requestName + ' : ' + ' { ' + requestType + ' : ' + role + ' } }');
 	};
 
     // Setter to add a request to namedRequestAuthorization Map.
@@ -164,7 +163,7 @@ var configure = function() {
 
         currRequest[ requestType ] = role;
 
-        console.log( 'Added to Named Requests { ' + requestName + ' : ' + ' { ' + requestType + ' : ' + role + ' } }');
+        logger.info( 'Added to Named Requests { ' + requestName + ' : ' + ' { ' + requestType + ' : ' + role + ' } }');
     };
 
 	// Getter to list all the mappings in the map
@@ -173,7 +172,7 @@ var configure = function() {
 		return JSON.stringify( global.requestAuthMap );
 	};
 	
-	console.log( 'Global Variables Configuration Completed.' );
+	logger.info( 'Global Variables Configuration Completed.' );
 };
 
 exports.configure = configure;

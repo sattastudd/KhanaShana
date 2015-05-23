@@ -4,67 +4,58 @@
 var jwt = require( 'jwt-simple' );
 var credentials = require( './../../credentials' );
 
-var validateToken = function( req, res, next ) {
-	
-	/* We will receive token in headers in Authorization header.
-	 * Token would be fallowed by Bearer and a space.
-	 * We would need to strip it.
-	 */
-	var token = req.headers.authorization;
+var validateToken = function ( req, res, next ) {
 
-	if( typeof token === 'undefined' || token === '' ) {
-		console.log('Authenticator | No Authentication Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
+    /* We will receive token in headers in Authorization header.
+     * Token would be fallowed by Bearer and a space.
+     * We would need to strip it.
+     */
+    var token = req.headers.authorization;
 
-		res.status( 401 )
-		   .json({
-                err : {},
-                errMsg : {},
-                data : 'TE',
-                msg : 'Invalid token'
-		});
-	} else if ( token.indexOf( 'Bearer ' ) !== 0 ) {
-		console.log('Authenticator | Invalid Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
+    if ( typeof token === 'undefined' || token === '' ) {
+        var msg = 'Authenticator | No Authentication Token Found for' + ( req.headers[ 'x-forwarded-for' ] || req.connection.remoteAddress ) + ' at ' + new Date() + ' requesting ' + req.originalUrl + ' | Sent 401';
 
-		res.status( 401 )
-		   .json({
-                err : {},
-                errMsg : {},
-                data : 'IE',
-                msg : 'Invalid Authentication Token'
-		});
-	} else {
-		
-		token = token.substr( 7 );
-		
-		try{
-			var decoded = jwt.decode( token, credentials.jwtSecret );
+        logger.warning( msg );
 
-			if( decoded.exp <= (new Date()).getTime() ){
-				res.status( 401 )
-				   .json({
-                        err : {},
-                        errMsg : {},
-                        data : 'TE',
-                        msg : 'Token Expired',
-                        user : decoded.email
-				});
-			} else {
-				req.user = decoded;
-				next();
-			}
-		} catch ( err ) {
-			console.log( err );
-			console.log('Authenticator | No Authentication Token Found for %s at %s requesting %s | Sent 401', req.headers['x-forwarded-for'] || req.connection.remoteAddress, new Date(), req.originalUrl );
+        res.status( 401 ).json( {
+                err : {}, errMsg : {}, data : 'TE', msg : 'Invalid token'
+            } );
+    } else if ( token.indexOf( 'Bearer ' ) !== 0 ) {
 
-			res.status( 401 )
-			   .json({
-                    err : {},
-                    errMsg : {},
-                    data : 'IE',
-                    msg : 'Invalid Authentication Token'
-			});
-		}
-	}
+        var msg = 'Authenticator | Invalid Authentication Token Found for' + ( req.headers[ 'x-forwarded-for' ] || req.connection.remoteAddress ) + ' at ' + new Date() + ' requesting ' + req.originalUrl + ' | Sent 401';
+
+        logger.warning( msg );
+
+        res.status( 401 ).json( {
+                err : {}, errMsg : {}, data : 'IE', msg : 'Invalid Authentication Token'
+            } );
+    } else {
+
+        token = token.substr( 7 );
+
+        try {
+            var decoded = jwt.decode( token, credentials.jwtSecret );
+
+            if ( decoded.exp <= (new Date()).getTime() ) {
+                res.status( 401 ).json( {
+                        err : {}, errMsg : {}, data : 'TE', msg : 'Token Expired', user : decoded.email
+                    } );
+            } else {
+                req.user = decoded;
+                next();
+            }
+        } catch ( err ) {
+            logger.error( err );
+
+            var msg = 'Authenticator | Invalid Authentication Token Found for' + ( req.headers[ 'x-forwarded-for' ] || req.connection.remoteAddress ) + ' at ' + new Date() + ' requesting ' + req.originalUrl + ' | Sent 401';
+
+            logger.warning( msg );
+
+            res.status( 401 ).json( {
+                    err : {}, errMsg : {}, data : 'IE', msg : 'Invalid Authentication Token'
+                } );
+        }
+    }
 };
 
 module.exports = validateToken;

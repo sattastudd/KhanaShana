@@ -22,7 +22,7 @@ var showAllMappings = utils.showAllMappings;
 
 var createRequestMap = function () {
 
-    console.log('Mapping Requests to Authorized Roles');
+    logger.info('Mapping Requests to Authorized Roles');
 
     var filesInDirectory = fs.readdirSync(pathReceived);
 
@@ -72,7 +72,7 @@ var createRequestMap = function () {
         }
     });
 
-    console.log('Mapping Requests to Authorized Roles Finished');
+    logger.info('Mapping Requests to Authorized Roles Finished');
 };
 
 module.exports.createRequestMap = createRequestMap;
