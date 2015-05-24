@@ -123,6 +123,12 @@ var searchRestaurants = function( cityName, searchParam, pagingParams, callback 
         query.delivery = DBUtils.createCaseInSensitiveRegexString( searchParam.location );
     }
 
+    var isCuisineNotEmpty = !DBUtils.isFieldEmpty( searchParam.cuisine ) ;
+
+    if( isCuisineNotEmpty ) {
+        query.cuisines = DBUtils.createCaseInSensitiveRegexString( searchParam.cuisine );
+    }
+
     var projection = {
         _id : false,
         approved : false,

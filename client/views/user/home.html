@@ -30,7 +30,7 @@
     <div class="container">
         <div class="hidden-xs">
             <div ng-repeat="cuisine in cuisines">
-                <div class="cuisine" ng-class="getClassForLg($index)">
+                <div class="cuisine" ng-class="getClassForLg($index)" ng-click="searchByCuisine( cuisine ) ">
                     <div class="image-container">
                         <div class="cuisine-image" style="background-image: url('{{getImageSrcForLg($index, cuisine.img)}}')"></div>
                     </div>
@@ -42,7 +42,7 @@
             </div>
         <div class="visible-xs hidden-sm hidden-md hidden-lg">
             <div ng-repeat="cuisine in cuisines">
-                <div class="cuisine" ng-class="getClassForLg($index)">
+                <div class="cuisine" ng-class="getClassForLg($index)" ng-click="searchByCuisine( cuisine ) ">
                     <div class="image-container">
                         <div class="cuisine-image" style="background-image: url('{{getImageSrcForXs($index, cuisine.img)}}')"></div>
                     </div>

@@ -41,7 +41,8 @@ var searchRestaurants = function( req, res, next ) {
     logger.info( 'In RestaurantPublicController | Starting Execution of searchRestaurants' );
 
     var searchParams = {
-        location : req.body.location
+        location : req.body.location,
+        cuisine : req.body.cuisine
     };
 
     var pagingParams = {

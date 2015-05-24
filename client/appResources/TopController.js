@@ -268,11 +268,24 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
 
     /* Function to move to control over search page. */
     $scope.searchByLocation = function( location ) {
-        console.log( location );
 
         var searchInfo = {
             type : 'location',
             text : location.name
+        };
+
+        DataStore.storeData( 'searchTaskInfo', searchInfo );
+
+        $location.path( 'search' );
+    };
+
+    /* Function to move to control over search page. */
+    $scope.searchByCuisine = function( cuisine ) {
+        console.log( cuisine );
+
+        var searchInfo = {
+            type : 'cuisine',
+            text : cuisine.name
         };
 
         DataStore.storeData( 'searchTaskInfo', searchInfo );

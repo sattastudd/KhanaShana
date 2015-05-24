@@ -77,13 +77,33 @@ var searchRestaurants = function( searchParams, pagingParams, callback ) {
     var hasAnyValidationFailed = false;
 
     var location = searchParams.location;
+    var cuisine = searchParams.cuisine;
 
-    var responseFromValidatorForLocation = Validator.isNameNotValid( location );
+    var isLocationBlank = Validator.isFieldEmpty( location );
+    var isCuisineBlank = Validator.isFieldEmpty( cuisine );
 
-    if( responseFromValidatorForLocation.result ) {
-        hasAnyValidationFailed = true;
+    if( isLocationBlank ) {
+        delete searchParams.location;
+    } else {
+        var responseFromValidatorForLocation = Validator.isNameNotValid( location );
 
-        setUpError( err, errMsg, 'location', responseFromValidatorForLocation );
+        if( responseFromValidatorForLocation.result ) {
+            hasAnyValidationFailed = true;
+
+            setUpError( err, errMsg, 'location', responseFromValidatorForLocation );
+        }
+    }
+
+    if( isCuisineBlank ) {
+        delete searchParams.cuisine;
+    } else {
+        var responseFromValidatorForCuisine = Validator.isNameNotValid( cuisine );
+
+        if( responseFromValidatorForCuisine.result ) {
+            hasAnyValidationFailed = true;
+
+            setUpError( err, errMsg, 'cuisine', responseFromValidatorForCuisine );
+        }
     }
 
     if( hasAnyValidationFailed ) {
