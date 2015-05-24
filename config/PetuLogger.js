@@ -8,28 +8,32 @@ winston.setLevels({
     info: 0,
     error: 1,
     warning: 2,
-    audit: 3
+    audit: 3,
+    access : 4
 });
 
 winston.addColors({
     info: 'blue',
     error: 'red',
     warning: 'yellow',
-    audit: 'green'
+    audit: 'green',
+    access : 'white'
 });
 
 var levels = {
     info: 0,
     error: 1,
     warning: 2,
-    audit: 3
+    audit: 3,
+    access : 4
 };
 
 var colors = {
     info: 'blue',
     error: 'red',
     warning: 'yellow',
-    audit: 'green'
+    audit: 'green',
+    access : 'white'
 };
 
 /* We can't configure a winston logger to listen to only one specific kind of log.
@@ -123,7 +127,7 @@ var logger = {};
 
 logger.access = function( message ) {
     consoleLogger.info( message );
-    accessLogger.info( message, { timestamp : Date.now() });
+    accessLogger.access( message, { timestamp : Date.now() });
 };
 
 logger.info = function( message ) {

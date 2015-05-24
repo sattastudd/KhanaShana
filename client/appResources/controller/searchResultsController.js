@@ -4,9 +4,26 @@ define([], function() {
     return userSearchResultController;
 });
 
-function searchResultController ($scope){
+function searchResultController ($scope, $http, AppConstants, RestRequests, DataStore ){
 
-    
+    if( DataStore.isKeyDefined( 'searchTaskInfo' )) {
+        $scope.searchInfo = DataStore.readAndRemove( 'searchTaskInfo' );
+
+        console.log( $scope.searchInfo );
+
+        var searchRequestName = AppConstants.httpServicePrefix + '/' + RestRequests.restaurantSearch;
+
+        var searchPayLoad = {};
+        searchPayLoad[ $scope.searchInfo.type ] = $scope.searchInfo.text;
+
+        $http.post( searchRequestName, searchPayLoad )
+            .success( function( data ) {
+                console.log( data );
+            })
+            .error( function( data ) {
+                console.log( data );
+            })
+    }
 
     $scope.searchValue = 'all';
 

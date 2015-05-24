@@ -265,6 +265,20 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
                 delete $window.localStorage['token'];
             });
     };
+
+    /* Function to move to control over search page. */
+    $scope.searchByLocation = function( location ) {
+        console.log( location );
+
+        var searchInfo = {
+            type : 'location',
+            text : location.name
+        };
+
+        DataStore.storeData( 'searchTaskInfo', searchInfo );
+
+        $location.path( 'search' );
+    };
 }
 
 function LoginModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){

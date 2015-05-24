@@ -4,40 +4,130 @@
 var ServerConstants = require( '../../constants/ServerConstants' );
 var RestaurantPublicDBI = require('../../daoLayer/public/PublicRestaurantDBI' );
 
+var Validator = require( '../util/Validator' );
+
+/* Private method to set up error */
+var setUpError = function( err, errMsg, type, responseFromValidator ) {
+    err[ type ] = true;
+    errMsg[ type ] = responseFromValidator.message;
+};
+
+/*                          Restaurant Information Retrieval                        */
+/*==================================================================================*/
+
+/* Public method to retrieve restaurant info given its slug. */
 var getRestaurantInfoBySlug = function ( cityName, slug, callback ) {
-    console.log( 'In RestaurantPublicService | Starting Execution of getRestaurantInfoBySlug' );
+    logger.info( 'In RestaurantPublicService | Starting Execution of getRestaurantInfoBySlug' );
 
-    /*Perform Validations here*/
-    RestaurantPublicDBI.getRestaurrantInfoBySlug( cityName, slug, function( err, result ){
-       if( err ){
-           console.log( err );
+    var responseFromValidatorForSlug = Validator.isSlugNotValid( slug );
 
-           if( err === ServerConstants.appErrors.noRecordFound ) {
+    if( responseFromValidatorForSlug.result ) {
+        callback( ServerConstants.appErrors.validationError, {
+            err : { slug : true },
+            errMsg : { slug : responseFromValidatorForSlug.message },
+            data : null,
+            msg : ServerConstants.removeError
+        });
+    } else {
 
-               callback( ServerConstants.appErrors.noRecordFound, {
-                   err : {},
-                   errMap : {},
-                   data : null,
-                   msg : ServerConstants.errorMessage.noRecordFound
-               });
+        /*Perform Validations here*/
+        RestaurantPublicDBI.getRestaurrantInfoBySlug( cityName, slug, function( err, result ){
+           if( err ){
+               logger.error( 'In RestaurantPublicService | getRestaurantInfoBySlug ' + err );
+
+               if( err === ServerConstants.appErrors.noRecordFound ) {
+
+                   callback( ServerConstants.appErrors.noRecordFound, {
+                       err : {},
+                       errMap : {},
+                       data : null,
+                       msg : ServerConstants.errorMessage.noRecordFound
+                   });
+               } else {
+                   callback( ServerConstants.appErrors.someError, {
+                       err : {},
+                       errMap : {},
+                       data : null,
+                       msg : ServerConstants.errorMessage.someError
+                   });
+               }
            } else {
-               callback( ServerConstants.appErrors.someError, {
+               callback(null, {
                    err : {},
-                   errMap : {},
-                   data : null,
-                   msg : ServerConstants.errorMessage.someError
+                   errMap :  {},
+                   data : result,
+                   msg : ServerConstants.successMessage
                });
            }
-       } else {
-           callback(null, {
-               err : {},
-               errMap :  {},
-               data : result,
-               msg : ServerConstants.successMessage
-           });
-       }
-    });
-    console.log( 'In RestaurantPublicService | Finished Execution of getRestaurantInfoBySlug' );
+        });
+    }
+    logger.info( 'In RestaurantPublicService | Finished Execution of getRestaurantInfoBySlug' );
+};
+
+/*                              Restaurant Search Section                       */
+/*==============================================================================*/
+
+/* Public method to search restaurants to be displayed on search page. */
+var searchRestaurants = function( searchParams, pagingParams, callback ) {
+    logger.info( 'In RestaurantPublicService | Starting Execution of searchRestaurants' );
+
+    var err = {};
+    var errMsg = {};
+
+    var hasAnyValidationFailed = false;
+
+    var location = searchParams.location;
+
+    var responseFromValidatorForLocation = Validator.isNameNotValid( location );
+
+    if( responseFromValidatorForLocation.result ) {
+        hasAnyValidationFailed = true;
+
+        setUpError( err, errMsg, 'location', responseFromValidatorForLocation );
+    }
+
+    if( hasAnyValidationFailed ) {
+
+        callback( ServerConstants.appErrors.validationError, {
+            err : err,
+            errMsg : errMsg,
+            data : null,
+            msg : ServerConstants.removeError
+        });
+
+    } else {
+        var cityName = 'lucknow';
+
+        RestaurantPublicDBI.searchRestaurants( cityName, searchParams, pagingParams, function( err, result ) {
+            if( err ) {
+                logger.error( 'In RestaurantPublicService | searchRestaurants' + JSON.stringify(err ));
+            } else {
+
+                if( result.count === 0 ) {
+                    logger.error( 'In RestaurantPublicService | searchRestaurants ' + ServerConstants.errorMessage.noRecordFound );
+
+                    callback( ServerConstants.appErrors.noRecordFound , {
+                        err : {},
+                        errMsg : {},
+                        data : null,
+                        msg : ServerConstants.errorMessage.noRecordFound
+                    });
+                } else {
+                    callback( null, {
+                        err : {},
+                        errMsg : {},
+                        data : result,
+                        msg : ServerConstants.successMessage
+                    });
+                }
+
+            }
+        });
+
+    }
+
+    logger.info( 'In RestaurantPublicService | Finished Execution of searchRestaurants' );
 };
 
 exports.getRestaurantInfoBySlug = getRestaurantInfoBySlug;
+exports.searchRestaurants = searchRestaurants;

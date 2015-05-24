@@ -5,8 +5,8 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         $routeProvider
         .when('/', 
             routeConfig.config(
-                'views/user/userHome.html',
-                '../../appResources/controller/userHomeController'
+                'views/user/home.html',
+                '../../appResources/controller/homeController'
         ))
         .when('/restaurantDetails', 
             routeConfig.config(
@@ -20,8 +20,8 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         ))
         .when('/search',
             routeConfig.config(
-                'views/user/userSearchResult.html',
-                '../../appResources/controller/userSearchResultController'
+                'views/user/searchResults.html',
+                '../../appResources/controller/searchResultsController'
         ))
         .when('/adminHome',
             routeConfig.config(

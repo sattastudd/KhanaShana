@@ -34,10 +34,12 @@ requestMapper.createRequestMap();
 
 /* MiddleWare to log all Requests, No matter what is their fate.*/
 app.use( function( req, res, next ) {
-	logger.access( '%s user from %s at %s',
-			req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-			req.headers['user-agent'],
-			moment( Date.now() ).format() );
+    var msg = ( req.headers['x-forwarded-for'] || req.connection.remoteAddress ) + ' user from ' +
+        req.headers['user-agent'] +
+        ' at ' +
+        moment( Date.now() ) ;
+
+    logger.access( msg );
 	
 	res.header( 'Acess-Control-Allow-Origin', '*' );
 	next();

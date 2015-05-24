@@ -22,7 +22,8 @@
             checkUserExistence : 'email',
             addNewUser : 'users',
             login : 'login',
-            searchResult : 'result'
+            searchResult : 'result',
+            restaurantSearch : 'restaurant/search'
 
         })
         .constant('RegExProvider',  {
@@ -92,6 +93,13 @@
 
             var storedData = {};
 
+                this.isKeyDefined = function ( key ){
+                    if( typeof storedData[key] !== 'undefined' )
+                        return true;
+                    else
+                        return false;
+                };
+
             this.storeData = function(key, value) {
 
                 storedData[key] = value;
@@ -107,7 +115,19 @@
                 delete storedData[key];
             };
 
-            this.getAllStoredData = function() {
+                this.readAndRemove = function( key ) {
+                    var value = null;
+
+                    if( this.isKeyDefined( key )){
+                        value = this.getData( key );
+                        this.removeData( key );
+                    };
+
+                    return value;
+                };
+
+
+                this.getAllStoredData = function() {
 
                 return storedData;
             };
