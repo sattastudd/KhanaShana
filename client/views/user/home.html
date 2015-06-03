@@ -1,4 +1,4 @@
-<div class="fullScreenWidth pizzaBack" ng-controller="homeController">
+<div class="fullScreenWidth pizzaBack" ng-controller="BannerController">
     <div class="container" ng-click="closeOptionsDropDown($event)">
         <div class="row welcomeText">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-lg-offset-3 col-md-offset-2 col-sm-offset-1">
@@ -11,14 +11,14 @@
         <div class="row">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-lg-offset-3 col-md-offset-2 col-sm-offset-1 bannerSearch">
                 <div class="input-group">
-                    <input id="bannerSearch" type="text" class="form-control" ng-change="searchTextChanged()" ng-model="search.searchText" ng-click="handleClickOnSearch($event)" placeholder="Search Food, Restaurant, Cuisines and Street Food" />
+                    <input id="bannerSearch" type="text" class="form-control" ng-model="bannerSearch.searchText" ng-click="handleClickOnSearch($event)" placeholder="Search Food, Restaurant, Cuisines and Street Food" />
 
                     <span class="input-group-btn">
                         <button class="btn kh-primary" type="button">Search</button>
                     </span>
                 </div>
 
-                <ul class="dropdown" ng-if="firstClickHandled">
+                <ul class="dropdown" ng-if="shouldDropDownBeShown">
                     <li ng-repeat="menu in bannerDropDownOptions" ng-click="pickedCategory(menu)">{{menu.menuTitle}}</li>
                 </ul>
             </div>

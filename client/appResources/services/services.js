@@ -23,7 +23,8 @@
             addNewUser : 'users',
             login : 'login',
             searchResult : 'result',
-            restaurantSearch : 'restaurant/search'
+            restaurantSearch : 'restaurant/search',
+            typeahead : 'restaurant/typeahead'
 
         })
         .constant('RegExProvider',  {

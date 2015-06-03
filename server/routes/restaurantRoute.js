@@ -13,4 +13,9 @@ router.get('/public/restaurant/:restaurantSlug', function( req, res, next ){
 router.post( '/public/restaurant/search', function( req, res, next ) {
 
     RestaurantPublicController.searchRestaurants( req, res, next );
+})
+
+/* Request-Name : /public/restaurant/typeahead, Type : Post, Allowed : public */
+router.post( '/public/restaurant/typeahead', function( req, res, next ){
+    RestaurantPublicController.getOptionsForTypeAhead( req, res, next );
 });

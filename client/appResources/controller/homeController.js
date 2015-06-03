@@ -1,96 +1,106 @@
 define( [], function() {
 
-	function userHomeController($scope) {
+	function homeController($scope) {
 
 	}
-	return userHomeController;
+	return homeController;;
 } );
 
-function homeController($scope, $modal, $location, DataStore, $window, $http, AppConstants, RestRequests) {
+function BannerController($scope, $modal, $location, DataStore, $window, $http, AppConstants, RestRequests) {
 
-	$scope.search = {
-		searchText : ''
-	};
+    /* We have to design fulfill following requirements.
+     * If text is empty, and user clicks, then a dropdown of menu would be displayed.
+     * And user can use it to constrain his search.
+     * If user hasn't selected anything, then we will display all type-ahead menus.
+     */
+    $scope.bannerSearch = {
+        searchText : ''
+    };
 
-	$scope.canSelectionDropDownBeOpened = true;
+    var requestNameForTypeAhead = AppConstants.httpServicePrefix + '/' + RestRequests.typeahead;
 
-	/* Retriving dropdown options from DataStore */
-	$scope.bannerDropDownOptions = DataStore.getData( 'bannerDropDowns' );
+    $scope.backUpOfOpetions = [
+        {menuTitle: "Search By Location", type: "loc"},
+        { menuTitle: "Search All Restaurants", type: "rest" }
+    ];
 
-    console.log($scope.bannerDropDownOptions);
-    
-    if (typeof $scope.bannerDropDownOptions === 'undefined') {
-        console.log('Got Undefined from DataStore | Falling back to back up.')
-        $scope.bannerDropDownOptions = [
-            {menuTitle: "Search By Location", type: "loc"},
-            { menuTitle: "Search All Restaurants", type: "rest" }
-        ];
-    }
+    $scope.bannerDropDownOptions = [
+        {menuTitle: "Search By Location", type: "loc"},
+        { menuTitle: "Search All Restaurants", type: "rest" }
+    ];
 
-	$scope.handleClickOnSearch = function($event) {
+    $scope.shouldDropDownBeShown = false;
 
-		if ( $scope.search.searchText.length == 0
-				&& $scope.canSelectionDropDownBeOpened ) {
-			$scope.firstClickHandled = true;
-			$scope.canSelectionDropDownBeOpened = false;
+    /* $scope.$watch for watching over searchText of bannerSearch */
+    $scope.$watch( function(){
+        return $scope.bannerSearch.searchText;
+    }, function( currentValue, prevValue ){
 
-			$event.stopPropagation();
-		}
-	};
+        if( currentValue.length > 0 ){
+        $http.post( requestNameForTypeAhead, { text : currentValue })
+            .success( function( data ) {
+                console.log( data );
 
-	$scope.closeOptionsDropDown = function($event) {
+                var searchResult = data.data;
+                var typeAheadOptions = [];
+                var restaurantInResult = searchResult.restaurants;
 
-		if ( $scope.firstClickHandled == true ) {
-			$scope.firstClickHandled = false;
+                if( restaurantInResult.length > 0 ) {
+                    typeAheadOptions.push( {
+                        menuTitle : 'Restaurants', type : 'rest', isHeading : true
+                    });
 
-			$event.stopPropagation();
-		}
-	};
+                    for( var i = 0 ; i< restaurantInResult.length; i++ ) {
+                        var rest = restaurantInResult [ i ] ;
+                        typeAheadOptions.push({
+                            menuTitle : rest.name, type : 'rest', slug : rest.slug
+                        });
+                    }
+                }
 
-	$scope.pickedCategory = function(menu) {
+                var dishesInResult = searchResult.menu;
 
-		console.log( menu );
-		var bannerSearch = document.getElementById( 'bannerSearch' );
+                if( dishesInResult.length > 0 ) {
+                    typeAheadOptions.push({
+                        menuTitle : 'Dishes', type : 'menu', isHeading : true
+                    });
 
-		$scope.firstClickHandled = false;
+                    for( var i=0; i< dishesInResult.length; i++ ) {
+                        var dish = dishesInResult[ i ];
 
-		bannerSearch.focus();
+                        typeAheadOptions.push({
+                            menuTitle : dish.title, type : 'dish', isHeading: false
+                        });
+                    }
 
-		if(menu.type === 'loc'){
-			console.log("inside loc");
 
-			//$scope.openLocationModal = function () {
-	        	var modalInstance = $modal.open({
-	            templateUrl : '../../views/user/locationSelectModal.html',
-	            controller : 'locationSelectModalController',
-	            backdrop : 'static',
-	            windowClass    : 'darkTransparentBack',
-	            size : 'sm'
-	        });
-		//}
-	};
+                }
 
-	/*
-	 * We need a watch over the content of Banner Search as we need to determine
-	 * if the length has shortened.
-	 */
-	$scope.$watch( function() {
+                $scope.bannerDropDownOptions = typeAheadOptions;
+            })
+            .error( function( data ) {
+                console.log( data );
+            })
+        } else {
 
-		return $scope.search.searchText;
-	}, function(currentValue, prevValue) {
+        }
+    });
 
-		if ( currentValue.length === 0
-				&& ( prevValue.length > currentValue.length ) ) {
-			$scope.canSelectionDropDownBeOpened = true;
-		} else if ( currentValue.length > 0 ) {
-			$scope.firstClickHandled = false;
-		}
-	} );
+    /* What do we do on input click */
+    $scope.handleClickOnSearch = function( $event ) {
+        $scope.shouldDropDownBeShown = true;
 
-		var request = AppConstants.httpServicePrefix + '/'
-			+ RestRequests.getDropDowns;
-	}
+        $event.preventDefault();
+        $event.stopPropagation();
+    };
 
+    /* Let's close it */
+    $scope.closeOptionsDropDown = function( $event ) {
+        $scope.shouldDropDownBeShown = false;
+
+        $event.preventDefault();
+        $event.stopPropagation();
+    };
 };
 
 

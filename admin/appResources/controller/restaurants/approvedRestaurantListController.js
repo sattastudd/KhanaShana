@@ -5,7 +5,7 @@ define([], function($scope) {
     return approvedRestaurantListController;
 });
 
-function ApprovedRestaurantListController($scope, $http, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
+function ApprovedRestaurantListController($scope, $http, $location, AppConstants, AppUtils, RestRequests, DataStore, ResponseMessage, ValidationService){
     var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.searchRestaurants;;
 
     $scope.restaurantList = [];
@@ -106,11 +106,11 @@ function ApprovedRestaurantListController($scope, $http, AppConstants, AppUtils,
     };
 
     $scope.editRestaurant = function( restaurant ) {
-        user.role = $scope.roleSelected;
+
         DataStore.storeData( 'isRestaurantEdit', true );
         DataStore.storeData( 'toEditRestaurant', restaurant );
 
-        $location.path( 'newRestaurant' );
+        $location.path( 'restaurants/new' );
     };
 
     /* Getters */

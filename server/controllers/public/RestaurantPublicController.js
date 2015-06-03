@@ -64,5 +64,27 @@ var searchRestaurants = function( req, res, next ) {
     logger.info( 'In RestaurantPublicController | Finished Execution of searchRestaurants' );
 };
 
+/* Public method to fetch records for typeahead. */
+var getOptionsForTypeAhead = function( req, res, next ) {
+    logger.info( 'In RestaurantPublicController | Starting Execution of getOptionsForTypeAhead' );
+    console.log( req.body );
+    var text = req.body.text;
+
+    RestaurantPublicService.getOptionsForTypeAhead( text, function( err, result ) {
+        if( err ) {
+            if( err === ServerConstants.appErrors.validationError ) {
+                res.status( 400 ).json( result );
+            } else {
+                res.status( 500 ).json( result );
+            }
+        } else {
+            res.status( 200 ).json( result );
+        }
+    });
+
+    logger.info( 'In RestaurantPublicController | Finished Execution of getOptionsForTypeAhead' );
+};
+
 exports.getRestaurantInfoBySlug = getRestaurantInfoBySlug;
 exports.searchRestaurants = searchRestaurants;
+exports.getOptionsForTypeAhead  = getOptionsForTypeAhead;

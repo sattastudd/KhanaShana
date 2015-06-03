@@ -149,5 +149,49 @@ var searchRestaurants = function( searchParams, pagingParams, callback ) {
     logger.info( 'In RestaurantPublicService | Finished Execution of searchRestaurants' );
 };
 
+/* Public method to fetch records for automcomplete */
+var getOptionsForTypeAhead = function( text, callback ) {
+    logger.info( 'In RestaurantPublicService | Starting Execution of getOptionsForTypeAhead' );
+
+    var responseFromValidatorForText = Validator.isNameNotValid( text, true );
+
+    if( responseFromValidatorForText.result ) {
+        callback( ServerConstants.appErrors.validationError, {
+            err : { text : true },
+            errMsg : { text : responseFromValidatorForText.message },
+            data : null,
+            msg : ServerConstants.errorMessage.removeError
+        });
+    } else {
+        var cityName = 'lucknow';
+
+        RestaurantPublicDBI.getOptionsForTypeAhead( cityName, text, function( err, result ) {
+            if( err ) {
+                var errMsg = 'Error In RestaurantPublicService | getOptionsForTypeAhead | ' + JSON.stringify( err );
+
+                logger.error( errMsg );
+
+                callback( ServerConstants.appErrors.someError, {
+                    err : {},
+                    errMsg : {},
+                    data : null,
+                    msg : ServerConstants.errorMessage.someError
+                });
+            } else {
+
+                callback( null, {
+                    err : {},
+                    errMsg : {},
+                    data : result,
+                    msg : ServerConstants.successMessage
+                });
+            }
+        });
+    }
+
+    logger.info( 'In RestaurantPublicService | Finished Execution of getOptionsForTypeAhead' );
+};
+
 exports.getRestaurantInfoBySlug = getRestaurantInfoBySlug;
 exports.searchRestaurants = searchRestaurants;
+exports.getOptionsForTypeAhead = getOptionsForTypeAhead;
