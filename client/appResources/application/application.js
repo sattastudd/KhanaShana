@@ -58,6 +58,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/user/userForgotPwd.html',
                 '../../appResources/controller/userForgotPwdController'
         ))
+        .when('/profile',
+            routeConfig.config(
+                'views/user/userProfile.html',
+                '../../appResources/controller/userProfileController'
+        ))
         .otherwise({
             redirectTo: '/404'
         });
