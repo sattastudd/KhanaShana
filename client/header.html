@@ -22,11 +22,14 @@
                                     <div class="userIcon">
                                         <span class="glyphicon glyphicon-user" ng-click="toggleUserContextMenu()"></span>
                                         <ul class="dropdown-menu" ng-class="getClassForUserContext()">
-                                            <li><a class="noHover" href="#">{{getUserName()}}</a></li>
+                                            <li><a class="noHover" href="#/profile">{{getUserName()}}</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="#/changePwd">Change Password</a></li>
-                                            <li><a href="#/profile">My Profile</a></li>
+                                            <li><a href="#/profile">Profile</a></li>
+                                            <li><a href="#/fav">Fovourites</a></li>
                                             <li><a href="#/order">My Orders</a></li>
+                                            <li><a href="#/petu">Petu Coins</a></li>
+                                            <li><a href="#/porder">Pending Orders</a></li>
+                                            <li><a href="#/changePwd">Change Password</a></li>
                                             <li class="divider"></li>
                                             <li><a ng-click="logoutUser()">Logout</a></li>
                                         </ul>
@@ -81,11 +84,14 @@
                             <div class="userIcon">
                                 <span class="glyphicon glyphicon-user" ng-click="toggleUserContextMenu()"></span>
                                 <ul class="dropdown-menu" ng-class="getClassForUserContext()">
-                                    <li><a class="noHover" href="#">{{getUserName()}}</a></li>
+                                    <li><a class="noHover" href="#/profile">{{getUserName()}}</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#/changePwd">Change Password</a></li>
-                                    <li><a href="#/profile">My Profile</a></li>
+                                   <li><a href="#/profile">Profile</a></li>
+                                    <li><a href="#/fav">Fovourites</a></li>
                                     <li><a href="#/order">My Orders</a></li>
+                                    <li><a href="#/petu">Petu Coins</a></li>
+                                    <li><a href="#/porder">Pending Orders</a></li>
+                                    <li><a href="#/changePwd">Change Password</a></li>
                                     <li class="divider"></li>
                                     <li><a ng-click="logoutUser()">Logout</a></li>
                                 </ul>
