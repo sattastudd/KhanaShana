@@ -1266,6 +1266,38 @@ button.kh-primary {
 
 /* styles for check out page ends */
 
+/* styles for user profile starts */
+
+.userImage{
+  width: 170px;
+  margin-left: -27px;
+}
+.userImageBlock{
+  border-right: 1px solid gainsboro;
+  margin-bottom: 15px;
+  margin-left: -8px;
+}
+.profileHead{
+  margin-top:15px;
+  border-bottom: 1px solid gainsboro;
+}
+.foodQoute{
+  font-size: 39px;
+}
+.profileList{
+  border-right: 1px solid gainsboro;
+  margin-top: 15px;
+}
+.listContent{
+  font-size: 20px;
+  border-bottom: 1px solid gainsboro;
+  margin-right: 40px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+/* styles for user profile ends */
+
 /* styles for user restaurant home page starts */
 
 .bottomBorder {
@@ -1460,6 +1492,14 @@ button.kh-primary {
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px;
+  }
+
+  .userImage{
+      width: 60px;
+      margin-left: 0px;
+    }
+    .foodQoute{
+      font-size: 16px;
   }
 
   .hiddenInput {
