@@ -1268,32 +1268,99 @@ button.kh-primary {
 
 /* styles for user profile starts */
 
-.userImage{
-  width: 170px;
-  margin-left: -27px;
+.userImage {
+    width: 170px;
+    margin-left: -27px;
 }
-.userImageBlock{
-  border-right: 1px solid gainsboro;
-  margin-bottom: 15px;
-  margin-left: -8px;
+.lpad24{
+    padding-left:24px;
 }
-.profileHead{
-  margin-top:15px;
-  border-bottom: 1px solid gainsboro;
+.orderImage {
+    width: 100px;
+    margin-left: -14px;
+    margin-top: 24px;
+    border-right: 1px solid gainsboro;
 }
-.foodQoute{
-  font-size: 39px;
+.userImageBlock {
+    border-right: 1px solid gainsboro;
+    margin-bottom: 15px;
+    margin-left: -8px;
 }
-.profileList{
-  border-right: 1px solid gainsboro;
-  margin-top: 15px;
+.profileHead {
+    margin-top:15px;
+    border-bottom: 1px solid gainsboro;
 }
-.listContent{
-  font-size: 20px;
-  border-bottom: 1px solid gainsboro;
-  margin-right: 40px;
-  padding-bottom: 5px;
-  padding-top: 5px;
+.foodQoute {
+    font-size: 39px;
+}
+.profileList {
+    border-right: 1px solid gainsboro;
+    margin-top: 15px;
+}
+.listContent {
+    font-size: 20px;
+    border-bottom: 1px solid gainsboro;
+    margin-right: 40px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.orderBlock {
+    border: 1px solid gainsboro;
+    margin-top: 6px;
+    margin-bottom: 9px;
+}
+.orderNo {
+    margin-bottom:-12px;
+    margin-top: 12px;
+}
+.orderListContent {
+    margin-bottom:2px;
+}
+.repeatOrderBtn{
+  border: 1px solid gainsboro;
+  text-align: center;
+  height: 44px;
+  font-size: 25px;
+  border-radius: 8opx;
+  border-radius: 2px;
+  font-family: serif;
+}
+.orderBtnBlock{
+  margin-top: 19px;
+  margin-bottom: 5px;
+}
+.repeatBtnBlock{
+  margin-top: 19px;
+}
+
+
+@media (max-width: 768px) {
+    .userImage {
+        width: 60px;
+        margin-left: 0px;
+    }
+    .foodQoute {
+        font-size: 16px;
+    }
+    .orderImage {
+        width: 88px;
+    }
+    .repeatBtnBlock{
+    margin-top: 0px;
+  }
+  .repeatOrderBtn{
+    font-size: 20px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 460px) {
+    .orderImage {
+        width: 70px;
+    }
+    .smallFont{
+        font-size:20px;
+    }
 }
 
 /* styles for user profile ends */
@@ -1492,14 +1559,6 @@ button.kh-primary {
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px;
-  }
-
-  .userImage{
-      width: 60px;
-      margin-left: 0px;
-    }
-    .foodQoute{
-      font-size: 16px;
   }
 
   .hiddenInput {

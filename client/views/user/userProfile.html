@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 profileList">
+            <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 profileList hand">
                 <div class="row">
                     <p class="listContent">Overview</p>
                 </div>
@@ -40,13 +40,21 @@
                             <img src="https://cdn4.iconfinder.com/data/icons/adiante-apps-app-templates-incos-in-grey/512/app_type_restaurant_chain_512px_GREY.png" class="orderImage" />
                         </div>
                         <div class="col-xs-9 col-sm-6 col-md-6 col-lg-6 lpad24">
-                             <h4 class="orderNo"><b>#order No. - {{list.orderNo}}</b></h4>
-
-                             <h3 class="smallFont"><b>{{list.restName}}</b></h3>
-
+                            <h4 class="orderNo"><b>#order No. - {{list.orderNo}}</b></h4>
+                            <h3 class="smallFont"><b>{{list.restName}}</b></h3>
                             <p class="orderListContent">Total Cost : {{list.cost}} Rs</p>
                             <p class="orderListContent">ordered At : {{list.orderTime}}</p>
                             <p class="orderListContent">Delivered In : {{list.deliveredIn}}</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 orderBtnBlock">
+                        	<div class="row">
+                        		<div class="col-xs-6 col-sm-12 col-md-12col-lg-12">
+                        			<p class="repeatOrderBtn hand" ng-click="openBillModal()">View Bill</p>
+                        		</div>
+                        		<div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 repeatBtnBlock">
+                        			<p class="repeatOrderBtn hand" ng-click="toCheckOut()">Repeat</p>
+                        		</div>
+                        	</div>
                         </div>
                     </div>
                 </div>
