@@ -50,9 +50,9 @@ function profileController($scope, $rootScope, $http, DataStore, AppConstants, R
         deliveredIn: '30 mins'
     }];
 
-    /*$scope.toCheckOut = function(){
+    $scope.toCheckOut = function(){
     	$location.path('/checkOut');
-    }*/
+    }
 
     $scope.openBillModal = function () {
         var modalInstance = $modal.open({

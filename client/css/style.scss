@@ -1308,6 +1308,7 @@ button.kh-primary {
     border: 1px solid gainsboro;
     margin-top: 6px;
     margin-bottom: 9px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.26);
 }
 .orderNo {
     margin-bottom:-12px;
@@ -1332,6 +1333,35 @@ button.kh-primary {
 .repeatBtnBlock{
   margin-top: 19px;
 }
+.smallFont{
+    color: #DC141B;
+}
+.foodOrderImage{
+  width: 90px;
+  margin-top: 10px;
+  margin-left: -7px;
+}
+.coinsImgBlock{
+  border-right: 1px solid gainsboro;
+  margin-top: 10px;
+}
+.coinImage{
+  width: 56px;
+  margin-top: 26px;
+  margin-left: 16px;
+}
+.orderNos{
+  margin-bottom: -20px;
+  font-size: 60px;
+}
+.favHeartGlyph{
+  font-size: 60px;
+    margin-top: 22px;
+}
+.marginTopBottom{
+  margin-bottom: 15px;
+    margin-top: 10px;
+}
 
 
 @media (max-width: 768px) {
@@ -1352,6 +1382,22 @@ button.kh-primary {
     font-size: 20px;
     height: 36px;
   }
+  .foodOrderImage{
+    width: 60px;
+    margin-left: -14px;
+  }
+  .coinImage{
+    width: 40px;
+    margin-left: 0px;
+  }
+  .orderNos{
+      margin-bottom: -20px;
+    font-size: 40px;
+  }
+  .favHeartGlyph{
+    font-size: 30px;
+    margin-left: -12px;
+  }
 }
 
 @media (max-width: 460px) {
@@ -1360,6 +1406,7 @@ button.kh-primary {
     }
     .smallFont{
         font-size:20px;
+        color: #DC141B;
     }
 }
 

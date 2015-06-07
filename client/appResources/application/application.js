@@ -33,7 +33,7 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/admin/adminRestaurants.html',
                 '../../appResources/controller/adminRestHomeController'
         ))
-        .when('/userCheckOut',
+        .when('/checkOut',
             routeConfig.config(
                 'views/user/UserCheckOut.html',
                 '../../appResources/controller/userCheckOutController'
