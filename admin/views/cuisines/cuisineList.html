@@ -1,0 +1,82 @@
+<div ng-include="'views/header.html'"></div>
+<div class="container" ng-controller="CuisineListController" ng-init="init()">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="bottomBorder">All Cuisines</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="bg-danger" ng-class="haveReceivedErrorFromServer()">
+                {{errorMessage}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="bg-success" ng-class="haveReceivedSuccessFromServer()">
+                {{successMessage}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row restaurantList noLeftRightMargin tMar20">
+        <div class="col-xs-4">
+            <div class="heading">
+                <div class="text">
+                    Cuisine Name
+                </div>
+
+                <div class="input-group search">
+                    <input type="text" class="form-control" ng-model="searchParams.name" />
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-glyph" type="button" ng-click="search($event)">
+                                <span class="glyphicon glyphicon-search form-control-feedback" ></span>
+                            </button>
+                        </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-4">
+            <div class="heading">
+                <div class="text">
+                    On Home Page ?
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-4">
+            <div class="heading">
+                <div class="text">Actions</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row noLeftRightMargin userList" ng-repeat="cuisine in cuisineList">
+        <div class="col-xs-4 dataCell">
+            {{cuisine.name}}
+        </div>
+
+        <div class="col-xs-4 dataCell">
+            {{cuisine.showOnHomePage}}
+        </div>
+
+        <div class="col-xs-4">
+            <span class="glyphicon glyphicon-edit" title="Edit Cuisine" ng-click="editCuisine( cuisine )"></span>
+        </div>
+    </div>
+
+    <div class="row noLeftRightMargin">
+        <div class="col-xs-12 col-sm-4 tMar20 noLeftRightPadding">
+            <button type="reset" class="btn btn-pr-secondary btn-block" ng-click="resetSearch()">Reset Search</button>
+        </div>
+
+        <div class="col-xs-12 col-sm-8 noLeftRightPadding">
+            <div class="pull-right" pagination total-items="listInfo.totalItems" ng-model="listInfo.currentPage" ng-change="getCuisines()"/>
+        </div>
+    </div>
+</div>

@@ -53,7 +53,7 @@ var isFieldNotValid = function (value, isMandatory, mandatoryMessage, regEx, inV
             result : result
         };
     }
-}
+};
 
 var isNameNotValid = function (name, isMandatory) {
     return isFieldNotValid(name, isMandatory, mandatoryMessage, RegExProvider.name, ServerConstants.errorMessage.name);

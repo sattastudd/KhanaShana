@@ -2,6 +2,7 @@ var statsController = require( '../controllers/admin/stats/StatsController' );
 var optionsController = require( '../controllers/admin/options/OptionsController' );
 var adminRestController = require( '../controllers/admin/restaurant/AdminRestaurantController' );
 var usersController = require( '../controllers/admin/users/UsersController' );
+var cuisineController = require( '../controllers/admin/cuisines/AdminCuisineController' );
 
 /* Request-Name : /admin/stats, Type : Get, Allowed : admin*/
 /* This request would be used by admin to get application stats. */
@@ -128,6 +129,19 @@ router.post( '/admin/restaurants/approve', function( req, res, next ) {
     console.log( 'In adminRoutes | Handling ' + req.route.path );
 
     adminRestController.approveRestaurant(req, res, next );
+
+    console.log( 'In adminRoutes | Finished ' + req.route.path );
+});
+
+/*                          Admin Cuisine Routes                        */
+/*======================================================================*/
+
+/* Request-Name : /admin/cuisine/search, Type : Post, Allowed : admin*/
+/* This request would be used by admin to search cuisines. */
+router.post( '/admin/cuisine/search', function( req, res, next ) {
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    cuisineController.getCuisines(req, res, next );
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 });

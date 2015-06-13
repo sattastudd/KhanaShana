@@ -56,6 +56,12 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 '../../appResources/controller/restaurants/restaurantApprovalController'
             ))
 
+            .when( '/cuisines/all',
+            routeConfig.config(
+                'views/cuisines/cuisineList.html',
+                '../../appResources/controller/cuisines/cuisineListController'
+            ))
+
             .otherwise({
                 redirectTo: '/login'
             });

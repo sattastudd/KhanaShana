@@ -33,7 +33,9 @@
             restaurants : 'restaurants',
             restaurant : 'restaurant',
 
-            approveRestaurant : 'restaurants/approve'
+            approveRestaurant : 'restaurants/approve',
+
+            cuisineSearch : 'cuisine/search'
         })
         .constant('RegExProvider',  {
 

@@ -1,189 +1,123 @@
-/* This is a Database Interaction file Responsible for adding, editing, deleting a cuisines.
- */
+/* This is DB Interaction file for Admin Cuisine related tasks. */
 
-var CuisinesModelModule = require( '../../../models/cuisines/cuisinesModel' );
+var CuisineModelModule = require( '../../../models/cuisines/cuisinesModel' );
+var DbUtils = require( '../../util/DBIUtil' );
+var AppConstants = require( '../../../constants/ServerConstants' );
 
-/* This public method is used to retrieve all cuisines from system.
+var async = require( 'async' );
+
+/*                      Cuisine Search Section Begin                    */
+/*===========================================================================*/
+
+/*              Private Methods             */
+/*==========================================*/
+
+/**
+ * Private method to get total cuisines count.
+ * It takes search parameters into account.
+ * It would only be executed if user has initiated a fresh search.
  */
-var getAllCuisines = function(cityName, callback){
-    console.log( 'In AdminCuisineDBI | Starting Execution of getAllCuisines' );
+var getCuisineCount = function( searchParam, cityName, query, callback ) {
+    logger.info( 'In AdminCuisineDBI | Starting Execution of getCuisinesCount' );
 
     var cityDBConnection = utils.getDBConnection( cityName );
 
-    CuisinesModelModule.setUpConnection( cityDBConnection );
-    var CuisinesModel = CuisinesModelModule.getModel();
+    CuisineModelModule.setUpConnection( cityDBConnection );
+    var CuisineModel = CuisineModelModule.getModel();
+
+    CuisineModel.count( query, function( err, count ) {
+        if( err ) {
+            callback ( err );
+        } else {
+            callback ( null, count );
+        }
+    });
+
+    logger.info( 'In AdminCuisineDBI | Finished Execution of getCuisinesCount' );
+};
+
+/**
+ * Private method to search on first retrieval of data.
+ * This method is only called in case of fresh search.
+ */
+var getCuisinesForFirstTime = function( searchParam, cityName, query, projection, callback ) {
+    logger.info( 'In AdminCuisineDBI | Starting Execution of getCuisinesForFirstTime' );
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    CuisineModelModule.setUpConnection( cityDBConnection );
+    var CuisineModel = CuisineModelModule.getModel();
+
+    var option = {
+        limit : 10
+    };
+
+    CuisineModel.find( query, projection, option, function( err, result ) {
+        if( err ) {
+            callback ( err );
+        } else {
+            callback ( null, result );
+        }
+    });
+
+    logger.info( 'In AdminCuisineDBI | Finished Execution of getCuisinesForFirstTime' );
+};
+
+/*                              Public Methods                         */
+/*======================================================================*/
+var getCuisines = function( cityName, searchParam, pagingParams, callback ) {
+    logger.info( 'In AdminCuisineDBI | Starting Execution of getCuisines' );
 
     var query = {};
     var projection = {
-        '_id' : false,
-        img : false,
-        showOnHomePage : false,
-        slug : false
+        "_id" : false,
+        "img" : false
     };
 
-    CuisinesModel.find( query, projection, function( err, result ){
-        if( err ) {
-            callback ( err );
-        } else {
-            callback( null, result );
-        }
-    });
+    var isNameNotEmpty = !DbUtils.isFieldEmpty( searchParam.name );
 
-    console.log( 'In AdminCuisineDBI | Finished Execution of getAllCuisines' );
-};
-
-/* This public method is used to add a new cuisine into system.
- */
-var addNewCuisine = function( cityName, cuisine, callback ){
-    console.log( 'In AdminCuisineDBI | Starting Execution of addNewCuisines' );
-
-    var cityDBConnection = utils.getDBConnection( cityName );
-
-    CuisinesModelModule.setUpConnection( cityDBConnection );
-    var CuisinesModel = CuisinesModelModule.getCuisinesModel();
-
-    var Cuisine = new CuisinesModel({
-        name : cuisine.name,
-        img : null,
-        showOnHomePage : false
-    });
-
-    Cuisine.save( function( err, result ){
-        if( err ){
-            callback( err );
-        } else {
-            callback( null, result );
-        }
-    });
-
-    console.log( 'In AdminCuisineDBI | Finished Execution of addNewCuisines' );
-};
-
-/* This public method would be used to update cuisine */
-var editCuisineBySlug = function( cityName, slug, cuisine, callback ){
-    console.log( 'In AdminCuisineDBI | Starting Execution of editCuisine' );
-
-    var cityDBConnection = utils.getDBConnection( cityName );
-
-    CuisinesModelModule.setUpConnection( cityDBConnection );
-    var CuisinesModel = CuisinesModelModule.getCuisinesModel();
-
-    var query = {
-        slug : slug
+    if( isNameNotEmpty ) {
+        query.name = DbUtils.createCaseInsensitiveLikeString( searchParam.name )
     };
 
-    var update = {
-        $set : {
-            name : cuisine.name,
-            img : cuisine.img,
-            showOnHomePage : cuisine.showOnHomePage
-        }
-    };
+    console.log( query );
 
-    CuisinesModel.update( query, update, function ( err, numberOfRowsEffected ){
-        if( err ) {
-            callback( err );
-        } else {
-            callback( null, numberOfRowsEffected );
-        }
-    });
-    console.log( 'In AdminCuisineDBI | Finished Execution of editCuisine' );
-};
+    if(pagingParams.startIndex === 0 || null == pagingParams.startIndex || typeof pagingParams.startIndex === 'undefined' ) {
 
-/* This public method would be used to delete a cuisines from the DB.
- */
-var deleteCuisineBySlug = function( cityName, cuisineSlug, callback ) {
-    console.log( 'In AdminCuisineDBI | Starting Execution of deleteCuisineBySlug' );
+        async.parallel({
+            count : async.apply(getCuisineCount, searchParam, cityName, query ),
+            result : async.apply(getCuisinesForFirstTime, searchParam, cityName, query, projection)
+        },
 
-    var cityDBConnection = utils.getDBConnection( cityName );
-
-    CuisinesModelModule.setUpConnection( cityDBConnection );
-    var CuisinesModel = CuisinesModelModule.getCuisinesModel();
-
-    var query = {
-        slug : cuisineSlug
-    };
-
-    CuisinesModel.findOneAndRemove( query, function ( err, result ){
-        if( err ) {
-            callback( err );
-        }
-        else {
-            callback( null, result );
-        }
-    });
-
-    console.log( 'In AdminCuisineDBI | Finished Execution of deleteCuisineBySlug' );
-};
-
-/* This public method would check if a cuisine is already present */
-var isCuisineNotPresent = function ( cityName, cuisineName, callback ) {
-
-    console.log( 'In AdminCuisineDBI | Starting Execution of isCuisineNotPresent' );
-
-    var cityDBConnection = utils.getDBConnection( cityName );
-
-    CuisinesModelModule.setUpConnection( cityDBConnection );
-    var CuisinesModel = CuisinesModelModule.getCuisinesModel();
-
-    var query = {
-        name : cuisineName
-    };
-
-    CuisinesModel.findOne( query, function ( err, result ) {
-        if( err ) {
-            callback ( err );
-        } else {
-            if( null !== result ){
-                callback( null, true );
-            } else {
-                callback( null, false );
+            function( err, result ) {
+                if( err ) {
+                    callback( err );
+                } else {
+                    callback( null, result );
+                }
             }
-        }
-    });
+        )
+    } else {
+        var options = {
+            skip : ( pagingParams.startIndex - 1),
+            limit : 10
+        };
 
-    console.log( 'In AdminCuisineDBI | Finished Execution of isCuisineNotPresent' );
+        var cityDBConnection = utils.getDBConnection( cityName );
 
-};
+        CuisineModelModule.setUpConnection( cityDBConnection );
+        var CuisineModel = CuisineModelModule.getModel();
 
-/* This public method would check if a cuisine is already present */
-var isSlugNameNotPresent = function ( cityName, cuisineSlug, callback ) {
-
-    console.log( 'In AdminCuisineDBI | Starting Execution of isSlugNameNotPresent' );
-
-    var cityDBConnection = utils.getDBConnection( cityName );
-
-    CuisinesModelModule.setUpConnection( cityDBConnection );
-    var CuisinesModel = CuisinesModelModule.getCuisinesModel();
-
-    var query = {
-        slug : cuisineSlug
-    };
-
-    CuisinesModel.findOne( query, function ( err, result ) {
-        if( err ) {
-            callback ( err );
-        } else {
-            if( null !== result ){
-                callback( null, true );
+        CuisineModel.find( query, projection, options, function( err, result ){
+            if( err ) {
+                callback( err );
             } else {
-                callback( null, false );
+                callback( null, result );
             }
-        }
-    });
+        });
+    }
 
-    console.log( 'In AdminCuisineDBI | Finished Execution of isSlugNameNotPresent' );
-
+    logger.info( 'In AdminCuisineDBI | Finished Execution of getCuisines' );
 };
 
-/*
-    console.log( 'In AdminCuisineDBI | Starting Execution of methodName' );
-    console.log( 'In AdminCuisineDBI | Finished Execution of methodName' );
- */
-
-exports.getAllCuisines = getAllCuisines;
-exports.addNewCuisine = addNewCuisine;
-exports.editCuisineBySlug = editCuisineBySlug;
-exports.deleteCuisineBySlug = deleteCuisineBySlug;
-exports.isCuisineNotPresent = isCuisineNotPresent;
-exports.isSlugNameNotPresent = isSlugNameNotPresent;
+exports.getCuisines = getCuisines;
