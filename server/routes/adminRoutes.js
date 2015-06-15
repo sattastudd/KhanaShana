@@ -151,11 +151,21 @@ router.post( '/admin/cuisine/search', function( req, res, next ) {
 /*                          Admin Location Routes                        */
 /*======================================================================*/
 /* Request-Name : /admin/locations/search, Type : Post, Allowed : admin*/
-/* This request would be used by admin to search cuisines. */
+/* This request would be used by admin to search locations. */
 router.post( '/admin/locations/search', function( req, res, next ){
     console.log( 'In adminRoutes | Handling ' + req.route.path );
 
     locationController.getAllLocations(req, res, next );
+
+    console.log( 'In adminRoutes | Finished ' + req.route.path );
+});
+
+/* Request-Name : /admin/locations, Type : Post, Allowed : admin*/
+/* This request would be used by admin to add new Location. */
+router.post( '/admin/locations', function( req, res, next ){
+    console.log( 'In adminRoutes | Handling ' + req.route.path );
+
+    locationController.addNewLocation(req, res, next );
 
     console.log( 'In adminRoutes | Finished ' + req.route.path );
 });

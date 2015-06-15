@@ -68,6 +68,12 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 '../../appResources/controller/locations/locationListController'
             ))
 
+            .when( '/locations/new',
+            routeConfig.config(
+                'views/locations/newOrEditLocation.html',
+                '../../appResources/controller/locations/newOrEditLocationController'
+            ))
+
             .otherwise({
                 redirectTo: '/login'
             });

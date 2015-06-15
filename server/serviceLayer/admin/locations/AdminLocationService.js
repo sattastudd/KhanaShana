@@ -76,4 +76,42 @@ var getAllLocations = function( searchParam, pagingParam, callback ) {
     logger.info( 'In AdminLocationService | Finished Execution of getAllLocations' );
 };
 
+/**
+ * Service method to insert new Location Into System
+ */
+var addNewLocation = function( locationName, callback ) {
+    logger.info( 'In AdminLocationService | Starting Execution of addNewLocation' );
+
+    var err = {}, errMsg = {}, hasAnyValidationFailed = false;
+
+    var responseFromValidatorForLocationName = Validator.isNameNotValid( locationName, true );
+
+    if( responseFromValidatorForLocationName.result ) {
+        err.name = true;
+        errMsg.name = responseFromValidatorForLocationName.message;
+
+        hasAnyValidationFailed = true;
+    }
+
+    if( hasAnyValidationFailed ) {
+        callback( AppConstants.appErrors.validationError, {
+            err : err, errMsg : errMsg, data : null, msg : AppConstants.errorMessage.removeError
+        });
+    } else {
+        var cityName = 'lucknow';
+
+        AdminLocationDBI.addNewLocation( cityName, locationName, function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, {
+                    err : {}, errMsg : {}, data : result, msg : 'Location with name ' + locationName + ' has been added.' });
+            }
+        });
+    }
+
+    logger.info( 'In AdminLocationService | Finished Execution of addNewLocation' );
+};
+
 exports.getAllLocations = getAllLocations;
+exports.addNewLocation = addNewLocation;

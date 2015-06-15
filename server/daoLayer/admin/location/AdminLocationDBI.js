@@ -8,7 +8,7 @@ var AppConstants = require( '../../../constants/ServerConstants' );
 
 var async = require( 'async' );
 
-/*                      Cuisine Search Section Begin                    */
+/*                      Location Search Section Begin                    */
 /*===========================================================================*/
 
 /*              Private Methods             */
@@ -67,6 +67,7 @@ var getLocationsForFirstTime = function( cityName, query, projection, callback )
 
 /*                              Public Methods                         */
 /*======================================================================*/
+/** Public Method to search for locations. */
 var getLocations = function( cityName, searchParams, pagingParams, callback ) {
     logger.info( 'In AdminLocationDBI | Finished Execution of getLocations' );
 
@@ -119,4 +120,91 @@ var getLocations = function( cityName, searchParams, pagingParams, callback ) {
     logger.info( 'In AdminLocationDBI | Finished Execution of getLocations' );
 };
 
+/*                      Location Addition Section Begin                    */
+/*=========================================================================*/
+
+/*              Private Methods             */
+/*==========================================*/
+
+var isLocationAlreadyPresent = function( cityName, locationName, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of isLocationAlreadyPresent' );
+
+    var query = {
+        name : DbUtils.createCaseInsensitiveLikeString( locationName )
+    };
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    LocationModelModule.setUpConnection( cityDBConnection );
+    var LocationModel = LocationModelModule.getModel();
+
+    LocationModel.count( query, function( err, count ) {
+        if( err ) {
+            callback( err );
+        } else {
+            if( count > 0 ) {
+                callback( AppConstants.appErrors.existingLocation );
+            } else {
+                callback( null, false );
+            }
+        }
+    });
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of isLocationAlreadyPresent' );
+};
+
+/**
+ * Private Method to insert location into system.
+ */
+var insertLocationIntoSystem = function( cityName, locationName, isLocationAlreadyPresent, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of insertLocationIntoSystem' );
+
+    if( !isLocationAlreadyPresent ) {
+
+        var cityDBConnection = utils.getDBConnection( cityName );
+
+        LocationModelModule.setUpConnection( cityDBConnection );
+        var LocationModel = LocationModelModule.getModel();
+
+        var Location = new LocationModel({
+            name : locationName
+        });
+
+        Location.save( function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        });
+
+    } else {
+        callback( AppConstants.appErrors.existingLocation );
+    }
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of insertLocationIntoSystem' );
+};
+
+/*                              Public Methods                         */
+/*======================================================================*/
+
+var addNewLocation = function( cityName, location, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of addNewLocation' );
+
+    async.waterfall([
+        async.apply( isLocationAlreadyPresent, cityName, location),
+        async.apply( insertLocationIntoSystem, cityName, location)
+    ],
+        function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        });
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of addNewLocation' );
+};
+
 exports.getLocations = getLocations;
+exports.addNewLocation = addNewLocation;

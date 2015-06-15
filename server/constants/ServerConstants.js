@@ -19,7 +19,8 @@ var appConstants = {
         someError : 'SomeError',
         noMenuPresent : 'No Menu Entries Provided.',
         alreadyHasAnOwner : 'ExistingOwner',
-        userAlreadyAssigned : 'ExistingAssignment'
+        userAlreadyAssigned : 'ExistingAssignment',
+        existingLocation : 'ExistingLocation'
     },
 
     errorMessage : {
@@ -56,7 +57,9 @@ var appConstants = {
         unSupportedFile : 'Unsupported File',
 
         alreadyHasAnOwner : 'Restaurant Already has an owner.',
-        userAlreadyAssigned : 'User already has an assigned restaurant'
+        userAlreadyAssigned : 'User already has an assigned restaurant',
+
+        existingLocation : 'Local Already Exisits.'
     },
 
     successMessage : 'Ok',
