@@ -3,152 +3,120 @@
 
 var LocationModelModule = require( '../../../models/locations/locationsModel' );
 
-/* This public method is used to get all the Locations from the system.
+var DbUtils = require( '../../util/DBIUtil' );
+var AppConstants = require( '../../../constants/ServerConstants' );
+
+var async = require( 'async' );
+
+/*                      Cuisine Search Section Begin                    */
+/*===========================================================================*/
+
+/*              Private Methods             */
+/*==========================================*/
+
+/**
+ * Private method to get total locations count.
+ * It takes search parameters into account.
+ * It would only be executed if user has initiated a fresh search.
  */
-var getAllLocations = function( cityName, callback ){
-  console.log( 'In AdminRestaurantDBI | Starting Execution of getAllLocations' );
-
-  var cityDBConnection = utils.getDBConnection( cityName );
-
-  LocationModelModule.setUpConnection( cityDBConnection );
-  var LocationModel = LocationModelModule.getModel();
-
-  var query = {};
-  var projection = {
-  	'_id' : false
-  };
-
-  LocationModel.find( query, projection, function( err, result ){
-  	if( err ){
-  		callback( err );
-  	} else {
-  		callback( null, result );
-  	}
-  });
-
-  console.log( 'In AdminRestaurantDBI | Finished Execution of getAllLocations' );
-};
-
-/* This public method is used to add a new location into system.
- */
-var addNewLocation = function( cityName, locationName, callback ){
-    console.log( 'In AdminRestaurantDBI | Starting Execution of addNewLocation' );
+var getTotalLocationsCount = function( cityName, query, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of getTotalLocationsCount' );
 
     var cityDBConnection = utils.getDBConnection( cityName );
 
     LocationModelModule.setUpConnection( cityDBConnection );
-    var LocationModel = LocationModelModule.getLocationModel();
+    var LocationModel = LocationModelModule.getModel();
 
-    var Location = new LocationModel({
-        name : locationName
-    });
+    LocationModel.count( query, function( err, count ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, count );
+        }
+    } );
 
-    Location.save( function( err, result ){
-        if( err ){
+    logger.info( 'In AdminLocationDBI | Finished Execution of getTotalLocationsCount' );
+};
+
+/**
+ * Private method to search on first retrieval of data.
+ * This method is only called in case of fresh search.
+ */
+var getLocationsForFirstTime = function( cityName, query, projection, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of getLocationsForFirstTime' );
+
+    var options = {
+        limit : 10
+    };
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    LocationModelModule.setUpConnection( cityDBConnection );
+    var LocationModel = LocationModelModule.getModel();
+
+    LocationModel.find( query, projection, options, function( err, result ) {
+        if( err ) {
             callback( err );
         } else {
             callback( null, result );
         }
     });
 
-    console.log( 'In AdminRestaurantDBI | Finished Execution of addNewLocation' );
+    logger.info( 'In AdminLocationDBI | Finished Execution of getLocationsForFirstTime' );
 };
 
-/* This public method would be used to update location */
-var editLocationByName = function( cityName, oldName, newName, callback ){
-    console.log( 'In AdminRestaurantDBI | Starting Execution of editLocationByName' );
+/*                              Public Methods                         */
+/*======================================================================*/
+var getLocations = function( cityName, searchParams, pagingParams, callback ) {
+    logger.info( 'In AdminLocationDBI | Finished Execution of getLocations' );
 
-    var cityDBConnection = utils.getDBConnection( cityName );
+    var query = {};
+    var projection = {};
 
-    LocationModelModule.setUpConnection( cityDBConnection );
-    var LocationModel = LocationModelModule.getLocationModel();
+    var name = searchParams.name;
+    var isNameEmpty = DbUtils.isFieldEmpty( name );
 
-    var query = {
-        name : oldName
-    };
+    if( isNameEmpty ) {
+        delete searchParams.name;
+    } else {
+        query.name = DbUtils.createCaseInsensitiveLikeString(name);
+    }
 
-    var update = {
-        $set : {
-            name : newName
-        }
-    };
+    if( pagingParams.startIndex == 0 ) {
+        async.parallel({
+            count : async.apply( getTotalLocationsCount, cityName, query ),
+            result : async.apply( getLocationsForFirstTime, cityName, query, projection )
+        },
+            function( err, result ) {
+                if( err ) {
+                    callback( err );
+                } else {
+                    callback( null, result );
+                }
+            });
+    } else {
 
-    LocationModel.update( query, update, function ( err, numberOfRowsEffected ){
-        if( err ) {
-            callback( err );
-        } else {
-            callback( null, numberOfRowsEffected );
-        }
-    });
-    console.log( 'In AdminRestaurantDBI | Finished Execution of editLocationByName' );
-};
+        var cityDBConnection = utils.getDBConnection( cityName );
 
-/* This public method would be used to delete a location from the DB.
- * This method needs to make sure that a location can only be deleted if there are no corrosponding entries for it in restaurants DB.
- */
-var deleteLocationByName = function( cityName, locationName, callback ) {
-    console.log( 'In AdminRestaurantDBI | Starting Execution of deleteLocationByName' );
+        var options = {
+            limit : 10,
+            skip : pagingParams.startIndex
+        };
 
-    var cityDBConnection = utils.getDBConnection( cityName );
+        LocationModelModule.setUpConnection( cityDBConnection );
+        var LocationModel = LocationModelModule.getModel();
 
-    LocationModelModule.setUpConnection( cityDBConnection );
-    var LocationModel = LocationModelModule.getLocationModel();
-
-    var query = {
-        name : locationName
-    };
-
-    LocationModel.findOneAndRemove( query, function ( err, result ){
-        if( err ) {
-            callback( err );
-        }
-        else {
-            callback( null, result );
-        }
-    });
-
-    console.log( 'In AdminRestaurantDBI | Finished Execution of deleteLocationByName' );
-};
-
-/* This public method would check if a cuisine is already present */
-var isLocationNotPresent = function ( cityName, locationName, callback ) {
-
-    console.log( 'In AdminRestaurantDBI | Starting Execution of isLocationNotPresent' );
-
-    var cityDBConnection = utils.getDBConnection( cityName );
-
-    LocationModelModule.setUpConnection( cityDBConnection );
-    var LocationModel = LocationModelModule.getLocationModel();
-
-    var query = {
-        name : locationName
-    };
-
-    LocationModel.findOne( query, function ( err, result ) {
-        if( err ) {
-            callback ( err );
-        } else {
-            if( null !== result ){
-                callback( null, true );
+        LocationModel.find( query, projection, options, function( err, result ) {
+            if( err ) {
+                callback( err );
             } else {
-                callback( null, false );
+                callback( null, result );
             }
-        }
-    });
+        });
 
-    console.log( 'In AdminRestaurantDBI | Finished Execution of isLocationNotPresent' );
+    }
 
+    logger.info( 'In AdminLocationDBI | Finished Execution of getLocations' );
 };
 
-
-
-/*
- console.log( 'In AdminRestaurantDBI | Starting Execution of methodName' );
- console.log( 'In AdminRestaurantDBI | Finished Execution of methodName' );
- */
-
-exports.getAllLocations = getAllLocations;
-exports.addNewLocation = addNewLocation;
-exports.editLocationByName = editLocationByName;
-exports.deleteLocationByName = deleteLocationByName;
-exports.isLocationNotPresent = isLocationNotPresent;
+exports.getLocations = getLocations;
