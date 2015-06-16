@@ -823,21 +823,29 @@ ul.newRestaurantAddition{
   }
 }
 
-.bannerCropModel{
+.modal-content{
   background-color : $theme-primary-background-color;
+  top : 150px;
+
+  .modal-header{
+    border-bottom-color: #444;
+    margin : 15px 15px 0 15px;
+    padding : 0 0 10px 0;
+
+    background-color : $theme-primary-background-color;
+  }
+
+  .modal-body{
+    font-size : 18px;
+  }
+
+  .modal-footer{
+    border-top-color: #444;
+    margin : 0 15px;
+    padding : 10px 0;
+  }
 }
 
 .modal-backdrop.in{
   height : 100%;
-}
-
-.imageCrop{
-  position: relative;
-
-  .croppedArea{
-    border : 1px dashed #fff;
-    position: absolute;
-    top : 0;
-    left : 0;
-  }
 }

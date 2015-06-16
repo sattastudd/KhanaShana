@@ -20,7 +20,8 @@ var appConstants = {
         noMenuPresent : 'No Menu Entries Provided.',
         alreadyHasAnOwner : 'ExistingOwner',
         userAlreadyAssigned : 'ExistingAssignment',
-        existingLocation : 'ExistingLocation'
+        existingLocation : 'ExistingLocation',
+        locationInUse : 'locationInUse'
     },
 
     errorMessage : {
@@ -59,7 +60,8 @@ var appConstants = {
         alreadyHasAnOwner : 'Restaurant Already has an owner.',
         userAlreadyAssigned : 'User already has an assigned restaurant',
 
-        existingLocation : 'Local Already Exisits.'
+        existingLocation : 'Local Already Exists.',
+        locationInUse : 'Location is in use.'
     },
 
     successMessage : 'Ok',

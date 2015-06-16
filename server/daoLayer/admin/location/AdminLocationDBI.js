@@ -2,6 +2,7 @@
  */
 
 var LocationModelModule = require( '../../../models/locations/locationsModel' );
+var RestaurantModelModule = require( '../../../models/locations/locationsModel' );
 
 var DbUtils = require( '../../util/DBIUtil' );
 var AppConstants = require( '../../../constants/ServerConstants' );
@@ -206,5 +207,92 @@ var addNewLocation = function( cityName, location, callback ) {
     logger.info( 'In AdminLocationDBI | Finished Execution of addNewLocation' );
 };
 
+/*                      Location Deletion Section Begin                    */
+/*=========================================================================*/
+
+/*              Private Methods             */
+/*==========================================*/
+
+/**
+ * Private method to count number of restaurants that deliver in particular area.
+ * We can't allow a location to be deleted which is in use. It will break our functionality.
+ */
+var getLocationUsageCount = function( cityName, locationName, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of getLocationUsageCount' );
+
+    var query = {
+        delivery : DbUtils.createCaseInsensitiveLikeString( locationName )
+    };
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+    RestaurantModelModule.setUpConnection( cityDBConnection );
+
+    var RestaurantModel = RestaurantModelModule.getModel();
+
+    RestaurantModel.count( query, function( err, result ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of getLocationUsageCount' );
+};
+
+/**
+ * Private method to delete a location.
+ */
+var deleteLocationFromSystem = function( cityName, locationName, locationUsageCount, callback ) {
+    logger.info( 'In AdminLocationDBI | Finished Execution of deleteLocationFromSystem' );
+
+    if( locationUsageCount === 0 ) {
+
+        var query = {
+            name : DbUtils.createCaseInSensitiveRegexString( locationName )
+        };
+
+        var cityDBConnection = utils.getDBConnection( cityName );
+        LocationModelModule.setUpConnection( cityDBConnection );
+
+        var LocationModel = LocationModelModule.getModel();
+
+        LocationModel.delete( query, function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        });
+
+    } else {
+        callback( AppConstants.appErrors.locationInUse );
+    }
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of deleteLocationFromSystem' );
+};
+
+/*                              Public Methods                         */
+/*======================================================================*/
+/* Public method to delete a Location From System */
+var deleteLocation = function( cityName, locationName, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of deleteLocation' );
+
+    async.waterfall([
+        async.apply( getLocationUsageCount, cityName, locationName ),
+        async.apply( deleteLocationFromSystem, cityName, locationName )
+    ],
+        function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        });
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of deleteLocation' );
+};
+
 exports.getLocations = getLocations;
 exports.addNewLocation = addNewLocation;
+exports.deleteLocation = deleteLocation;

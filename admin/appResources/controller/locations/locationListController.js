@@ -5,7 +5,7 @@ define([], function(){
     return locationListController;
 });
 
-function LocationListController( $scope, $http, AppConstants, AppUtils, RestRequests, ValidationService, ResponseMessage ) {
+function LocationListController( $scope, $http, $modal, AppConstants, AppUtils, RestRequests, ValidationService, ResponseMessage ) {
 
     $scope.searchParams = {
         startIndex : 0
@@ -103,4 +103,37 @@ function LocationListController( $scope, $http, AppConstants, AppUtils, RestRequ
         $scope.performSearch();
     };
 
+    $scope.deleteLocation = function( location ) {
+        var modalInstance = $modal.open({
+            template : angular.element( document.getElementById('deleteModal')).html(),
+            size : 'md',
+            controller : 'ModalInstanceController',
+            resolve : {
+                title : function () {
+                    return 'Location';
+                }
+            },
+            backdrop : 'static'
+        });
+
+        modalInstance.result.then( function( data ) {
+            if( data === 'deleteIt' ) {
+                console.log('Location should be deleted now' );
+            }
+        });
+    };
+
+};
+
+function ModalInstanceController( $scope, $modalInstance, title ) {
+    console.log( title );
+    $scope.title = title;
+
+    $scope.ok = function(){
+        $modalInstance.close('deleteIt');
+    };
+
+    $scope.cancel = function (){
+        $modalInstance.dismiss('no' );
+    };
 };
