@@ -6,7 +6,7 @@ var mongoose = require( 'mongoose' );
 var cuisinesSchema = new mongoose.Schema( {
 	name : String,
 	img : String,
-    showOnHomePage : Boolean,
+    isOnHomePage : Boolean,
     slug : String
 } );
 
