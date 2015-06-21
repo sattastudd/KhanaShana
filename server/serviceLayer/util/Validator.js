@@ -19,7 +19,8 @@ var RegExProvider = {
     contactNumber : /^[1-9][0-9]{9,10}$/,
     number : /^[0-9]{1,}$/,
     slug : /^[a-zA-Z-]+$/,
-    fileName : /^[a-zA-Z0-9-]+.[jpg,jpeg,png]+$/
+    fileName : /^[a-zA-Z0-9-]+.[jpg,jpeg,png]+$/,
+    boolean : /^[true,false]{1,}$/
 };
 
 var isFieldNotValid = function (value, isMandatory, mandatoryMessage, regEx, inValidMessage){
@@ -81,6 +82,10 @@ var isReceivedFieldNotValid = function( fieldValue, isMandatory ) {
 
 var isNumberNotValid = function( number, isMandatory ) {
     return isFieldNotValid( number, isMandatory, mandatoryMessage, RegExProvider.number, ServerConstants.errorMessage.number );
+};
+
+var isBooleanNotValid = function( value, isMandatory ) {
+    return isFieldNotValid( value, isMandatory, mandatoryMessage, RegExProvider.boolean, ServerConstants.errorMessage.boolean );
 };
 
 var isFileNameNotValid = function (value) {
@@ -171,3 +176,4 @@ exports.isFieldNotValidByType = isFieldNotValidByType;
 exports.isRoleDropDownNotValid = isRoleDropDownNotValid;
 
 exports.isFileNameNotValid = isFileNameNotValid;
+exports.isBooleanNotValid = isBooleanNotValid;

@@ -5,7 +5,7 @@ define([], function(){
     return locationListController;
 });
 
-function LocationListController( $scope, $http, $modal, AppConstants, AppUtils, RestRequests, ValidationService, ResponseMessage ) {
+function LocationListController( $scope, $http, $modal, $location, AppConstants, AppUtils, RestRequests, ValidationService, ResponseMessage, DataStore) {
 
     $scope.searchParams = {
         startIndex : 0
@@ -111,26 +111,64 @@ function LocationListController( $scope, $http, $modal, AppConstants, AppUtils, 
             resolve : {
                 title : function () {
                     return 'Location';
+                },
+                location : function () {
+                    return location;
                 }
             },
             backdrop : 'static'
         });
 
         modalInstance.result.then( function( data ) {
-            if( data === 'deleteIt' ) {
+            if( data.text === 'deleteIt' ) {
                 console.log('Location should be deleted now' );
+                console.log( data );
+
+                var requestName = AppConstants.adminServicePrefix + '/' + RestRequests.newLocation + '/' + data.location.name;
+
+                $http.delete( requestName )
+                    .success( function( data ) {
+                        $scope.isServerError = false;
+                        $scope.isServerSuccess = true;
+
+                        $scope.successMessage = data.msg;
+
+                        $scope.resetSearch();
+                    })
+                    .error( function( data ) {
+                        $scope.err = data.err;
+                        $scope.errMsg = data.errMsg;
+
+                        $scope.isServerError = true;
+                        $scope.isServerSuccess = false;
+
+                        $scope.errorMessage = data.msg;
+                    })
+
             }
         });
     };
 
+    $scope.editLocation = function( location ) {
+        DataStore.storeData( 'isLocationEdit', true );
+        DataStore.storeData( 'toEdit', location );
+
+        $location.path( '/locations/new' );
+    }
+
 };
 
-function ModalInstanceController( $scope, $modalInstance, title ) {
+function ModalInstanceController( $scope, $modalInstance, title, location ) {
     console.log( title );
+    console.log( location );
+
     $scope.title = title;
 
     $scope.ok = function(){
-        $modalInstance.close('deleteIt');
+        $modalInstance.close({
+            text : 'deleteIt',
+            location : location
+        });
     };
 
     $scope.cancel = function (){

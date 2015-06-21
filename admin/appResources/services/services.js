@@ -12,7 +12,7 @@
         })
         .constant('AppConstants', {
 
-            appName : 'KhanaShana',
+            appName : 'PetuRaam',
             httpServicePrefix : 'node',
             publicServicePrefix : 'node/public',
             adminServicePrefix : 'node/admin'
@@ -44,7 +44,8 @@
 
             name: /^[a-zA-Z ]{1,}$/,
             email: /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/,
-            contactNumber : /^[1-9][0-9]{9,10}$/
+            contactNumber : /^[1-9][0-9]{9,10}$/,
+            boolean : /^[true,false]{1,}$/
 
         })
         .service('AppUtils', function ($filter){
@@ -67,6 +68,7 @@
             this.errorMessage = {
                 name : 'Invalid Name',
                 email : 'Invalid Email',
+                boolean : 'Invalid value',
                 mandatory : 'Field can not be left empty.',
                 contact : 'Invalid Contact Number.',
                 sessionExpired : 'Your session has expired.',
@@ -89,6 +91,10 @@
                 var message = resultToReturn ? regExFailMessage : '';
 
                 return { result : resultToReturn, message : message };
+            };
+
+            this.isBooleanNotValid = function( value, isMandatory ) {
+                return isFieldNotValid( value, isMandatory, RegExProvider.boolean, mandatoryMessage, errorMessage.boolean );
             };
 
             var mandatoryMessage = ResponseMessage.errorMessage.mandatory;

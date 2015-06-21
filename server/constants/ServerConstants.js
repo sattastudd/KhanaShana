@@ -21,7 +21,8 @@ var appConstants = {
         alreadyHasAnOwner : 'ExistingOwner',
         userAlreadyAssigned : 'ExistingAssignment',
         existingLocation : 'ExistingLocation',
-        locationInUse : 'locationInUse'
+        locationInUse : 'locationInUse',
+        deleteFailed : 'deleteFailed'
     },
 
     errorMessage : {
@@ -36,6 +37,7 @@ var appConstants = {
         noRecordFound : 'No Such Record Exists',
         noSearchCriteria : 'Please enter at least one search criteria.',
         number : 'Invalid Number',
+        boolean : 'Invalid value',
         dropdown : 'Please select a value from dropdown',
         roleError : 'Invalid Role',
         noDeliveryArea : 'Please select a delivery area',
@@ -60,8 +62,13 @@ var appConstants = {
         alreadyHasAnOwner : 'Restaurant Already has an owner.',
         userAlreadyAssigned : 'User already has an assigned restaurant',
 
-        existingLocation : 'Local Already Exists.',
-        locationInUse : 'Location is in use.'
+        existingLocation : 'Local with name {{1}} Already Exists.',
+        locationInUse : 'Location {{1}} is in use. Please remove it from usage before deleting it.',
+
+        deleteFailed : 'Delete Failed',
+
+        oldObjectNull : 'Update query is missing.',
+        newObjectNull : 'Values to be updated are missing'
     },
 
     successMessage : 'Ok',
@@ -77,7 +84,9 @@ var appConstants = {
 
     basicDetailsAdded : 'Basic Restaurant Details have been saved.',
 
-    restaurantApproved : 'Restaurant has been approved.'
+    restaurantApproved : 'Restaurant has been approved.',
+    locationDeleted : 'Location {{1}} has been deleted.',
+    locationHasBeenUpdated : 'Location {{1}} has been updated.'
 };
 
 module.exports = appConstants;

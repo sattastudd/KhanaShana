@@ -33,9 +33,12 @@ var getAllLocations = function( req, res, next ) {
 var addNewLocation = function( req, res, next ) {
     logger.info( 'In AdminLocationController | Starting Execution of addNewLocation' );
 
-    var locationName = req.body.name;
+    var location = {
+        locationName: req.body.name,
+        isOnHomePage: req.body.isOnHomePage
+    };
 
-    AdminLocationService.addNewLocation( locationName, function( err, result ) {
+    AdminLocationService.addNewLocation( location, function( err, result ) {
         if( err ) {
             if( err === AppConstants.appErrors.validationError ) {
                 res.status( 400).json( result );
@@ -50,5 +53,50 @@ var addNewLocation = function( req, res, next ) {
     logger.info( 'In AdminLocationController | Finished Execution of addNewLocation' );
 };
 
+/**
+ * Public method to delete a location.
+ */
+var deleteLocation = function( req, res, next ) {
+    logger.info( 'In AdminLocationController | Starting Execution of deleteLocation' );
+
+    var locationName = req.params.locationName;
+
+    AdminLocationService.deleteLocation( locationName, function( err, result ) {
+        if( err ) {
+            res.status( 500).json( result );
+        } else {
+            res.status( 200).json( result );
+        }
+    });
+
+    logger.info( 'In AdminLocationController | Finished Execution of deleteLocation' );
+};
+
+/**
+ * Public method to update a location.
+ */
+var updateLocation = function( req, res, next ) {
+    logger.info( 'In AdminLocationController | Starting Execution of updateLocation' );
+
+    var oldLocationObject = req.body.old;
+    var newLocationObject = req.body.new;
+
+    AdminLocationService.updateLocation( oldLocationObject, newLocationObject, function( err, result ) {
+        if( err ) {
+            if( err === AppConstants.appErrors.validationError ) {
+                res.status( 400).json( result );
+            } else {
+                res.status( 500).json( result );
+            }
+        } else {
+            res.status( 200).json( result );
+        }
+    });
+
+    logger.info( 'In AdminLocationController | Finished Execution of updateLocation' );
+};
+
 exports.getAllLocations = getAllLocations;
 exports.addNewLocation = addNewLocation;
+exports.deleteLocation = deleteLocation;
+exports.updateLocation = updateLocation;

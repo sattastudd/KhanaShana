@@ -2,7 +2,7 @@
  */
 
 var LocationModelModule = require( '../../../models/locations/locationsModel' );
-var RestaurantModelModule = require( '../../../models/locations/locationsModel' );
+var RestaurantModelModule = require( '../../../models/restaurant/restaurants' );
 
 var DbUtils = require( '../../util/DBIUtil' );
 var AppConstants = require( '../../../constants/ServerConstants' );
@@ -73,7 +73,9 @@ var getLocations = function( cityName, searchParams, pagingParams, callback ) {
     logger.info( 'In AdminLocationDBI | Finished Execution of getLocations' );
 
     var query = {};
-    var projection = {};
+    var projection = {
+        "__v" : false
+    };
 
     var name = searchParams.name;
     var isNameEmpty = DbUtils.isFieldEmpty( name );
@@ -127,8 +129,10 @@ var getLocations = function( cityName, searchParams, pagingParams, callback ) {
 /*              Private Methods             */
 /*==========================================*/
 
-var isLocationAlreadyPresent = function( cityName, locationName, callback ) {
+var isLocationAlreadyPresent = function( cityName, location, callback ) {
     logger.info( 'In AdminLocationDBI | Starting Execution of isLocationAlreadyPresent' );
+
+    var locationName = location.locationName;
 
     var query = {
         name : DbUtils.createCaseInsensitiveLikeString( locationName )
@@ -157,10 +161,13 @@ var isLocationAlreadyPresent = function( cityName, locationName, callback ) {
 /**
  * Private Method to insert location into system.
  */
-var insertLocationIntoSystem = function( cityName, locationName, isLocationAlreadyPresent, callback ) {
+var insertLocationIntoSystem = function( cityName, location, isLocationAlreadyPresent, callback ) {
     logger.info( 'In AdminLocationDBI | Starting Execution of insertLocationIntoSystem' );
 
     if( !isLocationAlreadyPresent ) {
+
+        var locationName = location.locationName;
+        var isOnHomePage = location.isOnHomePage;
 
         var cityDBConnection = utils.getDBConnection( cityName );
 
@@ -168,7 +175,9 @@ var insertLocationIntoSystem = function( cityName, locationName, isLocationAlrea
         var LocationModel = LocationModelModule.getModel();
 
         var Location = new LocationModel({
-            name : locationName
+            name : locationName,
+            isOnHomePage : isOnHomePage,
+            dateModified : new Date()
         });
 
         Location.save( function( err, result ) {
@@ -257,7 +266,7 @@ var deleteLocationFromSystem = function( cityName, locationName, locationUsageCo
 
         var LocationModel = LocationModelModule.getModel();
 
-        LocationModel.delete( query, function( err, result ) {
+        LocationModel.remove( query, function( err, result ) {
             if( err ) {
                 callback( err );
             } else {
@@ -293,6 +302,142 @@ var deleteLocation = function( cityName, locationName, callback ) {
     logger.info( 'In AdminLocationDBI | Finished Execution of deleteLocation' );
 };
 
+/*                      Location Update Section Begin                    */
+/*=========================================================================*/
+
+/*              Private Methods             */
+/*==========================================*/
+
+/** Private method to update name of old location to new location in Locations DB.
+ */
+var updateNameOfLocationInDatabase = function( cityName, oldLocationObject, newLocationObject, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of updateNameOfLocationInDatabase' );
+
+    var query = {
+        name : oldLocationObject.locationName
+    };
+
+    var updateQuery = {
+        $set : {
+            name : newLocationObject.locationName,
+            dateModified : new Date()
+        }
+    };
+
+    if( oldLocationObject.isOnHomePage !== newLocationObject.isOnHomePage ) {
+        updateQuery.$set.isOnHomePage = newLocationObject.isOnHomePage;
+    }
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+    LocationModelModule.setUpConnection( cityDBConnection );
+
+    var LocationModel = LocationModelModule.getModel();
+
+    LocationModel.update( query, updateQuery, function( err, result ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of updateNameOfLocationInDatabase' );
+};
+
+
+/**
+ * Private method to update location details in all Restaurants.
+ * If a location has been renamed, it should be renamed as well in all existing restaurants.
+ */
+var updateDeliveryDetailOfRestaurants = function( cityName, oldName, newName, updateInLocations, callback ) {
+    logger.info( 'In AdminLocationDBI | Finished Execution of updateDeliveryDetailOfRestaurants' );
+
+    var query = {
+        delivery : DbUtils.createCaseInSensitiveRegexString( oldName )
+    };
+
+    var update = {
+        '$set' : {
+            'delivery.$' : newName
+        }
+    };
+
+    var options = {
+        multi : true
+    };
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+    RestaurantModelModule.setUpConnection( cityDBConnection );
+
+    var RestaurantModel = RestaurantModelModule.getModel();
+
+    RestaurantModel.update( query, update, options, function( err, updateCount ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, updateCount );
+        }
+    });
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of updateDeliveryDetailOfRestaurants' );
+};
+
+/*                              Public Methods                         */
+/*======================================================================*/
+
+/**
+ * Public method to update location in System.
+ */
+var updateLocation = function( cityName, oldLocationObject, newLocationObject, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of updateLocation' );
+
+    if( newLocationObject.locationName === oldLocationObject.locationName ) {
+
+        /* We are updating isOnHomePage of location. */
+        var query = {
+            name: newLocationObject.locationName
+        };
+
+        var update = {
+            $set : {
+                isOnHomePage : newLocationObject.isOnHomePage,
+                dateModified : new Date()
+            }
+        };
+
+        var cityDBConnection = utils.getDBConnection( cityName );
+        LocationModelModule.setUpConnection( cityDBConnection );
+
+        var LocationModel = LocationModelModule.getModel();
+
+        LocationModel.update( query, update, function( err, updateCount ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, updateCount );
+            }
+        });
+
+    } else {
+
+        /* We are renaming the object here. */
+        async.waterfall([
+            async.apply( updateNameOfLocationInDatabase, cityName, oldLocationObject, newLocationObject ),
+            async.apply( updateDeliveryDetailOfRestaurants, cityName, oldLocationObject.locationName, newLocationObject.locationName )
+        ],
+            function( err, result ) {
+                if( err ) {
+                    callback( err );
+                } else {
+                    callback( null, result );
+                }
+            });
+    }
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of updateLocation' );
+};
+
 exports.getLocations = getLocations;
 exports.addNewLocation = addNewLocation;
 exports.deleteLocation = deleteLocation;
+exports.updateLocation = updateLocation;

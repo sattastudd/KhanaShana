@@ -1,5 +1,5 @@
 <div ng-include="'views/header.html'"></div>
-<div class="container" ng-controller="NewLocationController">
+<div class="container" ng-controller="NewLocationController" ng-init="init()">
     <div class="row">
         <div class="col-xs-12">
             <h2 class="bottomBorder">Add a New Location</h2>
@@ -33,6 +33,19 @@
                 <div class="collapsibleErrorMessage" ng-class="hasFieldError('name')">
                     <div class="bg-danger" ng-class="hasFieldError('name')">
                         {{errMsg.name}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-5">
+                <div class="form-group bMar9">
+                    <label style="display: block">Displayed On Home Page ?</label>
+                    <input type="checkbox" ng-model="location.isOnHomePage" />
+                </div>
+
+                <div class="collapsibleErrorMessage" ng-class="hasFieldError( 'isOnHomePage' )">
+                    <div class="bg-danger" ng-class="hasFieldError( 'isOnHomePage' )">
+                        {{errMsg.isOnHomePage}}
                     </div>
                 </div>
             </div>

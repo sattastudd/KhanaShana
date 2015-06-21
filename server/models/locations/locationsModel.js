@@ -4,7 +4,9 @@
 var mongoose = require( 'mongoose' );
 
 var locationsSchema = new mongoose.Schema( {
-	name : String
+	name : String,
+    isOnHomePage : Boolean,
+    dateModified : Date
 } );
 
 var connection = null;
