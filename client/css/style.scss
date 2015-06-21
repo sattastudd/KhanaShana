@@ -616,6 +616,11 @@ body {
     }
   }
 
+  input {
+    height : 40px;
+    font-size : 15px;
+  }
+
   .form-group {
     margin-top: 10px;
 
@@ -659,6 +664,11 @@ body {
 /*Utility Classes*/
 .negativeTopMargin50{
   margin-top : -50px;
+}
+
+.leftRightPadding20{
+  padding-left : 20px;
+  padding-right : 20px;
 }
 
 .marRight5 {
@@ -797,6 +807,16 @@ body {
       &:last-child {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+      }
+
+      &.heading{
+        font-weight: 600;
+        font-size : 17px;
+
+        &:hover{
+          background-color : #fff;
+          color : #000;
+        }
       }
     }
   }
@@ -1322,7 +1342,7 @@ button.kh-primary {
   text-align: center;
   height: 44px;
   font-size: 25px;
-  border-radius: 8opx;
+  border-radius: 80px;
   border-radius: 2px;
   font-family: serif;
 }
@@ -1469,9 +1489,6 @@ button.kh-primary {
 .restTitleName {
   color: white;
 }
-
-
-
 
 .hand {
     cursor:pointer;

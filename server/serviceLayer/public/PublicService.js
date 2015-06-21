@@ -4,23 +4,46 @@
 
 var publicDBI = require( '../../daoLayer/public/PublicDBI' );
 
-var getGlobalData = function( dbName, callback ) {
-	console.log( 'In PublicService | Starting Execution of getGlobalData' );
+/** Get initial data to be used on the homepage. */
+var getGlobalData = function( callback ) {
+	logger.info( 'In PublicService | Starting Execution of getGlobalData' );
 
 	/* Perform validations here.
 	 */
 
-	publicDBI.getGlobalData( dbName, function( err, result ) {
+    var cityName = 'lucknow';
+	publicDBI.getGlobalData( cityName, function( err, result ) {
 		
 		if( err ) {
-			console.log( err );
+			logger.error( err );
 			callback( err );
 		} else {
 			callback( null, result );
 		}
 	} );
 
-	console.log( 'In PublicService | Finsihed Execution of getGlobalUserData' );
+	logger.info( 'In PublicService | Finsihed Execution of getGlobalUserData' );
+};
+
+/** Public Method to extract all locations from the system. */
+var getAllLocations = function( callback ) {
+
+    logger.info( 'In PublicService | Starting Execution of getAllLocations' );
+
+    var cityName = 'lucknow';
+
+    publicDBI.getAllLocations( cityName, function( err, result ) {
+        if( err ) {
+            logger.error( err );
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    logger.info( 'In PublicService | Finished Execution of getAllLocations' );
+
 };
 
 exports.getGlobalData = getGlobalData;
+exports.getAllLocations = getAllLocations;

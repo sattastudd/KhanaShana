@@ -10,10 +10,15 @@ var async = require( 'async' );
 
 /* 				    Global Module Variables				*/
 /*======================================================================================*/
-var query = {};
+var query = {
+    isOnHomePage : true
+};
 
 var projection = {
-	'_id' : false
+	'_id' : false,
+    "__v" : false,
+    dateModified : false,
+    isOnHomePage : false
 };
 
 /*					Utility Methods					*/
@@ -26,7 +31,7 @@ var projection = {
  */
 var getDropDownFromDB = function( callback ) {
 	
-	console.log( 'In publicDBI | Starting Execution of getDropDownFromDB' );
+	logger.info( 'In publicDBI | Starting Execution of getDropDownFromDB' );
 
 	var globalDBConnection = utils.getDBConnection( appConstants.globalDataBase );
 
@@ -42,20 +47,27 @@ var getDropDownFromDB = function( callback ) {
 		}
 	});
 
-	console.log( 'In publicDBI | Finsished Execution of getDropDownFromDB' );
+	logger.info( 'In publicDBI | Finished Execution of getDropDownFromDB' );
 };
 
 /* This private method is responsible for retrieving locations for city in DB.
  */
 var getLocationsFromDB = function( dbName, callback ) {
-	console.log( 'In publicDBI | Starting Execution of getLocationsFromDB' );
+	logger.info( 'In publicDBI | Starting Execution of getLocationsFromDB' );
 
 	var dbConnection = utils.getDBConnection( dbName );
 
 	locationsModule.setUpConnection( dbConnection );
     var LocationsModel = locationsModule.getModel();
 
-	LocationsModel.find( query, projection, function( err, locations ) {
+    var options = {
+        limit : 10,
+        sort : {
+            dateModified : -1
+        }
+    };
+
+	LocationsModel.find( query, projection, options, function( err, locations ) {
 		
 		if( err ) {
 			callback( err );
@@ -64,14 +76,14 @@ var getLocationsFromDB = function( dbName, callback ) {
 		}
 	});
 
-	console.log( 'In publicDBI | Finished Execution of getLocationsFromDB' );
+	logger.info( 'In publicDBI | Finished Execution of getLocationsFromDB' );
 };
 
-/* This private method is responsible for retriving cuisines from DB.
+/* This private method is responsible for retrieving cuisines from DB.
  */
 var getCuisinesFromDB = function( dbName, callback ) {
 	
-	console.log( 'In publicDBI | Starting Execution of getCuisinesFromDB' );
+	logger.info( 'In publicDBI | Starting Execution of getCuisinesFromDB' );
 
 	var dbConnection = utils.getDBConnection( dbName );
 
@@ -87,7 +99,7 @@ var getCuisinesFromDB = function( dbName, callback ) {
 		}
 	} );
 
-	console.log( 'In publicDBI | Finished Execution of getCuisinesFromDB' );
+	logger.info( 'In publicDBI | Finished Execution of getCuisinesFromDB' );
 };
 
 /*				    Final Callback Methods				*/
@@ -98,10 +110,10 @@ var getCuisinesFromDB = function( dbName, callback ) {
  */
 var finalCallBackForFirstCall = function( callBackFromService, err, results ) {
 	
-	console.log( 'In publicDBI | Starting Execution of finalCallBackForFirstCall' );
+	logger.info( 'In publicDBI | Starting Execution of finalCallBackForFirstCall' );
 
 	if( err ) {
-		console.log( err );
+		logger.error( err );
 		callBackFromService( err );
 	} else {
 		var result = {
@@ -113,7 +125,7 @@ var finalCallBackForFirstCall = function( callBackFromService, err, results ) {
 		callBackFromService( null, result );
 	}
 
-	console.log( 'In publicDBI | Finished Execution of finalCallBackForFirstCall' );
+	logger.info( 'In publicDBI | Finished Execution of finalCallBackForFirstCall' );
 };
 
 /*					Public Methods					*/
@@ -122,16 +134,39 @@ var finalCallBackForFirstCall = function( callBackFromService, err, results ) {
  */
 var getGlobalDataForFirstCall = function( dbName, callback ) {
 	
-	console.log( 'In publicDBI | Starting Execution of getGlobalDataForFirstCall' );
+	logger.info( 'In publicDBI | Starting Execution of getGlobalDataForFirstCall' );
 	
 	async.parallel( [ getDropDownFromDB,
 		async.apply( getLocationsFromDB, dbName ),
 		async.apply( getCuisinesFromDB, dbName ) ],
 		async.apply( finalCallBackForFirstCall, callback ) );
 
-	console.log( 'In publicDBI | Finished Execution of getGlobalDataForFirstCall' );
+	logger.info( 'In publicDBI | Finished Execution of getGlobalDataForFirstCall' );
+};
+
+/* Public Method to get all locations from Database.
+ * This method would be used without limit on size to get all locations at once.
+ */
+var getAllLocations = function( cityName, callback ) {
+    logger.info( 'In publicDBI | Starting Execution of getGlobalDataForFirstCall' );
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    locationsModule.setUpConnection( cityDBConnection );
+    var LocationsModel = locationsModule.getModel();
+
+    LocationsModel.find({}, projection, function( err, result ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    logger.info( 'In publicDBI | Finished Execution of getGlobalDataForFirstCall' );
 };
 
 /*										Exports In Progress Methods									*/
 /*==================================================================================================*/
 exports.getGlobalData = getGlobalDataForFirstCall;
+exports.getAllLocations = getAllLocations;

@@ -1,29 +1,50 @@
 /* This controller would facilitate retrieval of global data.
  */
 
- var publicService = require( '../serviceLayer/public/PublicService' );
+var publicService = require('../serviceLayer/public/PublicService');
+var AppConstants = require('../constants/ServerConstants');
 
- var getGlobalDataForCity = function( request, response, next ) {
+var getGlobalDataForCity = function (request, response, next) {
 
- 		console.log( 'In globalDataController | Starting Execution of getGlobalDataForCity' );
+    logger.info('In globalDataController | Starting Execution of getGlobalDataForCity');
 
- 		var dbName = request.body.cityName;
 
- 		publicService.getGlobalData( dbName, function( err, result ) {
+    publicService.getGlobalData(function (err, result) {
 
- 			if( err ) {
- 				console.log( err );
- 				response.status( 500 )
- 					    .json({
- 					    		err : err
- 					    });
- 			} else {
- 				response.status( 200 )
- 						.json( result );
- 			}
- 		});
+        if (err) {
+            response.status(500)
+                .json({
+                    err: AppConstants.errorMessage.someError
+                });
+        } else {
+            response.status(200)
+                .json(result);
+        }
+    });
 
- 		console.log( 'In globalDataController | Finished Execution of getGlobalDataForCity' );
- };
+    logger.info('In globalDataController | Finished Execution of getGlobalDataForCity');
+};
 
- exports.getGlobalData = getGlobalDataForCity;
+/**
+ * Public Method to getAllLocationsFromDB.
+ */
+var getAllLocations = function (req, res, next) {
+    logger.info('In globalDataController | Starting Execution of getAllLocations');
+
+    publicService.getAllLocations(function (err, result) {
+        if (err) {
+            res.status(500)
+                .json({
+                    err: AppConstants.errorMessage.someError
+                });
+        } else {
+            res.status(200)
+                .json(result);
+        }
+    });
+
+    logger.info('In globalDataController | Finished Execution of getAllLocations');
+};
+
+exports.getGlobalData = getGlobalDataForCity;
+exports.getAllLocations = getAllLocations;

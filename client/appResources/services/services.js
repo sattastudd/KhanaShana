@@ -24,7 +24,8 @@
             login : 'login',
             searchResult : 'result',
             restaurantSearch : 'restaurant/search',
-            typeahead : 'restaurant/typeahead'
+            typeahead : 'restaurant/typeahead',
+            locations : 'locations'
 
         })
         .constant('RegExProvider',  {

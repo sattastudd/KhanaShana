@@ -82,9 +82,15 @@ function BannerController($scope, $modal, $location, DataStore, $window, $http, 
                 console.log( data );
             })
         } else {
-
+            $scope.bannerDropDownOptions = $scope.backUpOfOpetions;
         }
     });
+
+    $scope.getClassForSearchResult = function( aResult ) {
+        if( aResult.isHeading ) {
+            return 'heading';
+        }
+    };
 
     /* What do we do on input click */
     $scope.handleClickOnSearch = function( $event ) {
@@ -101,24 +107,64 @@ function BannerController($scope, $modal, $location, DataStore, $window, $http, 
         $event.preventDefault();
         $event.stopPropagation();
     };
+
+    /* Now, user has clicked on dropdown. What do we do ? */
+    $scope.pickedCategory = function( menu ) {
+        if( menu.menuTitle === 'Search By Location' ) {
+            $modal.open({
+                templateUrl : 'views/modals/location/locationModal.html',
+                controller : 'LocationSelectModalController',
+                resolve : {
+                    displayedOnPage : function() {
+                        return $scope.locations;
+                    }
+                }
+            })
+        }
+    };
 };
 
 
-function locationSelectModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
+function LocationSelectModalController($scope, $modalInstance, $location, DataStore, AppConstants, RestRequests, $http, displayedOnPage ) {
+
+    $scope.locations = displayedOnPage;
+
+    $scope.serverError = false;
 
 	$scope.closeLoginModal = function (){
         $modalInstance.close();
     };
 	console.log("inside modal location");
 
-	$scope.locations = ['PatrakarPuram','Chinhat','Gomti nagar','Alambagh','Aliganj',
-						'Charbagh','Hazratganj', 'Alamnagar','Tedhi Puliya','Bhootnath',
-						'RabindraPalli','Polytechnic','Munsi Puliya','Vaibhav Khand','Vibhuti Khand',
-						'PatrakarPuram','Chinhat','Gomti nagar','Alambagh','Aliganj',
-						'Charbagh','Hazratganj', 'Alamnagar','Tedhi Puliya','Bhootnath',
-						'RabindraPalli','Polytechnic','Munsi Puliya','Vaibhav Khand','Vibhuti Khand',
-						'PatrakarPuram','Chinhat','Gomti nagar','Alambagh','Aliganj',
-						'Charbagh','Hazratganj', 'Alamnagar','Tedhi Puliya','Bhootnath',
-						'RabindraPalli','Polytechnic','Munsi Puliya','Vaibhav Khand','Vibhuti Khand',];
+    $scope.init = function() {
+        var requestName = AppConstants.httpServicePrefix + '/' + RestRequests.locations;
 
-};
+        $http.get( requestName )
+            .success( function( data ) {
+                $scope.locations = data;
+            })
+            .error( function( data ){
+
+            });
+    };
+
+    $scope.haveRecievedFromServer = function() {
+        return $scope.serverError ? 'bg-danger' : 'noHeight';
+    };
+
+    /* Function to move to control over search page. */
+    $scope.searchByLocation = function( location ) {
+
+        var searchInfo = {
+            type : 'location',
+            text : location.name
+        };
+
+        DataStore.storeData( 'searchTaskInfo', searchInfo );
+        $modalInstance.close('dismiss' );
+
+        $location.path( 'search' );
+    };
+
+    $scope.init();
+}
