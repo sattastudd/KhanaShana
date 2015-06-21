@@ -437,7 +437,43 @@ var updateLocation = function( cityName, oldLocationObject, newLocationObject, c
     logger.info( 'In AdminLocationDBI | Finished Execution of updateLocation' );
 };
 
+/*                      Location Retrieval Section Begin                    */
+/*=========================================================================*/
+
+/*                              Public Methods                         */
+/*======================================================================*/
+
+/**
+ * Method to retrieve all locations from system.
+ */
+var getAllLocations = function( cityName, callback ) {
+    logger.info( 'In AdminLocationDBI | Starting Execution of getAllLocations' );
+
+    var query = {};
+    var projection = {
+        "_id" : false,
+        isOnHomePage : false,
+        dateModified : false
+    };
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+    LocationModelModule.setUpConnection( cityDBConnection );
+
+    var LocationModel = LocationModelModule.getModel();
+
+    LocationModel.find( query , projection, function( err, result ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    logger.info( 'In AdminLocationDBI | Finished Execution of getAllLocations' );
+};
+
 exports.getLocations = getLocations;
+exports.getAllLocations = getAllLocations;
 exports.addNewLocation = addNewLocation;
 exports.deleteLocation = deleteLocation;
 exports.updateLocation = updateLocation;

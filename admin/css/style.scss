@@ -377,9 +377,19 @@ ul.pagination{
   overflow: hidden;
   height : 0;
 }
+
+.noWidth{
+  padding:0;
+  width:0;
+  overflow:hidden;
+}
 /* Global CSS End */
 
 /* Utility Classes */
+.formControlContainer{
+  @include transition-mix( all, $theme-fast-reaction );
+}
+
 .tpad50{
   padding-top : 50px;
 }
@@ -390,6 +400,10 @@ ul.pagination{
 
 .bMar9{
     margin-bottom : 9px;
+}
+
+.bPad8{
+  padding-bottom: 8px;
 }
 
 .tMar20{

@@ -120,4 +120,38 @@ var getCuisines = function( cityName, searchParam, pagingParams, callback ) {
     logger.info( 'In AdminCuisineDBI | Finished Execution of getCuisines' );
 };
 
+/*                      Cuisine Get Section Begin                    */
+/*===================================================================*/
+
+/*                              Public Methods                         */
+/*======================================================================*/
+
+var getAllCuisines = function( cityName, callback ) {
+    logger.info( 'In AdminCuisineDBI | Starting Execution of getAllCuisines' );
+
+    var query = {};
+    var projection = {
+        "_id" : false,
+        "img" : false,
+        "__v" : false
+    };
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    CuisineModelModule.setUpConnection( cityDBConnection );
+    var CuisineModel = CuisineModelModule.getModel();
+
+    CuisineModel.find( query, projection, function( err, result ){
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, result );
+        }
+    });
+
+    logger.info( 'In AdminCuisineDBI | Finished Execution of getAllCuisines' );
+};
+
+
 exports.getCuisines = getCuisines;
+exports.getAllCuisines = getAllCuisines;

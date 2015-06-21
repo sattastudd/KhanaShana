@@ -308,6 +308,18 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
             items : []
         };
 
+        var dish = {
+            title : '',
+            type : '',
+            veg : false,
+            price : {
+                half : '',
+                full : ''
+            }
+        };
+
+        newMenu.items.push( dish );
+
         $scope.restMenu.push( newMenu );
     };
 
@@ -324,6 +336,10 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
         };
 
         menu.items.push( dish );
+    };
+
+    $scope.removeItemFromCategory = function( menus, index ) {
+        menus.splice( index, 1 );
     };
 
     /*                       Controls of Image Upload Stage                       */

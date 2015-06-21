@@ -225,8 +225,19 @@ ul.pagination {
   overflow: hidden;
   height: 0; }
 
+.noWidth {
+  padding: 0;
+  width: 0;
+  overflow: hidden; }
+
 /* Global CSS End */
 /* Utility Classes */
+.formControlContainer {
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+
 .tpad50 {
   padding-top: 50px; }
 
@@ -235,6 +246,9 @@ ul.pagination {
 
 .bMar9 {
   margin-bottom: 9px; }
+
+.bPad8 {
+  padding-bottom: 8px; }
 
 .tMar20 {
   margin-top: 20px; }

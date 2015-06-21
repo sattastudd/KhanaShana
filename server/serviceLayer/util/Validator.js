@@ -19,7 +19,7 @@ var RegExProvider = {
     contactNumber : /^[1-9][0-9]{9,10}$/,
     number : /^[0-9]{1,}$/,
     slug : /^[a-zA-Z-]+$/,
-    fileName : /^[a-zA-Z0-9-]+.[jpg,jpeg,png]+$/,
+    fileName : /^[a-zA-Z0-9-]+.[jpg,jpeg,png,JPG,JPEG,PNG]+$/,
     boolean : /^[true,false]{1,}$/
 };
 

@@ -301,9 +301,9 @@
                     </div>
                 </div>
 
-                <div class="petoo-form bottomBorderThin " ng-repeat="menu in restMenu" ng-class="{'tMar20' : !$first}">
+                <div class="petoo-form bottomBorderThin" ng-repeat="menu in restMenu" ng-class="{'tMar20' : !$first}">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 formControlContainer" ng-class="{'bpad8' : menu.err.title}">
                             <div class="form-group">
                                 <label>Category Title</label>
                                 <input type="text" ng-model="menu.title" class="form-control"/>
@@ -315,14 +315,49 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-xs-3" ng-if="$last">
+                            <button type="button" class="btn btn-pr-primary" ng-click="addNewCategory()">Add New Category</button>
+                        </div>
                     </div>
 
-                    <div ng-repeat="dish in menu.items" class="bottomMarginLight" ng-class="{'tMar20' : !$first}">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div class="form-group">
+                                <label>Dish Title</label>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2">
+                            <div class="form-group">
+                                <label>Dish Type</label>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2">
+                            <div class="form-group">
+                                <label>Price Half</label>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2">
+                            <div class="form-group">
+                                <label>Price Full</label>
+                            </div>
+                        </div>
+
+                        <div class="co-xs-2">
+                            <div class="form-group">
+                                <label>Non-Veg ?</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="dish in menu.items">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-2 formControlContainer" ng-class="{ 'bPad8' : dish.err.title }">
                                 <div class="form-group">
-                                    <label>Dish Title</label>
-                                    <input type="text" ng-model="dish.title" class="form-control"/>
+                                    <input type="text" class="form-control" ng-model="dish.title"/>
                                 </div>
 
                                 <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.title, true)">
@@ -332,10 +367,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-3">
+                            <div class="col-xs-2 formControlContainer" ng-class="{ 'bPad8' : dish.err.type }">
                                 <div class="form-group">
-                                    <label>Dish Type</label>
-                                    <input type="text" ng-model="dish.type" class="form-control"/>
+                                    <input type="text" class="form-control" ng-model="dish.type"/>
                                 </div>
 
                                 <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.type, true)">
@@ -345,25 +379,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-3">
-                                <div class="form-group bMar9">
-                                    <label style="display: block">Vegetarian ?</label>
-                                    <input type="checkbox" ng-model="dish.veg" />
+                            <div class="col-xs-2 formControlContainer" ng-class="{ 'bPad8' : dish.err.price.half }">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="dish.price.half"/>
                                 </div>
 
-                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.veg, true)">
-                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.veg, true)">
-                                        {{dish.errMsg.veg}}
+                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.price.half, true)">
+                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.price.half, true)">
+                                        {{dish.errMsg.price.half}}
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-2 formControlContainer" ng-class="{ 'bPad8' : dish.err.price.full }">
                                 <div class="form-group">
-                                    <label>Price Full Plate</label>
-                                    <input type="text" ng-model="dish.price.full" class="form-control"/>
+                                    <input type="text" class="form-control" ng-model="dish.price.full"/>
                                 </div>
 
                                 <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.price.full, true)">
@@ -373,38 +403,37 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label>Price Half Plate</label>
-                                    <input type="text" ng-model="dish.price.half" class="form-control"/>
+                            <div class="col-xs-1 formControlContainer" ng-class="{ 'bPad8' : dish.err.veg }">
+                                <div class="form-group bMar9">
+                                    <input type="checkbox" ng-model="dish.veg" />
                                 </div>
 
-                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.price.half, true)">
-                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.price.half, true)">
-                                        {{dish.errMsg.price.half}}
+                                <div class="collapsibleErrorMessage" ng-class="hasFieldError(dish.err.veg, true)">
+                                    <div class="bg-danger" ng-class="hasFieldError(dish.err.veg, true)">
+                                        {{dish.errMsg.veg}}
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-xs-3 ">
+                                <div class="btn-group">
+
+                                    <button type="button" class="btn btn-pr-secondary" ng-click="removeItemFromCategory( menu.items, $index ) ">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-pr-secondary" ng-if="$last" ng-click="addNewItemInCategory( menu )">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-3 tMar20 bMar20">
-                            <button type="button" class="btn btn-block btn-pr-secondary" ng-click="addNewItemInCategory(menu)">Add Category Item</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row tMar20">
-                    <div class="col-xs-3">
-                        <button type="button" class="btn btn-block btn-pr-primary" ng-click="addNewCategory()">Add Menu Category</button>
                     </div>
                 </div>
 
                 <div class="row bMar20 tMar20">
                     <div class="col-xs-3">
-                        <button type="button" class="btn btn-pr-primary btn-block" ng-click="saveAndContinue()">Save Delivery Areas</button>
+                        <button type="button" class="btn btn-pr-primary btn-block" ng-click="saveAndContinue()">Save Restaurant Menu</button>
                     </div>
                 </div>
             </div>
