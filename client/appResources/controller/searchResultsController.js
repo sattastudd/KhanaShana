@@ -42,7 +42,7 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
 */
 
 
-    $scope.sort = [{name:'Manish Eating Point', img:'../images/pizza4.jpg'}, {name:'Waah ji Waah', img:'../images/northIndian.jpg'},
+    $scope.result = [{name:'Manish Eating Point', img:'../images/pizza4.jpg'}, {name:'Waah ji Waah', img:'../images/northIndian.jpg'},
                     {name:'Mughal Dastarkhwan', img:'../images/thaali.jpg'},{name:'Tundey Kabab', img:'../images/pizza2.jpg'},
                     {name:'Royal Cafe', img:'../images/pizza1.jpg'}];
 
@@ -56,12 +56,12 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
     $scope.showQuickView = true;
     
     $scope.openQuickView = function(index){
-        var current = $scope.sort[index];
+        var current = $scope.result[index];
         var status = current.showQuickView;
     
-        for(var i=0; i<$scope.sort.length; i++){
+        for(var i=0; i<$scope.result.length; i++){
             
-            var obj = $scope.sort[i];
+            var obj = $scope.result[i];
             obj.showQuickView = true;
         }
         
@@ -90,17 +90,15 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
 
     //code for filter block
 
-    $scope.filters = [{name: 'filters', list:['aloo', 'bhaloo', 'chaloo']}, 
-                     {name: 'Cuisines', list:['hakoona', 'matata','oh shit']},
-                     {name: 'Average Cost', list:['aloo', 'bhaloo', 'chaloo']},
-                     {name: 'Minimum Cost', list:['aloo', 'bhaloo', 'chaloo']},
-                     {name: 'Locality', list:['aloo', 'bhaloo', 'chaloo']},
-                     {name: 'Restaurant Type', list:['aloo', 'bhaloo', 'chaloo']},
-                     {name: 'Top 10', list:['aloo', 'bhaloo', 'chaloo']}];
+    $scope.sortBy = ['Price','Rating','Popularity','Open Now','Recently Ordered'];
+    $scope.cuisines = ['North Indian','Mughlai','South Indian','Chinese','Punjabi','Italian','Rajasthani'];
+    $scope.minDelivery = ['Below 200','200-300','300-400','400-500','Above 500'];
+    $scope.avgCost = ['Below 200','200-300','300-400','400-500','Above 500'];
+    $scope.restType = ['Budget','Class','Dhaba','Street','Family','Pub'];
 
     $scope.filterCollapse = true;
 
-    $scope.filterClicked = function(index){
+    /*$scope.filterClicked = function(index){
         console.log("inside filter clicked");
 
         var current = $scope.filters[index];
@@ -114,7 +112,7 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
         
         current.filterCollapse = !status;
     }
-
+*/
     $scope.contentSelected = function(value){
         //$scope.filterCollapse = false;
         console.log(value);
