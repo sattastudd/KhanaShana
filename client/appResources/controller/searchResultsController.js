@@ -53,7 +53,7 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
         $scope.showMenu = !$scope.showMenu;
     }
 
-    $scope.showQuickView = true;
+    /*$scope.showQuickView = true;
     
     $scope.openQuickView = function(index){
         var current = $scope.result[index];
@@ -86,17 +86,38 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
     },
     {
       image: 'http://lorempixel.com/400/200/people'
-    }];
+    }];*/
 
     //code for filter block
 
-    $scope.sortBy = ['Price','Rating','Popularity','Open Now','Recently Ordered'];
+    $scope.sortBy = ['Price','Rating','Popularity','Delivery Time','Open Now','Recently Ordered'];
     $scope.cuisines = ['North Indian','Mughlai','South Indian','Chinese','Punjabi','Italian','Rajasthani'];
     $scope.minDelivery = ['Below 200','200-300','300-400','400-500','Above 500'];
     $scope.avgCost = ['Below 200','200-300','300-400','400-500','Above 500'];
     $scope.restType = ['Budget','Class','Dhaba','Street','Family','Pub'];
 
-    $scope.filterCollapse = true;
+    $scope.sortByCollapse = true;
+    $scope.cuisineCollapse = true;
+    $scope.minDelCollapse = true;
+    $scope.avgCostCollapse = true;
+    $scope.restTypeCollapse = true;
+
+    $scope.sortByClicked = function(){
+        console.log("collapse clicked");
+        $scope.sortByCollapse = !$scope.sortByCollapse;
+    }
+    $scope.cuisineClicked = function(){
+        $scope.cuisineCollapse = !$scope.cuisineCollapse;
+    }
+    $scope.minDeliveryClicked = function(){
+        $scope.minDelCollapse = !$scope.minDelCollapse;
+    }
+    $scope.avgCostClicked =function(){
+        $scope.avgCostCollapse = !$scope.avgCostCollapse;
+    }
+    $scope.restTypeClicked = function(){
+        $scope.restTypeCollapse = !$scope.restTypeCollapse;
+    }
 
     /*$scope.filterClicked = function(index){
         console.log("inside filter clicked");
