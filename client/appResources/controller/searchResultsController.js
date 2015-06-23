@@ -134,6 +134,15 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
         current.filterCollapse = !status;
     }
 */
+
+//code for rating
+
+$scope.maxRating = 5;
+$scope.rate = 3;
+
+//code for rating ends
+
+
     $scope.contentSelected = function(value){
         //$scope.filterCollapse = false;
         console.log(value);

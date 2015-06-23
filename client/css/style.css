@@ -866,6 +866,10 @@ button.kh-primary {
 
 .bpad8 {
   padding-bottom: 8px; }
+.rateStar{
+  	font-size: 18px;
+  	color: #DC141B;
+  }
 
 /* styles for search result page ends */
 /* styles for check out page starts*/
@@ -1226,6 +1230,10 @@ button.kh-primary {
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px; }
+
+  .rateStar{
+  	font-size: 14px;
+  }
 
   .hiddenInput {
     width: 200px;
