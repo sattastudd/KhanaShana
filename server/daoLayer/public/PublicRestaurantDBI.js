@@ -234,7 +234,7 @@ var findDishesForAutoComplete = function( cityName, text, callback ) {
     var DishesModel = DishesModelModule.getModel();
 
     var query = {
-        title : DBUtils.createCaseInsensitiveLikeString( text ),
+        name : DBUtils.createCaseInsensitiveLikeString( text ),
         active : true
     };
 

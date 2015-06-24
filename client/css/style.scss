@@ -747,6 +747,9 @@ body {
   @include background-size-mix(cover);
   height: 560px;
   box-shadow: #333 0 0 15px;
+
+  position : relative;
+  z-index : 500;
 }
 
 .welcomeText {
@@ -846,6 +849,9 @@ button.kh-primary {
 .cuisinesContainer {
   padding-top: 30px;
   padding-bottom: 30px;
+
+  position : relative;
+  z-index: 5;
 }
 
 .cuisine {

@@ -3,6 +3,7 @@
 
 var appConstants = require('../../../constants/ServerConstants');
 var RestaurantDBI = require('../../../daoLayer/admin/restaurant/AdminRestaurantDBI');
+var DishesCollectionUpdate = require( '../../../daoLayer/postResponseTasks/dishes/DishesCollectionUpdate' );
 
 var Validator = require('../../util/Validator');
 
@@ -697,6 +698,10 @@ var updateRestaurantDetails = function (slug, restaurant, callback) {
                         data : true,
                         msg : appConstants.restaurantDetailsUpdated
                     });
+
+                    if( restaurant.stage === 'restMenu' ) {
+                        DishesCollectionUpdate.updateDishesCollection( cityName, restaurant.menu );
+                    }
                 } else {
                     callback(appConstants.appErrors.someError, {
                         err : {},

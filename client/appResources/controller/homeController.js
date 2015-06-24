@@ -69,7 +69,7 @@ function BannerController($scope, $modal, $location, DataStore, $window, $http, 
                         var dish = dishesInResult[ i ];
 
                         typeAheadOptions.push({
-                            menuTitle : dish.title, type : 'dish', isHeading: false
+                            menuTitle : dish.name, type : 'dish', isHeading: false
                         });
                     }
 
