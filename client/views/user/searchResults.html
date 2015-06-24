@@ -34,15 +34,58 @@
        <div class="row">
            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                <div class="hidden-xs hidden-sm col-md-2 col-lg-2 fixedBlock">
-                   <div class="repeatBlock">
-                       <div class="filterBlock">
+                   <div class="repeatBlock hand">
+                       <div class="filterBlock" ng-click="sortByClicked()">
                           <div>
-                             <p>Sort By
-                              <i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             <p>Sort By<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
                              </p>
                           </div>
-                           <div collapse="option.filterCollapse">
-                              <div ng-repeat="content in option.list" class="contentClass" ng-click="contentSelected(value)">
+                           <div collapse="sortByCollapse">
+                              <div ng-repeat="content in sortBy" class="contentClass" ng-click="sortBySelected(value)">
+                                {{content}}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="filterBlock" ng-click="cuisineClicked()">
+                          <div>
+                             <p>Cuisines<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="cuisineCollapse">
+                              <div ng-repeat="cuisine in cuisines" class="contentClass" ng-click="contentSelected(value)">
+                                {{cuisine}}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="filterBlock" ng-click="minDeliveryClicked()">
+                          <div>
+                             <p>Min. Delivery<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="minDelCollapse">
+                              <div ng-repeat="content in minDelivery" class="contentClass" ng-click="contentSelected(value)">
+                                {{content}}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="filterBlock" ng-click="avgCostClicked()">
+                          <div>
+                             <p>Cost for 2<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="avgCostCollapse">
+                              <div ng-repeat="content in avgCost" class="contentClass" ng-click="contentSelected(value)">
+                                {{content}}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="filterBlock" ng-click="restTypeClicked()">
+                          <div>
+                             <p>Restaurant Type<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="restTypeCollapse">
+                              <div ng-repeat="content in restType" class="contentClass" ng-click="contentSelected(value)">
                                 {{content}}
                               </div>
                            </div>
@@ -60,37 +103,36 @@
                                    <img src={{results.img}} class="restaurantIcon" />
                                  </div>
                                  <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 restTitleContent">
-                                     <div class="col-xs-9 col-sm-7 col-md-7 col-lg-7">
+                                     <div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
                                        <p class="restTitle"><strong>{{results.name}}</strong></p>
                                      </div>
-                                     <div class="col-xs-3 col-sm-5 col-md-5 col-lg-5 rating">
+                                     <div class="col-xs-2 col-sm-3 col-md-3 col-lg-3 rating">
                                       <div class="row">
                                          <p class="glyphicon glyphicon-heart pull-right" align="right"></p>
-                                         <b class="ratingNumber pull-right">3.5</b>
                                       </div>
                                      </div>
                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 lpad0">
-                                        <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6">
-                                            <p class="paraNoMargin">Avg Cost:</p>
-                                        </div>
-                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hidden-xs">
-                                           <p class="paraNoMargin">Delivery Time:</p>
-                                        </div>
-                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hidden-xs">
-                                           <p class="paraNoMargin">Timing:</p>
-                                        </div>
-                                        <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6">
-                                            <p class="paraNoMargin">Min Delivery:</p>
-                                        </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                          <rating ng-model="rate" class="rateStar" max="maxRating" readonly="true"></rating>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <p class="paraNoMargin">Min Delivery: 200 Rs  ( 30 min )</p>
+                                        </div>
+                                        <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6">
+                                            <p class="paraNoMargin">Cost for 2:</p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                            <p class="paraNoMargin">Cuisines:</p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hidden-xs">
+                                           <p class="paraNoMargin">Open Hours:</p>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                            <div class="row">
                                             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8  hidden-xs">
                                                <p class="paraNoMargin">Address:</p>
                                             </div>
-                                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 bpad8 tpad8">
+                                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 bpad8 tpad8 mtop10">
                                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 orderButton" ng-click="next()">
                                                 <p align="center" class="orderBtnFont">Order</p>
                                               </div>
@@ -101,7 +143,8 @@
                                   </div>
                                </div>
                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div collapse="results.showQuickView">
+                                <!-- <div collapse="results.showQuickView"> -->
+                                <div collapse="true">
                                    <div class="row">
                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
