@@ -886,6 +886,14 @@ button.kh-primary {
   margin-top: -15px;
   margin-bottom: 10px; }
 
+.addressModalInput{
+	margin-bottom: 15px;
+}
+.addressModalInput .glyphicon{
+	color:#ccc;
+	margin-right: 15px;
+  	margin-top: 2px;
+}
 .checkoutTabs {
   background-color: #07a16d;
   color: white;
