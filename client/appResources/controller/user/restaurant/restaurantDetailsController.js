@@ -18,7 +18,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
             console.log(data );
 
             $scope.rest.name = data.data.name;
-            //$scope.rest.img = data.data.img.full;
+            $scope.rest.img = data.data.img;
             $scope.rest.menus = data.data.menu;
 
         })

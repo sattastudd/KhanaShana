@@ -405,6 +405,11 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
                     $scope.err = data.err;
                     $scope.errMsg = data.errMsg;
 
+                    $scope.restaurantOldSlug = $scope.restaurant.slug;
+
+                    $scope.restaurant.delivery = [];
+                    $scope.restaurant.cuisines = [];
+
                     /* Now we, are on same page. */
                     $timeout( function() {
                         $scope.isEdit = true;

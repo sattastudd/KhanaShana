@@ -98,7 +98,7 @@ function PendingDetailsRestaurantListController( $scope, $http, $location, AppCo
     /* Reset Search */
     $scope.resetSearch = function(){
         $scope.searchParams = {
-            approved : false
+            allStagesCompleted : false
         };
 
         $scope.search();

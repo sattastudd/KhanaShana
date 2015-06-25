@@ -431,6 +431,12 @@
                     </div>
                 </div>
 
+                <div class="row tMar20" ng-if="restMenu.length == 0">
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-block btn-pr-primary" ng-click="addNewCategory()">Add Menu Category</button>
+                    </div>
+                </div>
+
                 <div class="row bMar20 tMar20">
                     <div class="col-xs-3">
                         <button type="button" class="btn btn-pr-primary btn-block" ng-click="saveAndContinue()">Save Restaurant Menu</button>

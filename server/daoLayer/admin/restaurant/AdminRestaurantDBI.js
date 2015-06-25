@@ -116,6 +116,8 @@ var addNewRestaurant = function( cityName, restaurantToInsert, callback ) {
             email : null
         },
 
+        allStagesCompleted : false,
+
         img : {
 
         }

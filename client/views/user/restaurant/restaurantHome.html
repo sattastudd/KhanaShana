@@ -1,8 +1,26 @@
 <div class="container" ng-controller="RestaurantDetailsController">
     <div class="row mBottom100">
-        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <div class="hidden-xs hidden-md hidden-sm col-lg-12">
             <div class="restaurantSnap">
-                <img src="{{rest.img.lg}}"/>
+                <img class="img-responsive" src="{{rest.img.lg}}" style="max-height: 400px;"/>
+            </div>
+        </div>
+
+        <div class="hidden-xs hidden-sm hidden-lg col-md-12">
+            <div class="restaurantSnap">
+                <img class="img-responsive" src="{{rest.img.md}}" style="max-height: 400px;"/>
+            </div>
+        </div>
+
+        <div class="hidden-xs hidden-md hidden-lg col-sm-12">
+            <div class="restaurantSnap">
+                <img class="img-responsive" src="{{rest.img.sm}}" style="max-height: 400px;"/>
+            </div>
+        </div>
+
+        <div class="hidden-md hidden-sm hidden-lg col-xs-12">
+            <div class="restaurantSnap">
+                <img class="img-responsive" src="{{rest.img.xs}}" style="max-height: 400px;"/>
             </div>
         </div>
 
