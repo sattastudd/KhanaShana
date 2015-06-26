@@ -500,7 +500,7 @@ body {
   height: 560px;
   box-shadow: #333 0 0 15px;
   position: relative;
-  z-index: 500; }
+  z-index: 5; }
 
 .welcomeText {
   color: white;
@@ -772,6 +772,10 @@ button.kh-primary {
 .containerBlock {
   margin-top: 15px; }
 
+.marginT30{
+	margin-top: 15px;
+}
+
 .filterBlock {
   height: auto;
   padding-top: 12px;
@@ -779,15 +783,19 @@ button.kh-primary {
   border-bottom: solid 1px gray;
   font-size: 20px; }
 
-.filterContent {
-  cursor: pointer; }
-
-.filterButton {
-  border: solid 1px gray; }
-
-.contentClass {
-  padding-left: 15px;
-  cursor: pointer; }
+.filterBar{
+  background-color: rgb(180, 20, 27);
+  position: fixed;
+  color: white;
+  margin-top: 0px;
+  height: 40px;
+  z-index: 10;
+  padding-top: 7px;
+  border-top: solid 1px gainsboro;
+}
+.borderLeft{
+	border-left: 1px solid gainsboro;
+}
 
 .resultBlock {
   border: solid 1px #ece1e1;
@@ -1239,6 +1247,11 @@ button.kh-primary {
 @media (max-width: 480px) {
   .welcomeText {
     margin-top: 15px; } }
+@media (max-width: 992px){
+	.marginT30{
+		margin-top: 30px;
+	}
+}
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px; }
@@ -1271,11 +1284,11 @@ button.kh-primary {
 
   .restTitle {
     padding-top: 05px;
-    font-size: 18px; }
+    font-size: 21px; }
 
   .paraNoMargin {
     margin: 0 0 0;
-    font-size: 14px; }
+    font-size: 15px; }
 
   .tpad15 {
     padding-top: 15px; }
@@ -1297,16 +1310,6 @@ button.kh-primary {
   .glyphicon-heart {
     font-size: 20px;
     padding-left: 4px; }
-
-  .ratingNumber {
-    font-size: 15px;
-    padding-left: 8px; }
-
-  .filterBlock {
-    height: auto;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    font-size: 15px; }
 
   .filterGlyph {
     font-size: 9px;

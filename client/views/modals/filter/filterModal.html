@@ -1,0 +1,61 @@
+<div class="loginModal">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <p>{{filterValue}}</p>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <i class="pull-right close-icon" ng-click="closeModal()"><span
+                        class="glyphicon glyphicon-remove hand"></span></i>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body  scrollModal">
+        <div class="repeatBlock hand">
+                       <div class="filterBlock" ng-click="cuisineClicked()">
+                          <div>
+                             <p>Cuisines<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="cuisineCollapse">
+                              <div ng-repeat="cuisine in cuisines" class="contentClass" ng-click="contentSelected(value)">
+                                {{cuisine}}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="filterBlock" ng-click="minDeliveryClicked()">
+                          <div>
+                             <p>Min. Delivery<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="minDelCollapse">
+                              <div ng-repeat="content in minDelivery" class="contentClass" ng-click="contentSelected(value)">
+                                {{content}}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="filterBlock" ng-click="avgCostClicked()">
+                          <div>
+                             <p>Cost for 2<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="avgCostCollapse">
+                              <div ng-repeat="content in avgCost" class="contentClass" ng-click="contentSelected(value)">
+                                {{content}}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="filterBlock" ng-click="restTypeClicked()">
+                          <div>
+                             <p>Restaurant Type<i class="glyphicon glyphicon-menu-down pull-right filterGlyph"></i>
+                             </p>
+                          </div>
+                           <div collapse="restTypeCollapse">
+                              <div ng-repeat="content in restType" class="contentClass" ng-click="contentSelected(value)">
+                                {{content}}
+                              </div>
+                           </div>
+                       </div>
+                   </div>
+    </div>
+</div>

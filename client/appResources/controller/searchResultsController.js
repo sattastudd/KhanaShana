@@ -4,7 +4,7 @@ define([], function() {
     return userSearchResultController;
 });
 
-function searchResultController ($scope, $http, AppConstants, RestRequests, DataStore ){
+function searchResultController ($scope, $modal, $location, DataStore, $window, $http, AppConstants, RestRequests){
 
     if( DataStore.isKeyDefined( 'searchTaskInfo' )) {
         $scope.searchInfo = DataStore.readAndRemove( 'searchTaskInfo' );
@@ -119,32 +119,70 @@ function searchResultController ($scope, $http, AppConstants, RestRequests, Data
         $scope.restTypeCollapse = !$scope.restTypeCollapse;
     }
 
-    /*$scope.filterClicked = function(index){
-        console.log("inside filter clicked");
-
-        var current = $scope.filters[index];
-        var status = current.filterCollapse;
-    
-        for(var i=0; i<$scope.filters.length; i++){
-            
-            var obj = $scope.filters[i];
-            obj.filterCollapse = true;
-        }
-        
-        current.filterCollapse = !status;
-    }
-*/
-
 //code for rating
 
 $scope.maxRating = 5;
 $scope.rate = 3;
 
 //code for rating ends
-
-
     $scope.contentSelected = function(value){
         //$scope.filterCollapse = false;
         console.log(value);
     }
+
+    $scope.openFilterModal = function(){
+         $modal.open({
+                templateUrl : 'views/modals/filter/filterModal.html',
+                controller : 'filterModalController',
+                size : 'sm',
+                resolve : {
+                    displayedOnPage : function() {
+                       // return $scope.locations;
+                    }
+                }
+            })
+    }
+
+    $scope.filterModal = function(){
+        $scope.openFilterModal();
+        //DataStore.store
+    }
+
+    $scope.sortModal = function(){
+        $scope.openFilterModal();
+    }
+
+}
+
+function filterModalController ($scope, $modalInstance, $location, DataStore, AppConstants, RestRequests, $http, displayedOnPage ) {
+    
+    $scope.closeModal = function(){
+        $modalInstance.close();
+    }
+
+    $scope.sortBy = ['Price','Rating','Popularity','Delivery Time','Open Now','Recently Ordered'];
+    $scope.cuisines = ['North Indian','Mughlai','South Indian','Chinese','Punjabi','Italian','Rajasthani'];
+    $scope.minDelivery = ['Below 200','200-300','300-400','400-500','Above 500'];
+    $scope.avgCost = ['Below 200','200-300','300-400','400-500','Above 500'];
+    $scope.restType = ['Budget','Class','Dhaba','Street','Family','Pub'];
+
+    $scope.sortByCollapse = true;
+    $scope.cuisineCollapse = true;
+    $scope.minDelCollapse = true;
+    $scope.avgCostCollapse = true;
+    $scope.restTypeCollapse = true;
+
+    $scope.cuisineClicked = function(){
+        $scope.cuisineCollapse = !$scope.cuisineCollapse;
+    }
+    $scope.minDeliveryClicked = function(){
+        $scope.minDelCollapse = !$scope.minDelCollapse;
+    }
+    $scope.avgCostClicked =function(){
+        $scope.avgCostCollapse = !$scope.avgCostCollapse;
+    }
+    $scope.restTypeClicked = function(){
+        $scope.restTypeCollapse = !$scope.restTypeCollapse;
+    }
+
 }
