@@ -82,7 +82,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10; }
+  z-index: 20; }
   .customNavBar .navSearch input {
     margin-top: 8px; }
   .customNavBar a.navbar-brand {
@@ -500,15 +500,19 @@ body {
   height: 560px;
   box-shadow: #333 0 0 15px;
   position: relative;
-  z-index: 5; }
+  z-index: 15; }
 
 .welcomeText {
   color: white;
-  margin-top: 90px;
+  margin-top: 50px;
   padding-bottom: 25px;
   text-align: center; }
   .welcomeText h1 {
     font-size: 59px; }
+
+ .welcomeTextFont{
+  font-size: 40px;
+ }
 
 .bannerSearch {
   font-family: "Segoe UI", sans-serif; }
@@ -1255,6 +1259,10 @@ button.kh-primary {
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px; }
+
+ .welcomeTextFont{
+    font-size: 30px;
+  }
 
   .rateStar{
     font-size: 14px;
