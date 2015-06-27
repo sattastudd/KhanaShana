@@ -8,7 +8,7 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 'views/login/login.html',
                 '../../appResources/controller/login/loginController'
             ))
-            
+
         //Will use it later.
         //Will know how. 
         $httpProvider.interceptors.push("authInterceptor");
