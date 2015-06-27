@@ -24,7 +24,8 @@ var getRestaurrantInfoBySlug = function (cityName, slug, callback){
     var RestaurantModel = restaurantModelModule.getModel();
 
     var query = {
-        slug : slug
+        slug : slug,
+        approved : true
     };
 
     var projection = {
@@ -54,15 +55,15 @@ var getRestaurrantInfoBySlug = function (cityName, slug, callback){
 
 };
 
-/*                  Restaurant Search Section               */
+/*     Restaurant Search By Location And Cuisine Section    */
 /*==========================================================*/
 
 /* Private Methods */
 /*=================*/
 
 /* Private method to get restaurant count according to query specified. */
-var getQueriedRestaurantCount = function( cityName, query, callback ) {
-    logger.info( 'In PublicRestaurantDBI | Starting Execution of getQueriedRestaurantCount' );
+var getQueriedRestaurantCountContainingCuisineOrLocation = function( cityName, query, callback ) {
+    logger.info( 'In PublicRestaurantDBI | Starting Execution of getQueriedRestaurantCountContainingCuisineOrLocation' );
 
     var cityDBConnection = utils.getDBConnection( cityName );
 
@@ -77,14 +78,14 @@ var getQueriedRestaurantCount = function( cityName, query, callback ) {
        }
     });
 
-    logger.info( 'In PublicRestaurantDBI | Finished Execution of getQueriedRestaurantCount' );
+    logger.info( 'In PublicRestaurantDBI | Finished Execution of getQueriedRestaurantCountContainingCuisineOrLocation' );
 };
 
 /* Private method to get queried restaurant data according to query.
  * This method would only be executed in case of first execution or fresh query.
  */
-var getQueriedRestaurantData = function( cityName, query, projection, pagingParams, callback ) {
-    logger.info( 'In PublicRestaurantDBI | Starting Execution of getQueriedRestaurantData' );
+var getQueriedRestaurantDataContainingCuisineOrLocation = function( cityName, query, projection, pagingParams, callback ) {
+    logger.info( 'In PublicRestaurantDBI | Starting Execution of getQueriedRestaurantDataContainingCuisineOrLocation' );
 
     var cityDBConnection = utils.getDBConnection( cityName );
 
@@ -106,7 +107,7 @@ var getQueriedRestaurantData = function( cityName, query, projection, pagingPara
        }
     });
 
-    logger.info( 'In PublicRestaurantDBI | Finished Execution of getQueriedRestaurantData' );
+    logger.info( 'In PublicRestaurantDBI | Finished Execution of getQueriedRestaurantDataContainingCuisineOrLocation' );
 };
 
 /*  Public Method */
@@ -114,8 +115,8 @@ var getQueriedRestaurantData = function( cityName, query, projection, pagingPara
 /* Public Method to search for a restaurant.
  * This method would be used for searching, not for fetching auto-complete options.
  */
-var searchRestaurants = function( cityName, searchParam, pagingParams, callback ) {
-    logger.info( 'In PublicRestaurantDBI | Starting Execution of searchRestaurants' );
+var searchRestaurantsForLocationAndSearch = function( cityName, searchParam, pagingParams, callback ) {
+    logger.info( 'In PublicRestaurantDBI | Starting Execution of searchRestaurantsForLocationAndSearch' );
 
     var query = {};
 
@@ -137,15 +138,16 @@ var searchRestaurants = function( cityName, searchParam, pagingParams, callback 
         stage : false,
         owner : false,
         '__v' : false,
-        allStagesCompleted : false
+        allStagesCompleted : false,
+        menu : false
     };
 
     console.log( query );
 
     if(pagingParams.startIndex === 0 || null == pagingParams.startIndex || typeof pagingParams.startIndex === 'undefined' ) {
         async.parallel( {
-            count : async.apply( getQueriedRestaurantCount, cityName, query ),
-            result : async.apply( getQueriedRestaurantData, cityName, query, projection, pagingParams )
+            count : async.apply( getQueriedRestaurantCountContainingCuisineOrLocation, cityName, query ),
+            result : async.apply( getQueriedRestaurantDataContainingCuisineOrLocation, cityName, query, projection, pagingParams )
         },
         function( err, result ) {
             if( err ) {
@@ -175,7 +177,7 @@ var searchRestaurants = function( cityName, searchParam, pagingParams, callback 
         });
     }
 
-    logger.info( 'In PublicRestaurantDBI | Finished Execution of searchRestaurants' );
+    logger.info( 'In PublicRestaurantDBI | Finished Execution of searchRestaurantsForLocationAndSearch' );
 };
 
 /*                  Section for fetching auto-complete options.                 */
@@ -196,7 +198,8 @@ var findRestaurantsForAutoComplete = function( cityName, text, callback ) {
     var RestaurantModel = restaurantModelModule.getModel();
 
     var query = {
-        name : DBUtils.createCaseInsensitiveLikeString( text )
+        name : DBUtils.createCaseInsensitiveLikeString( text ),
+        approved : true
     };
 
     var options = {
@@ -328,6 +331,166 @@ var getOptionsForTypeAhead = function( cityName, text, callback ) {
     logger.info( 'In PublicRestaurantDBI | Finished Execution of getOptionsForTypeAhead' );
 };
 
+/*               Restaurant Search By Menu                  */
+/*==========================================================*/
+
+/* Private Methods */
+/*=================*/
+
+/**
+ * Private method to get count for restaurants offering queried dish.
+ */
+var getRestaurantCountOfferingADish = function( cityName, dishName , callback ) {
+    logger.info( 'In PublicRestaurantDBI | Starting Execution of getRestaurantCountOfferingADish' );
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    restaurantModelModule.setUpConnection( cityDBConnection );
+    var RestaurantModel = restaurantModelModule.getModel();
+
+    var query = {
+        'menu.items.title' : DBUtils.createCaseInsensitiveLikeString( dishName)
+    };
+
+    RestaurantModel.count( query, function(err, count ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, count );
+        }
+    });
+
+    logger.info( 'In PublicRestaurantDBI | Finished Execution of getRestaurantCountOfferingADish' );
+};
+
+/**
+ * Private function to return first ten restaurants offering a particular dish.
+ */
+var getRestaurantDataOfferingQueriedDish = function( cityName, dishName, callback ) {
+    logger.info( 'In PublicRestaurantDBI | Starting Execution of getRestaurantDataOfferingQueriedDish' );
+
+    var cityDBConnection = utils.getDBConnection( cityName );
+
+    restaurantModelModule.setUpConnection( cityDBConnection );
+    var RestaurantModel = restaurantModelModule.getModel();
+
+    var query = [
+            { '$match' :
+                { 'menu.items.title' : DBUtils.createCaseInsensitiveLikeString( dishName) }
+            },
+
+            {
+                '$limit' : 10
+            },
+
+            { '$unwind' : '$menu' },
+            { '$unwind' : '$menu.items' },
+            { '$match' :
+                { 'menu.items.title' : DBUtils.createCaseInsensitiveLikeString( dishName) }
+            },
+
+            { '$sort' : { '_id' : 1 }},
+
+            { '$group' : {
+                '_id' : '$_id',
+                name : { '$first' : '$name'},
+                menu : { '$push' : '$menu'}
+            }},
+
+            {
+                '$project' : {
+                    '_id' : false,
+                    name : true,
+                    menu : true,
+                    slug : true
+                }
+            }
+        ];
+
+    RestaurantModel.aggregate( query, function( err, data ) {
+        if( err ) {
+            callback( err );
+        } else {
+            callback( null, data );
+        }
+    });
+
+    logger.info( 'In PublicRestaurantDBI | Finished Execution of getRestaurantDataOfferingQueriedDish' );
+};
+
+/*              Public Method              */
+/*=========================================*/
+
+/**
+ * Public Method to get restaurants offering particular dish.
+ */
+var getRestaurantsOfferingDish = function( cityName, dishName, startIndex, callback ) {
+    logger.info( 'In PublicRestaurantDBI | Finished Execution of getRestaurantsOfferingDish' );
+
+    if( startIndex == 0 ) {
+        async.parallel(
+            {
+                count : async.apply( getRestaurantCountOfferingADish, cityName, dishName ),
+                data : async.apply( getRestaurantDataOfferingQueriedDish, cityName, dishName )
+            },
+
+            function( err, result ) {
+                if( err ) {
+                    callback ( err );
+                } else {
+                    callback( null, result );
+                }
+            }
+        );
+    } else {
+
+        var cityDBConnection = utils.getDBConnection( cityName );
+
+        restaurantModelModule.setUpConnection( cityDBConnection );
+        var RestaurantModel = restaurantModelModule.getModel();
+
+        var query = [
+            { '$match' :
+                { 'menu.items.title' : DBUtils.createCaseInsensitiveLikeString( dishName ) }
+            },
+
+            {
+                '$skip' : ( startIndex -1 )
+            },
+
+            {
+                '$limit' : 10
+            },
+
+            { '$unwind' : '$menu' },
+            { '$unwind' : '$menu.items' },
+            { '$match' :
+                { 'menu.items.title' : DBUtils.createCaseInsensitiveLikeString( dishName ) }
+            },
+
+            { '$sort' : { '_id' : 1 }},
+
+            { '$group' : {
+                '_id' : '$_id',
+                name : { '$first' : '$name'},
+                menu : { '$push' : '$menu'}
+            }}
+        ];
+
+        RestaurantModel.aggregate( query, function( err, result ) {
+            if( err ) {
+                callback( err );
+            } else {
+                callback( null, result );
+            }
+        });
+
+    }
+
+    logger.info( 'In PublicRestaurantDBI | Finished Execution of getRestaurantsOfferingDish' );
+};
+
 exports.getRestaurrantInfoBySlug = getRestaurrantInfoBySlug;
-exports.searchRestaurants = searchRestaurants;
+exports.searchRestaurantsForLocationAndSearch = searchRestaurantsForLocationAndSearch;
 exports.getOptionsForTypeAhead = getOptionsForTypeAhead;
+exports.getRestaurantsOfferingDish = getRestaurantsOfferingDish;

@@ -9,7 +9,8 @@ var dishSchema = new mongoose.Schema({
     price : {
         half : Number,
         full : Number
-    }
+    },
+    _id : false
 });
 
 var restaurantSchema = new mongoose.Schema({
@@ -54,6 +55,7 @@ var restaurantSchema = new mongoose.Schema({
     },
     menu : [
         {
+            '_id' : false,
             title : String,
             items : [
                 dishSchema

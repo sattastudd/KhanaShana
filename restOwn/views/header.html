@@ -1,0 +1,22 @@
+<div class="adminNav" ng-controller="HeaderController">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                PetooRam
+            </div>
+
+            <div class="col-xs-6 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                <div class="pull-right">
+                    <div class="glyphicon glyphicon-user" ng-click="toggleUserContextMenu()">
+                        <ul class="dropdown-menu" ng-class="getClassForUserContext()">
+                            <li><a class="noHover" href="#">{{getLoggedInUserName()}}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Change Password</a></li>
+                            <li><a ng-click="logoutUser()">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,350 +1,532 @@
+$theme-background-color: #FAF8FD;
+$theme-primary-color: #DC141B;
+$theme-primary-hover-color : rgba(220, 20, 27, .7);
+
+$theme-secondary-font: 'Segoe UI', sans-serif;
+
+$theme-primary-font-color: #fff;
+
+$theme-shadow-color: #444;
+
+$theme-glyphicon-size: 22px;
+
+$theme-footer-color: #333;
+
+$theme-navbar-height : 50px;
+
 /*Cuisine Image*/
+$theme-cuisine-lg-width: 703px;
+$theme-cuisine-lg-height: 210px;
+
+$theme-cuisine-lgs-width: 337px;
+
 /*Transition Constants*/
+$theme-fast-reaction: .2s;
+
 /*Min-ins*/
+@mixin transition-mix($property, $duration) {
+  -moz-transition: $property $duration;
+  -o-transition: $property $duration;
+  -webkit-transition: $property $duration;
+  transition: $property $duration;
+}
+
+@mixin transition-transform-mixin($duration, $timing-function) {
+  -moz-transition: -moz-transform $duration $timing-function;
+  -o-transition: -o-transform $duration $timing-function;
+  -webkit-transition: -webkit-transform $duration $timing-function;
+  transition: transform $duration $timing-function;
+}
+
+@mixin background-size-mix($property) {
+  -webkit-background-size: $property;
+  -moz-background-size: $property;
+  -o-background-size: $property;
+  background-size: $property;
+}
+
+@mixin rotate-transform($degree) {
+  -webkit-transform: rotate($degree);
+  -moz-transform: rotate($degree);
+  -o-transform: rotate($degree);
+  -ms-transform: rotate($degree);
+  transform: rotate($degree);
+}
+
+@mixin transform-property($property) {
+  -webkit-transform: $property;
+  -moz-transform: $property;
+  -o-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
+}
+
+@mixin filter-property($property) {
+  -webkit-filter: $property;
+  -moz-filter: $property;
+  -o-filter: $property;
+  -ms-filter: $property;
+  filter: $property;
+}
+
 @font-face {
   font-family: Avdira;
-  src: url("fonts/Riven.woff"); }
+  src: url('fonts/Riven.woff');
+}
+
 input {
-  font-family: 'Segoe UI'; }
+  font-family: 'Segoe UI';
+}
 
 p {
-  margin: 0 0 0px; }
+  margin: 0 0 0px;
+}
 
 body {
-  background-color: #FAF8FD;
+  background-color: $theme-background-color;
   font-family: Avdira;
-  font-size: 18px; }
+  font-size: 18px;
+}
 
 /*Global Classes Begin*/
-#main {
-  padding-top: 50px; }
+#main{
+  padding-top : 50px;
+}
 
 .fullScreenWidth {
-  width: 100%; }
+  width: 100%;
+}
 
 .contentContainer {
-  -moz-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s; }
+  @include transition-mix(all, .2s);
+}
 
 .blurredBack {
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px); }
+  @include filter-property(blur(5px));
+}
 
 .darkTransparentBack {
-  background-color: rgba(0, 0, 0, 0.4); }
+  background-color: rgba(0, 0, 0, .4);
+}
 
 .modal.scale .modal-dialog {
-  -moz-transition: -moz-transform 0.3s ease;
-  -o-transition: -o-transform 0.3s ease;
-  -webkit-transition: -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease;
-  -webkit-transform: scale(0);
-  -moz-transform: scale(0);
-  -o-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0); }
+
+  @include transition-transform-mixin(.3s, ease);
+  @include transform-property(scale(0));
+}
 
 .modal.scale.in .modal-dialog {
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -o-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1); }
+  @include transform-property(scale(1));
+}
 
 .btn-pram-primary {
-  background-color: #DC141B;
-  color: #fff;
-  font-size: 18px; }
-  .btn-pram-primary:hover {
+  background-color: $theme-primary-color;
+  color: $theme-primary-font-color;
+  font-size: 18px;
+
+  &:hover {
     background-color: #c61218;
-    color: #fff; }
-  .btn-pram-primary:active {
+    color: $theme-primary-font-color;
+  }
+
+  &:active {
     background-color: #b01015;
-    color: #fff; }
-  .btn-pram-primary:focus {
-    background-color: #DC141B;
-    color: #fff;
-    outline: none; }
+    color: $theme-primary-font-color;
+  }
+
+  &:focus {
+    background-color: $theme-primary-color;
+    color: $theme-primary-font-color;
+    outline: none;
+  }
+}
 
 /*Global Classes End*/
+
 /* Header Styles Start*/
 .customNavBar {
-  background-color: #DC141B;
+  background-color: $theme-primary-color;
   border-bottom: 0;
-  box-shadow: #444 0 0 5px;
+  box-shadow: $theme-shadow-color 0 0 5px;
   height: 50px;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10; }
-  .customNavBar .navSearch input {
-    margin-top: 8px; }
-  .customNavBar a.navbar-brand {
-    color: #fff;
+  top : 0;
+  left : 0;
+  right : 0;
+  z-index: 10;
+
+  .navSearch input{
+    margin-top : 8px;
+  }
+
+  a.navbar-brand {
+    color: $theme-primary-font-color;
     text-decoration: none;
     cursor: pointer;
     font-size: 25px;
     border-bottom: none;
-    -moz-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s; }
-    .customNavBar a.navbar-brand:hover {
-      color: #fff;
-      border-bottom: 2px solid #fff; }
-  .customNavBar .visible-lg .navLinks > div > div {
-    display: inline-block; }
-  .customNavBar .visible-lg .searchGlyphContainer {
-    height: 50px;
-    width: 22px;
-    font-size: 22px;
-    color: #fff;
-    overflow: hidden; }
-    .customNavBar .visible-lg .searchGlyphContainer .searchGlyphWrapper {
+    @include transition-mix(all, $theme-fast-reaction);
+
+    &:hover{
+      color : $theme-primary-font-color;
+      border-bottom: 2px solid $theme-primary-font-color;
+    }
+  }
+
+  .visible-lg {
+
+    .navLinks > div > div {
+      display: inline-block;
+    }
+
+    .searchGlyphContainer {
+      height: 50px;
       width: 22px;
-      postition: relative;
-      -moz-transition: all 0.2s;
-      -o-transition: all 0.2s;
-      -webkit-transition: all 0.2s;
-      transition: all 0.2s; }
-      .customNavBar .visible-lg .searchGlyphContainer .searchGlyphWrapper div {
-        line-height: 50px;
-        cursor: pointer;
-        height: 50px; }
-  .customNavBar .visible-lg .loginControlsContainer {
-    font-size: 20px;
-    color: #fff;
-    overflow: hidden;
-    height: 50px;
-    width: 71px;
-    overflow: hidden; }
-    .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper {
-      width: 71px;
-      -moz-transition: all 0.2s;
-      -o-transition: all 0.2s;
-      -webkit-transition: all 0.2s;
-      transition: all 0.2s; }
-      .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div {
-        height: 50px;
-        margin: 0 auto; }
-        .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.loginSpan {
-          padding: 14px 15px;
-          font-size: 20px;
-          line-height: 24px;
-          border-bottom: 2px solid #DC141B;
-          -moz-transition: all 0.2s;
-          -o-transition: all 0.2s;
-          -webkit-transition: all 0.2s;
-          transition: all 0.2s;
-          cursor: pointer; }
-          .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.loginSpan:hover {
-            border-bottom: 2px solid #fff; }
-        .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon {
+
+      font-size: $theme-glyphicon-size;
+      color: $theme-primary-font-color;
+
+      overflow: hidden;
+
+      .searchGlyphWrapper {
+        width: 22px;
+        postition: relative;
+
+        div {
+          line-height: 50px;
           cursor: pointer;
-          line-height: 40px;
-          font-family: "Segoe UI", sans-serif; }
-          .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon span {
-            line-height: 50px;
-            margin: 0 auto;
-            display: block;
-            width: 22px;
-            float: right; }
-          .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu {
-            right: 0;
-            left: auto;
-            display: block;
-            height: 265px;
-            display: block;
-            overflow: hidden;
-            -moz-transition: all 0.3s;
-            -o-transition: all 0.3s;
-            -webkit-transition: all 0.3s;
-            transition: all 0.3s;
-            background-color: #FAF8FD; }
-            .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu.noHeight {
-              padding: 0;
-              height: 0;
-              border: 0; }
-            .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu li a {
-              text-align: right; }
-              .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu li a:hover {
-                background-color: #DC141B;
-                color: #fff; }
-            .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover {
-              cursor: default; }
-              .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover:hover {
-                background-color: #FAF8FD;
-                color: #000; }
-  .customNavBar .visible-xs {
-    position: relative; }
-    .customNavBar .visible-xs .navLinks > div > div {
-      float: left; }
-      .customNavBar .visible-xs .navLinks > div > div.searchGlyphContainer {
-        width: auto;
-        height: 50px;
-        margin-right: 5px;
-        font-family: 'Segoe UI';
-        font-size: 22px;
-        color: #fff; }
-        .customNavBar .visible-xs .navLinks > div > div.searchGlyphContainer div {
           height: 50px;
-          float: left;
-          position: relative;
-          top: 0;
-          line-height: 50px; }
-      .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer {
-        font-size: 20px;
-        color: #fff;
-        overflow: hidden;
-        height: 50px;
+        }
+
+        @include transition-mix(all, $theme-fast-reaction);
+      }
+    }
+
+    .loginControlsContainer {
+      font-size: 20px;
+      color: $theme-primary-font-color;
+
+      overflow: hidden;
+
+      height: 50px;
+      width: 71px;
+
+      overflow: hidden;
+
+      .loginControlsWrapper {
         width: 71px;
-        -moz-transition: all 0.2s;
-        -o-transition: all 0.2s;
-        -webkit-transition: all 0.2s;
-        transition: all 0.2s; }
-        .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked {
-          width: 32px; }
-          .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper {
-            width: 32px; }
-            .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div {
-              height: 50px;
+
+        @include transition-mix(all, $theme-fast-reaction);
+
+        div {
+          height: 50px;
+          margin: 0 auto;
+
+          &.loginSpan {
+            padding: 14px 15px;
+
+            font-size: 20px;
+            line-height: 24px;
+
+            border-bottom: 2px solid $theme-primary-color;
+            @include transition-mix(all, $theme-fast-reaction);
+            cursor: pointer;
+
+            &:hover {
+              border-bottom: 2px solid $theme-primary-font-color;
+            }
+          }
+
+          &.userIcon {
+            cursor: pointer;
+            line-height: 40px;
+
+            font-family: $theme-secondary-font;
+
+            span {
+              line-height: 50px;
               margin: 0 auto;
-              vertical-align: middle;
-              text-align: center; }
-              .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon {
-                cursor: pointer;
-                float: right;
-                padding: 14px; }
-                .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu {
-                  font-family: 'Segoe UI';
-                  right: 0;
-                  left: auto;
-                  display: block;
-                  height: 265px;
-                  display: block;
-                  overflow: hidden;
-                  -moz-transition: all 0.3s;
-                  -o-transition: all 0.3s;
-                  -webkit-transition: all 0.3s;
-                  transition: all 0.3s;
-                  background-color: #FAF8FD; }
-                  .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu.noHeight {
-                    padding: 0;
-                    height: 0;
-                    border: 0; }
-                  .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu li a {
-                    text-align: right; }
-                    .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu li a:hover {
-                      background-color: #DC141B;
-                      color: #fff; }
-                  .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover {
-                    cursor: default; }
-                    .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover:hover {
-                      background-color: #FAF8FD;
-                      color: #000; }
-        .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer .loginControlsWrapper {
+
+              display: block;
+
+              width: 22px;
+              float: right;
+            }
+
+            .dropdown-menu {
+              right: 0;
+              left: auto;
+
+              display: block;
+
+              height: 265px;
+              display: block;
+
+              overflow: hidden;
+              @include transition-mix(all, .3s);
+
+              background-color: $theme-background-color;
+
+              &.noHeight {
+                padding: 0;
+                height: 0;
+                border: 0;
+              }
+
+              li {
+                a {
+                  text-align: right;
+
+                  &:hover {
+                    background-color: $theme-primary-color;
+                    color: $theme-primary-font-color;
+                  }
+                }
+
+                a.noHover {
+                  cursor: default;
+                  &:hover {
+                    background-color: $theme-background-color;
+                    color: #000;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .visible-xs{
+    position : relative;
+    .navLinks{
+      > div > div {
+        float : left;
+
+        &.searchGlyphContainer{
+          width : auto;
+          height : $theme-navbar-height;
+
+          margin-right : 5px;
+
+          font-family: 'Segoe UI';
+          font-size : $theme-glyphicon-size;
+          color : $theme-primary-font-color;
+
+          div {
+            height : $theme-navbar-height;
+            float : left;
+
+            position : relative;
+            top : 0;
+
+            line-height : $theme-navbar-height;
+          }
+        }
+
+        &.loginControlsContainer{
+          font-size: 20px;
+          color: $theme-primary-font-color;
+
+          overflow: hidden;
+
+          height: 50px;
           width: 71px;
-          -moz-transition: all 0.2s;
-          -o-transition: all 0.2s;
-          -webkit-transition: all 0.2s;
-          transition: all 0.2s; }
-          .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer .loginControlsWrapper div {
-            height: 50px;
-            margin: 0 auto;
-            vertical-align: middle;
-            text-align: center; }
-            .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer .loginControlsWrapper div.loginSpan {
-              padding: 12px 15px;
-              font-size: 20px;
-              border-bottom: 2px solid #DC141B;
-              -moz-transition: all 0.2s;
-              -o-transition: all 0.2s;
-              -webkit-transition: all 0.2s;
-              transition: all 0.2s;
-              cursor: pointer; }
-              .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer .loginControlsWrapper div.loginSpan:hover {
-                border-bottom: 2px solid #fff; }
-    .customNavBar .visible-xs .overLappedRow {
+
+          @include transition-mix(all, $theme-fast-reaction);
+
+          &.shrinked{
+            width : 32px;
+
+            .loginControlsWrapper{
+              width : 32px;
+
+              div{
+                height : 50px;
+                margin : 0 auto;
+
+                vertical-align: middle;
+                text-align : center;
+
+                &.userIcon{
+                  cursor : pointer;
+                  float : right;
+
+                  padding : 14px;
+
+                  .dropdown-menu {
+                    font-family: 'Segoe UI';
+                    right: 0;
+                    left: auto;
+
+                    display: block;
+
+                    height: 265px;
+                    display: block;
+
+                    overflow: hidden;
+                    @include transition-mix(all, .3s);
+
+                    background-color: $theme-background-color;
+
+                    &.noHeight {
+                      padding: 0;
+                      height: 0;
+                      border: 0;
+                    }
+
+                    li {
+                      a {
+                        text-align: right;
+
+                        &:hover {
+                          background-color: $theme-primary-color;
+                          color: $theme-primary-font-color;
+                        }
+                      }
+
+                      a.noHover {
+                        cursor: default;
+                        &:hover {
+                          background-color: $theme-background-color;
+                          color: #000;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .loginControlsWrapper {
+            width: 71px;
+
+            div{
+              height : 50px;
+              margin : 0 auto;
+
+              vertical-align: middle;
+              text-align : center;
+
+              &.loginSpan{
+                padding: 12px 15px;
+                font-size: 20px;
+
+                border-bottom: 2px solid $theme-primary-color;
+                @include transition-mix(all, $theme-fast-reaction);
+                cursor: pointer;
+
+                &:hover {
+                  border-bottom: 2px solid $theme-primary-font-color;
+                }
+              }
+            }
+
+            @include transition-mix(all, $theme-fast-reaction);
+          }
+
+
+        }
+      }
+    }
+
+    .overLappedRow{
       position: absolute;
       top: -200px;
-      background-color: #DC141B;
+      background-color: $theme-primary-color;
       padding: 8px;
-      -moz-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      -webkit-transition: all 0.5s;
-      transition: all 0.5s; }
-      .customNavBar .visible-xs .overLappedRow .remove {
-        color: #fff;
-        font-size: 22px; }
-      .customNavBar .visible-xs .overLappedRow .centerGlyph {
-        padding-top: 5px;
-        text-align: center; }
-      .customNavBar .visible-xs .overLappedRow.moveToNormalPosition {
-        top: 0; }
 
+      @include transition-mix(all, .5s);
+
+      .remove {
+        color: $theme-primary-font-color;
+        font-size: $theme-glyphicon-size;
+      }
+
+      .centerGlyph {
+        padding-top: 5px;
+        text-align: center;
+      }
+
+      &.moveToNormalPosition {
+        top: 0;
+      }
+    }
+  }
+}
 /* Header Styles End
 
 /*Login Modal Start*/
 .loginModal {
-  font-family: 'Segoe UI'; }
-  .loginModal .collapsibleContent {
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+  font-family: 'Segoe UI';
+
+  .collapsibleContent {
+    @include transition-mix(all, .3s);
     height: 65px;
-    overflow: hidden; }
-    .loginModal .collapsibleContent.noHeight {
-      height: 0; }
-  .loginModal .collapsibleServerResponse {
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+    overflow: hidden;
+
+    &.noHeight {
+      height: 0;
+    }
+  }
+
+  .collapsibleServerResponse {
+    @include transition-mix(all, .3s);
     height: 40px;
     margin-bottom: 6px;
-    font-size: 14px; }
-    .loginModal .collapsibleServerResponse .bg-danger, .loginModal .collapsibleServerResponse .bg-success {
+    font-size: 14px;
+
+    .bg-danger, .bg-success {
       height: 40px;
       line-height: 40px;
-      padding-left: 15px; }
-    .loginModal .collapsibleServerResponse.bg-success, .loginModal .collapsibleServerResponse.bg-danger {
-      background: none; }
-    .loginModal .collapsibleServerResponse.noHeight {
+      padding-left: 15px;
+    }
+
+    &.bg-success, &.bg-danger {
+      background: none;
+    }
+
+    &.noHeight {
       height: 0;
       margin-bottom: 0;
-      overflow: hidden; }
-      .loginModal .collapsibleServerResponse.noHeight .noHeight {
+      overflow: hidden;
+
+      .noHeight {
         height: 0;
-        overflow: hidden; }
-  .loginModal .collapsibleErrorMessage {
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .collapsibleErrorMessage {
+    @include transition-mix(all, .3s);
     height: 40px;
+
     margin-bottom: 6px;
-    font-size: 14px; }
-    .loginModal .collapsibleErrorMessage.noHeight {
+    font-size: 14px;
+
+    &.noHeight {
       height: 0;
       margin-bottom: 0;
-      overflow: hidden; }
-      .loginModal .collapsibleErrorMessage.noHeight .noHeight {
+      overflow: hidden;
+
+      .noHeight {
         height: 0;
-        overflow: hidden; }
-    .loginModal .collapsibleErrorMessage .bg-danger {
+        overflow: hidden;
+      }
+    }
+
+    .bg-danger {
       height: 40px;
       line-height: 40px;
       padding-left: 15px;
       border-radius: 2px;
-      position: relative; }
-      .loginModal .collapsibleErrorMessage .bg-danger:after {
+
+      position: relative;
+
+      &:after {
         content: " ";
         top: -23px;
         left: 12%;
@@ -352,38 +534,54 @@ body {
         height: 0;
         width: 0;
         position: absolute;
-        border-bottom-color: #f2dede; }
-  .loginModal .modal-header {
-    background-color: #DC141B;
+        border-bottom-color: #f2dede;
+      }
+    }
+  }
+
+  .modal-header {
+    background-color: $theme-primary-color;
     padding: 8px 15px 0 8px;
-    color: #fff;
+    color: $theme-primary-font-color;
     position: relative;
-    height: 45px; }
-    .loginModal .modal-header ul.login-links {
+    height: 45px;
+
+    ul.login-links {
       padding-left: 0;
       list-style: none;
-      margin-bottom: 0; }
-      .loginModal .modal-header ul.login-links li {
+
+      margin-bottom: 0;
+
+      li {
         display: inline-block;
         padding: 4px 10px;
-        border: 2px solid #DC141B;
-        border-bottom: none; }
-        .loginModal .modal-header ul.login-links li a {
+        border: 2px solid $theme-primary-color;
+        border-bottom: none;
+
+        a {
           color: #fff;
           line-height: 10px;
+
           font-size: 20px;
           text-decoration: none;
-          cursor: pointer; }
-          .loginModal .modal-header ul.login-links li a:hover {
+
+          cursor: pointer;
+
+          &:hover {
             color: #fff;
-            text-decoration: none; }
-        .loginModal .modal-header ul.login-links li.active, .loginModal .modal-header ul.login-links li.active:hover {
+            text-decoration: none;
+          }
+        }
+
+        &.active, &.active:hover {
           background-color: #9a0e12;
           border-color: #840c10;
           border-bottom: none;
+
           border-radius: 5px 5px 0 0;
-          position: relative; }
-          .loginModal .modal-header ul.login-links li.active:after, .loginModal .modal-header ul.login-links li.active:hover:after {
+          position: relative;
+
+          &:after {
             content: " ";
             top: 100%;
             left: 38%;
@@ -391,283 +589,397 @@ body {
             height: 0;
             width: 0;
             position: absolute;
-            border-top-color: #9a0e12; }
-        .loginModal .modal-header ul.login-links li:hover {
+            border-top-color: #9a0e12;
+          }
+        }
+
+        &:hover {
           background-color: #c61218;
           border-color: #840c10;
           border-bottom: none;
-          border-radius: 5px 5px 0 0; }
-        .loginModal .modal-header ul.login-links li.close-icon {
+
+          border-radius: 5px 5px 0 0;
+        }
+
+        &.close-icon {
           padding: 3px 0;
           font-size: 18px;
-          border: 2px solid #DC141B;
-          cursor: pointer; }
-          .loginModal .modal-header ul.login-links li.close-icon:hover {
-            background-color: #DC141B;
-            border: 2px solid #DC141B; }
-  .loginModal input {
-    height: 40px;
-    font-size: 15px; }
-  .loginModal .form-group {
-    margin-top: 10px; }
-    .loginModal .form-group .glyphicon {
-      color: #ccc; }
-    .loginModal .form-group input {
-      height: 40px; }
-    .loginModal .form-group .form-control-feedback {
-      top: 3px; }
-  .loginModal .btn-pram-primary {
+          border: 2px solid $theme-primary-color;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $theme-primary-color;
+            border: 2px solid $theme-primary-color;
+          }
+        }
+      }
+    }
+  }
+
+  input {
+    height : 40px;
+    font-size : 15px;
+  }
+
+  .form-group {
+    margin-top: 10px;
+
+    .glyphicon {
+      color: #ccc;
+    }
+
+    input {
+      height: 40px;
+
+    }
+
+    .form-control-feedback {
+      top: 3px;
+    }
+  }
+
+  .btn-pram-primary {
     font-size: 19px;
     padding: 6px 12px;
-    font-family: 'Segoe UI'; }
-  .loginModal .forgotPassword {
-    line-height: 41px; }
-    .loginModal .forgotPassword a {
+    font-family: 'Segoe UI';
+  }
+
+  .forgotPassword {
+    line-height: 41px;
+
+    a {
       color: #ccc;
-      text-decoration: none; }
-      .loginModal .forgotPassword a:hover {
+      text-decoration: none;
+
+      &:hover {
         color: #ccc;
-        text-decoration: underline; }
+        text-decoration: underline;
+      }
+    }
+  }
+}
 
 /*Login Modal End*/
-/*Utility Classes*/
-.negativeTopMargin50 {
-  margin-top: -50px; }
 
-.leftRightPadding20 {
-  padding-left: 20px;
-  padding-right: 20px; }
+/*Utility Classes*/
+.negativeTopMargin50{
+  margin-top : -50px;
+}
+
+.leftRightPadding20{
+  padding-left : 20px;
+  padding-right : 20px;
+}
 
 .marRight5 {
-  margin-right: 5px; }
+  margin-right: 5px;
+}
 
 .noLeftRightPadding {
   padding-left: 0;
-  padding-right: 0; }
+  padding-right: 0;
+}
 
 .noLPad {
-  padding-left: 0; }
+  padding-left: 0;
+}
 
 .noRPad {
-  padding-right: 0; }
+  padding-right: 0;
+}
 
 .lpad0 {
-  padding-left: 0; }
+  padding-left: 0;
+}
 
 .lpad30 {
-  padding-left: 30px; }
+  padding-left: 30px;
+}
 
 .tpad5 {
-  padding-top: 5px; }
+  padding-top: 5px;
+}
 
 .tpad7 {
-  padding-top: 7px; }
+  padding-top: 7px;
+}
 
 .tpad15 {
-  padding-top: 15px; }
+  padding-top: 15px;
+}
 
 .tpad30 {
-  padding-top: 30px; }
+  padding-top: 30px;
+}
 
 .bpad5 {
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+}
 
 .bpad30 {
-  padding-bottom: 30px; }
+  padding-bottom: 30px;
+}
 
 .rpad0 {
-  padding-right: 0; }
+  padding-right: 0;
+}
 
 .rpad3 {
-  padding-right: 3px; }
+  padding-right: 3px;
+}
 
 .tpad50 {
-  padding-top: 50px; }
+  padding-top: 50px;
+}
 
 .bpad13 {
-  padding-bottom: 13px; }
+  padding-bottom: 13px;
+}
 
 .lpad5 {
-  padding-left: 5px; }
+  padding-left: 5px;
+}
 
 /*Home Page Styles*/
 .pizzaBack {
   background: url("../images/pizza.jpg") no-repeat top center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+
+  @include background-size-mix(cover);
   height: 560px;
   box-shadow: #333 0 0 15px;
-  position: relative;
-  z-index: 5; }
+
+  position : relative;
+  z-index : 9;
+}
 
 .welcomeText {
   color: white;
   margin-top: 90px;
   padding-bottom: 25px;
-  text-align: center; }
-  .welcomeText h1 {
-    font-size: 59px; }
+  text-align: center;
+
+  h1 {
+    font-size: 59px;
+  }
+}
 
 .bannerSearch {
-  font-family: "Segoe UI", sans-serif; }
-  .bannerSearch input {
+  font-family: $theme-secondary-font;
+
+  input {
     height: 50px;
     font-size: 19px;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
     padding-left: 20px;
-    box-shadow: 0 0 15px #000; }
-    .bannerSearch input:focus {
-      box-shadow: 0 0 15px #000; }
-  .bannerSearch .input-group-btn button {
-    height: 50px;
-    font-size: 19px;
     box-shadow: 0 0 15px #000;
-    width: 90px; }
-  .bannerSearch .dropdown {
+
+    &:focus {
+      box-shadow: 0 0 15px #000;
+    }
+  }
+
+  .input-group-btn {
+    button {
+      height: 50px;
+      font-size: 19px;
+      box-shadow: 0 0 15px #000;
+      width: 90px;
+    }
+  }
+
+  .dropdown {
     list-style: none;
-    background-color: #FAF8FD;
+    background-color: $theme-background-color;
     padding-left: 0;
     margin-left: 21px;
     margin-right: 90px;
     border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px; }
-    .bannerSearch .dropdown li {
+    border-bottom-right-radius: 5px;
+
+    li {
       font-size: 16px;
       padding: 5px 0 5px 5px;
-      margin-bottom: 2px; }
-      .bannerSearch .dropdown li:hover {
-        background-color: #DC141B;
-        color: #fff; }
-      .bannerSearch .dropdown li:last-child {
+      margin-bottom: 2px;
+
+      &:hover {
+        background-color: $theme-primary-color;
+        color: $theme-primary-font-color;
+      }
+
+      &:last-child {
         border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px; }
-      .bannerSearch .dropdown li.heading {
+        border-bottom-right-radius: 5px;
+      }
+
+      &.heading{
         font-weight: 600;
-        font-size: 17px; }
-        .bannerSearch .dropdown li.heading:hover {
-          background-color: #fff;
-          color: #000; }
+        font-size : 17px;
+
+        &:hover{
+          background-color : #fff;
+          color : #000;
+        }
+      }
+    }
+  }
+}
 
 button.kh-primary {
-  background-color: #DC141B;
-  border: 1px solid #DC141B;
-  color: #fff;
+  background-color: $theme-primary-color;
+  border: 1px solid $theme-primary-color;
+  color: $theme-primary-font-color;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   padding-right: 20px;
-  outline: 0; }
-  button.kh-primary:hover, button.kh-primary:focus {
+  outline: 0;
+
+  &:hover, &:focus {
     background-color: #C61218;
-    border: 1px solid #DC141B;
-    color: #fff;
-    outline: 0; }
-  button.kh-primary:active, button.kh-primary:focus {
-    outline: 0; }
+    border: 1px solid $theme-primary-color;
+    color: $theme-primary-font-color;
+    outline: 0;
+  }
+
+  &:active, &:focus {
+    outline: 0;
+  }
+}
 
 .cuisinesContainer {
   padding-top: 30px;
   padding-bottom: 30px;
-  position: relative;
-  z-index: 5; }
+
+  position : relative;
+  z-index: 5;
+}
 
 .cuisine {
   position: relative;
   height: 200px;
   margin-bottom: 30px;
-  overflow: hidden; }
-  .cuisine img {
+  overflow: hidden;
+
+  img {
     margin-bottom: 30px;
     top: 0;
     position: absolute;
-    -moz-transition: all 10s;
-    -o-transition: all 10s;
-    -webkit-transition: all 10s;
-    transition: all 10s; }
-  .cuisine .image-container {
+
+    @include transition-mix(all, 10s);
+  }
+
+  .image-container {
     overflow: hidden;
-    height: 210px;
+    height: $theme-cuisine-lg-height;
     position: relative;
-    cursor: pointer; }
-  .cuisine .cuisine-image {
-    height: 210px;
-    -moz-transition: all 10s;
-    -o-transition: all 10s;
-    -webkit-transition: all 10s;
-    transition: all 10s; }
-  .cuisine .cuisine-description {
+    cursor: pointer;
+  }
+
+  .cuisine-image {
+    height: $theme-cuisine-lg-height;
+    @include transition-mix(all, 10s);
+  }
+
+  .cuisine-description {
     position: relative;
     cursor: pointer;
     height: 60px;
     top: -70px;
-    color: #fff;
+    color: $theme-primary-font-color;
     font-size: 20px;
     line-height: 60px;
     background-color: rgba(220, 20, 27, 0.3);
     padding-left: 15px;
-    -moz-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -webkit-transition: all 0.4s;
-    transition: all 0.4s; }
-  .cuisine:hover .cuisine-image {
-    -webkit-transform: scale(1.5);
-    -moz-transform: scale(1.5);
-    -o-transform: scale(1.5);
-    -ms-transform: scale(1.5);
-    transform: scale(1.5); }
-  .cuisine:hover .cuisine-description {
-    height: 100px;
-    line-height: 100px;
-    top: -110px;
-    font-size: 25px; }
+
+    @include transition-mix(all, .4s);
+  }
+
+  &:hover {
+    .cuisine-image {
+      @include transform-property(scale(1.5));
+    }
+
+    .cuisine-description {
+      height: 100px;
+      line-height: 100px;
+      top: -110px;
+      font-size: 25px;
+    }
+  }
+}
 
 .localitiesContainer {
   padding-top: 20px;
   padding-bottom: 20px;
-  background-color: #e7e7e7; }
-  .localitiesContainer .locationHeading {
-    padding-bottom: 20px; }
-  .localitiesContainer .location {
-    padding-bottom: 10px; }
-    .localitiesContainer .location a {
+  background-color: #e7e7e7;
+
+  .locationHeading {
+    padding-bottom: 20px;
+  }
+
+  .location {
+    padding-bottom: 10px;
+
+    a {
       font-size: 18px;
       color: #333;
-      text-decoration: none; }
-      .localitiesContainer .location a:hover {
+      text-decoration: none;
+
+      &:hover {
         color: #333;
-        text-decoration: underline; }
+        text-decoration: underline;
+      }
+    }
+  }
+}
 
 .footer {
-  background-color: #333;
-  padding: 20px 0; }
-  .footer .mainBar {
+  background-color: $theme-footer-color;
+  padding: 20px 0;
+
+  .mainBar {
     border-bottom: 1px solid #707070;
-    margin-bottom: 10px; }
-  .footer .footerCompany {
+    margin-bottom: 10px;
+  }
+
+  .footerCompany {
     color: #707070;
-    font-size: 24px; }
-  .footer .copyRight {
-    color: #5d5d5d; }
-  .footer ul.footerLinks {
+    font-size: 24px;
+  }
+
+  .copyRight {
+    color: #5d5d5d;
+  }
+
+  ul.footerLinks {
     padding-left: 0;
     list-style: none;
-    line-height: 34px; }
-    .footer ul.footerLinks li {
-      float: right; }
-      .footer ul.footerLinks li a {
+    line-height: 34px;
+
+    li {
+      float: right;
+
+      a {
         padding: 0 10px;
         color: #707070;
-        text-decoration: none; }
-        .footer ul.footerLinks li a:hover {
-          text-decoration: underline; }
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
 
 /*styles for restaurant details page*/
+
 .adminBody {
-  margin-top: 65px; }
+  margin-top: 65px;
+}
 
 /* admin home page styles */
+
 .adminBlock {
   background-color: #DC141B;
   border-radius: 155px;
@@ -675,13 +987,13 @@ button.kh-primary {
   cursor: pointer;
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
   top: 0;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s; }
-  .adminBlock:hover {
+  @include transition-mix(all, .5s);
+
+  &:hover {
     box-shadow: 0 9px 10px 0 #555;
-    top: -1px; }
+    top: -1px;
+  }
+}
 
 .newsFeedBlock {
   height: 90px;
@@ -690,89 +1002,101 @@ button.kh-primary {
   cursor: pointer;
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
   top: 0;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s; }
-  .newsFeedBlock:hover {
+
+  @include transition-mix(all, .5s);
+
+  &:hover {
     box-shadow: 0 9px 10px 0 #555;
-    top: -1px; }
+    top: -1px;
+  }
+}
 
 /*Style for restaurant Home*/
-.restaurantSnap {
-  height: 400px;
-  width: 100%; }
+.restaurantSnap{
+  height : 400px;
+  width : 100%;
+}
 
-.restaurantName {
-  font-size: 30px;
+.restaurantName{
+  font-size : 30px;
   line-height: 67px;
   font-weight: bolder;
-  text-align: center; }
 
-.restaurantMenu ul {
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
-  font-family: "Segoe UI";
-  margin-bottom: 0; }
-  .restaurantMenu ul li {
-    display: inline-block;
-    float: left;
-    padding: 21px 0;
-    cursor: pointer;
-    -moz-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s; }
-    .restaurantMenu ul li a {
-      padding: 0 30px;
-      color: #000;
-      text-decoration: none;
-      border-left: 1px solid #ccc;
-      font-size: 15px;
-      cursor: pointer;
-      -moz-transition: all 0.2s;
-      -o-transition: all 0.2s;
-      -webkit-transition: all 0.2s;
-      transition: all 0.2s; }
-      .restaurantMenu ul li a.first {
-        border-left: none; }
-    .restaurantMenu ul li.active {
-      background-color: #DC141B; }
-      .restaurantMenu ul li.active a {
-        color: #fff; }
-    .restaurantMenu ul li:hover {
-      background-color: #DC141B; }
-      .restaurantMenu ul li:hover a, .restaurantMenu ul li:hover a:hover {
-        color: #fff; }
+  text-align : center;
+}
 
-.tabbedContent {
-  position: relative; }
-  .tabbedContent > div {
-    border: 1px solid #ccc;
-    width: 100%;
-    float: left;
-    opacity: 0;
-    z-index: 3;
-    -moz-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s; }
-    .tabbedContent > div.active {
-      margin-left: 0;
-      z-index: 4 !important;
-      opacity: 1; }
-    .tabbedContent > div.menu {
-      margin-left: 0; }
-    .tabbedContent > div.gallery, .tabbedContent > div.reviews, .tabbedContent > div.location {
-      margin-left: -100%; }
+.restaurantMenu{
+  ul{
+    list-style : none;
+    margin-left : 0;
+    padding-left : 0;
 
+    font-family: "Segoe UI";
+    margin-bottom: 0;
+
+    li{
+      display : inline-block;
+      float : left;
+
+      padding : 21px 0;
+      cursor : pointer;
+
+      @include transition-mix(all, $theme-fast-reaction);
+
+      a{
+        padding : 0 30px;
+        color : #000;
+        text-decoration:  none;
+        border-left : 1px solid #ccc;
+        font-size : 15px;
+        cursor : pointer;
+
+        @include transition-mix(all, $theme-fast-reaction);
+
+        &.first{
+          border-left : none;
+        }
+      }
+
+      &.active{
+        background-color: $theme-primary-color;
+        a{
+          color : #fff;
+        }
+      }
+
+      &:hover{
+        background-color : $theme-primary-color;
+        a,a:hover{
+          color : #fff;
+        }
+      }
+    }
+  }
+}
+
+.tabbedContent{
+  position : relative;
+
+  > div{
+    border : 1px solid #ccc;
+    width : 100%;
+    float : left;
+    opacity : 0;
+    z-index : 3;
+
+    @include transition-mix(all, $theme-fast-reaction);
+    &.active{margin-left:0;z-index : 4 !important; opacity: 1}
+    &.menu{margin-left : 0}
+    &.gallery, &.reviews, &.location{margin-left : -100%}
+
+  }
+}
 /*Style for restaurant Home End*/
-/* styles for search result page starts */
-.containerBlock {
-  margin-top: 15px; }
 
-.marginT30{
+/* styles for search result page starts */
+
+.containerBlock {
   margin-top: 15px;
 }
 
@@ -781,53 +1105,60 @@ button.kh-primary {
   padding-top: 12px;
   padding-bottom: 13px;
   border-bottom: solid 1px gray;
-  font-size: 20px; }
-
-.filterBar{
-  background-color: rgb(180, 20, 27);
-  position: fixed;
-  color: white;
-  margin-top: 0px;
-  height: 40px;
-  z-index: 10;
-  padding-top: 7px;
-  border-top: solid 1px gainsboro;
+  font-size: 20px;
 }
-.borderLeft{
-  border-left: 1px solid gainsboro;
+
+.filterContent {
+  cursor: pointer;
+}
+
+.filterButton {
+  border: solid 1px gray;
+}
+
+.contentClass {
+  padding-left: 15px;
+  cursor: pointer;
 }
 
 .resultBlock {
-  border: solid 1px #ece1e1;
+  border: solid 1px rgb(236, 225, 225);
   border-radius: 5px 5px 0 0;
   height: auto;
-  background-color: white; }
+  background-color: white;
+}
 
 .repeatBlock {
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+}
 
 .resultRepeatBlock {
-  padding-bottom: 40px; }
+  padding-bottom: 40px;
+}
 
 .fixedBlock {
   padding-left: 0;
-  padding-right: 10px; }
+  padding-right: 10px;
+}
 
 .filterGlyph {
   font-size: 15px;
   padding-right: 8px;
-  padding-top: 3px; }
+  padding-top: 3px;
+}
 
 .quickView {
   background-color: gainsboro;
   color: black;
   border-radius: 0 0 5px 5px;
   box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .resultBlockRow {
   margin-right: -18px;
-  margin-left: -15px; }
+  margin-left: -15px;
+}
 
 .glyphDown {
   padding-left: 1px;
@@ -837,289 +1168,320 @@ button.kh-primary {
   height: 27px;
   width: 27px;
   padding-top: 5px;
-  color: gray; }
+  color: gray;
+}
 
 .restaurantIcon {
   height: 140px;
   width: 140px;
   border-radius: 6px;
-  box-shadow: 0 4px 10px 0 #555; }
+  box-shadow: 0 4px 10px 0 #555;
+}
 
 .orderButton {
   font-size: 25px;
-  background-color: #dc141b;
+  background-color: rgb(220, 20, 27);
   border-radius: 4px;
-  color: white; }
+  color: white;
+}
 
 .corouselBlock {
-  height: 250px; }
+  height: 250px;
+}
 
 .restTitle {
   padding-top: 15px;
-  font-size: 30px; }
+  font-size: 30px;
+}
 
 .rating {
   padding-top: 14px;
-  padding-right: 50px; }
+  padding-right: 50px;
+}
 
 .ratingNumber {
   font-size: 26px;
   color: #333;
-  padding-left: 30px; }
+  padding-left: 30px;
+}
 
 .lpad8 {
-  padding-left: 8px; }
+  padding-left: 8px;
+}
 
 .lpad15 {
-  padding-left: 15px; }
+  padding-left: 15px;
+}
 
 .tpad10 {
-  padding-top: 10px; }
+  padding-top: 10px;
+}
 
 .bpad8 {
-  padding-bottom: 8px; }
-.rateStar{
-    font-size: 18px;
-    color: #DC141B;
-  }
+  padding-bottom: 8px;
+}
 
 /* styles for search result page ends */
+
 /* styles for check out page starts*/
+
 .reviewBlock {
   border: solid 1px gray;
-  border-radius: 0px 0px 5px 5px;
+  border-radius: 0px 0px 5px 5px;;
   background-color: gainsboro;
   padding-bottom: 5px;
   padding-top: 5px;
   margin-top: -15px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+}
 
-.addressModalInput{
-  margin-bottom: 15px;
-}
-.addressModalInput .glyphicon{
-  color:#ccc;
-  margin-right: 15px;
-    margin-top: 2px;
-}
-.checkoutTabs {
-  background-color: #07a16d;
+.checkoutTabs{
+  background-color: rgb(7, 161, 109);;
   color: white;
   cursor: pointer;
   margin-bottom: 15px;
-  border-radius: 5px 5px 0px 0px; }
-
+  border-radius: 5px 5px 0px 0px;
+}
 .addressBlock {
   padding-top: 13px;
   background-color: white;
   border-radius: 5px;
-  padding-bottom: 9px; }
+  padding-bottom: 9px;
+}
 
 .orderBlock {
   background-color: white;
   border-radius: 5px;
-  padding-top: 5px; }
+  padding-top: 5px;
+}
 
 .addressButton {
   background-color: #DC141B;
-  color: white; }
+  color: white;
+}
 
 .tableFont {
-  font-size: 15px; }
+  font-size: 15px;
+}
 
 .input-group-addon {
-  font-size: 18px; }
+  font-size: 18px;
+}
 
 .addressOk {
-  padding-top: 10px; }
+  padding-top: 10px;
+}
 
 .addressLineTitle1 {
   background-color: #333;
-  color: white; }
+  color: white;
+}
 
 .addressLineTitle2 {
   background-color: green;
-  color: white; }
+  color: white;
+}
 
 .addressLineContent {
-  border: solid 1px gray; }
+  border: solid 1px gray;
+}
 
 .makingCenter {
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+}
 
 /* styles for check out page ends */
+
 /* styles for user profile starts */
+
 .userImage {
   width: 170px;
-  margin-left: -27px; }
-
-.lpad24 {
-  padding-left: 24px; }
-
+  margin-left: -27px;
+}
+.lpad24{
+  padding-left:24px;
+}
 .orderImage {
   width: 100px;
   margin-left: -14px;
   margin-top: 24px;
-  border-right: 1px solid gainsboro; }
-
+  border-right: 1px solid gainsboro;
+}
 .userImageBlock {
   border-right: 1px solid gainsboro;
   margin-bottom: 15px;
-  margin-left: -8px; }
-
+  margin-left: -8px;
+}
 .profileHead {
-  margin-top: 15px;
-  border-bottom: 1px solid gainsboro; }
-
+  margin-top:15px;
+  border-bottom: 1px solid gainsboro;
+}
 .foodQoute {
-  font-size: 39px; }
-
+  font-size: 39px;
+}
 .profileList {
   border-right: 1px solid gainsboro;
-  margin-top: 15px; }
-
+  margin-top: 15px;
+}
 .listContent {
   font-size: 20px;
   border-bottom: 1px solid gainsboro;
   margin-right: 40px;
   padding-bottom: 5px;
-  padding-top: 5px; }
-
+  padding-top: 5px;
+}
 .orderBlock {
   border: 1px solid gainsboro;
   margin-top: 6px;
   margin-bottom: 9px;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.26); }
-
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.26);
+}
 .orderNo {
-  margin-bottom: -12px;
-  margin-top: 12px; }
-
+  margin-bottom:-12px;
+  margin-top: 12px;
+}
 .orderListContent {
-  margin-bottom: 2px; }
-
-.repeatOrderBtn {
+  margin-bottom:2px;
+}
+.repeatOrderBtn{
   border: 1px solid gainsboro;
   text-align: center;
   height: 44px;
   font-size: 25px;
   border-radius: 80px;
   border-radius: 2px;
-  font-family: serif; }
-
-.orderBtnBlock {
+  font-family: serif;
+}
+.orderBtnBlock{
   margin-top: 19px;
-  margin-bottom: 5px; }
-
-.repeatBtnBlock {
-  margin-top: 19px; }
-
-.smallFont {
-  color: #DC141B; }
-
-.foodOrderImage {
+  margin-bottom: 5px;
+}
+.repeatBtnBlock{
+  margin-top: 19px;
+}
+.smallFont{
+  color: #DC141B;
+}
+.foodOrderImage{
   width: 90px;
   margin-top: 10px;
-  margin-left: -7px; }
-
-.coinsImgBlock {
+  margin-left: -7px;
+}
+.coinsImgBlock{
   border-right: 1px solid gainsboro;
-  margin-top: 10px; }
-
-.coinImage {
+  margin-top: 10px;
+}
+.coinImage{
   width: 56px;
   margin-top: 26px;
-  margin-left: 16px; }
-
-.orderNos {
+  margin-left: 16px;
+}
+.orderNos{
   margin-bottom: -20px;
-  font-size: 60px; }
-
-.favHeartGlyph {
   font-size: 60px;
-  margin-top: 22px; }
-
-.marginTopBottom {
+}
+.favHeartGlyph{
+  font-size: 60px;
+  margin-top: 22px;
+}
+.marginTopBottom{
   margin-bottom: 15px;
-  margin-top: 10px; }
+  margin-top: 10px;
+}
+
 
 @media (max-width: 768px) {
   .userImage {
     width: 60px;
-    margin-left: 0px; }
-
+    margin-left: 0px;
+  }
   .foodQoute {
-    font-size: 16px; }
-
+    font-size: 16px;
+  }
   .orderImage {
-    width: 88px; }
-
-  .repeatBtnBlock {
-    margin-top: 0px; }
-
-  .repeatOrderBtn {
+    width: 88px;
+  }
+  .repeatBtnBlock{
+    margin-top: 0px;
+  }
+  .repeatOrderBtn{
     font-size: 20px;
-    height: 36px; }
-
-  .foodOrderImage {
+    height: 36px;
+  }
+  .foodOrderImage{
     width: 60px;
-    margin-left: -14px; }
-
-  .coinImage {
+    margin-left: -14px;
+  }
+  .coinImage{
     width: 40px;
-    margin-left: 0px; }
-
-  .orderNos {
+    margin-left: 0px;
+  }
+  .orderNos{
     margin-bottom: -20px;
-    font-size: 40px; }
-
-  .favHeartGlyph {
+    font-size: 40px;
+  }
+  .favHeartGlyph{
     font-size: 30px;
-    margin-left: -12px; } }
+    margin-left: -12px;
+  }
+}
+
 @media (max-width: 460px) {
   .orderImage {
-    width: 70px; }
+    width: 70px;
+  }
+  .smallFont{
+    font-size:20px;
+    color: #DC141B;
+  }
+}
 
-  .smallFont {
-    font-size: 20px;
-    color: #DC141B; } }
 /* styles for user profile ends */
+
 /* styles for user restaurant home page starts */
+
 .bottomBorder {
   border-bottom: solid 1px gainsboro;
   padding-top: 7px;
   padding-bottom: 7px;
   color: #DC141B;
   cursor: pointer;
-  padding-left: 10px; }
+  padding-left: 10px;
+}
 
 .nav-tabs {
   position: fixed;
   z-index: 2;
-  background-color: #FAF8FD; }
+  background-color: #FAF8FD
+}
 
 .tpad40 {
-  padding-top: 40px; }
+  padding-top: 40px;
+}
 
 .lpad10 {
-  padding-left: 10px; }
+  padding-left: 10px;
+}
 
 .dishList {
   padding-top: 5px;
   padding-bottom: 5px;
   border-top: solid 1px gainsboro;
   cursor: pointer;
-  color: green; }
+  color: green;
+}
 
 .dishPrice {
   padding-top: 5px;
   padding-bottom: 5px;
   border-top: solid 1px gainsboro;
   cursor: pointer;
-  color: #222; }
+  color: #222;
+}
 
 .menuActiveClass {
-  background-color: wheat; }
+  background-color: wheat;
+}
 
 .restImage {
   background: url("../images/restPic.jpg") no-repeat top center;
@@ -1127,28 +1489,30 @@ button.kh-primary {
   margin-top: 7px;
   width: 100%;
   background-position-x: 15px;
-  margin-bottom: 45px; }
+  margin-bottom: 45px;
+}
 
 .restTitleName {
-  color: white; }
+  color: white;
+}
 
 .hand {
-  cursor: pointer; }
-
+  cursor:pointer;
+}
 .login {
   float: right;
-  padding-right: 20px; }
-
+  padding-right: 20px;
+}
 .marginRight20 {
-  margin-right: 20px;
-  margin-top: 60px; }
-
+  margin-right:20px;
+  margin-top: 60px;
+}
 .mtop10 {
-  margin-top: 10px; }
-
-.mtop28 {
-  margin-top: -28px; }
-
+  margin-top:10px;
+}
+.mtop28{
+  margin-top: -28px;
+}
 .menuCategory {
   border-bottom: 1px solid gainsboro;
   color: #DC141B;
@@ -1156,16 +1520,16 @@ button.kh-primary {
   margin-top: 3px;
   padding-bottom: 6px;
   font-size: 20px;
-  cursor: pointer; }
-
+  cursor: pointer;
+}
 .itemList {
   border-bottom: 1px solid gainsboro;
   margin-top: 10px;
   margin-left: 15px;
   font-size: 19px;
-  margin-left: -15px; }
-
-.glyphPlusMinus {
+  margin-left: -15px;
+}
+.glyphPlusMinus{
   font-size: 19px;
   border-radius: 5px;
   color: white;
@@ -1173,153 +1537,201 @@ button.kh-primary {
   height: 23px;
   width: 21px;
   margin-right: 20px;
-  margin-bottom: 8px; }
-
-.glyphPlusMinusBill {
+  margin-bottom: 8px;
+}
+.glyphPlusMinusBill{
   font-size: 12px;
   margin-top: 3px;
-  color: #746868;
+  color: rgb(116, 104, 104);
   height: 15px;
-  width: 14px; }
-
-.billList {
+  width: 14px;
+}
+.billList{
   border-bottom: 1px solid gainsboro;
   margin-top: 10px;
-  padding-bottom: 15px; }
-
-.billOutline {
-  border: 1px solid gainsboro; }
-
-.mBottom100 {
-  margin-bottom: 100px; }
-
-.proceedCheckOut {
+  padding-bottom: 15px;
+}
+.billOutline{
+  border: 1px solid gainsboro;
+}
+.mBottom100{
+  margin-bottom: 100px;
+}
+.proceedCheckOut{
   height: 40px;
   padding-top: 7px;
   border-radius: 5px;
   background-color: #07a16d;
-  color: white; }
-
-.dishRemove {
+  color: white;
+}
+.dishRemove{
   font-size: 12px;
-  margin-top: 5px; }
+  margin-top: 5px;
+}
 
 /* styles for user restaurant home page ends */
+
 /* style for location select modal starts */
-.locList {
+
+.locList{
   margin-top: 5px;
+  border-bottom: 1px solid gainsboro;
+  margin-bottom: 5px;  margin-top: 5px;
   border-bottom: 1px solid gainsboro;
   margin-bottom: 5px;
-  margin-top: 5px;
-  border-bottom: 1px solid gainsboro;
-  margin-bottom: 5px; }
+}
 
 /* style for location select modal ends */
+
+
 /* styles for change pwd starts */
-.pwdLabelBlock {
+
+
+.pwdLabelBlock{
   margin-top: 20px;
-  margin-bottom: 30px; }
-
-.pwdLabel {
-  margin-top: 15px; }
-
-.pwdBtnBlock {
-  margin-bottom: 50px; }
-
-.pwdBtnSecondary {
+  margin-bottom: 30px;
+}
+.pwdLabel{
+  margin-top: 15px;
+}
+.pwdBtnBlock{
+  margin-bottom: 50px;
+}
+.pwdBtnSecondary{
   font-size: 19px;
   padding: 6px 12px;
-  font-family: 'Segoe UI'; }
-
-.pwdBtnPrimary {
+  font-family: 'Segoe UI';
+}
+.pwdBtnPrimary{
   font-size: 19px;
   background-color: #DC141B;
   color: #fff;
   padding: 6px 12px;
-  font-family: 'Segoe UI'; }
-
-.pwdkeyImage {
+  font-family: 'Segoe UI';
+}
+.pwdkeyImage{
   margin-left: 140px;
   margin-top: 40px;
-  width: 320px; }
+  width: 320px;
+}
 
 /* styles for change pwd ends */
+
+
+
+
 @media (max-width: 480px) {
   .welcomeText {
-    margin-top: 15px; } }
-@media (max-width: 992px){
-  .marginT30{
-    margin-top: 30px;
+    margin-top: 15px;
   }
 }
+
 @media (max-width: 768px) {
   .buttonCity {
-    width: 125px; }
-
-  .rateStar{
-    font-size: 14px;
+    width: 125px;
   }
 
   .hiddenInput {
     width: 200px;
     font-size: 12px;
-    padding-left: 40px; }
+    padding-left: 40px;
+  }
 
   .extendedInput {
     width: 285px;
     font-size: 14px;
-    padding-left: 28px; }
+    padding-left: 28px;
+  }
 
   h3 {
-    font-size: 18px; }
+    font-size: 18px;
+  }
 
   .headerLocationInput {
     padding-left: 30px;
-    padding-right: 0; }
+    padding-right: 0;
+  }
 
   .restaurantIcon {
     height: 90px;
     padding-top: 0;
-    width: 90px; }
+    width: 90px;
+  }
 
   .restTitle {
     padding-top: 05px;
-    font-size: 21px; }
+    font-size: 18px;
+  }
 
   .paraNoMargin {
     margin: 0 0 0;
-    font-size: 15px; }
+    font-size: 14px;
+  }
 
   .tpad15 {
-    padding-top: 15px; }
+    padding-top: 15px;
+  }
 
   .orderButton {
-    font-size: 21px; }
+    font-size: 21px;
+  }
 
   .ordrBtnFLtRight {
-    float: right; }
+    float: right;
+  }
 
   .quickViewRow {
     margin-left: -15px;
-    margin-right: -15px; }
+    margin-right: -15px;
+  }
 
   .rating {
     padding-top: 5px;
-    padding-right: 10px; }
+    padding-right: 10px;
+  }
 
   .glyphicon-heart {
     font-size: 20px;
-    padding-left: 4px; }
+    padding-left: 4px;
+  }
+
+  .ratingNumber {
+    font-size: 15px;
+    padding-left: 8px;
+  }
+
+  .filterBlock {
+    height: auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 15px;
+  }
 
   .filterGlyph {
     font-size: 9px;
-    padding-right: 15px; } }
+    padding-right: 15px;
+  }
+}
+
 @media (min-width: 992px) {
+
   .restTitleContent {
-    padding-left: 26px; } }
+    padding-left: 26px;
+  }
+}
+
 @media (min-width: 1200px) {
+
   .restTitleContent {
-    padding-left: 7px; } }
+    padding-left: 7px;
+  }
+}
+
+@media(max-width:767px){}
+@media(min-width:768px){}
+@media(min-width:992px){}
+@media(min-width:1200px){}
+
 /*Animation*/
 .glyphicon-heart {
   font-size: 34px;
@@ -1328,28 +1740,47 @@ button.kh-primary {
   -webkit-animation-name: beat;
   -webkit-animation-duration: 2.4s;
   -webkit-animation-iteration-count: infinite;
-  -webkit-animation-play-state: running; }
+  -webkit-animation-play-state: running;
+}
 
 @-webkit-keyframes beat {
   0% {
-    -webkit-transform: scale(1); }
+    -webkit-transform: scale(1);
+  }
+
   10% {
-    -webkit-transform: scale(1.1); }
+    -webkit-transform: scale(1.1);
+  }
+
   16% {
-    -webkit-transform: scale(0.95); }
+    -webkit-transform: scale(.95);
+  }
+
   25% {
-    -webkit-transform: scale(1.2); }
+    -webkit-transform: scale(1.2);
+  }
+
   32% {
-    -webkit-transform: scale(1); }
+    -webkit-transform: scale(1);
+  }
+
   40% {
-    -webkit-transform: scale(0.95); }
+    -webkit-transform: scale(.95);
+  }
+
   50% {
-    -webkit-transform: scale(1); }
+    -webkit-transform: scale(1);
+  }
+
   100% {
-    -webkit-transform: scale(1); } }
+    -webkit-transform: scale(1);
+  }
+}
+
 @media (min-width: 320px) {
+
   .glyphicon-heart {
     font-size: 15px;
-    padding-top: 4px; } }
-
-/*# sourceMappingURL=style.css.map */
+    padding-top: 4px;
+  }
+}

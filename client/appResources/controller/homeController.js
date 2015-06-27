@@ -3,7 +3,7 @@ define( [], function() {
 	function homeController($scope) {
 
 	}
-	return homeController;;
+	return homeController;
 } );
 
 function BannerController($scope, $modal, $location, DataStore, $window, $http, AppConstants, RestRequests) {
@@ -120,6 +120,15 @@ function BannerController($scope, $modal, $location, DataStore, $window, $http, 
                     }
                 }
             })
+        } else {
+            if( menu.type === 'rest' ) {
+
+                var pathToRedirect = '/restaurant/' + menu.slug;
+                $location.path( pathToRedirect );
+            } else if( menu.type === 'dish' ) {
+                var url = '/search?' + 'type=menu' + '&' + 'name=' + menu.menuTitle + '&' + 'startIndex=0';
+                $location.url( url );
+            }
         }
     };
 };

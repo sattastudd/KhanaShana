@@ -4,7 +4,30 @@ define([], function() {
     return userSearchResultController;
 });
 
-function searchResultController ($scope, $modal, $location, DataStore, $window, $http, AppConstants, RestRequests){
+function searchResultController ($scope, $modal, $routeParams, $location, DataStore, $window, $http, AppConstants, RestRequests){
+
+    console.log( $routeParams );
+
+    if( $routeParams.type=== 'menu' ) {
+        var searchRequestName = AppConstants.httpServicePrefix + '/' + RestRequests.restaurantSearch;
+
+        var searchPayLoad = {};
+        searchPayLoad[ 'dish' ] = $routeParams.name;
+
+        $http.post( searchRequestName, searchPayLoad)
+            .success( function( data ) {
+                console.log( data );
+            })
+            .error( function( data ) {
+                console.log( data );
+            })
+    }
+
+    $scope.getSearchTitle = function () {
+        if( $routeParams.type === 'menu' ) {
+            return 'Restaurants offering ' + $routeParams.name;
+        }
+    };
 
     if( DataStore.isKeyDefined( 'searchTaskInfo' )) {
         $scope.searchInfo = DataStore.readAndRemove( 'searchTaskInfo' );

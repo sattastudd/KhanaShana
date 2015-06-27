@@ -78,9 +78,13 @@ var searchRestaurants = function( searchParams, pagingParams, callback ) {
 
     var location = searchParams.location;
     var cuisine = searchParams.cuisine;
+    var dish = searchParams.dish;
 
     var isLocationBlank = Validator.isFieldEmpty( location );
     var isCuisineBlank = Validator.isFieldEmpty( cuisine );
+    var isDishBlank = Validator.isFieldEmpty( dish );
+
+    var isDishSearch = false;
 
     if( isLocationBlank ) {
         delete searchParams.location;
@@ -106,13 +110,56 @@ var searchRestaurants = function( searchParams, pagingParams, callback ) {
         }
     }
 
+    if( isDishBlank ) {
+        delete searchParams.dish;
+    } else {
+        var responseFromValidatorForDish = Validator.isNameNotValid( dish );
+
+        if( responseFromValidatorForDish.result ) {
+            hasAnyValidationFailed = true;
+
+            setUpError( err, errMsg, 'dish', responseFromValidatorForDish );
+        } else {
+            isDishSearch = true;
+        }
+    }
+
+    if( isDishSearch ) {
+        var cityName = 'lucknow';
+        var startIndex = 0;
+        RestaurantPublicDBI.getRestaurantsOfferingDish( cityName, searchParams.dish, startIndex, function( err, result ) {
+            if( err ) {
+                logger.error( 'In RestaurantPublicService | searchRestaurants' + JSON.stringify(err ));
+
+                callback( ServerConstants.appErrors.someError, {
+                    err : {}, errMsg : {}, data : null, msg : ServerConstants.errorMessage.someError
+                });
+            } else {
+
+                if( result.count === 0 ) {
+                    callback( ServerConstants.appErrors.noRecordFound, {
+                        err : {}, errMsg : {}, data : null, msg : ServerConstants.errorMessage.noRecordFound
+                    });
+                } else {
+                    callback( null, {
+                        err : {}, errMsg : {}, data : result, msg : ServerConstants.successMessage
+                    });
+                }
+
+            }
+        });
+
+        return;
+
+    }
+
     if( hasAnyValidationFailed ) {
 
         callback( ServerConstants.appErrors.validationError, {
             err : err,
             errMsg : errMsg,
             data : null,
-            msg : ServerConstants.removeError
+            msg : ServerConstants.errorMessage.removeError
         });
 
     } else {
@@ -121,6 +168,9 @@ var searchRestaurants = function( searchParams, pagingParams, callback ) {
         RestaurantPublicDBI.searchRestaurants( cityName, searchParams, pagingParams, function( err, result ) {
             if( err ) {
                 logger.error( 'In RestaurantPublicService | searchRestaurants' + JSON.stringify(err ));
+                callback( ServerConstants.appErrors.someError, {
+                    err : {}, errMsg : {}, data : null, msg : ServerConstants.errorMessage.someError
+                });
             } else {
 
                 if( result.count === 0 ) {

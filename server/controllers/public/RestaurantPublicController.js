@@ -42,7 +42,8 @@ var searchRestaurants = function( req, res, next ) {
 
     var searchParams = {
         location : req.body.location,
-        cuisine : req.body.cuisine
+        cuisine : req.body.cuisine,
+        dish : req.body.dish
     };
 
     var pagingParams = {

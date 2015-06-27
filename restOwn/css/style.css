@@ -1,0 +1,564 @@
+/*Min-ins*/
+/* Global CSS Begin */
+@font-face {
+  font-family: Bree;
+  src: url("../fonts/bree-serif.otf"); }
+body {
+  background-color: #2b3238;
+  font-family: Bree;
+  color: #fff;
+  overflow-x: hidden; }
+
+#ngViewContent {
+  margin-left: 50px;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  overflow: hidden;
+  position: relative;
+  left: 0; }
+
+.has-feedback input {
+  background-color: #3b4148;
+  color: #fff;
+  font-family: 'Calibri';
+  border: none;
+  font-size: 18px;
+  height: 40px; }
+
+.form-group span {
+  background-color: #363b41;
+  height: 40px;
+  line-height: 40px;
+  color: #5f626b; }
+
+.bg-danger, .bg-success {
+  height: 40px;
+  font-family: 'Calibri';
+  margin-bottom: 15px;
+  padding-left: 15px;
+  border-radius: 4px;
+  font-size: 18px;
+  line-height: 40px;
+  color: #ccc;
+  overflow: hidden;
+  background-color: #7a2934;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+  .bg-danger.noHeight, .bg-success.noHeight {
+    height: 0;
+    margin-bottom: 0; }
+
+.bg-success {
+  background-color: #3c6c24;
+  color: #eee; }
+
+.btn-pr-primary {
+  background-color: #7b2d87;
+  height: 40px;
+  font-size: 18px;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+  .btn-pr-primary:hover, .btn-pr-primary:focus {
+    color: #fff;
+    background-color: #932d87; }
+
+.btn-pr-secondary {
+  background-color: #3b4148;
+  height: 40px;
+  font-size: 18px;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+  .btn-pr-secondary:hover {
+    color: #fff;
+    background-color: #5e6873; }
+
+.input-group-btn {
+  width: 34px; }
+  .input-group-btn .btn-glyph {
+    width: 34px;
+    background-color: #363b41;
+    color: #5f626b;
+    height: 40px;
+    line-height: 40px;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    .input-group-btn .btn-glyph span {
+      height: 40px;
+      line-height: 40px; }
+    .input-group-btn .btn-glyph:hover, .input-group-btn .btn-glyph:focus {
+      color: #fff;
+      background-color: #5e6873; }
+
+.sidebar {
+  position: fixed;
+  width: 50px;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  background-color: #2b2b38;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+  .sidebar.expanded {
+    width: 300px; }
+
+.glyphicon-search {
+  cursor: pointer; }
+
+.fileUploadBox {
+  background-color: #3b4148;
+  color: #fff;
+  font-family: 'Calibri';
+  border: none;
+  font-size: 18px;
+  height: 40px;
+  cursor: pointer;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+
+.fileActionsContainer {
+  margin-top: 5px;
+  margin-bottom: 5px; }
+  .fileActionsContainer > div {
+    float: left;
+    width: 70%; }
+    .fileActionsContainer > div.fileDelete {
+      height: 40px;
+      width: 30%;
+      background-color: #7a2934;
+      text-align: center;
+      cursor: pointer; }
+      .fileActionsContainer > div.fileDelete span {
+        color: #ccc;
+        height: 39px;
+        background-color: #7a2934; }
+    .fileActionsContainer > div.fileUploadBox {
+      cursor: pointer;
+      line-height: 40px;
+      padding-left: 15px; }
+  .fileActionsContainer.noHeight {
+    margin-top: 0;
+    height: 0;
+    overflow: hidden; }
+
+/* Global Pagination CSS */
+ul.pagination {
+  font-family: 'Calibri'; }
+  ul.pagination li a {
+    border: none;
+    background-color: #3b4148;
+    height: 40px;
+    font-size: 18px;
+    padding: 8px 14px;
+    color: #aaa;
+    margin-left: 5px;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    ul.pagination li a:hover, ul.pagination li a:focus {
+      color: #fff;
+      background-color: #5e6873; }
+  ul.pagination li.disabled a {
+    background-color: #3b4148; }
+    ul.pagination li.disabled a:hover, ul.pagination li.disabled a:focus {
+      background-color: #3b4148; }
+  ul.pagination li.active a {
+    background-color: #7b2d87;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    ul.pagination li.active a:hover, ul.pagination li.active a:focus {
+      color: #fff;
+      background-color: #932d87; }
+
+/* Global Fields Error Message*/
+.collapsibleErrorMessage {
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  height: 40px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  overflow: visible; }
+  .collapsibleErrorMessage.noHeight {
+    height: 0;
+    margin-bottom: 0;
+    overflow: hidden; }
+    .collapsibleErrorMessage.noHeight .noHeight {
+      height: 0;
+      overflow: hidden; }
+  .collapsibleErrorMessage .bg-danger {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 15px;
+    border-radius: 2px;
+    font-size: 14px;
+    position: relative;
+    overflow: visible; }
+    .collapsibleErrorMessage .bg-danger:after {
+      content: " ";
+      top: -23px;
+      left: 12%;
+      border: 12px solid transparent;
+      height: 0;
+      width: 0;
+      position: absolute;
+      border-bottom-color: #7a2934; }
+
+.noHeight {
+  overflow: hidden;
+  height: 0; }
+
+.noWidth {
+  padding: 0;
+  width: 0;
+  overflow: hidden; }
+
+/* Global CSS End */
+/* Utility Classes */
+.formControlContainer {
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+
+.tpad50 {
+  padding-top: 50px; }
+
+.tMar30 {
+  margin-top: 30px; }
+
+.bMar9 {
+  margin-bottom: 9px; }
+
+.bPad8 {
+  padding-bottom: 8px; }
+
+.tMar20 {
+  margin-top: 20px; }
+
+.bMar10 {
+  margin-bottom: 10px; }
+
+.uploadContainerDiv {
+  height: 0;
+  overflow: hidden;
+  visibility: hidden; }
+
+.bMar20 {
+  margin-bottom: 20px; }
+
+.bottomBorder {
+  border-bottom: 2px solid #fff; }
+
+.bottomBorderThin {
+  border-bottom: 1px solid #fff; }
+
+.bottomMarginLight {
+  border-bottom: 1px solid #888; }
+
+.collapseController {
+  float: left;
+  width: 27px;
+  height: 27px;
+  margin: 20px 5px 20px 0;
+  position: relative; }
+  .collapseController span {
+    height: 5px;
+    width: 27px;
+    position: absolute;
+    top: 26%;
+    background-color: #fff;
+    display: block;
+    margin-top: 5px;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+
+.makeRightAngle {
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.petoo-form {
+  font-family: Calibri; }
+  .petoo-form .form-group label {
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: normal; }
+    .petoo-form .form-group label.radio {
+      font-size: 18px; }
+  .petoo-form .form-group input {
+    background-color: #3b4148;
+    color: #fff;
+    font-family: 'Calibri';
+    border: none;
+    font-size: 18px;
+    height: 40px; }
+    .petoo-form .form-group input.radio {
+      height: 18px; }
+
+.noLeftRightMargin {
+  margin-left: 0;
+  margin-right: 0; }
+
+.noLeftRightPadding {
+  padding-left: 0;
+  padding-right: 0; }
+
+/*SideBar Page Styles Begin*/
+.icon-container, .control-actions-container {
+  float: left; }
+
+.icon-container {
+  width: 50px;
+  background-color: #3b4148;
+  height: 100%; }
+  .icon-container ul.adminControls {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0; }
+    .icon-container ul.adminControls li {
+      cursor: pointer;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s; }
+      .icon-container ul.adminControls li span {
+        display: block;
+        font-size: 18px;
+        height: 60px;
+        width: 100%;
+        line-height: 60px;
+        text-align: center;
+        color: #5f626b; }
+      .icon-container ul.adminControls li:hover span {
+        color: #9aa1a4; }
+      .icon-container ul.adminControls li.active span, .icon-container ul.adminControls li.active:hover span {
+        background-color: #2b2b38;
+        color: #c7cccd; }
+
+.control-actions-container {
+  width: 250px;
+  background-color: #2b2b38;
+  height: 100%;
+  position: relative; }
+  .control-actions-container ul {
+    list-style: none;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    z-index: 1;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    padding-top: 50px;
+    padding-left: 15px; }
+    .control-actions-container ul li {
+      font-size: 18px;
+      line-height: 40px; }
+    .control-actions-container ul.active {
+      opacity: 1;
+      z-index: 2; }
+
+/*SideBar Page Styles End*/
+/*Header Page Styles Begin*/
+.adminNav {
+  height: 60px;
+  box-shadow: #444 0 0 5px;
+  background-color: #2b2b38; }
+  .adminNav .row > div {
+    height: 60px;
+    line-height: 60px;
+    font-size: 22px; }
+    .adminNav .row > div .glyphicon {
+      cursor: pointer; }
+    .adminNav .row > div .dropdown-menu {
+      right: 0;
+      left: auto;
+      top: 110%;
+      display: block;
+      height: 110px;
+      display: block;
+      font-family: 'Segoe UI';
+      overflow: hidden;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+      background-color: #FAF8FD; }
+      .adminNav .row > div .dropdown-menu.noHeight {
+        padding: 0;
+        height: 0;
+        border: 0; }
+      .adminNav .row > div .dropdown-menu li a {
+        text-align: right; }
+        .adminNav .row > div .dropdown-menu li a:hover {
+          background-color: #2b3238;
+          color: #fff; }
+      .adminNav .row > div .dropdown-menu li a.noHover {
+        cursor: default; }
+        .adminNav .row > div .dropdown-menu li a.noHover:hover {
+          background-color: #FAF8FD;
+          color: #000; }
+
+/*Header Page Styles End*/
+/*UserList Page*/
+.userList {
+  font-size: 19px; }
+  .userList .heading {
+    text-align: center;
+    border: 1px solid #fff; }
+  .userList .dataCell {
+    border-left: 1px solid #3f4952;
+    border-bottom: 1px solid #3f4952;
+    padding: 5px 20px;
+    font-family: 'Calibri';
+    text-overflow: ellipsis;
+    overflow: hidden; }
+    .userList .dataCell span {
+      font-size: 16px;
+      cursor: pointer;
+      color: #5f626b;
+      margin-right: 10px; }
+      .userList .dataCell span.active {
+        color: #cfcfd2; }
+    .userList .dataCell.top {
+      border-top: 1px solid #3f4952; }
+    .userList .dataCell.right {
+      border-right: 1px solid #3f4952; }
+
+/*Restaurant List page*/
+.restaurantList {
+  font-size: 19px;
+  border: 1px solid #3f4952;
+  border-bottom: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px; }
+  .restaurantList > div {
+    border-bottom: 1px solid #3f4952; }
+  .restaurantList input {
+    background-color: #3b4148;
+    color: #fff;
+    font-family: 'Calibri';
+    border: none;
+    font-size: 18px;
+    height: 40px; }
+  .restaurantList .heading {
+    padding: 5px 5px 10px 5px; }
+    .restaurantList .heading div.text {
+      margin-left: 3px; }
+    .restaurantList .heading div.search {
+      margin-top: 5px;
+      margin-bottom: 4px;
+      width: 100%; }
+
+/* New Restaurant Page */
+ul.newRestaurantAddition {
+  padding-left: 15px;
+  list-style: none; }
+  ul.newRestaurantAddition li {
+    float: left;
+    padding: 20px 0px;
+    background-color: #2c6084;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    border-right: 1px solid #46535d; }
+    ul.newRestaurantAddition li.active {
+      background-color: #32404b; }
+    ul.newRestaurantAddition li.last {
+      border-right: none; }
+    ul.newRestaurantAddition li[disabled] {
+      background-color: #6f7981;
+      cursor: not-allowed; }
+    ul.newRestaurantAddition li.completed {
+      background-color: #46535d; }
+    ul.newRestaurantAddition li a, ul.newRestaurantAddition li a:hover {
+      color: #fff;
+      text-decoration: none; }
+
+.tabbedContent {
+  position: relative; }
+  .tabbedContent > div {
+    width: 100%;
+    float: left;
+    opacity: 0;
+    z-index: 3;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    .tabbedContent > div.active {
+      margin-left: 0;
+      z-index: 4 !important;
+      opacity: 1; }
+    .tabbedContent > div.menu {
+      margin-left: 0; }
+    .tabbedContent > div.basicDetails, .tabbedContent > div.deliveryArea, .tabbedContent > div.cuisineArea, .tabbedContent > div.menuArea, .tabbedContent > div.pictureArea, .tabbedContent > div.pictureArea {
+      margin-left: -200%; }
+      .tabbedContent > div.basicDetails.active, .tabbedContent > div.deliveryArea.active, .tabbedContent > div.cuisineArea.active, .tabbedContent > div.menuArea.active, .tabbedContent > div.pictureArea.active, .tabbedContent > div.pictureArea.active {
+        margin-left: 0; }
+
+.optionsContainer .box {
+  height: 200px;
+  width: 100%;
+  overflow-y: scroll;
+  font-family: 'Segoe UI';
+  background-color: #3b4148;
+  border-radius: 4px; }
+  .optionsContainer .box ul {
+    list-style: none;
+    padding-left: 0; }
+    .optionsContainer .box ul li {
+      padding: 5px 15px;
+      font-size: 16px;
+      cursor: pointer; }
+      .optionsContainer .box ul li.active {
+        background-color: #2b2b38; }
+    .optionsContainer .box ul.right li {
+      background-color: #2b2b38;
+      margin-bottom: 5px; }
+      .optionsContainer .box ul.right li span.pull-right {
+        margin-top: 3px; }
+
+.modal-content {
+  background-color: #2b3238;
+  top: 150px; }
+  .modal-content .modal-header {
+    border-bottom-color: #444;
+    margin: 15px 15px 0 15px;
+    padding: 0 0 10px 0;
+    background-color: #2b3238; }
+  .modal-content .modal-body {
+    font-size: 18px; }
+  .modal-content .modal-footer {
+    border-top-color: #444;
+    margin: 0 15px;
+    padding: 10px 0; }
+
+.modal-backdrop.in {
+  height: 100%; }
+
+/*# sourceMappingURL=style.css.map */
