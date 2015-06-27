@@ -4,7 +4,7 @@ define([], function() {
     return userCheckOutController;
 });
 
-function checkOutContoller ($scope) {
+function checkOutContoller ($scope, $modal, $location, DataStore, $window, $http, AppConstants, RestRequests) {
 
 	console.log("inside checkout controller");
 
@@ -61,5 +61,28 @@ function checkOutContoller ($scope) {
 					{no:"2", name:"Paneer Chilli", price:"240", quantity:"2"},
 					{no:"3", name:"kabab Masala", price:"220", quantity:"2"},
 					{no:"4", name:"Kadhai Paneer", price:"200", quantity:"2"}];
+
+	$scope.showAddressModal = function(){
+            $modal.open({
+                templateUrl : 'views/modals/address/addressModal.html',
+                controller : 'AddressModalController',
+                size : 'sm',
+                resolve : {
+                    displayedOnPage : function() {
+                       // return $scope.locations;
+                    }
+                }
+            })
+	}
+
+}
+
+function AddressModalController ($scope, $modalInstance, $location, DataStore, AppConstants, RestRequests, $http, displayedOnPage ) {
+
+	console.log("inside address modal");
+
+	$scope.closeModal = function(){
+		$modalInstance.close();
+	}
 
 }
