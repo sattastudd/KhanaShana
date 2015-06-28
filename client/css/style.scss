@@ -1100,6 +1100,10 @@ button.kh-primary {
   margin-top: 15px;
 }
 
+.marginT30{
+    margin-top: 15px;
+}
+
 .filterBlock {
   height: auto;
   padding-top: 12px;
@@ -1219,6 +1223,25 @@ button.kh-primary {
 
 .bpad8 {
   padding-bottom: 8px;
+}
+
+.filterBar{
+  background-color: rgb(180, 20, 27);
+  position: fixed;
+  color: white;
+  margin-top: 0px;
+  height: 40px;
+  z-index: 10;
+  padding-top: 7px;
+  border-top: solid 1px gainsboro;
+}
+
+.rateStar{
+    font-size: 18px;
+    color: #DC141B;
+}
+.borderLeft{
+  border-left: 1px solid gainsboro;
 }
 
 /* styles for search result page ends */
@@ -1638,10 +1661,17 @@ button.kh-primary {
   .restaurantSnap {
     height: 230px;
   }
+  .marginT30{
+    margin-top: 30px;
+  }
 }
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px;
+  }
+
+  .rateStar{
+    font-size: 14px;
   }
 
   .restaurantSnap {
@@ -1710,18 +1740,6 @@ button.kh-primary {
   .glyphicon-heart {
     font-size: 20px;
     padding-left: 4px;
-  }
-
-  .ratingNumber {
-    font-size: 15px;
-    padding-left: 8px;
-  }
-
-  .filterBlock {
-    height: auto;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    font-size: 15px;
   }
 
   .filterGlyph {
