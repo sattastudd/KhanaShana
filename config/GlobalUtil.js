@@ -96,6 +96,8 @@ var configure = function() {
                         return true;
                     } else if (allowedRoles.indexOf(role) >= 0) {
                         return true;
+                    } else if( allowedRoles.toLowerCase().indexOf( role ) >= 0 ) {
+                        return true;
                     }
                     return false;
                 }
@@ -118,6 +120,8 @@ var configure = function() {
                         if (allowedRoles.indexOf('public') >= 0) {
                             return true;
                         } else if (allowedRoles.indexOf(role) >= 0) {
+                            return true;
+                        } else if (allowedRoles.toLowerCase().indexOf(role) >= 0 ) {
                             return true;
                         }
                         return false;

@@ -8,11 +8,11 @@ var loginController = require( '../controllers/loginController' );
 router.post( '/public/login',
 		function(req, res, next) {
 
-			console.log( 'In loginRoutes | Handling ' + req.route.path );
+			logger.info( 'In loginRoutes | Handling ' + req.route.path );
 
 			loginController.loginUser( req, res, next );
 
-			console.log( 'In loginRoutes | Complted Processing for '
+			logger.info( 'In loginRoutes | Complted Processing for '
 					+ req.route.path );
 		} );
 
@@ -22,42 +22,54 @@ router.post( '/public/login',
  */
 router.post( '/public/email', function( req, res, next) {
 
-	console.log( 'In loginRoutes | Handling ' + req.route.path );
+	logger.info( 'In loginRoutes | Handling ' + req.route.path );
 
 	loginController.isUserAlreadyInSystem( req, res, next );
 
-	console.log( 'In loginRoutes | Completed Processing for ' + req.route.path );
+	logger.info( 'In loginRoutes | Completed Processing for ' + req.route.path );
 });
 
 /* Request-Name : /public/users, Type: Post, Allowed : public*/
 /* This Rest Requset is supposed to add a new user in the system.
  */
 router.post( '/public/users', function( req, res, next ) {
-	console.log( 'In loginRoutes | Handling ' + req.route.path );
+	logger.info( 'In loginRoutes | Handling ' + req.route.path );
 
 	loginController.signUpUser( req, res, next );
 
-	console.log( 'In loginRoutes | Completed Processing for ' + req.route.path );
+	logger.info( 'In loginRoutes | Completed Processing for ' + req.route.path );
 });
 
 /* Request-Name : /user/logout, Type: Post, Allowed : user, admin*/
 /* This request is supposed to put the retrieved token into blacklist.
  */
 router.post( '/user/logout', function( req, res, next ){
-    console.log( 'In loginRoutes | Handling ' + req.route.path ) ;
+    logger.info( 'In loginRoutes | Handling ' + req.route.path ) ;
 
     loginController.logoutUser( req, res, next );
 
-    console.log( 'In loginRoutes | Completed Processing for ' + req.route.path);
+    logger.info( 'In loginRoutes | Completed Processing for ' + req.route.path);
 });
 
-/* Request-Name :/login, Type: Post, Allowed : admin*/
+/* Request-Name :/login, Type: Post, Allowed : public*/
 /* This request would only be used by admin for logging in.
  */
 router.post( '/login', function( req, res, next ){
-    console.log( 'In loginRoutes | Handling ' + req.route.path );
+    logger.info( 'In loginRoutes | Handling ' + req.route.path );
 
-    loginController.loginUser( req, res, next, true );
+    loginController.loginUser( req, res, next, 'admin' );
 
-    console.log( 'In loginRoutes | Completed Processing for ' + req.route.path );
+    logger.info( 'In loginRoutes | Completed Processing for ' + req.route.path );
+});
+
+
+/* Request-Name : /login/restOwn, Type : Post, Allowed : public*/
+/* This request would be used by restaurant owner to logging in.
+ */
+router.post( '/login/restOwn', function( req, res, next ) {
+    logger.info( 'In loginRoutes | Handling' + req.route.path );
+
+    loginController.loginUser( req, res, next, 'restOwn' );
+
+    logger.info( 'In loginRoutes | Completed Processing for ' + req.route.path );
 });

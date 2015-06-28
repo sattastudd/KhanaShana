@@ -220,63 +220,63 @@ body{
 }
 
 .fileUploadBox{
-    background-color : $theme-input-background-color;
-    color : $theme-input-font-color;
+  background-color : $theme-input-background-color;
+  color : $theme-input-font-color;
 
-    font-family: 'Calibri';
-    border : none;
+  font-family: 'Calibri';
+  border : none;
 
-    font-size : $theme-input-font-size;
+  font-size : $theme-input-font-size;
 
-    height : $theme-input-box-height;
+  height : $theme-input-box-height;
 
-    cursor : pointer;
+  cursor : pointer;
 
-    @include transition-mix(all, $theme-fast-reaction);
+  @include transition-mix(all, $theme-fast-reaction);
 }
 
 .fileActionsContainer{
 
-    margin-top : 5px;
-    margin-bottom : 5px;
+  margin-top : 5px;
+  margin-bottom : 5px;
 
-    > div {
-        float : left;
-        width : 70%;
+  > div {
+    float : left;
+    width : 70%;
 
-        &.fileDelete{
-            height : $theme-input-box-height;            
-            width : 30%;
+    &.fileDelete{
+      height : $theme-input-box-height;
+      width : 30%;
 
-            background-color : $theme-error-back-color;
+      background-color : $theme-error-back-color;
 
-            text-align : center;
+      text-align : center;
 
-            cursor : pointer;
+      cursor : pointer;
 
-            span {                
-                color : $theme-error-font-color;
-                height : 39px;
-                background-color : $theme-error-back-color;
+      span {
+        color : $theme-error-font-color;
+        height : 39px;
+        background-color : $theme-error-back-color;
 
-                
-            }
-        }
 
-        &.fileUploadBox{
-            cursor : pointer;
-
-            line-height : $theme-input-box-height;
-
-            padding-left : 15px;
-        }
+      }
     }
 
-    &.noHeight {
-        margin-top : 0;
-        height : 0;
-        overflow : hidden;
+    &.fileUploadBox{
+      cursor : pointer;
+
+      line-height : $theme-input-box-height;
+
+      padding-left : 15px;
     }
+  }
+
+  &.noHeight {
+    margin-top : 0;
+    height : 0;
+    overflow : hidden;
+  }
 }
 
 /* Global Pagination CSS */
@@ -399,7 +399,7 @@ ul.pagination{
 }
 
 .bMar9{
-    margin-bottom : 9px;
+  margin-bottom : 9px;
 }
 
 .bPad8{

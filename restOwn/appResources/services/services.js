@@ -14,13 +14,13 @@
 
             appName : 'PetuRaam',
             httpServicePrefix : 'node',
-            publicServicePrefix : 'node/public',
-            adminServicePrefix : 'node/admin'
-
+            restOwnServicePrefix : 'node/restOwn'
         })
         .constant('RestRequests', {
 
-            login : 'login',
+            login : 'login/restOwn',
+            restaurant : 'restaurant',
+            options : 'options'
 
         })
         .constant('RegExProvider',  {
@@ -196,6 +196,15 @@
 
                     return user.name;
                 };
+                return null;
+            };
+
+            this.getAssignedRestaurantSlug = function() {
+                if( this.isUserLoggedIn() ) {
+                    var user = JSON.parse( $window.localStorage.user );
+                    return user.restSlug;
+                }
+
                 return null;
             };
 

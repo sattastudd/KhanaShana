@@ -55,9 +55,10 @@ var loginRoute = require( './server/routes/loginRoutes' );
 var publicRestaurantRoute = require( './server/routes/restaurantRoute');
 var adminRoutes = require( './server/routes/adminRoutes' );
 var customerRoutes = require( './server/routes/customerRoutes' );
+var restOwnRoutes = require( './server/routes/restaurantOwnerRoute' );
 
 /* Setting up modules to work on /admin and /user requests only. */
-app.use( ['/admin', '/user'], Authenticator, BlackListFilter, AuthorizationFilter);
+app.use( ['/admin', '/user', '/restOwn'], Authenticator, BlackListFilter, AuthorizationFilter);
 
 
 /* App Configuration */

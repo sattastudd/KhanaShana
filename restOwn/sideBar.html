@@ -5,23 +5,17 @@
         <li petoo-side-bar-tab target="restaurant-controls" ><span class="glyphicon glyphicon-cutlery"></span></li>
         <li petoo-side-bar-tab target="order-controls"><span class="glyphicon glyphicon-piggy-bank"></span></li>
         <li petoo-side-bar-tab target="review-controls"><span class="glyphicon glyphicon-comment"></span></li>
-        <li petoo-side-bar-tab target="location-controls"><span class="glyphicon glyphicon-map-marker"></span></li>
-        <li petoo-side-bar-tab target="cuisine-controls"><span class="glyphicon glyphicon-tags"></span></li>
     </ul>
 </div>
 
 <div class="control-actions-container">
     <ul class="user-controls">
         <li><a ng-click="moveToLocation('users')">All Users</a></li>
-        <li><a ng-click="moveToLocation('newUser')">Add a new User</a></li>
     </ul>
 
     <ul class="restaurant-controls">
-        <li><a ng-click="moveToLocation('restaurants/approved')">Approved Restaurants</a></li>
-        <li><a ng-click="moveToLocation('restaurants/pendingApproval')">Pending Approval</a></li>
-        <li><a ng-click="moveToLocation('restaurants/pendingDetails')">Incomplete Restaurants</a></li>
-        <li><a ng-click="moveToLocation('restaurants/new')">Add a new Restaurant</a></li>
-        <li>Delete a Restaurant</li>
+        <li><a ng-click="moveToLocation('restaurant/my')">Edit Restaurant</a></li>
+        <li><a ng-click="moveToLocation('restaurant/additional')">Additional Details</a></li>
     </ul>
 
     <ul class="order-controls">
@@ -34,16 +28,5 @@
         <li>All Reviews</li>
         <li>Today</li>
         <li>This Month</li>
-    </ul>
-
-    <ul class="location-controls">
-        <li><a ng-click="moveToLocation( 'locations/all' )">All Locations</a></li>
-        <li><a ng-click="moveToLocation( 'locations/new' )">Add a new Location</a></li>
-    </ul>
-
-    <ul class="cuisine-controls">
-        <li><a ng-click="moveToLocation('/cuisines/all')">All Cuisines</a></li>
-        <li>Add a new Cuisine</li>
-        <li>Delete a Cuisine</li>
     </ul>
 </div>

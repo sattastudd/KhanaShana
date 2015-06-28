@@ -927,7 +927,8 @@ var updateAssignedRestaurantInfoInUserDocument = function( userInfo, restInfo, h
         var update = {
             $set : {
                 'restaurantAssigned.name' : restInfo.name,
-                'restaurantAssigned.slug' : restInfo.slug
+                'restaurantAssigned.slug' : restInfo.slug,
+                isAssigned : true
             }
         };
 

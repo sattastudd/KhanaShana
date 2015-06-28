@@ -41,6 +41,7 @@ var prepareObjectForResponse = function( user ) {
 
     toReturn.name = user.name;
     toReturn.token = token;
+    toReturn.assignedRestaurantSlug = user.restaurantAssigned.slug;
 
 	return toReturn;
 };
@@ -69,7 +70,7 @@ var stripObjectProperties = function (newUser) {
  * Part of Sign UP
  */
 var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
-	console.log( 'In LoginDBI | Starting Execution of insertUser' );
+	logger.info( 'In LoginDBI | Starting Execution of insertUser' );
 
     if( isUserAlreadyInSystem ) {
         callback( appConstants.appErrors.userExists );
@@ -102,8 +103,6 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
         userObj.isAssigned = false;
     }
 
-    console.log( userObj );
-
 	var User = new UserModel( userObj );
 
 	User.save( function( err, result ) {
@@ -116,7 +115,7 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
 		}
 	});
 	
-	console.log( 'In LoginDBI | Finished Execution of insertUser' );
+	logger.info( 'In LoginDBI | Finished Execution of insertUser' );
 };
 
 /* Private method to check if credentials provided for admin.
@@ -124,7 +123,7 @@ var insertUser = function( userInfo, isUserAlreadyInSystem, callback ) {
  */
 
 var areCredentialsValid = function( userInfo, callback ) {
-    console.log( 'In LoginDBI | Starting Execution of areCredentialsValid' );
+    logger.info( 'In LoginDBI | Starting Execution of areCredentialsValid' );
 
     var usersDBConnection = utils.getDBConnection( appConstants.appUsersDataBase );
 
@@ -153,8 +152,8 @@ var areCredentialsValid = function( userInfo, callback ) {
                 callback( appConstants.appErrors.invalidCredentials, null );
             } else {
 
-                if( result.role === 'user' ){
-                	callback( appConstants.appErrors.intentionalBreak, result );
+                if( result.role === 'user' || result.role === 'restOwn'){
+                	callback( appConstants.appErrors.intentionalBreak, prepareObjectForResponse( result ) );
                 } else {
                 	callback( null, prepareObjectForResponse( result ) );
                 }
@@ -162,13 +161,13 @@ var areCredentialsValid = function( userInfo, callback ) {
         }
     } );
 
-    console.log( 'In LoginDBI | Finished Execution of areCredentialsValid' );
+    logger.info( 'In LoginDBI | Finished Execution of areCredentialsValid' );
 };
 
 /* Private Method to Retrieve Application Stats
  */
 var retrievePostLoginData = function (user, callback ) {
-    console.log( 'In LoginDBI | Starting Execution of retrievePostLoginData' );
+    logger.info( 'In LoginDBI | Starting Execution of retrievePostLoginData' );
 
     var globalDBConnection = utils.getDBConnection( appConstants.globalDataBase );
 
@@ -191,7 +190,7 @@ var retrievePostLoginData = function (user, callback ) {
        }
     });
 
-    console.log( 'In LoginDBI | Finished Execution of retrievePostLoginData' );
+    logger.info( 'In LoginDBI | Finished Execution of retrievePostLoginData' );
 };
 /*										Final Callback Methods											*/
 /*==================================================================================================*/
@@ -201,7 +200,7 @@ var retrievePostLoginData = function (user, callback ) {
  */
 var finishSignUpProcess = function( serviceLayerCallBack, errorFromWaterFallenMethod, resultFromWaterFallenMethod ) {
 
-	console.log( 'In LoginDBI | Starting Execution of finishSignUpProcess' );
+	logger.info( 'In LoginDBI | Starting Execution of finishSignUpProcess' );
 
 	if( errorFromWaterFallenMethod ) {
 		serviceLayerCallBack( errorFromWaterFallenMethod );
@@ -209,14 +208,14 @@ var finishSignUpProcess = function( serviceLayerCallBack, errorFromWaterFallenMe
 		serviceLayerCallBack( null, resultFromWaterFallenMethod );
 	}
 
-	console.log( 'In LoginDBI | Finishing Execution of finishSignUpProcess' );
+	logger.info( 'In LoginDBI | Finishing Execution of finishSignUpProcess' );
 };
 
 /* This private method would be executed when admin Login Process is finally completed.
  * We would send response to service layer in this method.
  */
 var finshLoginProcess = function( serviceLayerCallback, errFromWaterFellMethod, resultFromWaterFellMethod ){
-    console.log( 'In LoginDBI | Starting Execution of finshLoginProcess' );
+    logger.info( 'In LoginDBI | Starting Execution of finshLoginProcess' );
 
     if( errFromWaterFellMethod ){
 
@@ -229,7 +228,7 @@ var finshLoginProcess = function( serviceLayerCallback, errFromWaterFellMethod, 
         serviceLayerCallback( null, resultFromWaterFellMethod );
     }
 
-    console.log( 'In LoginDBI | Finishing Execution of finshLoginProcess' );
+    logger.info( 'In LoginDBI | Finishing Execution of finshLoginProcess' );
 };
 
 /*											Public Methods											*/
@@ -240,7 +239,7 @@ var finshLoginProcess = function( serviceLayerCallback, errFromWaterFellMethod, 
 
 var signUpUser = function( userInfo, callback ) {
 	
-	console.log( 'In LoginDBI | Starting Execution of signUpUserDBI' );
+	logger.info( 'In LoginDBI | Starting Execution of signUpUserDBI' );
 
 	async.waterfall([
 		async.apply( isUserAlreadyInSystem, userInfo.email ),
@@ -249,7 +248,7 @@ var signUpUser = function( userInfo, callback ) {
 
 		async.apply( finishSignUpProcess, callback )
 	);
-	console.log( 'In LoginDBI | Finished Execution of signUpUserDBI' );
+	logger.info( 'In LoginDBI | Finished Execution of signUpUserDBI' );
 };
 
 /* Public Method.
@@ -258,7 +257,7 @@ var signUpUser = function( userInfo, callback ) {
  */
 var isUserAlreadyInSystem = function( email, callback ) {
 
-	console.log( 'In LoginDBI | Starting Execution of isUserAlreadyInSystem' );
+	logger.info( 'In LoginDBI | Starting Execution of isUserAlreadyInSystem' );
 
 	var isBeingUsedAsUtility = false;
 
@@ -279,11 +278,11 @@ var isUserAlreadyInSystem = function( email, callback ) {
 		'_id' : false
 	};
 
-    console.log( query );
+    logger.info( query );
 
 	UserModel.findOne( query, projection, function( err, result ) {
-        console.log( err );
-        console.log( result );
+        logger.error( err );
+
 		if( err ) {
 			if( isBeingUsedAsUtility ){
 				return {msg : err};
@@ -307,11 +306,11 @@ var isUserAlreadyInSystem = function( email, callback ) {
 		}
 	});
 
-	console.log( 'In LoginDBI | Finished Execution of isUserAlreadyInSystem' );
+	logger.info( 'In LoginDBI | Finished Execution of isUserAlreadyInSystem' );
 };
 
 var loginUser = function( user, callback ) {
-	console.log( 'In LoginDBI | Starting Execution of loginUser' );
+	logger.info( 'In LoginDBI | Starting Execution of loginUser' );
 
 	async.waterfall([
 		async.apply( areCredentialsValid, user ),
@@ -319,7 +318,7 @@ var loginUser = function( user, callback ) {
 	],
 		async.apply( finshLoginProcess, callback )
 	);
-	console.log( 'In LoginDBI | Finished Execution of loginUser' );
+	logger.info( 'In LoginDBI | Finished Execution of loginUser' );
 };
 
 /*										Exports In Progress Methods									*/

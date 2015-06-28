@@ -1,4 +1,4 @@
-define([], function() {
+ define([], function() {
     function loginController($scope) {
     }
     return loginController;
@@ -89,12 +89,15 @@ function LoginController($scope, $http, $window, $location, AppConstants, RestRe
             $http.post(requestPath, $scope.user)
                 .success(function (data) {
 
-                    $window.localStorage.token = data.user.user.token;
+                    $window.localStorage.token = data.user.token;
 
-                    delete data.user.user.token;
-                    $window.localStorage.user = JSON.stringify(data.user.user);
-
-                    DataStore.storeData('stats', data.user.stats);
+                    delete data.user.token;
+                    $window.localStorage.user = JSON.stringify( {
+                        name : data.user.name,
+                        email : data.user.email,
+                        restSlug : data.user.assignedRestaurantSlug
+                    });
+                    //DataStore.storeData('stats', data.user.stats);
 
                     $location.path('/dashboard');
                 })

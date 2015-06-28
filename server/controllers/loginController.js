@@ -17,19 +17,21 @@ var loginService = require( '../serviceLayer/login/LoginService' );
  * It sets up a waterfall call to loginUser first, then, pipes its result to getRoleForId and finally, pipes result
  * to combineAndSend.
  */
-var loginUser = function( req, res, next, adminLogin ) {
+var loginUser = function( req, res, next, role ) {
 	
-	console.log( 'In LoginController | Starting execution of loginUser | loginAdminUser' );
+	logger.info( 'In LoginController | Starting execution of loginUser | loginAdminUser' );
 
 	var user = {
 		email : req.body.email,
 		credential : req.body.password
 	};
 
-    if( adminLogin ) {
-        user.role = 'admin'
+    if( role === 'admin' ) {
+        user.role = 'admin';
+    } else if( role === 'restOwn' ) {
+        user.role = 'restOwn';
     } else {
-        user.role = 'user'
+        user.role = 'user';
     }
 
     loginService.loginUser( user, function( err, result ){
@@ -44,14 +46,14 @@ var loginUser = function( req, res, next, adminLogin ) {
 
     });
 
-	console.log( 'In oginController | Finished execution of loginUser | loginAdminUser' );
+	logger.info( 'In oginController | Finished execution of loginUser | loginAdminUser' );
 }
 
 /* This method checks if a user already exists with given email id.
  */
 var isUserAlreadyInSystem = function( req, res, next ) {
 
-	console.log( 'In LoginController | Starting Execution of isUserAlreadyInSystem ' );
+	logger.info( 'In LoginController | Starting Execution of isUserAlreadyInSystem ' );
 
 	var email = req.body.email;
 
@@ -65,14 +67,14 @@ var isUserAlreadyInSystem = function( req, res, next ) {
 		}
 	});
 
-	console.log( 'In LoginController | Finished Execution of isUserAlreadyInSystem ');
+	logger.info( 'In LoginController | Finished Execution of isUserAlreadyInSystem ');
 };
 
 /* Method to create a new user.
  */
 var signUpUser = function( req, res, next ) {
 
-	console.log( 'In LoginController | Starting Execution of signUpUser ' );
+	logger.info( 'In LoginController | Starting Execution of signUpUser ' );
 
 	var email = req.body.email;
 	var user = {
@@ -93,12 +95,12 @@ var signUpUser = function( req, res, next ) {
 		}
 	});
 
-	console.log( 'In LoginController | Finished Execution of signUpUser ');
+	logger.info( 'In LoginController | Finished Execution of signUpUser ');
 };
 
 /* Method to blacklist a token */
 var logoutUser = function (req, res, next ) {
-    console.log( 'In LoginController | Starting Execution of logoutUser' );
+    logger.info( 'In LoginController | Starting Execution of logoutUser' );
 
     var token = req.headers.authorization;
     token = token.substr( 7 );
@@ -113,7 +115,7 @@ var logoutUser = function (req, res, next ) {
         }
     });
 
-    console.log( 'In LoginController | Finished Execution of logoutUser' );
+    logger.info( 'In LoginController | Finished Execution of logoutUser' );
 };
 
 exports.loginUser = loginUser;

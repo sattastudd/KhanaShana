@@ -51,8 +51,8 @@ var setUpError = function (err, errMsg, type, response) {
     user => user info sent from controller.
     callback => callback from controller.
  */
-var loginUser = function( user, callback, role ) {
-	console.log( 'In LoginService | Starting Execution of loginUser' );
+var loginUser = function( user, callback ) {
+	logger.info( 'In LoginService | Starting Execution of loginUser' );
 
 	/*Perform validation here.
 	 */
@@ -82,13 +82,13 @@ var loginUser = function( user, callback, role ) {
         loginDBI.loginUser( user, function(err, result ) {
             if( err ){
                 /* Error should only be logged by services. */
-                console.log( err );
+                logger.error( 'Error in LoginService | loginUser | ' + JSON.stringify( err ));
 
                 /* What should be shown to user ? *
                  * DBI returns invalid credentials error, we can check it and send response accordingly.
                  */
                 if( err === ServerConstants.appErrors.invalidCredentials){
-                    console.log( 'In LoginService | Login failed for user ' + user.email);
+                    logger.error( 'In LoginService | Login failed for user ' + user.email);
 
                     callback( ServerConstants.appErrors.invalidCredentials, {
                         err : {},
@@ -129,7 +129,7 @@ var loginUser = function( user, callback, role ) {
         });
     }
 
-	console.log( 'In LoginService | Finished Execution of loginUser' );
+	logger.info( 'In LoginService | Finished Execution of loginUser' );
 };
 
 /* Method to create new user.
@@ -138,7 +138,7 @@ var loginUser = function( user, callback, role ) {
  */
 var signUpUser = function( userInfo, callback ) {
 
-    console.log('In LoginService | Starting Execution of signUpUSer');
+    logger.info('In LoginService | Starting Execution of signUpUSer');
     
     var err = {};
     var errMsg = {};
@@ -177,7 +177,7 @@ var signUpUser = function( userInfo, callback ) {
 
     /* If no validation has failed. */
     if (hasAnyValidationFailed) {
-        console.log('Validation Error for SignUp | Sent ValidationError');
+        logger.error('Validation Error for SignUp | Sent ValidationError');
         callback('ValidationError', {
             err : err,
             errMsg : errMsg,
@@ -228,11 +228,11 @@ var signUpUser = function( userInfo, callback ) {
 		}
 	});
 
-	console.log( 'In LoginService | Finished Execution of signUpUser' );
+	logger.info( 'In LoginService | Finished Execution of signUpUser' );
 };
 
 var isUserAlreadyInSystem = function( email, callback ) {
-	console.log('In LoginService | Starting Execution of isUserAlreadyInSystem' );
+	logger.info('In LoginService | Starting Execution of isUserAlreadyInSystem' );
 
 	/*Perform Validations here.
 	 */
@@ -264,7 +264,7 @@ var isUserAlreadyInSystem = function( email, callback ) {
             }
         });
     }
-	console.log('In LoginService  | Finished Execution of isUserAlreadyInSystem' );
+	logger.info('In LoginService  | Finished Execution of isUserAlreadyInSystem' );
 };
 
 /* Method to logout a user
@@ -273,7 +273,7 @@ var isUserAlreadyInSystem = function( email, callback ) {
  */
 var logoutUser = function( token, callback ) {
 
-    console.log( 'In loginService | Starting Execution of logoutUser' );
+    logger.info( 'In loginService | Starting Execution of logoutUser' );
 
     utils.setBlackListed( token );
 
@@ -283,7 +283,7 @@ var logoutUser = function( token, callback ) {
         result : null,
         msg : ServerConstants.logoutSuccessful
     });
-    console.log( 'In LoginService | Finished Execution of logoutUser' );
+    logger.info( 'In LoginService | Finished Execution of logoutUser' );
 
 };
 
