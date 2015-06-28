@@ -96,4 +96,26 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
     $scope.proceeded = function(){
         $location.path('/CheckOut');
     }
+
+
+   /* $scope.openQuickView = function(index){
+        var current = $scope.result[index];
+        var status = current.showQuickView;
+    
+        for(var i=0; i<$scope.result.length; i++){
+            
+            var obj = $scope.result[i];
+            obj.showQuickView = true;
+        }
+        
+        current.showQuickView = !status;
+    }*/
+    
+
+    $scope.menuCollapsed = true;
+
+    $scope.dropMenu = function(){
+        $scope.menuCollapsed = false;
+    }
+
 };
