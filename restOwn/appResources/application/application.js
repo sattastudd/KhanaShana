@@ -27,9 +27,9 @@ define(["services", "../require/route-config"], function (app, routeConfig) {
                 '../../appResources/controller/restaurant/restaurantDetailsController'
             ))
 
-            /*.otherwise({
+            .otherwise({
                 redirectTo: '/login'
-            });*/
+            });
 
         //Will use it later.
         //Will know how. 
