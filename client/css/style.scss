@@ -1506,6 +1506,7 @@ button.kh-primary {
 .marginRight20 {
   margin-right:20px;
   margin-top: 60px;
+  border-right: 1px solid gainsboro;
 }
 .mtop10 {
   margin-top:10px;
@@ -1625,10 +1626,26 @@ button.kh-primary {
     margin-top: 15px;
   }
 }
-
+@media (max-width: 992px){
+  .marginRight20 {
+    margin-right: -15px;
+    border-right: 0px;
+    margin-top: 0px;
+  }
+  .itemList{
+    margin-left: 0px;
+  }
+  .restaurantSnap {
+    height: 230px;
+  }
+}
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px;
+  }
+
+  .restaurantSnap {
+    height: 160px;
   }
 
   .hiddenInput {
