@@ -4,7 +4,7 @@ define([], function() {
     return restaurantDetailsController;
 });
 
-function RestaurantDetailsController ($scope, $route, $http, $routeParams, $location){
+function RestaurantDetailsController ($scope, $modal, $routeParams, $location, DataStore, $window, $http, AppConstants, RestRequests){
     console.log( $routeParams );
 
     $scope.rest = {};
@@ -72,6 +72,8 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         
         $scope.dishShortlisted.push( objectToPush );
 
+        DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
+
         console.log($scope.dishShortlisted[0].dish);
     }
 
@@ -90,6 +92,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
             }
             
             $scope.dishShortlisted.push( objectToPush );
+             DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
             //$scope.dishDuplicacy = $scope.
     }
 
@@ -115,4 +118,49 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         $location.path('/CheckOut');
     }
 
+
+    $scope.reviewOrder = function(){
+         $modal.open({
+                templateUrl : 'views/modals/orderReview/orderReviewModal.html',
+                controller : 'orderReviewModalController',
+                resolve : {
+                    displayedOnPage : function() {
+                       // return $scope.locations;
+                    }
+                }
+            })
+    }
+
 };
+
+
+function orderReviewModalController ($scope, $modalInstance, $location, DataStore, AppConstants, RestRequests, $http, displayedOnPage ) {
+
+    $scope.closeModal = function(){
+        $modalInstance.close();
+    }
+
+    $scope.dishShortlisted =  DataStore.getData( 'dishShortlisted' );
+
+    $scope.quantityIncreased = function(dish){
+        console.log(dish);
+
+        dish.quantity = dish.quantity + 1;
+        dish.totalPrice = dish.quantity * dish.price;
+
+    }
+    $scope.quantityDecreased = function(dish){
+
+        dish.quantity = dish.quantity - 1;
+        dish.totalPrice = dish.quantity * dish.price;
+    }
+    $scope.removeDish = function(index){
+        
+        $scope.dishShortlisted.splice(index, 1);
+        console.log($scope.dishShortlisted);
+    }
+
+    $scope.proceeded = function(){
+        $location.path('/CheckOut');
+    }
+}    
