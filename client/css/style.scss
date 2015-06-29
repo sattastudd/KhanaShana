@@ -1552,6 +1552,27 @@ button.kh-primary {
   margin-left: 15px;
   font-size: 19px;
   margin-left: -15px;
+  color: #000;
+}
+.smallCartGlyph{
+  background-color: rgb(207, 126, 128);
+  color: white;
+  border-radius: 25px;
+  margin-top: 4px;
+  font-size: 24px;
+  padding-top: 8px;
+  width: 40px;
+  height: 40px;
+  padding-left: 7px;
+}
+.navbarBottomTitle{
+  margin-top: 10px;
+  font-size: 21px;
+}
+.navbarBottomTotal{
+  margin-top: 10px;
+  font-size: 21px;
+  border-left:1px solid gainsboro;
 }
 .glyphPlusMinus{
   font-size: 19px;

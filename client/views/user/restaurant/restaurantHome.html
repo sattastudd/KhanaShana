@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-3 mol-lg-3">
                         <div class="row marginRight20">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 menuCategory" ng-repeat="menu in rest.menus" ng-click="menuSelected(menu)" ng-click="dropMenu()">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 menuCategory" ng-repeat="menu in rest.menus" ng-click="menuSelected(menu)">
                                 <label class="hand">{{menu.title}}</label>
                                 <div class="row" collapse="menuCollapsed">
                                      <div class="col-xs-12 col-sm-12 hidden-md hidden-lg itemList" ng-repeat="item in menu.items">
@@ -93,6 +93,25 @@
                                         </div>
                                      </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+                                <nav class="navbar navbar-default navbar-fixed-bottom" style="background-color:#171616;color:white;">
+                                    <div class="container">
+                                       <div class="row">
+                                           <div class="col-xs-7 col-sm-7">
+                                               <p class="navbarBottomTitle">{{itemAddedName}}</p>
+                                           </div>
+                                           <div class="col-xs-3 col-sm-3 navbarBottomTotal">
+                                               <p>Total</p>
+                                           </div>
+                                           <div class="col-xs-2 col-sm-2">
+                                               <i class="glyphicon glyphicon-shopping-cart smallCartGlyph"></i>
+                                           </div>
+                                       </div>
+                                    </div>
+                                </nav>
                             </div>
                         </div>
                     </div>

@@ -37,12 +37,29 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         //if (menu.items.price) {};
     }
 
+    
+   /* $scope.openQuickView = function(index){
+        var current = $scope.result[index];
+        var status = current.showQuickView;
+    
+        for(var i=0; i<$scope.result.length; i++){
+            
+            var obj = $scope.result[i];
+            obj.showQuickView = true;
+        }
+        
+        current.showQuickView = !status;
+    }*/
+    
+    
+
     //$scope.count = 1;
 
     $scope.itemAddedHalf = function(item,index){
         console.log(item.title);
         console.log(item.price.half);
         $scope.cartLoaded = true;
+        $scope.itemAddedName = item.title;
 
 
         var objectToPush = {
@@ -59,9 +76,10 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
     }
 
     $scope.itemAddedFull = function(item){
-        console.log(item);
         $scope.cartLoaded = true;
         //console.log($scope.dishShortlisted.quantity);
+        $scope.itemAddedName = item.title;
+        console.log("the value is>>>>>"+$scope.itemAddedName);
 
             var objectToPush = {
                 dish : item.title,
@@ -95,27 +113,6 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
 
     $scope.proceeded = function(){
         $location.path('/CheckOut');
-    }
-
-
-   /* $scope.openQuickView = function(index){
-        var current = $scope.result[index];
-        var status = current.showQuickView;
-    
-        for(var i=0; i<$scope.result.length; i++){
-            
-            var obj = $scope.result[i];
-            obj.showQuickView = true;
-        }
-        
-        current.showQuickView = !status;
-    }*/
-    
-
-    $scope.menuCollapsed = true;
-
-    $scope.dropMenu = function(){
-        $scope.menuCollapsed = false;
     }
 
 };
