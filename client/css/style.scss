@@ -88,6 +88,140 @@ body {
   font-size: 18px;
 }
 
+/* style for loading start */
+
+@mixin set_animation($name, $duration){
+  animation-name:$name;
+  -webkit-animation-name: $name;
+  
+  animation-duration: $duration;
+  -webkit-animation-duration: $duration;
+  
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes spin{
+  0%{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin{
+  0%{
+    transform: rotate(0deg);
+    webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(360deg);
+    webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes anti_spin{
+  0%{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+  }
+}
+
+@keyframes anti_spin{
+  0%{
+    transform: rotate(0deg);
+    webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(-360deg);
+    webkit-transform: rotate(-360deg);
+  }
+}
+
+body{
+  background-color : #333;  
+}
+
+$outerCircleHeight : 90px;
+$outerCircleWidth : 90px;
+
+$outerDuration : 2s;
+
+.loader{
+  position : relative;
+  margin: 0 auto;
+  width:100px;
+  height:100px;
+  
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.cookingText{
+  margin-top: 35px;
+  margin-left: 16px;
+  color: white;
+  font-size: 16px;
+}
+.loader span{
+  position: absolute;
+  display: block;
+}
+
+.loader{
+  span.outCircle{
+    height:$outerCircleHeight;
+    width:$outerCircleWidth;
+    border-radius: 50%;
+    background-color: transparent;    
+    border-top: 2px solid #e74c3c;
+    border-left: 2px solid #e74c3c;
+    
+    @include set_animation(spin, $outerDuration);
+  }
+  
+  span.midCircle{
+    height: $outerCircleHeight - 20px;
+    width: $outerCircleHeight - 20px;
+    border-radius: 50%;
+    background-color: transparent;    
+    border-top: 2px solid #f9c922;
+    border-left: 2px solid #f9c922;
+    top:10px;
+    left:10px;
+    
+    @include set_animation(anti_spin, $outerDuration - 1s);
+  }
+  
+  span.innerCircle{
+    height: $outerCircleHeight - 40px;
+    width: $outerCircleWidth - 40px;
+    border-radius: 50%;
+    background-color: transparent;    
+    border-top: 2px solid #3498db;    
+    border-left: 2px solid #3498db;
+    top:20px;
+    left:20px;
+    
+    @include set_animation(spin, $outerDuration - 2s);
+  }
+}
+
+/* style for loading ends */
+
 /*Global Classes Begin*/
 #main{
   padding-top : 50px;
@@ -1100,6 +1234,10 @@ button.kh-primary {
   margin-top: 15px;
 }
 
+.marginT30{
+    margin-top: 15px;
+}
+
 .filterBlock {
   height: auto;
   padding-top: 12px;
@@ -1219,6 +1357,25 @@ button.kh-primary {
 
 .bpad8 {
   padding-bottom: 8px;
+}
+
+.filterBar{
+  background-color: rgb(180, 20, 27);
+  position: fixed;
+  color: white;
+  margin-top: 0px;
+  height: 40px;
+  z-index: 10;
+  padding-top: 7px;
+  border-top: solid 1px gainsboro;
+}
+
+.rateStar{
+    font-size: 18px;
+    color: #DC141B;
+}
+.borderLeft{
+  border-left: 1px solid gainsboro;
 }
 
 /* styles for search result page ends */
@@ -1529,6 +1686,27 @@ button.kh-primary {
   margin-left: 15px;
   font-size: 19px;
   margin-left: -15px;
+  color: #000;
+}
+.smallCartGlyph{
+  background-color: rgb(207, 126, 128);
+  color: white;
+  border-radius: 25px;
+  margin-top: 4px;
+  font-size: 24px;
+  padding-top: 8px;
+  width: 40px;
+  height: 40px;
+  padding-left: 7px;
+}
+.navbarBottomTitle{
+  margin-top: 10px;
+  font-size: 21px;
+}
+.navbarBottomTotal{
+  margin-top: 10px;
+  font-size: 21px;
+  border-left:1px solid gainsboro;
 }
 .glyphPlusMinus{
   font-size: 19px;
@@ -1638,10 +1816,17 @@ button.kh-primary {
   .restaurantSnap {
     height: 230px;
   }
+  .marginT30{
+    margin-top: 30px;
+  }
 }
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px;
+  }
+
+  .rateStar{
+    font-size: 14px;
   }
 
   .restaurantSnap {
@@ -1710,18 +1895,6 @@ button.kh-primary {
   .glyphicon-heart {
     font-size: 20px;
     padding-left: 4px;
-  }
-
-  .ratingNumber {
-    font-size: 15px;
-    padding-left: 8px;
-  }
-
-  .filterBlock {
-    height: auto;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    font-size: 15px;
   }
 
   .filterGlyph {
@@ -1799,5 +1972,69 @@ button.kh-primary {
   .glyphicon-heart {
     font-size: 15px;
     padding-top: 4px;
+  }
+}
+
+$outerCircleHeight : 90px;
+$outerCircleWidth : 90px;
+
+$outerDuration : 2s;
+
+.loader{
+  position : relative;
+  margin: 0 auto;
+  width:100px;
+  height:100px;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.cookingText{
+  margin-top: 35px;
+  margin-left: 16px;
+  color: white;
+  font-size: 16px;
+}
+.loader span{
+  position: absolute;
+  display: block;
+}
+
+.loader {
+  span.outCircle {
+    height: $outerCircleHeight;
+    width: $outerCircleWidth;
+    border-radius: 50%;
+    background-color: transparent;
+    border-top: 2px solid #e74c3c;
+    border-left: 2px solid #e74c3c;
+
+    @include set_animation(spin, $outerDuration);
+  }
+
+  span.midCircle {
+    height: $outerCircleHeight - 20px;
+    width: $outerCircleHeight - 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    border-top: 2px solid #f9c922;
+    border-left: 2px solid #f9c922;
+    top: 10px;
+    left: 10px;
+
+    @include set_animation(anti_spin, $outerDuration - 1s);
+  }
+
+  span.innerCircle {
+    height: $outerCircleHeight - 40px;
+    width: $outerCircleWidth - 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    border-top: 2px solid #3498db;
+    border-left: 2px solid #3498db;
+    top: 20px;
+    left: 20px;
+
+    @include set_animation(spin, $outerDuration - 2s);
   }
 }

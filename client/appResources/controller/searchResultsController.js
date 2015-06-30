@@ -16,7 +16,10 @@ function searchResultController ($scope, $modal, $routeParams, $location, DataSt
 
         $http.post( searchRequestName, searchPayLoad)
             .success( function( data ) {
-                console.log( data );
+                console.log( data.data.data );
+
+                $scope.result = data.data.data;
+
             })
             .error( function( data ) {
                 console.log( data );
@@ -41,7 +44,7 @@ function searchResultController ($scope, $modal, $routeParams, $location, DataSt
 
         $http.post( searchRequestName, searchPayLoad )
             .success( function( data ) {
-                console.log( data );
+                console.log( data.name );
             })
             .error( function( data ) {
                 console.log( data );
@@ -65,9 +68,9 @@ function searchResultController ($scope, $modal, $routeParams, $location, DataSt
 */
 
 
-    $scope.result = [{name:'Manish Eating Point', img:'../images/pizza4.jpg'}, {name:'Waah ji Waah', img:'../images/northIndian.jpg'},
+    /*$scope.result = [{name:'Manish Eating Point', img:'../images/pizza4.jpg'}, {name:'Waah ji Waah', img:'../images/northIndian.jpg'},
                     {name:'Mughal Dastarkhwan', img:'../images/thaali.jpg'},{name:'Tundey Kabab', img:'../images/pizza2.jpg'},
-                    {name:'Royal Cafe', img:'../images/pizza1.jpg'}];
+                    {name:'Royal Cafe', img:'../images/pizza1.jpg'}];*/
 
     $scope.showMenu = true;
 
@@ -142,6 +145,19 @@ function searchResultController ($scope, $modal, $routeParams, $location, DataSt
         $scope.restTypeCollapse = !$scope.restTypeCollapse;
     }
 
+//code for order clicked 
+
+$scope.orderClicked = function(results){
+    var restName = results.name;
+    console.log(restName.trim());
+
+    var pathToRedirect = '/restaurant/' + restName;
+    $location.path( pathToRedirect );
+}
+
+
+//code for order clicked ends
+
 //code for rating
 
 $scope.maxRating = 5;
@@ -157,6 +173,7 @@ $scope.rate = 3;
          $modal.open({
                 templateUrl : 'views/modals/filter/filterModal.html',
                 controller : 'filterModalController',
+                windowClass    : 'darkTransparentBack',
                 size : 'sm',
                 resolve : {
                     displayedOnPage : function() {

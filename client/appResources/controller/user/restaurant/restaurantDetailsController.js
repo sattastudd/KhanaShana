@@ -4,7 +4,7 @@ define([], function() {
     return restaurantDetailsController;
 });
 
-function RestaurantDetailsController ($scope, $route, $http, $routeParams, $location){
+function RestaurantDetailsController ($scope, $modal, $routeParams, $location, DataStore, $window, $http, AppConstants, RestRequests){
     console.log( $routeParams );
 
     $scope.rest = {};
@@ -37,12 +37,29 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         //if (menu.items.price) {};
     }
 
+    
+   /* $scope.openQuickView = function(index){
+        var current = $scope.result[index];
+        var status = current.showQuickView;
+    
+        for(var i=0; i<$scope.result.length; i++){
+            
+            var obj = $scope.result[i];
+            obj.showQuickView = true;
+        }
+        
+        current.showQuickView = !status;
+    }*/
+    
+    
+
     //$scope.count = 1;
 
     $scope.itemAddedHalf = function(item,index){
         console.log(item.title);
         console.log(item.price.half);
         $scope.cartLoaded = true;
+        $scope.itemAddedName = item.title;
 
 
         var objectToPush = {
@@ -55,13 +72,16 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
         
         $scope.dishShortlisted.push( objectToPush );
 
+        DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
+
         console.log($scope.dishShortlisted[0].dish);
     }
 
     $scope.itemAddedFull = function(item){
-        console.log(item);
         $scope.cartLoaded = true;
         //console.log($scope.dishShortlisted.quantity);
+        $scope.itemAddedName = item.title;
+        console.log("the value is>>>>>"+$scope.itemAddedName);
 
             var objectToPush = {
                 dish : item.title,
@@ -72,6 +92,7 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
             }
             
             $scope.dishShortlisted.push( objectToPush );
+             DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
             //$scope.dishDuplicacy = $scope.
     }
 
@@ -98,24 +119,49 @@ function RestaurantDetailsController ($scope, $route, $http, $routeParams, $loca
     }
 
 
-   /* $scope.openQuickView = function(index){
-        var current = $scope.result[index];
-        var status = current.showQuickView;
-    
-        for(var i=0; i<$scope.result.length; i++){
-            
-            var obj = $scope.result[i];
-            obj.showQuickView = true;
-        }
-        
-        current.showQuickView = !status;
-    }*/
-    
-
-    $scope.menuCollapsed = true;
-
-    $scope.dropMenu = function(){
-        $scope.menuCollapsed = false;
+    $scope.reviewOrder = function(){
+         $modal.open({
+                templateUrl : 'views/modals/orderReview/orderReviewModal.html',
+                controller : 'orderReviewModalController',
+                windowClass    : 'darkTransparentBack',
+                resolve : {
+                    displayedOnPage : function() {
+                       // return $scope.locations;
+                    }
+                }
+            })
     }
 
 };
+
+
+function orderReviewModalController ($scope, $modalInstance, $location, DataStore, AppConstants, RestRequests, $http, displayedOnPage ) {
+
+    $scope.closeModal = function(){
+        $modalInstance.close();
+    }
+
+    $scope.dishShortlisted =  DataStore.getData( 'dishShortlisted' );
+
+    $scope.quantityIncreased = function(dish){
+        console.log(dish);
+
+        dish.quantity = dish.quantity + 1;
+        dish.totalPrice = dish.quantity * dish.price;
+
+    }
+    $scope.quantityDecreased = function(dish){
+
+        dish.quantity = dish.quantity - 1;
+        dish.totalPrice = dish.quantity * dish.price;
+    }
+    $scope.removeDish = function(index){
+        
+        $scope.dishShortlisted.splice(index, 1);
+        console.log($scope.dishShortlisted);
+    }
+
+    $scope.proceeded = function(){
+        $location.path('/CheckOut');
+    }
+}    

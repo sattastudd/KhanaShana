@@ -112,6 +112,14 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
             windowClass    : 'darkTransparentBack',
             size : 'sm'
         });
+
+    $scope.loadingModal = function () {
+        var modalInstance = $modal.open({
+            templateUrl : 'loadingModal.html',
+            controller : 'loadingModalController',
+            backdrop : 'static',
+            windowClass    : 'darkTransparentBack'
+        });
         
         /*To make rest of the page blurred.*/
         var contentContainer = angular.element(document.querySelector('#contentContainer'));
@@ -650,3 +658,9 @@ function LoginModalController($scope, $modalInstance, $location, DataStore, $win
         }
     };
 }
+}
+
+function loadingModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
+
+    console.log('the modal is coming for loading');
+};
