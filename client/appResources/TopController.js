@@ -8,6 +8,8 @@ define( [], function() {
 
 function parentController($scope, $rootScope, $http, DataStore, AppConstants, RestRequests, $modal, $window, $timeout, $location) {
 
+    $scope.visibilityController = {};
+
     /* Modify search box visibility on location change. */
     $rootScope.$on('$locationChangeStart', function( event, next, current ){
 
@@ -113,13 +115,13 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
             size : 'sm'
         });
 
-    $scope.loadingModal = function () {
+    /*$scope.loadingModal = function () {
         var modalInstance = $modal.open({
             templateUrl : 'loadingModal.html',
             controller : 'loadingModalController',
             backdrop : 'static',
             windowClass    : 'darkTransparentBack'
-        });
+        });*/
         
         /*To make rest of the page blurred.*/
         var contentContainer = angular.element(document.querySelector('#contentContainer'));
@@ -300,7 +302,7 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
 
         $location.path( 'search' );
     };
-}
+};
 
 function LoginModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
 	$scope.user = {
@@ -340,7 +342,7 @@ function LoginModalController($scope, $modalInstance, $location, DataStore, $win
         return '';
     };
 
-    //fogot password function
+    //forgot password function
     $scope.showForgotPwd = true;
     $scope.forgotPwd = function(){
         $location.path('/forgotPassword');
@@ -657,7 +659,6 @@ function LoginModalController($scope, $modalInstance, $location, DataStore, $win
             $scope.errMsg.password = '';
         }
     };
-}
 }
 
 function loadingModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){
