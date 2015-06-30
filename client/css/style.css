@@ -1121,9 +1121,8 @@ button.kh-primary {
 
 .marginRight20 {
   margin-right: 20px;
-  margin-top: 60px; 
-  border-right: 1px solid gainsboro;
-}
+  margin-top: 60px;
+  border-right: 1px solid gainsboro; }
 
 .mtop10 {
   margin-top: 10px; }
@@ -1143,6 +1142,7 @@ button.kh-primary {
 .itemList {
   border-bottom: 1px solid gainsboro;
   margin-top: 10px;
+  margin-left: 15px;
   font-size: 19px;
   margin-left: -15px; }
 
@@ -1228,26 +1228,23 @@ button.kh-primary {
 @media (max-width: 480px) {
   .welcomeText {
     margin-top: 15px; } }
-@media (max-width: 992px){
+@media (max-width: 992px) {
   .marginRight20 {
-  	margin-right: -15px;
-  	border-right: 0px;
-  	margin-top: 0px;
-  }
-  .itemList{
-  	margin-left: 0px;
-  }
+    margin-right: -15px;
+    border-right: 0px;
+    margin-top: 0px; }
+
+  .itemList {
+    margin-left: 0px; }
+
   .restaurantSnap {
-  	height: 230px;
-  }
-}
+    height: 230px; } }
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px; }
 
   .restaurantSnap {
-  	height: 160px;
-  }
+    height: 160px; }
 
   .hiddenInput {
     width: 200px;

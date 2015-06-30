@@ -103,6 +103,10 @@ var isFileNameNotValid = function (value) {
     }
 };
 
+var isEverythingAllowed = function( value ) {
+    return { result : false }
+};
+
 var isFieldNotValidByType = function( fieldValue, isMandatory, type ) {
     if( type === 'name' ) {
         return isNameNotValid( fieldValue, isMandatory );
@@ -177,3 +181,5 @@ exports.isRoleDropDownNotValid = isRoleDropDownNotValid;
 
 exports.isFileNameNotValid = isFileNameNotValid;
 exports.isBooleanNotValid = isBooleanNotValid;
+
+exports.isEverythingAllowed = isEverythingAllowed;

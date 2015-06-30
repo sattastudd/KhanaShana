@@ -12,12 +12,12 @@ function ParentController($scope, $rootScope, UserInfoProvider, $location, DataS
 
 
     $scope.$on( 'closeUserContextMenu', function (){
-        
+
         $scope.visibilityControl.isUserContextMenuOpen = false;
     });
 
     $scope.broadCastCloseEvents = function () {
-        
+
         $rootScope.$broadcast('closeSideBar');
     };
 

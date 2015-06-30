@@ -34,6 +34,10 @@ var prepareObjectForResponse = function( user ) {
     toReturn.exp = (new Date()).getTime() + (1000*60*60);
     toReturn.role = user.role;
 
+    if( toReturn.role === 'restOwn' ) {
+        toReturn.assignedRestaurantSlug = user.restaurantAssigned.slug;
+    }
+
     var token = generateToken( toReturn );
 
     delete toReturn.role;

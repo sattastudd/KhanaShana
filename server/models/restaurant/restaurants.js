@@ -44,14 +44,17 @@ var restaurantSchema = new mongoose.Schema({
 
     cost : {
         avg : Number,
-        min : Number
+        min : Number,
+        costForTwo : Number,
+        minimumDeliveryAt : Number
     },
     detail : {
         timing : String,
         rating : Number,
         total_votes : Number,
         total_orders : Number,
-        total_revenue_earned : Number
+        total_revenue_earned : Number,
+        delivery_time : String
     },
     menu : [
         {
@@ -66,7 +69,8 @@ var restaurantSchema = new mongoose.Schema({
         xs : String,
         md : String,
         sm : String,
-        lg : String
+        lg : String,
+        snip : String
     }
 });
 

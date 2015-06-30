@@ -672,7 +672,7 @@ function NewRestaurantController($scope, $http, $rootScope, $timeout, DataStore,
         }
     };
 
-    /*Function to opwn banner image in next tab */
+    /*Function to open banner image in next tab */
     $scope.openImage = function( type ) {
         console.log(type);
 

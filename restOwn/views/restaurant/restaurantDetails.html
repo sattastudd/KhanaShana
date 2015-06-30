@@ -1,10 +1,113 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div ng-include="'views/header.html'"></div>
+<div ng-controller="RestaurantOtherDetailsController" ng-init="init()">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="bottomBorder">Restaurant Additional Details</h2>
+            </div>
+        </div>
 
-</body>
-</html>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="bg-danger" ng-class="haveReceivedErrorFromServer()">
+                    {{errorMessage}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="bg-success" ng-class="haveReceivedSuccessFromServer()">
+                    {{successMessage}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="petoo-form">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label>Minimum Delivery At</label>
+                        <input type="text" ng-model="restaurant.minimumDelivery" class="form-control" />
+                    </div>
+
+                    <div class="collapsibleErrorMessage" ng-class="hasFieldError('minimumDelivery')">
+                        <div class="bg-danger" ng-class="hasFieldError('minimumDelivery')" >
+                            {{errMsg.minimumDelivery}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label>Cost for Two ?</label>
+                        <input type="text" ng-model="restaurant.costForTwo" class="form-control" />
+                    </div>
+
+                    <div class="collapsibleErrorMessage" ng-class="hasFieldError('costForTwo')">
+                        <div class="bg-danger" ng-class="hasFieldError('costForTwo')" >
+                            {{errMsg.costForTwo}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label>Delivery Time</label>
+                        <input type="text" ng-model="restaurant.deliveryTime" class="form-control" />
+                    </div>
+
+                    <div class="collapsibleErrorMessage" ng-class="hasFieldError('deliveryTime')">
+                        <div class="bg-danger" ng-class="hasFieldError('deliveryTime')" >
+                            {{errMsg.deliveryTime}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label>Open Hours</label>
+                        <input type="text" ng-model="restaurant.openHours" class="form-control" />
+                    </div>
+
+                    <div class="collapsibleErrorMessage" ng-class="hasFieldError('openHours')">
+                        <div class="bg-danger" ng-class="hasFieldError('openHours')" >
+                            {{errMsg.openHours}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="petoo-form">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label>Restaurant Snip Screen (120 x 120).</label>
+
+                        <div class="uploadContainerDiv">
+                            <input type="file" id="snip"/>
+                        </div>
+
+                        <div class="fileUploadBox" file-upload-view target="snip" type="snip" ng-class="isFileNotSelected('snip')"></div>
+
+                        <div class="fileActionsContainer" ng-class="isFileSelected('snip')">
+                            <div class="fileUploadBox" ng-click="openImage('snip')" >{{getFileName('snip')}}</div>
+                            <div class="fileDelete" ng-click="removeFile( 'snip' )"><span class="glyphicon glyphicon-trash"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row tMar20">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <button type="button" ng-click="addAdditionalDetails()" class="btn btn-block btn-pr-primary">Save Details</button>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-2">
+                <button type="button" class="btn btn-block btn-pr-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
