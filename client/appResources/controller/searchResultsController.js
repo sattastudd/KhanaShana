@@ -173,6 +173,7 @@ $scope.rate = 3;
          $modal.open({
                 templateUrl : 'views/modals/filter/filterModal.html',
                 controller : 'filterModalController',
+                windowClass    : 'darkTransparentBack',
                 size : 'sm',
                 resolve : {
                     displayedOnPage : function() {

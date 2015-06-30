@@ -15,6 +15,140 @@ body {
   font-family: Avdira;
   font-size: 18px; }
 
+/* style for loading start */
+
+@mixin set_animation($name, $duration){
+  animation-name:$name;
+  -webkit-animation-name: $name;
+  
+  animation-duration: $duration;
+  -webkit-animation-duration: $duration;
+  
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes spin{
+  0%{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin{
+  0%{
+    transform: rotate(0deg);
+    webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(360deg);
+    webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes anti_spin{
+  0%{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+  }
+}
+
+@keyframes anti_spin{
+  0%{
+    transform: rotate(0deg);
+    webkit-transform: rotate(0deg);
+  }
+  
+  100%{
+    transform: rotate(-360deg);
+    webkit-transform: rotate(-360deg);
+  }
+}
+
+body{
+  background-color : #333;  
+}
+
+$outerCircleHeight : 90px;
+$outerCircleWidth : 90px;
+
+$outerDuration : 2s;
+
+.loader{
+  position : relative;
+  margin: 0 auto;
+  width:100px;
+  height:100px;
+  
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.cookingText{
+  margin-top: 35px;
+  margin-left: 16px;
+  color: white;
+  font-size: 16px;
+}
+.loader span{
+  position: absolute;
+  display: block;
+}
+
+.loader{
+  span.outCircle{
+    height:$outerCircleHeight;
+    width:$outerCircleWidth;
+    border-radius: 50%;
+    background-color: transparent;    
+    border-top: 2px solid #e74c3c;
+    border-left: 2px solid #e74c3c;
+    
+    @include set_animation(spin, $outerDuration);
+  }
+  
+  span.midCircle{
+    height: $outerCircleHeight - 20px;
+    width: $outerCircleHeight - 20px;
+    border-radius: 50%;
+    background-color: transparent;    
+    border-top: 2px solid #f9c922;
+    border-left: 2px solid #f9c922;
+    top:10px;
+    left:10px;
+    
+    @include set_animation(anti_spin, $outerDuration - 1s);
+  }
+  
+  span.innerCircle{
+    height: $outerCircleHeight - 40px;
+    width: $outerCircleWidth - 40px;
+    border-radius: 50%;
+    background-color: transparent;    
+    border-top: 2px solid #3498db;    
+    border-left: 2px solid #3498db;
+    top:20px;
+    left:20px;
+    
+    @include set_animation(spin, $outerDuration - 2s);
+  }
+}
+
+/* style for loading ends */
+
 /*Global Classes Begin*/
 #main {
   padding-top: 50px; }

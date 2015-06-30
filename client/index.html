@@ -115,6 +115,21 @@
             </div>
         </div>
     </script>
+    <script type="text/ng-template" id="loader.html">
+        <div class="loginModal">
+            <div class="modal-header">
+                <ul class="login-links">
+                    <li class="pull-right close-icon" ng-click="closeLoginModal()"><span class="glyphicon glyphicon-remove"></span></li>
+                </ul>
+            </div>
+            <div class="modal-body">
+                <div class="loader">
+                  <span class="outCircle"></span>
+                  <span class="cookingText">Cooking..</span>
+                </div>
+            </div>
+        </div>
+    </script>
 </head>
 
 <body ng-controller="parentController">

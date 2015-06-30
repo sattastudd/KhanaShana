@@ -123,6 +123,7 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
          $modal.open({
                 templateUrl : 'views/modals/orderReview/orderReviewModal.html',
                 controller : 'orderReviewModalController',
+                windowClass    : 'darkTransparentBack',
                 resolve : {
                     displayedOnPage : function() {
                        // return $scope.locations;
