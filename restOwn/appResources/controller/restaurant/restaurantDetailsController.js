@@ -20,10 +20,17 @@ function RestaurantOtherDetailsController($scope, $http, AppConstants, RestReque
     $scope.paths = {};
 
     $scope.init = function() {
-        var requestName = AppConstants.restOwnServicePrefix + '/' + RestRequests.restaurant + '/' + UserInfoProvider.getAssignedRestaurantSlug();
+        var requestName = AppConstants.restOwnServicePrefix + '/' + RestRequests.restaurant + '/additional/' + UserInfoProvider.getAssignedRestaurantSlug();
 
         $http.get( requestName).success( function( data ) {
-            console.log( data );
+            $scope.restaurant = {
+                minimumDelivery : data.data.cost.minimumDeliveryAt,
+                costForTwo : data.data.cost.costForTwo,
+                deliveryTime : data.data.detail.delivery_time,
+                openHours : data.data.detail.timing
+            };
+
+            $scope.paths.snip = data.data.img.snip;
         })
             .error( function( data ) {
                 console.log( data );

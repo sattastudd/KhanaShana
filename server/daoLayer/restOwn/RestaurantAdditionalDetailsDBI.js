@@ -62,7 +62,7 @@ var updateAdditionalDetails = function( cityName, restaurant, callback ) {
 /**
  * Function to read Restaurant Additional Data
  */
-var readRestaurantAdditionalData = function( cityName, slugName ) {
+var readRestaurantAdditionalData = function( cityName, slugName, callback ) {
     logger.info( 'In RestaurantAdditionalDetailsDBI | Starting Execution of readRestaurantAdditionalData' );
 
     var query = {
@@ -71,12 +71,25 @@ var readRestaurantAdditionalData = function( cityName, slugName ) {
 
     var projection = {
         '_id' : false,
-        'address' : false,
-        'img.snip' : true,
-        'detail.timing' : true,
-        'detail.delivery_time' : true,
-        'cost.costForTwo' : true,
-        'cost.minimumDeliveryAt' : true
+        '__v' : false,
+        allStagesCompleted : false,
+        'address.locality' : false,
+        'address.postal_code' : false,
+        'address.street' : false,
+        'address.town' : false,
+        'address.city' : false,
+        approved : false,
+        cuisines : false,
+        'delivery':false,
+        'img.lg' : false,
+        'img.md' : false,
+        'img.sm' : false,
+        'img.xs' : false,
+        'menu' : false,
+        'name' : false,
+        'owner' : false,
+        'slug' : false,
+        'stage' : false
     };
 
     var cityDBConnection = utils.getDBConnection(cityName);
@@ -84,7 +97,7 @@ var readRestaurantAdditionalData = function( cityName, slugName ) {
     RestaurantModelModule.setUpConnection(cityDBConnection);
     var RestaurantModel = RestaurantModelModule.getModel();
 
-    RestaurantModel.find( query, projection, function( err, result ) {
+    RestaurantModel.findOne( query, projection, function( err, result ) {
         if( err ) {
             callback( err );
         } else {

@@ -57,7 +57,7 @@ var updateRestaurantInfo = function( restaurant, callback ) {
         err.snip = true;
         errMsg.snip = responseFromValidatorForFileName.message;
     } else {
-        restaurant.snip = AppConstants.restaurantImagesPath + restaurant.slug + '/' + restaurant.slug + '-snip' + files.snip.name.substr(files.snip.name.indexOf('.'));
+        restaurant.snip = AppConstants.restaurantImagesPath + restaurant.slug + '/' + restaurant.slug + '-snip' + restaurant.snip.substr(restaurant.snip.indexOf('.'));
     }
 
     if( hasAnyValidationFailed ) {
@@ -103,7 +103,9 @@ var readRestaurantAdditionalData =  function( restaurantSlug, callback ) {
                 err : {}, errMsg : {}, data : null, msg : AppConstants.errorMessage.someError
             });
         } else {
-            callback( null, result );
+            callback( null, {
+                err : {}, errMsg : {}, data : result, msg : AppConstants.successMessage
+            } );
         }
     });
 

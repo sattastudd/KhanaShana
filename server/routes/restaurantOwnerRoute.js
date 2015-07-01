@@ -49,9 +49,9 @@ router.post( '/restOwn/restaurant/:restSlug', function( req, res, next ) {
 });
 
 
-/* Request-Name : /restOwn/restaurant/:restSlug, Type : Get, Allowed : restOwn*/
+/* Request-Name : /restOwn/restaurant/additional/:restSlug, Type : Get, Allowed : restOwn*/
 /* This request would be used by restOwn to update existing restaurant details. */
-router.get( '/restOwn/restaurant/:restSlug', function( req, res, next ) {
+router.get( '/restOwn/restaurant/additional/:restSlug', function( req, res, next ) {
 
     logger.info( 'In restaurantOwnerRoute | Handling ' + req.route.path );
 
