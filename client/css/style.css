@@ -15,8 +15,6 @@ body {
   font-family: Avdira;
   font-size: 18px; }
 
-/* style for loading start */
-/* style for loading ends */
 /*Global Classes Begin*/
 #main {
   padding-top: 50px; }
@@ -1388,25 +1386,25 @@ button.kh-primary {
     padding-top: 4px; } }
 .loader {
   position: relative;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
-  width: 100px;
-  height: 100px;
-  margin-top: 20px;
-  margin-bottom: 20px; }
+  top: 40%; }
 
 .cookingText {
-  margin-top: 35px;
+  margin-top: 60px;
   margin-left: 16px;
   color: white;
-  font-size: 16px; }
+  font-size: 41px;
+  font-family: 'Avdira'; }
 
 .loader span {
   position: absolute;
   display: block; }
 
 .loader span.outCircle {
-  height: 90px;
-  width: 90px;
+  height: 180px;
+  width: 180px;
   border-radius: 50%;
   background-color: transparent;
   border-top: 2px solid #e74c3c;
@@ -1419,39 +1417,52 @@ button.kh-primary {
   -webkit-animation-iteration-count: infinite;
   animation-timing-function: linear;
   -webkit-animation-timing-function: linear; }
-.loader span.midCircle {
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-  background-color: transparent;
-  border-top: 2px solid #f9c922;
-  border-left: 2px solid #f9c922;
-  top: 10px;
-  left: 10px;
-  animation-name: anti_spin;
-  -webkit-animation-name: anti_spin;
-  animation-duration: 1s;
-  -webkit-animation-duration: 1s;
+.loader span.cookingText {
+  animation-name: transparency;
+  -webkit-animation-name: transparency;
+  animation-duration: 2s;
+  -webkit-animation-duration: 2s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
   animation-timing-function: linear;
   -webkit-animation-timing-function: linear; }
-.loader span.innerCircle {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  background-color: transparent;
-  border-top: 2px solid #3498db;
-  border-left: 2px solid #3498db;
-  top: 20px;
-  left: 20px;
-  animation-name: spin;
-  -webkit-animation-name: spin;
-  animation-duration: 0s;
-  -webkit-animation-duration: 0s;
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  -webkit-animation-timing-function: linear; }
+
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: rgba(32, 32, 32, 0.9);
+  z-index: 50;
+  display: none; }
+
+@-webkit-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg); } }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    webkit-transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg);
+    webkit-transform: rotate(360deg); } }
+@-webkit-keyframes transparency {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: .1; }
+  100% {
+    opacity: 1; } }
+@keyframes transparency {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: .1; }
+  100% {
+    opacity: 1; } }
 
 /*# sourceMappingURL=style.css.map */

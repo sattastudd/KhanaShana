@@ -9,16 +9,16 @@
     <script src="extResources/require/require.js"></script>
     <script src="extResources/require/main.js"></script>
     
-    <!--<script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    <script>
+      /*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     
       ga('create', 'UA-61915018-1', 'auto');
-      ga('send', 'pageview');
+      ga('send', 'pageview');*/
 
-    </script>-->
+    </script>
     
     <link rel="stylesheet" type="text/css" href="extResources/TwitterBootStrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -142,6 +142,13 @@
         </div>
 
         <div ng-include="'footer.html'"></div>
+    </div>
+
+    <div class="overlay">
+        <div class="loader">
+            <span class="outCircle"></span>
+            <span class="cookingText">Cooking..</span>
+        </div>
     </div>
 </body>
 </html>

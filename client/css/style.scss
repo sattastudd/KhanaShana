@@ -69,6 +69,20 @@ $theme-fast-reaction: .2s;
   filter: $property;
 }
 
+@mixin set_animation($name, $duration){
+  animation-name:$name;
+  -webkit-animation-name: $name;
+
+  animation-duration: $duration;
+  -webkit-animation-duration: $duration;
+
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+}
+
 @font-face {
   font-family: Avdira;
   src: url('fonts/Riven.woff');
@@ -87,23 +101,6 @@ body {
   font-family: Avdira;
   font-size: 18px;
 }
-
-/* style for loading start */
-
-@mixin set_animation($name, $duration){
-  animation-name:$name;
-  -webkit-animation-name: $name;
-
-  animation-duration: $duration;
-  -webkit-animation-duration: $duration;
-
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
-
-  animation-timing-function: linear;
-  -webkit-animation-timing-function: linear;
-}
-/* style for loading ends */
 
 /*Global Classes Begin*/
 #main{
@@ -1858,25 +1855,27 @@ button.kh-primary {
   }
 }
 
-$outerCircleHeight : 90px;
-$outerCircleWidth : 90px;
+$outerCircleHeight : 180px;
+$outerCircleWidth : 180px;
 
 $outerDuration : 2s;
 
 .loader{
   position : relative;
-  margin: 0 auto;
-  width:100px;
-  height:100px;
+  width:200px;
+  height:200px;
 
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin : 0 auto;
+
+  top : 40%;
 }
 .cookingText{
-  margin-top: 35px;
+  margin-top: 60px;
   margin-left: 16px;
   color: white;
-  font-size: 16px;
+  font-size: 41px;
+
+  font-family: 'Avdira';
 }
 .loader span{
   position: absolute;
@@ -1895,29 +1894,69 @@ $outerDuration : 2s;
     @include set_animation(spin, $outerDuration);
   }
 
-  span.midCircle {
-    height: $outerCircleHeight - 20px;
-    width: $outerCircleHeight - 20px;
-    border-radius: 50%;
-    background-color: transparent;
-    border-top: 2px solid #f9c922;
-    border-left: 2px solid #f9c922;
-    top: 10px;
-    left: 10px;
+  span.cookingText{
+    @include set_animation(transparency, $outerDuration);
+  }
+}
 
-    @include set_animation(anti_spin, $outerDuration - 1s);
+.overlay{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: rgba(32, 32, 32, .9);
+  z-index: 50;
+  display: none;
+}
+
+@-webkit-keyframes spin{
+  0%{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
   }
 
-  span.innerCircle {
-    height: $outerCircleHeight - 40px;
-    width: $outerCircleWidth - 40px;
-    border-radius: 50%;
-    background-color: transparent;
-    border-top: 2px solid #3498db;
-    border-left: 2px solid #3498db;
-    top: 20px;
-    left: 20px;
+  100%{
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
 
-    @include set_animation(spin, $outerDuration - 2s);
+@keyframes spin{
+  0%{
+    transform: rotate(0deg);
+    webkit-transform: rotate(0deg);
+  }
+
+  100%{
+    transform: rotate(360deg);
+    webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes transparency{
+  0%{
+    opacity : 1;
+  }
+
+  50%{
+    opacity : .1;
+  }
+
+  100%{
+    opacity : 1;
+  }
+}
+
+@keyframes transparency{
+  0%{
+    opacity : 1;
+  }
+
+  50%{
+    opacity : .1;
+  }
+
+  100%{
+    opacity : 1;
   }
 }

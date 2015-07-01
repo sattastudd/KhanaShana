@@ -13,7 +13,9 @@
         .constant('AppConstants', {
 
             appName : 'KhanaShana',
-            httpServicePrefix : 'node/public'
+            httpServicePrefix : 'node/public',
+            requestCount : 'requestCount',
+            sentRequestObj : 'sentRequestObj'
 
         })
         .constant('RestRequests', {
@@ -134,23 +136,45 @@
                 return storedData;
             };
         } )
-        .service( 'authInterceptor', function ($rootScope, $q, $window) {
+        .service( 'authInterceptor', function ($rootScope, $q, $window, AppConstants, DataStore) {
             return {
                 request : function( config ) {
                     config.headers = config.headers || {};
+
+                    if( DataStore.isKeyDefined( AppConstants.requestCount )) {
+                        var requestCount = DataStore.getData( AppConstants.requestCount );
+
+                        DataStore.storeData( AppConstants.requestCount, ++requestCount);
+                    } else {
+                        var overLaidElement = angular.element( document.querySelector( '.overlay' ));
+
+                        overLaidElement.css({display: 'block'});
+                        DataStore.storeData( AppConstants.requestCount, 0);
+                    }
 
                     if( config.url.indexOf( 'node/' ) !== 0)
                         return config;
 
                     if( $window.localStorage.getItem( 'token') ) {
                         config.headers.Authorization = 'Bearer ' + $window.localStorage.token;
-
-                        console.log( 'Token Attached' );
-                    } else {
-                        console.log( 'No Token Found' );
                     }
 
                     return config;
+                },
+
+                response : function( response ) {
+
+                    var requestCount = DataStore.getData( AppConstants.requestCount );
+
+                    DataStore.storeData( AppConstants.requestCount, --requestCount);
+
+                    if( requestCount === 0 ) {
+
+                        var overLaidElement = angular.element( document.querySelector( '.overlay' ));
+                        overLaidElement.css({display: 'none'});
+
+                    }
+                    return response;
                 },
 
                 responseError : function( rejection ){
