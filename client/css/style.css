@@ -445,6 +445,10 @@ body {
   padding-left: 0;
   padding-right: 0; }
 
+.noLeftRightMargin {
+  margin-left: 0;
+  margin-right: 0; }
+
 .noLPad {
   padding-left: 0; }
 
