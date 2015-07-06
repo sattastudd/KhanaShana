@@ -22,22 +22,6 @@ body {
 .fullScreenWidth {
   width: 100%; }
 
-.contentContainer {
-  -moz-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s; }
-
-.blurredBack {
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px); }
-
-.darkTransparentBack {
-  background-color: rgba(0, 0, 0, 0.4); }
-
 .modal.scale .modal-dialog {
   -moz-transition: -moz-transform 0.3s ease;
   -o-transition: -o-transform 0.3s ease;
@@ -431,8 +415,8 @@ body {
 
 /*Login Modal End*/
 /*Utility Classes*/
-.negativeTopMargin50 {
-  margin-top: -50px; }
+.tMar30 {
+  margin-top: 30px; }
 
 .leftRightPadding20 {
   padding-left: 20px;
@@ -493,6 +477,9 @@ body {
 
 .lpad5 {
   padding-left: 5px; }
+
+.thinBorderBottom {
+  border-bottom: 2px solid #fff; }
 
 /*Home Page Styles*/
 .pizzaBack {
@@ -668,25 +655,6 @@ button.kh-primary {
           text-decoration: underline; }
 
 /*styles for restaurant details page*/
-.adminBody {
-  margin-top: 65px; }
-
-/* admin home page styles */
-.adminBlock {
-  background-color: #DC141B;
-  border-radius: 155px;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.26);
-  top: 0;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s; }
-  .adminBlock:hover {
-    box-shadow: 0 9px 10px 0 #555;
-    top: -1px; }
-
 .newsFeedBlock {
   height: 90px;
   background-color: gainsboro;
@@ -705,13 +673,35 @@ button.kh-primary {
 /*Style for restaurant Home*/
 .restaurantSnap {
   height: 400px;
-  width: 100%; }
+  width: 100%;
+  background-attachment: fixed;
+  position: relative; }
+  .restaurantSnap div {
+    width: 100%;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.5); }
+
+.ratingContainer {
+  height: 32px; }
+  .ratingContainer span {
+    display: block;
+    float: left; }
+    .ratingContainer span.votes {
+      font-size: 20px;
+      color: #fff;
+      font-family: 'Segoe UI';
+      margin-left: 20px; }
+    .ratingContainer span.glyphicon {
+      line-height: 32px; }
 
 .restaurantName {
-  font-size: 30px;
-  line-height: 67px;
-  font-weight: bolder;
-  text-align: center; }
+  font-size: 40px; }
+
+.offeredCuisines {
+  float: right; }
+  .offeredCuisines ul.cuisineList {
+    list-style: none;
+    text-align: right; }
 
 .restaurantMenu ul {
   list-style: none;
@@ -786,12 +776,6 @@ button.kh-primary {
   border-bottom: solid 1px gray;
   font-size: 20px; }
 
-.filterContent {
-  cursor: pointer; }
-
-.filterButton {
-  border: solid 1px gray; }
-
 .contentClass {
   padding-left: 15px;
   cursor: pointer; }
@@ -823,10 +807,6 @@ button.kh-primary {
   border-radius: 0 0 5px 5px;
   box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.26);
   cursor: pointer; }
-
-.resultBlockRow {
-  margin-right: -18px;
-  margin-left: -15px; }
 
 .glyphDown {
   padding-left: 1px;
@@ -860,11 +840,6 @@ button.kh-primary {
 .rating {
   padding-top: 14px;
   padding-right: 50px; }
-
-.ratingNumber {
-  font-size: 26px;
-  color: #333;
-  padding-left: 30px; }
 
 .lpad8 {
   padding-left: 8px; }
@@ -913,37 +888,16 @@ button.kh-primary {
   margin-bottom: 15px;
   border-radius: 5px 5px 0px 0px; }
 
-.addressBlock {
-  padding-top: 13px;
-  background-color: white;
-  border-radius: 5px;
-  padding-bottom: 9px; }
-
 .orderBlock {
   background-color: white;
   border-radius: 5px;
   padding-top: 5px; }
 
-.addressButton {
-  background-color: #DC141B;
-  color: white; }
-
 .tableFont {
   font-size: 15px; }
 
-.input-group-addon {
-  font-size: 18px; }
-
 .addressOk {
   padding-top: 10px; }
-
-.addressLineTitle1 {
-  background-color: #333;
-  color: white; }
-
-.addressLineTitle2 {
-  background-color: green;
-  color: white; }
 
 .addressLineContent {
   border: solid 1px gray; }
@@ -1089,18 +1043,19 @@ button.kh-primary {
     color: #DC141B; } }
 /* styles for user profile ends */
 /* styles for user restaurant home page starts */
-.bottomBorder {
-  border-bottom: solid 1px gainsboro;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  color: #DC141B;
-  cursor: pointer;
-  padding-left: 10px; }
-
-.nav-tabs {
-  position: fixed;
-  z-index: 2;
-  background-color: #FAF8FD; }
+.restaurantBannerContainer {
+  position: relative;
+  height: 400px;
+  color: #fff;
+  font-family: "Segoe UI";
+  background-color: rgba(0, 0, 0, 0.4); }
+  .restaurantBannerContainer > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0; }
+    .restaurantBannerContainer > div.container-fluid {
+      width: 100%; }
 
 .tpad40 {
   padding-top: 40px; }
@@ -1108,40 +1063,8 @@ button.kh-primary {
 .lpad10 {
   padding-left: 10px; }
 
-.dishList {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-top: solid 1px gainsboro;
-  cursor: pointer;
-  color: green; }
-
-.dishPrice {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-top: solid 1px gainsboro;
-  cursor: pointer;
-  color: #222; }
-
-.menuActiveClass {
-  background-color: wheat; }
-
-.restImage {
-  background: url("../images/restPic.jpg") no-repeat top center;
-  min-height: 300px;
-  margin-top: 7px;
-  width: 100%;
-  background-position-x: 15px;
-  margin-bottom: 45px; }
-
-.restTitleName {
-  color: white; }
-
 .hand {
   cursor: pointer; }
-
-.login {
-  float: right;
-  padding-right: 20px; }
 
 .marginRight20 {
   margin-right: 20px;
@@ -1232,14 +1155,6 @@ button.kh-primary {
 
 /* styles for user restaurant home page ends */
 /* style for location select modal starts */
-.locList {
-  margin-top: 5px;
-  border-bottom: 1px solid gainsboro;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  border-bottom: 1px solid gainsboro;
-  margin-bottom: 5px; }
-
 /* style for location select modal ends */
 /* styles for change pwd starts */
 .pwdLabelBlock {
@@ -1359,35 +1274,39 @@ button.kh-primary {
     padding-left: 7px; } }
 /*Animation*/
 .glyphicon-heart {
-  font-size: 34px;
+  position: relative;
+  font-size: 25px;
   color: red;
-  padding-left: 15px;
-  -webkit-animation-name: beat;
+  /*-webkit-animation-name: beat;
   -webkit-animation-duration: 2.4s;
   -webkit-animation-iteration-count: infinite;
-  -webkit-animation-play-state: running; }
+  -webkit-animation-play-state: running;*/ }
 
 @-webkit-keyframes beat {
   0% {
-    -webkit-transform: scale(1); }
+    -webkit-transform: scale(1);
+    left: 0; }
   10% {
-    -webkit-transform: scale(1.1); }
+    -webkit-transform: scale(1.1);
+    left: -1px; }
   16% {
-    -webkit-transform: scale(0.95); }
+    -webkit-transform: scale(0.95);
+    left: 1px; }
   25% {
-    -webkit-transform: scale(1.2); }
+    -webkit-transform: scale(1.2);
+    left: -2px; }
   32% {
-    -webkit-transform: scale(1); }
+    -webkit-transform: scale(1);
+    left: 0px; }
   40% {
-    -webkit-transform: scale(0.95); }
+    -webkit-transform: scale(0.95);
+    left: 1px; }
   50% {
-    -webkit-transform: scale(1); }
+    -webkit-transform: scale(1);
+    left: 0px; }
   100% {
-    -webkit-transform: scale(1); } }
-@media (min-width: 320px) {
-  .glyphicon-heart {
-    font-size: 15px;
-    padding-top: 4px; } }
+    -webkit-transform: scale(1);
+    left: 0px; } }
 .loader {
   position: relative;
   width: 200px;

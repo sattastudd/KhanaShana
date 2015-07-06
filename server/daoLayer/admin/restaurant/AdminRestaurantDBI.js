@@ -120,6 +120,11 @@ var addNewRestaurant = function( cityName, restaurantToInsert, callback ) {
 
         img : {
 
+        },
+
+        detail : {
+            rating : 5,
+            total_votes : 1
         }
     };
 

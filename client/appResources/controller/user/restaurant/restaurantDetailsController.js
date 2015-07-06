@@ -11,8 +11,6 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
 
     $scope.dishShortlisted = [];
 
-    console.log('alpha to charlie');
-
     $http.get('node/public/restaurant/' + $routeParams.restSLug)
         .success( function( data ){
             console.log(data );
@@ -20,6 +18,8 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
             $scope.rest.name = data.data.name;
             $scope.rest.img = data.data.img;
             $scope.rest.menus = data.data.menu;
+            $scope.rest.detail = data.data.detail;
+            $scope.rest.cuisines = data.data.cuisines;
 
         })
         .error( function ( data ) {
