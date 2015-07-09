@@ -1484,14 +1484,80 @@ button.kh-primary {
 }
 
 .userIconBorder{
-   border: 1px solid gainsboro;
+  border: 1px solid gainsboro;
   border-right: solid 1px gainsboro;
   height: 100px;
   width: 100px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
+  border-radius:4px;
+  margin-top: 2px;
+}
+.mtop15{
+    margin-top:-15px;
+}
+.reviewTIme{
+  font-size: 10px;
+  color: gainsboro;
+}
+.rateStar{
+    color: #DC141B;
+    margin-bottom:5px;
+    margin-top:5px;
+}
+.revTextArea{
+    height: 100px;
+}
+.center{
+    margin-left:2px;
+}
+.reviewTextBlock{
+  border: solid 1px gainsboro;
+  min-height: 100px;
+  border-radius: 8px;
+  background-color: beige;
 }
 .borderBottom{
     border-bottom: 1px solid gainsboro;
+    padding-bottom: 10px;
+}
+
+.mtop30{
+  margin-top: 30px;
+}
+.mtopBot10{
+    margin-top:8px;
+    margin-bottom:8px;
+}
+
+@media screen and (max-width: 768px) {
+    .userIconBorder{
+      height: 70px;
+      width: 70px;
+     }
+    .center{
+      margin-left:2px;
+    }
+     .reviewTextBlock{
+      min-height: 70px;
+    }
+    .revTextArea{
+        height: 70px;
+    }
+    .reviewFont{
+      font-size: 16px;
+    }
+}
+@media screen and (max-width: 462px) {
+    .userIconBorder{
+      height: 50px;
+      width: 50px;
+     }
+    .revTextArea{
+        height: 50px;
+    }
+    .reviewTextBlock{
+      min-height: 50px;
+    }
 }
 
 .marginRight20 {
