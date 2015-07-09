@@ -793,7 +793,8 @@ button.kh-primary {
 
 .fixedBlock {
   padding-left: 0;
-  padding-right: 10px; }
+  padding-right: 10px;
+  margin-bottom: 200px; }
 
 .filterGlyph {
   font-size: 15px;
@@ -1065,6 +1066,20 @@ button.kh-primary {
 .hand {
   cursor: pointer; }
 
+.userIconBorder{
+  border: 1px solid gainsboro;
+  border-right: solid 1px gainsboro;
+  height: 100px;
+  width: 100px;
+  margin-bottom: 20px;
+}
+.borderBottom{
+    border-bottom: 1px solid gainsboro;
+}
+
+.mtop30{
+	margin-top: 30px;
+}
 .marginRight20 {
   margin-right: 20px;
   margin-top: 60px;
@@ -1072,6 +1087,7 @@ button.kh-primary {
 
 .mtop10 {
   margin-top: 10px; }
+
 
 .mtop28 {
   margin-top: -28px; }

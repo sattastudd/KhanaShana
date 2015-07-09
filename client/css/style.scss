@@ -1161,6 +1161,7 @@ button.kh-primary {
 .fixedBlock {
   padding-left: 0;
   padding-right: 10px;
+  margin-bottom: 200px;
 }
 
 .filterGlyph {
@@ -1480,6 +1481,17 @@ button.kh-primary {
 
 .hand {
   cursor:pointer;
+}
+
+.userIconBorder{
+   border: 1px solid gainsboro;
+  border-right: solid 1px gainsboro;
+  height: 100px;
+  width: 100px;
+  margin-bottom: 20px; 
+}
+.borderBottom{
+    border-bottom: 1px solid gainsboro;
 }
 
 .marginRight20 {
