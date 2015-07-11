@@ -1,11 +1,11 @@
 var CustomerAccountController = require( '../controllers/customer/account/CustomerAccountController' );
 
-/* Request-Name : /user/password, Type : Get, Allowed : admin, user*/
+/* Request-Name : /user/password, Type : Put, Allowed : user, admin*/
 /* This request would be used by users to change their password. */
-router.post( '/user/password', function( req, res, next ){
-    console.log( 'In adminRoutes | Handling ' + req.route.path );
+router.put( '/user/password', function( req, res, next ){
+    logger.info( 'In customerRoutes | Handling ' + req.route.path );
 
     CustomerAccountController.changePassword( req, res, next );
 
-    console.log( 'In adminRoutes | Finished ' + req.route.path );
+    logger.info( 'In customerRoutes | Finished ' + req.route.path );
 });

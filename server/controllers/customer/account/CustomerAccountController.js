@@ -1,9 +1,10 @@
 /* This controller file would deal with customer user account related tasks.*/
 
 var CustomerAccountService = require( '../../../serviceLayer/customer/account/CustomerAccountService' );
+var ServerConstants = require( '../../../constants/ServerConstants' );
 
 var changePassword = function( req, res, next ) {
-    console.log( 'In CustomerAccountController | Starting Execution of changePassword' );
+    logger.info( 'In CustomerAccountController | Starting Execution of changePassword' );
 
     var userInfo = {
         email : req.user.email,
@@ -13,15 +14,20 @@ var changePassword = function( req, res, next ) {
 
     CustomerAccountService.changePassword( userInfo, function( err, result ){
         if( err ) {
-            res.status( 500 )
-                .json( result );
+            if( err === ServerConstants.appErrors.validationError ) {
+                res.status(400)
+                    .json(result);
+            } else {
+                res.status(500)
+                    .json(result);
+            }
         } else {
             res.status( 200 )
                 .json( result );
         }
     });
 
-    console.log( 'In CustomerAccountController | Finished Execution of changePassword' );
+    logger.info( 'In CustomerAccountController | Finished Execution of changePassword' );
 };
 
 exports.changePassword = changePassword;

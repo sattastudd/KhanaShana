@@ -23,16 +23,6 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/user/searchResults.html',
                 '../../appResources/controller/searchResultsController'
         ))
-        .when('/adminHome',
-            routeConfig.config(
-                'views/admin/adminHome.html',
-                '../../appResources/controller/adminHomeController'
-        ))
-        .when('/adminRestaurant',
-            routeConfig.config(
-                'views/admin/adminRestaurants.html',
-                '../../appResources/controller/adminRestHomeController'
-        ))
         .when('/checkOut',
             routeConfig.config(
                 'views/user/UserCheckOut.html',

@@ -79,6 +79,8 @@ var appConstants = {
     userPermitted : 'User Permitted.',
     userUpdated : 'User Details Updated.',
     passwordReset : 'User Password has been updated successfully.',
+    samePassword : 'Please enter a new password.',
+    passwordChanged : 'Password has been changed successfully.',
 
     restaurantDetailsUpdated : 'Restaurant Details have been updated.',
 

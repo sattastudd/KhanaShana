@@ -16,7 +16,7 @@ var setUpError = function( err, errMsg, type, response ){
 
 /* This is public method to change Users' Password.*/
 var changePassword = function( userInfo, callback ){
-	console.log( 'In CustomerAccountService | Starting execution of changePassword' );
+	logger.info( 'In CustomerAccountService | Starting execution of changePassword' );
 	
 	var err = {};
 	var errMsg = {};
@@ -34,44 +34,57 @@ var changePassword = function( userInfo, callback ){
 
 		if( responseForField.result ) {
 			hasAnyValidationFailed = true;
-			err[ propValue ] = true;
-			errMsg[ propValue ] = responseForField.message;
-
-			break;
+			err[ propName ] = true;
+			errMsg[ propName ] = responseForField.message;
 		}
 	}
 
+    if( !hasAnyValidationFailed ) {
+        if( userInfo.password === userInfo.newPassword ) {
+            hasAnyValidationFailed = true;
 
+            err.newPassword = true;
+            errMsg.newPassword = appConstants.samePassword;
+        }
+    }
 
 	if( hasAnyValidationFailed ) {
 		callback( appConstants.appErrors.validationError, {
 			err : err,
 			errMsg : errMsg,
 			data : null,
-			msg : appConstants.appErrors.validationError
+			msg : appConstants.errorMessage.fillDetails
 		});
 	} else {
 		CustomerAccountDBI.changePassword(userInfo, function(err, result){
 			if( err ) {
-				console.log( err );
-				callback( appConstants.appErrors.internalError, {
-					err : {},
-					errMsg : {},
-					data : null,
-					msg : appConstants.errorMessage.someError
-				});
+				logger.error( err );
+                if( err === appConstants.appErrors.invalidCredentials ) {
+                    callback( err, { err : {},
+                        errMsg : {},
+                        data : null,
+                        msg : appConstants.errorMessage.invalidCredentials
+                    });
+                } else {
+                    callback( appConstants.appErrors.internalError, {
+                        err : {},
+                        errMsg : {},
+                        data : null,
+                        msg : appConstants.errorMessage.someError
+                    });
+                }
 			} else {
 				callback( null, {
 					err : {},
 					errMsg : {},
 					data : result,
-					msg : appConstants.successMessage
+					msg : appConstants.passwordChanged
 				});
 			}
 		});
 	}
 
-	console.log( 'In CustomerAccountService | Finished Execution of changePassword' );
+	logger.info( 'In CustomerAccountService | Finished Execution of changePassword' );
 };
 
 exports.changePassword = changePassword;

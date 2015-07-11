@@ -4,17 +4,63 @@ define([], function() {
     return userChangePwdController;
 });
 
-function changePwdController ($scope,$location){
+function changePwdController ($scope, $location, DataStore, UserInfoProvider, AppConstants, RestRequests, $http){
 
-	console.log("inside change pwd");
+	UserInfoProvider.handleUserStatus();
 
-	$scope.cancel = function(){
+	$scope.user = {};
+    $scope.err = {};
+    $scope.errMsg = {};
 
-		$location.path('/')
-	}
+    $scope.successMessage = '';
+    $scope.errorMessage = '';
 
-	$scope.reset = function(){
+    $scope.isServerError = false;
+    $scope.isServerSuccess = false;
 
-		$scope.pwd = null;
-	}
+    $scope.hasFieldError = function ( type, isFieldValue ) {
+
+        if( isFieldValue ) {
+
+            return type ? '' : 'noHeight';
+
+        } else {
+
+            return $scope.err[ type ] ? '' : 'noHeight';
+
+        }
+    };
+
+    $scope.haveReceivedErrorFromServer = function() {
+        return $scope.isServerError ? '' : 'noHeight';
+    };
+
+    $scope.haveReceivedSuccessFromServer = function(){
+        return $scope.isServerSuccess ? '' : 'noHeight';
+    };
+
+
+    $scope.changePassword = function() {
+        var requestName = AppConstants.loggedInUser + '/' + RestRequests.password;
+
+        $http.put( requestName, $scope.user )
+            .success( function( data ) {
+                $scope.isServerError = false;
+                $scope.isServerSuccess = true;
+
+                $scope.err = {};
+                $scope.errMsg = {};
+
+                $scope.successMessage = data.msg;
+            })
+            .error( function( data ) {
+                $scope.isServerSuccess = false;
+                $scope.isServerError = true;
+
+                $scope.err = data.err;
+                $scope.errMsg = data.errMsg;
+
+                $scope.errorMessage = data.msg;
+            })
+    }
 }

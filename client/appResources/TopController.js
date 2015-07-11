@@ -256,6 +256,11 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
         return $scope.isUserContextMenuOpen ? '' : 'noHeight';
     };
 
+    $scope.moveToPath = function( path ) {
+        $scope.isUserContextMenuOpen = false;
+        $location.path( path );
+    };
+
     $scope.logoutUser = function () {
 
         $scope.isUserContextMenuOpen = false;
@@ -302,6 +307,10 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
 
         $location.path( 'search' );
     };
+
+    $scope.$on('SessionExpiredEvent', function($event) {
+        $scope.openLoginModal();
+    });
 };
 
 function LoginModalController($scope, $modalInstance, $location, DataStore, $window, $http, AppConstants, RestRequests, ValidationService, AppUtils){

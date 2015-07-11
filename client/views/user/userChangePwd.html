@@ -1,55 +1,82 @@
 <div ng-controller="changePwdController">
-   <div class="container containerBlock">
-   		<div class="row">
-   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-   				<h1>Change Password</h1>
-   			</div>
-   		</div>
-   		<div class="row">
-   			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 pwdLabelBlock">
-		   		<div class="row">
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdLabel">
-		   				<label>Enter your Email ID</label>
-		   			</div>
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		   				<input class="form-control" type="text" ng-model="pwd.mail" placeholder="Enter your Email ID" />
-		   			</div>
-		   		</div>
-		   		<div class="row">
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdLabel">
-		   				<label>Enter current password</label>
-		   			</div>
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		   				<input class="form-control" type="password" ng-model="pwd.oldPassword" placeholder="Enter current password" />
-		   			</div>
-		   		</div>
-		   		<div class="row">
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdLabel">
-		   				<label>Enter new password</label>
-		   			</div>
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		   				<input class="form-control" type="password" ng-model="pwd.newPassword" placeholder="Enter new password" />
-		   			</div>
-		   		</div>
-		   		<div class="row">
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdLabel">
-		   				<label>Re-enter new password</label>
-		   			</div>
-		   			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		   				<input class="form-control" type="password" ng-model="pwd.confirmNewPassword" placeholder="Re-enter new password" />
-		   			</div>
-		   		</div>
-		   	</div>
-		   	<div class="hidden-xs hidden-sm col-md-6 col-lg-6">
-		   		<img src="../../images/pwd keys 2.png" class="pwdkeyImage" />
-		   	</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdBtnBlock">
-				<button type="button" ng-click="submit()" class="btn pwdBtnPrimary">Submit</button>
-				<button type="button" ng-click="reset()" class="btn pwdBtnSecondary">Reset</button>
-				<button type="button" ng-click="cancel()" class="btn pwdBtnSecondary">Cancel</button>
-			</div>
-		</div>
-   </div>
+    <div class="container containerBlock">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1>Change Password</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="bg-danger" ng-class="haveReceivedErrorFromServer()">
+                    {{errorMessage}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="bg-success" ng-class="haveReceivedSuccessFromServer()">
+                    {{successMessage}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 pwdLabelBlock">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdLabel">
+                        <label>Enter current password</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                        <input class="form-control" type="password" ng-model="user.password"
+                               placeholder="Enter current password"/>
+                    </div>
+                    <div class="col-xs-12 collapsibleErrorMessage" ng-class="hasFieldError('password')">
+                        <div class="bg-danger" ng-class="hasFieldError('password')">
+                            {{errMsg.password}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdLabel">
+                        <label>Enter new password</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                        <input class="form-control" type="password" ng-model="user.newPassword"
+                               placeholder="Enter new password"/>
+                    </div>
+                    <div class="col-xs-12 collapsibleErrorMessage" ng-class="hasFieldError('newPassword')">
+                        <div class="bg-danger" ng-class="hasFieldError('newPassword')">
+                            {{errMsg.newPassword}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdLabel">
+                        <label>Re-enter new password</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                        <input class="form-control" type="password" ng-model="user.confirmNewPassword"
+                               placeholder="Re-enter new password"/>
+                    </div>
+                    <div class="col-xs-12 collapsibleErrorMessage" ng-class="hasFieldError('confirmNewPassword')">
+                        <div class="bg-danger" ng-class="hasFieldError('confirmNewPassword')">
+                            {{errMsg.confirmNewPassword}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden-xs hidden-sm col-md-6 col-lg-6">
+                <img src="../../images/pwd keys 2.png" class="pwdkeyImage"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pwdBtnBlock">
+                <button type="button" class="btn btn-pram-primary" ng-click="changePassword()">Submit</button>
+                <button type="button" ng-click="reset()" class="btn btn-pram-secondary">Reset</button>
+                <button type="button" ng-click="cancel()" class="btn btn-pram-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>
