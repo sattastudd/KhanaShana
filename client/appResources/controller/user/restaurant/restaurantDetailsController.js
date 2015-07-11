@@ -119,6 +119,13 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
     }
 
 
+$scope.reviews = [{name:'Saumya',review:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',rating:'2'},
+                     {name:'Gaurav',review:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',rating:'3'},
+                     {name:'Mayank',review:'Lorem ipsum dolor sit amet,',rating:'3'},
+                     {name:'Magan',review:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',rating:'5'},
+                     {name:'Ashish',review:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',rating:'4'}];
+
+
     $scope.reviewOrder = function(){
          $modal.open({
                 templateUrl : 'views/modals/orderReview/orderReviewModal.html',
