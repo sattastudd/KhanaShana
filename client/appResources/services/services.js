@@ -104,7 +104,8 @@ define(['angular', '../require/route-config'], function (angular,
                 name: 'Invalid Name',
                 email: 'Invalid Email',
                 mandatory: 'Field can not be left empty.',
-                contact: 'Invalid Contact Number.'
+                contact: 'Invalid Contact Number.',
+                sessionExpired : 'Your session has expired.'
             }
         })
         .service('ValidationService', function (ResponseMessage, RegExProvider) {
@@ -187,7 +188,7 @@ define(['angular', '../require/route-config'], function (angular,
                 return storedData;
             };
         })
-        .service('authInterceptor', function ($rootScope, $q, $window, AppConstants, DataStore, UserInfoProvider) {
+        .service('authInterceptor', function ($rootScope, $q, $window, AppConstants, DataStore, UserInfoProvider, ResponseMessage) {
             return {
                 request: function (config) {
                     config.headers = config.headers || {};
@@ -239,7 +240,7 @@ define(['angular', '../require/route-config'], function (angular,
 
                         DataStore.storeData( 'userStatus', {
                             user : rejection.data.user,
-                            msg : ResponseMessage.errorMessage.sessionExpired
+                            msg : ResponseMessage.sessionExpired
                         });
 
                         $rootScope.openLoginModal();

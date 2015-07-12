@@ -114,14 +114,6 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
             windowClass    : 'darkTransparentBack',
             size : 'sm'
         });
-
-    /*$scope.loadingModal = function () {
-        var modalInstance = $modal.open({
-            templateUrl : 'loadingModal.html',
-            controller : 'loadingModalController',
-            backdrop : 'static',
-            windowClass    : 'darkTransparentBack'
-        });*/
         
         /*To make rest of the page blurred.*/
         var contentContainer = angular.element(document.querySelector('#contentContainer'));
@@ -129,6 +121,29 @@ function parentController($scope, $rootScope, $http, DataStore, AppConstants, Re
 
         modalInstance.result.then(function (data) {
             
+            /*On modal close, we want to remove the blurred.*/
+            contentContainer.removeClass('blurredBack');
+        }, function (data) {
+            /*On modal close, we want to remove the blurred.*/
+            contentContainer.removeClass('blurredBack');
+        });
+    };
+
+    $rootScope.openLoginModal = function () {
+        var modalInstance = $modal.open({
+            templateUrl : 'loginModal.html',
+            controller : 'LoginModalController',
+            backdrop : 'static',
+            windowClass    : 'darkTransparentBack',
+            size : 'sm'
+        });
+
+        /*To make rest of the page blurred.*/
+        var contentContainer = angular.element(document.querySelector('#contentContainer'));
+        contentContainer.addClass('blurredBack');
+
+        modalInstance.result.then(function (data) {
+
             /*On modal close, we want to remove the blurred.*/
             contentContainer.removeClass('blurredBack');
         }, function (data) {

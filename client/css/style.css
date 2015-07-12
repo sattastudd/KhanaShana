@@ -496,6 +496,12 @@ body {
 .marRight5 {
   margin-right: 5px; }
 
+.marRight0 {
+  margin-right: 0; }
+
+.rightBorder {
+  border-right: 1px solid gainsboro; }
+
 .noLeftRightPadding {
   padding-left: 0;
   padding-right: 0; }
@@ -503,6 +509,10 @@ body {
 .noLeftRightMargin {
   margin-left: 0;
   margin-right: 0; }
+
+.leftRightMargin {
+  margin-left: 15px;
+  margin-right: 15px; }
 
 .noLPad {
   padding-left: 0; }
@@ -811,6 +821,13 @@ button.kh-primary {
       .restaurantMenu ul li:hover a, .restaurantMenu ul li:hover a:hover {
         color: #fff; }
 
+.blurredBack {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px); }
+
 .tabbedContent {
   position: relative; }
   .tabbedContent > div {
@@ -818,6 +835,7 @@ button.kh-primary {
     float: left;
     opacity: 0;
     z-index: 3;
+    display: inline-block;
     -moz-transition: all 0.2s;
     -o-transition: all 0.2s;
     -webkit-transition: all 0.2s;
@@ -1170,9 +1188,11 @@ button.kh-primary {
   border-radius: 8px;
   background-color: beige; }
 
+.segoeFont {
+  font-family: 'Segoe UI'; }
+
 .borderBottom {
-  border-bottom: 1px solid gainsboro;
-  padding-bottom: 10px; }
+  border-bottom: 1px solid gainsboro; }
 
 .mtop30 {
   margin-top: 30px; }
@@ -1208,9 +1228,7 @@ button.kh-primary {
   .reviewTextBlock {
     min-height: 50px; } }
 .marginRight20 {
-  margin-right: 20px;
-  margin-top: 60px;
-  border-right: 1px solid gainsboro; }
+  margin-right: 20px; }
 
 .mtop10 {
   margin-top: 10px; }
@@ -1218,21 +1236,27 @@ button.kh-primary {
 .mtop28 {
   margin-top: -28px; }
 
+.inVisible {
+  opacity: 0; }
+
 .menuCategory {
-  border-bottom: 1px solid gainsboro;
   color: #DC141B;
   margin-bottom: 3px;
   margin-top: 3px;
   padding-bottom: 6px;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer; }
+  .menuCategory label {
+    font-weight: 400; }
+
+.menuItems {
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s; }
 
 .itemList {
-  border-bottom: 1px solid gainsboro;
-  margin-top: 10px;
-  margin-left: 15px;
   font-size: 19px;
-  margin-left: -15px;
   color: #000; }
 
 .smallCartGlyph {
@@ -1263,7 +1287,9 @@ button.kh-primary {
   height: 23px;
   width: 21px;
   margin-right: 20px;
-  margin-bottom: 8px; }
+  margin-bottom: 6px;
+  margin-top: 2px;
+  line-height: 21px; }
 
 .glyphPlusMinusBill {
   font-size: 12px;
@@ -1293,6 +1319,11 @@ button.kh-primary {
 .dishRemove {
   font-size: 12px;
   margin-top: 5px; }
+
+.specialityText {
+  padding-bottom: 17px;
+  margin-top: 5px;
+  padding-left: 5px; }
 
 /* styles for user restaurant home page ends */
 /* style for location select modal starts */

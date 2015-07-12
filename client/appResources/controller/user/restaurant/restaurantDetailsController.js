@@ -11,6 +11,12 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
 
     $scope.dishShortlisted = [];
 
+    $scope.closeOtherMenus = function() {
+        angular.forEach( $scope.rest.menus, function( menu ) {
+            menu.isCollapsed = true;
+        });
+    };
+
     $http.get('node/public/restaurant/' + $routeParams.restSLug)
         .success( function( data ){
             console.log(data );
@@ -21,21 +27,26 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
             $scope.rest.detail = data.data.detail;
             $scope.rest.cuisines = data.data.cuisines;
 
+            $scope.closeOtherMenus();
+
         })
         .error( function ( data ) {
             console.log( data );
         });
 
-    console.log("i want this one");
-    console.log($scope.rest.menus);
-
     $scope.menuSelected = function (menu) {
-        console.log(menu);
+        var collapsedStateOfPassedMenu = menu.isCollapsed;
+        $scope.closeOtherMenus();
+
         $scope.menu = menu;
         $scope.menuName = menu.title;
-        console.log(menu.items);
-        //if (menu.items.price) {};
-    }
+
+        menu.isCollapsed = !collapsedStateOfPassedMenu;
+    };
+
+    $scope.showShowMenu = function(){
+        return typeof $scope.menu !== 'undefined' ? '' : 'inVisible';
+    };
 
     
    /* $scope.openQuickView = function(index){
