@@ -1207,6 +1207,7 @@ button.kh-primary {
   position : relative;
 
   > div{
+
     width : 100%;
     float : left;
     opacity : 0;
@@ -1214,11 +1215,14 @@ button.kh-primary {
 
     @include transition-mix(all, $theme-fast-reaction);
     &.active{margin-left:0;z-index : 4 !important; opacity: 1}
-    &.menu{margin-left : 0}
-    &.gallery, &.reviews, &.location{margin-left : -100%}
-
+    &.gallery, &.reviews, &.location, &.menu{margin-left: -200%;
+      &.active{
+        margin-left : 0;
+      }
+    }
   }
 }
+
 /*Style for restaurant Home End*/
 
 /* styles for search result page starts */

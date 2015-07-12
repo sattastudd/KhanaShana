@@ -6,7 +6,12 @@ define(["angular", "services"], function(angular, services) {
      * The source represents className of the ul.
      * The target represents the parent of tabbed Content.
      */
-    app.directive('petooTab', function(){
+    /* This directive aims at fade in animation for the tabbed content.
+     * The directive should be applied on the top of ul of tabbed elements.
+     * The source represents className of the ul.
+     * The target represents the parent of tabbed Content.
+     */
+    app.directive('petooTab', function( $timeout ){
         return {
             restrict : 'A',
             scope : {
@@ -28,21 +33,32 @@ define(["angular", "services"], function(angular, services) {
 
                 /*We need to perform magic on click.*/
                 element.on( 'click', function($event){
-                    removeActiveClassFromTabs(searchForClickedElement($event.toElement));
+
+                    removeActiveClassFromTabs(searchForClickedElement($event.srcElement));
                 });
 
                 /*In this method we find the index of the clicked element.*/
                 var searchForClickedElement = function( ele ){
                     var toSearchIn = null;
 
+                    var isControlDisabled = false;
+
                     if( ele.nodeName.toLowerCase() === 'li' ){
+                        isControlDisabled = angular.element(ele).prop( 'disabled' );
                         toSearchIn = tabsChildLi;
                     } else {
+                        isControlDisabled = angular.element(ele).parent().prop( 'disabled' );
                         toSearchIn = tabsChildHref;
                     }
-                    for( var i=0; i<toSearchIn.length; i++){
-                        if( ele === toSearchIn[i])
-                            return i;
+
+                    if( !isControlDisabled ) {
+                        for( var i=0; i<toSearchIn.length; i++){
+
+                            if( ele === toSearchIn[i])
+                                return i;
+                        }
+                    } else {
+                        return null;
                     }
                 };
 
@@ -50,12 +66,24 @@ define(["angular", "services"], function(angular, services) {
                  * Same happens for the tabbed content divs.
                  */
                 var removeActiveClassFromTabs = function( index ){
-                    listItems.removeClass(' active' );
-                    targetItems.removeClass( 'active' );
 
-                    listItems.eq( index).addClass( 'active' );
-                    targetItems.eq( index).addClass( 'active' );
+                    if( index != null ) {
+                        listItems.removeClass(' active');
+                        targetItems.removeClass('active');
+
+                        listItems.eq(index).addClass('active');
+                        targetItems.eq(index).addClass('active');
+                    }
                 };
+
+                /* In case we need to do move things around */
+                scope.$on( 'moveToPetooTab', function( $event, args ) {
+                    var indexToMove = parseInt( args, 10);
+
+                    $timeout( function() {
+                        removeActiveClassFromTabs( indexToMove );
+                    }, 500 );
+                });
             }
         }
     });

@@ -242,7 +242,7 @@ define(['angular', '../require/route-config'], function (angular,
                             msg : ResponseMessage.errorMessage.sessionExpired
                         });
 
-                        $rootScope.$broadcast('SessionExpiredEvent');
+                        $rootScope.openLoginModal();
                     }
 
                     return $q.reject(rejection);
