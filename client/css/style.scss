@@ -11,6 +11,8 @@ $theme-matching-color-three : #853bb1;
 $theme-matching-color-four : #652251;
 $theme-matching-color-five : #b83d60;
 
+$theme-add-button-color : #9A989D;
+
 $theme-secondary-font: 'Segoe UI', sans-serif;
 
 $theme-primary-font-color: #fff;
@@ -770,9 +772,22 @@ body {
   margin-top : 30px;
 }
 
+.bMar5{
+  margin-bottom:  5px;
+}
+
+.bMar10{
+  margin-bottom : 10px;
+}
+
 .leftRightPadding20{
   padding-left : 20px;
   padding-right : 20px;
+}
+
+.topBelowPadding6{
+  padding-top: 6px;
+  padding-bottom : 6px;
 }
 
 .marRight5 {
@@ -1753,6 +1768,37 @@ button.kh-primary {
   margin-top: 2px;
   line-height: 21px;
 }
+
+a.addButton{
+  .glyphicon-plus{
+    font-size: 14px;
+    color: #9A989D;
+    border: 1px solid #9A989D;
+    padding: 5px 5px 5px 7px;
+    box-shadow: 0px 0px 5px 2px #ccc;
+    border-radius: 100%;
+    @include transition-mix( all, $theme-fast-reaction );
+  }
+
+  &:hover{
+    .glyphicon-plus{
+      box-shadow : 0px 0px 10px 2px #ccc;
+    }
+  }
+}
+
+.menuPrice{
+  a, p {
+    display: inline-block;
+    margin-right : 20px;
+  }
+
+  p.price{
+    display: block;
+    float:right;
+    margin-right: 0;
+  }
+}
 .glyphPlusMinusBill{
   font-size: 12px;
   margin-top: 3px;
@@ -1787,6 +1833,7 @@ button.kh-primary {
   padding-bottom: 17px;
   margin-top: 5px;
   padding-left: 5px;
+  margin-bottom: 0px;
 }
 
 /* styles for user restaurant home page ends */

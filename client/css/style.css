@@ -489,9 +489,19 @@ body {
 .tMar30 {
   margin-top: 30px; }
 
+.bMar5 {
+  margin-bottom: 5px; }
+
+.bMar10 {
+  margin-bottom: 10px; }
+
 .leftRightPadding20 {
   padding-left: 20px;
   padding-right: 20px; }
+
+.topBelowPadding6 {
+  padding-top: 6px;
+  padding-bottom: 6px; }
 
 .marRight5 {
   margin-right: 5px; }
@@ -1291,6 +1301,28 @@ button.kh-primary {
   margin-top: 2px;
   line-height: 21px; }
 
+a.addButton .glyphicon-plus {
+  font-size: 14px;
+  color: #9A989D;
+  border: 1px solid #9A989D;
+  padding: 5px 5px 5px 7px;
+  box-shadow: 0px 0px 5px 2px #ccc;
+  border-radius: 100%;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s; }
+a.addButton:hover .glyphicon-plus {
+  box-shadow: 0px 0px 10px 2px #ccc; }
+
+.menuPrice a, .menuPrice p {
+  display: inline-block;
+  margin-right: 20px; }
+.menuPrice p.price {
+  display: block;
+  float: right;
+  margin-right: 0; }
+
 .glyphPlusMinusBill {
   font-size: 12px;
   margin-top: 3px;
@@ -1323,7 +1355,8 @@ button.kh-primary {
 .specialityText {
   padding-bottom: 17px;
   margin-top: 5px;
-  padding-left: 5px; }
+  padding-left: 5px;
+  margin-bottom: 0px; }
 
 /* styles for user restaurant home page ends */
 /* style for location select modal starts */

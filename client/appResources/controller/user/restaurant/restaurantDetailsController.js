@@ -48,6 +48,10 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
         return typeof $scope.menu !== 'undefined' ? '' : 'inVisible';
     };
 
+    $scope.showCheckoutLink = function() {
+        return typeof $scope.dishShortlisted.length !== 'undefined' && $scope.dishShortlisted.length > 0 ? '' : 'inVisible';
+    };
+
     
    /* $scope.openQuickView = function(index){
         var current = $scope.result[index];

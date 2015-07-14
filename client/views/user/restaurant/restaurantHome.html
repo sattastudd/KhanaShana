@@ -84,7 +84,7 @@
                                  <div class="row">
 
                                      <div class="col-xs-12">
-                                        <h3 class="segoeFont borderBottom specialityText">Specialities</h3>
+                                        <h3 class="segoeFont borderBottom specialityText" style="margin-bottom: 10px">Specialities</h3>
                                      </div>
 
                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 menuCategory segoeFont"
@@ -154,30 +154,33 @@
                                  <div class="row">
                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 itemList segoeFont " ng-repeat="item in menu.items">
 
-                                         <div class="row noLeftRightMargin" ng-class="{'borderBottom' : !$last}">
+                                         <div class="row noLeftRightMargin topBelowPadding6" ng-class="{'borderBottom' : !$last}">
                                              <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                                                 {{item.title}}
                                             </div>
 
                                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-                                                <div class="row marRight0">
+                                                <div class="row marRight0 menuPrice">
 
-                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bMar5"
                                                          ng-if="item.price.half!==0">
-                                                        <p align="center" ng-click="itemAddedHalf(item,$index)"
-                                                           class="pull-left glyphPlusMinus hand">+</p>
+
+                                                        <a class="hand addButton" ng-click="itemAddedHalf(item,$index)">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
 
                                                         <p>Half</p>
 
-                                                        <p class="pull-right mtop28"><b>{{item.price.half}}</b>-Rs</p>
+                                                        <p class="price"><b>{{item.price.half}}</b>-Rs</p>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <p align="center" ng-click="itemAddedFull(item)"
-                                                           class="pull-left glyphPlusMinus hand">+</p>
+                                                        <a class="hand addButton" ng-click="itemAddedFull(item)">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
 
                                                         <p>Full</p>
 
-                                                        <p class="pull-right mtop28"><b>{{item.price.full}}</b>-Rs</p>
+                                                        <p class="price"><b>{{item.price.full}}</b>-Rs</p>
                                                     </div>
 
                                                 </div>
@@ -195,7 +198,7 @@
                                              CheckOut</h3>
                                      </div>
                                  </div>
-                                 <div class="row billOutline">
+                                 <div class="row billOutline menuItems" ng-class="showCheckoutLink()">
                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 billList"
                                           ng-repeat="dish in dishShortlisted">
                                          <div class="row">
