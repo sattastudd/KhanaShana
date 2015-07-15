@@ -122,6 +122,21 @@ body {
   width: 100%;
 }
 
+.breakPaddingMargin{
+  .row{
+    margin-left:0;
+    margin-right:0;
+
+    .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9,
+    .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9,
+    .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9,
+    .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
+      padding-left:0;
+      padding-right:0;
+    }
+  }
+}
+
 .modal.scale .modal-dialog {
 
   @include transition-transform-mixin(.3s, ease);
@@ -837,6 +852,10 @@ body {
   padding-top: 5px;
 }
 
+.rPad15{
+  padding-right: 15px !important;
+}
+
 .tpad7 {
   padding-top: 7px;
 }
@@ -1368,6 +1387,22 @@ button.kh-primary {
   padding-top: 10px;
 }
 
+.tpad6{
+  padding-top: 6px;
+}
+
+.bMar4{
+  margin-bottom: 4px;
+}
+
+.topBelowMargin16{
+  margin : 16px 0;
+}
+
+.bPad10{
+  padding-bottom: 10px;
+}
+
 .bpad8 {
   padding-bottom: 8px;
 }
@@ -1661,7 +1696,7 @@ button.kh-primary {
 }
 
 .borderBottom{
-    border-bottom: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro !important;
 }
 
 .mtop30{
@@ -1709,6 +1744,11 @@ button.kh-primary {
 .mtop10 {
   margin-top:10px;
 }
+
+.mBottom10{
+  margin-bottom:10px;
+}
+
 .mtop28{
   margin-top: -28px;
 }
@@ -1770,7 +1810,7 @@ button.kh-primary {
 }
 
 a.addButton{
-  .glyphicon-plus{
+  .glyphicon-plus, .glyphicon-minus, .glyphicon-trash{
     font-size: 14px;
     color: #9A989D;
     border: 1px solid #9A989D;
@@ -1780,9 +1820,18 @@ a.addButton{
     @include transition-mix( all, $theme-fast-reaction );
   }
 
+  .glyphicon-minus, .glyphicon-trash{
+    padding-left : 5px;
+  }
+
   &:hover{
-    .glyphicon-plus{
+    .glyphicon-plus, .glyphicon-minus, .glyphicon-trash{
       box-shadow : 0px 0px 10px 2px #ccc;
+    }
+
+    .glyphicon-trash{
+      color : $theme-primary-color;
+      border : 1px solid $theme-primary-color;
     }
   }
 }
@@ -1806,23 +1855,18 @@ a.addButton{
   height: 15px;
   width: 14px;
 }
-.billList{
-  border-bottom: 1px solid gainsboro;
-  margin-top: 10px;
-  padding-bottom: 15px;
-}
-.billOutline{
+
+.OnePxGainsBroBorder{
   border: 1px solid gainsboro;
 }
+
+.noBottomBorder{
+  border-bottom : none;
+}
+
+
 .mBottom100{
   margin-bottom: 100px;
-}
-.proceedCheckOut{
-  height: 40px;
-  padding-top: 7px;
-  border-radius: 5px;
-  background-color: #07a16d;
-  color: white;
 }
 .dishRemove{
   font-size: 12px;

@@ -22,6 +22,16 @@ body {
 .fullScreenWidth {
   width: 100%; }
 
+.breakPaddingMargin .row {
+  margin-left: 0;
+  margin-right: 0; }
+  .breakPaddingMargin .row .col-lg-1, .breakPaddingMargin .row .col-lg-10, .breakPaddingMargin .row .col-lg-11, .breakPaddingMargin .row .col-lg-12, .breakPaddingMargin .row .col-lg-2, .breakPaddingMargin .row .col-lg-3, .breakPaddingMargin .row .col-lg-4, .breakPaddingMargin .row .col-lg-5, .breakPaddingMargin .row .col-lg-6, .breakPaddingMargin .row .col-lg-7, .breakPaddingMargin .row .col-lg-8, .breakPaddingMargin .row .col-lg-9,
+  .breakPaddingMargin .row .col-md-1, .breakPaddingMargin .row .col-md-10, .breakPaddingMargin .row .col-md-11, .breakPaddingMargin .row .col-md-12, .breakPaddingMargin .row .col-md-2, .breakPaddingMargin .row .col-md-3, .breakPaddingMargin .row .col-md-4, .breakPaddingMargin .row .col-md-5, .breakPaddingMargin .row .col-md-6, .breakPaddingMargin .row .col-md-7, .breakPaddingMargin .row .col-md-8, .breakPaddingMargin .row .col-md-9,
+  .breakPaddingMargin .row .col-sm-1, .breakPaddingMargin .row .col-sm-10, .breakPaddingMargin .row .col-sm-11, .breakPaddingMargin .row .col-sm-12, .breakPaddingMargin .row .col-sm-2, .breakPaddingMargin .row .col-sm-3, .breakPaddingMargin .row .col-sm-4, .breakPaddingMargin .row .col-sm-5, .breakPaddingMargin .row .col-sm-6, .breakPaddingMargin .row .col-sm-7, .breakPaddingMargin .row .col-sm-8, .breakPaddingMargin .row .col-sm-9,
+  .breakPaddingMargin .row .col-xs-1, .breakPaddingMargin .row .col-xs-10, .breakPaddingMargin .row .col-xs-11, .breakPaddingMargin .row .col-xs-12, .breakPaddingMargin .row .col-xs-2, .breakPaddingMargin .row .col-xs-3, .breakPaddingMargin .row .col-xs-4, .breakPaddingMargin .row .col-xs-5, .breakPaddingMargin .row .col-xs-6, .breakPaddingMargin .row .col-xs-7, .breakPaddingMargin .row .col-xs-8, .breakPaddingMargin .row .col-xs-9 {
+    padding-left: 0;
+    padding-right: 0; }
+
 .modal.scale .modal-dialog {
   -moz-transition: -moz-transform 0.3s ease;
   -o-transition: -o-transform 0.3s ease;
@@ -539,6 +549,9 @@ body {
 .tpad5 {
   padding-top: 5px; }
 
+.rPad15 {
+  padding-right: 15px !important; }
+
 .tpad7 {
   padding-top: 7px; }
 
@@ -949,6 +962,18 @@ button.kh-primary {
 .tpad10 {
   padding-top: 10px; }
 
+.tpad6 {
+  padding-top: 6px; }
+
+.bMar4 {
+  margin-bottom: 4px; }
+
+.topBelowMargin16 {
+  margin: 16px 0; }
+
+.bPad10 {
+  padding-bottom: 10px; }
+
 .bpad8 {
   padding-bottom: 8px; }
 
@@ -1202,7 +1227,7 @@ button.kh-primary {
   font-family: 'Segoe UI'; }
 
 .borderBottom {
-  border-bottom: 1px solid gainsboro; }
+  border-bottom: 1px solid gainsboro !important; }
 
 .mtop30 {
   margin-top: 30px; }
@@ -1242,6 +1267,9 @@ button.kh-primary {
 
 .mtop10 {
   margin-top: 10px; }
+
+.mBottom10 {
+  margin-bottom: 10px; }
 
 .mtop28 {
   margin-top: -28px; }
@@ -1301,7 +1329,7 @@ button.kh-primary {
   margin-top: 2px;
   line-height: 21px; }
 
-a.addButton .glyphicon-plus {
+a.addButton .glyphicon-plus, a.addButton .glyphicon-minus, a.addButton .glyphicon-trash {
   font-size: 14px;
   color: #9A989D;
   border: 1px solid #9A989D;
@@ -1312,8 +1340,13 @@ a.addButton .glyphicon-plus {
   -o-transition: all 0.2s;
   -webkit-transition: all 0.2s;
   transition: all 0.2s; }
-a.addButton:hover .glyphicon-plus {
+a.addButton .glyphicon-minus, a.addButton .glyphicon-trash {
+  padding-left: 5px; }
+a.addButton:hover .glyphicon-plus, a.addButton:hover .glyphicon-minus, a.addButton:hover .glyphicon-trash {
   box-shadow: 0px 0px 10px 2px #ccc; }
+a.addButton:hover .glyphicon-trash {
+  color: #DC141B;
+  border: 1px solid #DC141B; }
 
 .menuPrice a, .menuPrice p {
   display: inline-block;
@@ -1330,23 +1363,14 @@ a.addButton:hover .glyphicon-plus {
   height: 15px;
   width: 14px; }
 
-.billList {
-  border-bottom: 1px solid gainsboro;
-  margin-top: 10px;
-  padding-bottom: 15px; }
-
-.billOutline {
+.OnePxGainsBroBorder {
   border: 1px solid gainsboro; }
+
+.noBottomBorder {
+  border-bottom: none; }
 
 .mBottom100 {
   margin-bottom: 100px; }
-
-.proceedCheckOut {
-  height: 40px;
-  padding-top: 7px;
-  border-radius: 5px;
-  background-color: #07a16d;
-  color: white; }
 
 .dishRemove {
   font-size: 12px;
