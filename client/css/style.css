@@ -594,7 +594,6 @@ body {
   background-size: cover;
   height: 560px;
   box-shadow: #333 0 0 15px;
-  position: relative;
   z-index: 9; }
 
 .welcomeText {
@@ -1411,6 +1410,34 @@ a.addButton:hover .glyphicon-trash {
     border-right: 0px;
     margin-top: 0px; }
 
+   .restaurantName {
+      font-size: 21px;
+  }
+  .glyphPlusMinus {
+  	height: 30px;
+  	font-size: 33px;
+  	width: 30px;
+  }
+
+  .menuCategory {
+  	border-bottom: 1px solid gainsboro;
+  	padding-bottom: 18px;
+  	margin-bottom: 14px;
+  }
+  .itemList {
+    border-bottom: solid 1px gainsboro;
+    margin-bottom: 15px;
+    margin-top: 3px;
+    padding-bottom: 18px;
+  }
+  .smallScrText{
+  	font-size: 22px;
+  }
+
+  .restaurantBannerContainer {
+  	height: 230px;
+  }
+
   .itemList {
     margin-left: 0px; }
 
@@ -1422,6 +1449,14 @@ a.addButton:hover .glyphicon-trash {
 @media (max-width: 768px) {
   .buttonCity {
     width: 125px; }
+
+  .restaurantName {
+      font-size: 17px;
+  }
+
+  .restaurantBannerContainer {
+  	height: 160px;
+  }
 
   .rateStar {
     font-size: 14px; }
