@@ -8,7 +8,7 @@
                     </div>
                 </div>
 
-                <div class="hidden-xs hidden-sm hidden-lg noLeftRightPadding col-md-12">
+                <!-- <div class="hidden-xs hidden-sm hidden-lg noLeftRightPadding col-md-12">
                     <div class="restaurantSnap" style="background-image : url('{{rest.img.md}}')">
                         <div></div>
                     </div>
@@ -24,7 +24,7 @@
                     <div class="restaurantSnap" style="background-image : url('{{rest.img.xs}}')">
                         <div></div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -32,8 +32,8 @@
             <div class="row tMar30">
                 <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                     <div class="ratingContainer">
-                        <span class="glyphicon glyphicon-heart"></span>
-                        <span class="votes">{{rest.detail.total_votes}}</span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="votes rateStar">{{rest.detail.total_votes}}</span>
                     </div>
 
                     <div class="restaurantName">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-6 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-6">
+                <!-- <div class="col-xs-6 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-6">
                     <div class="offeredCuisines">
                         <h3 class="thinBorderBottom">Cuisines Offered</h3>
 
@@ -53,7 +53,7 @@
                             <li ng-repeat="cuisine in rest.cuisines">{{cuisine}}</li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -84,12 +84,12 @@
                                  <div class="row">
 
                                      <div class="col-xs-12">
-                                        <h3 class="segoeFont borderBottom specialityText" style="margin-bottom: 10px">Specialities</h3>
+                                        <h3 class="segoeFont borderBottom specialityText" style="margin-bottom: 10px">Courses</h3>
                                      </div>
 
                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 menuCategory segoeFont"
                                           ng-repeat="menu in rest.menus" ng-click="menuSelected(menu)">
-                                         <label class="hand">{{menu.title}}</label>
+                                         <label class="hand smallScrText">{{menu.title}}</label>
 
                                          <div class="row" collapse="menu.isCollapsed">
                                              <div class="col-xs-12 col-sm-12 hidden-md hidden-lg itemList"
@@ -99,22 +99,30 @@
                                                  </div>
                                                  <div class="col-xs-7 col-sm-7">
                                                      <div class="row">
-                                                         <div class="col-xs-12 col-sm-12" ng-if="item.price.half!==0">
-                                                             <p align="center" ng-click="itemAddedHalf(item,$index)"
-                                                                class="pull-left glyphPlusMinus hand">+</p>
+                                                         <div class="row marRight0 menuPrice">
 
-                                                             <p>Half</p>
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bMar5"
+                                                         ng-if="item.price.half!==0">
 
-                                                             <p class="pull-right mtop28"><b>{{item.price.half}}</b>-Rs</p>
-                                                         </div>
-                                                         <div class="col-xs-12 col-sm-12">
-                                                             <p align="center" ng-click="itemAddedFull(item)"
-                                                                class="pull-left glyphPlusMinus hand">+</p>
+                                                        <a class="hand addButton" style="padding-bottom:13px" ng-click="itemAddedHalf(item,$index)">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
 
-                                                             <p>Full</p>
+                                                        <p>Half</p>
 
-                                                             <p class="pull-right mtop28"><b>{{item.price.full}}</b>-Rs</p>
-                                                         </div>
+                                                        <p class="price">Rs.<b>{{item.price.half}}</b></p>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <a class="hand addButton" ng-click="itemAddedFull(item)">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
+
+                                                        <p>Full</p>
+
+                                                        <p class="price">Rs.<b>{{item.price.full}}</b></p>
+                                                    </div>
+
+                                                </div>
                                                      </div>
                                                  </div>
                                              </div>
@@ -165,13 +173,13 @@
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bMar5"
                                                          ng-if="item.price.half!==0">
 
-                                                        <a class="hand addButton" ng-click="itemAddedHalf(item,$index)">
+                                                        <a class="hand addButton" style="padding-bottom:13px" ng-click="itemAddedHalf(item,$index)">
                                                             <span class="glyphicon glyphicon-plus"></span>
                                                         </a>
 
                                                         <p>Half</p>
 
-                                                        <p class="price"><b>{{item.price.half}}</b>-Rs</p>
+                                                        <p class="price">Rs.<b>{{item.price.half}}</b></p>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <a class="hand addButton" ng-click="itemAddedFull(item)">
@@ -180,7 +188,7 @@
 
                                                         <p>Full</p>
 
-                                                        <p class="price"><b>{{item.price.full}}</b>-Rs</p>
+                                                        <p class="price">Rs.<b>{{item.price.full}}</b></p>
                                                     </div>
 
                                                 </div>
@@ -279,7 +287,7 @@
                         </div>
                      </div>
                    </div>
-                   <div class="row">
+                   
                     <div class="col-xs-12 mtopBot10" ng-repeat="review in reviews">
                        <div class="col-xs-3">
                             <img src="http://www.limestone.edu/sites/default/files/styles/medium/public/user.png?itok=ueTc1g_4" class="userIconBorder"/>
@@ -301,7 +309,6 @@
                            </div>
                        </div>
                     </div>
-                  </div>
                </div>
 
                  <div class="location">

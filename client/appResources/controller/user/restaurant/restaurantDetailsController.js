@@ -9,6 +9,8 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
 
     $scope.rest = {};
 
+   // $scope.ratingStars = 3;
+
     $scope.dishShortlisted = [];
 
     $scope.closeOtherMenus = function() {
