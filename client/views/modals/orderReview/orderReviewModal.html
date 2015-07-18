@@ -2,7 +2,7 @@
     <div class="modal-header">
         <div class="row">
             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                <p>{{filterValue}}</p>
+                <p>Your Plate</p>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <i class="pull-right close-icon" ng-click="closeModal()"><span
@@ -11,42 +11,61 @@
         </div>
     </div>
     <div class="modal-body  scrollModal">
-        <div class="row billOutline"> 
-                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 billList" ng-repeat="dish in dishShortlisted">
-                                <div class="row">
-                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                                        <p>{{dish.dish}}</p>
-                                    </div>
-                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <p>Rs-<b>{{dish.totalPrice}}</b></p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                        <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1">
-                                            <i class="glyphicon glyphicon-plus hand glyphPlusMinusBill pull-left" ng-click="quantityIncreased(dish)" style="margin-top:3px;"></i>
-                                        </div>
-                                        <div class="c0l-xs-3 col-sm-1 col-md-1 col-lg-1">    
-                                            {{dish.quantity}}
-                                        </div>
-                                        <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-                                            <i class="glyphicon glyphicon-minus hand glyphPlusMinusBill pull-left" ng-click="quantityDecreased(dish)" style="margin-top:3px;"></i>
-                                        </div>
-                                        <div class="col-xs-3 col-sm-7 col-md-7 col-lg-7">
-                                            {{dish.value}}
-                                            <i class="glyphicon glyphicon-trash pull-right dishRemove hand" ng-click="removeDish($index)"></i>
-                                        </div>
-                                </div> 
-                             </div>
-                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                 <div class="row">
-                                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                                       <p class="pull-left">Total</p>
-                                    </div>
-                                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                                        <p class="pull-right">{{totalValue}}</p>
-                                    </div>
-                                </div>
-                             </div>
-                         </div>
+        <div class="row">
+                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 segoeFont"
+                                          ng-repeat="dish in dishShortlisted">
+
+                                         <div class="tpad6 bPad10 lpad10 OnePxGainsBroBorder noBottomBorder" ng-class="{'borderBottom' : $last}">
+                                             <div class="row bMar4">
+                                                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                                     <p>{{dish.dish}}</p>
+                                                 </div>
+                                                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                     <p>Rs-<b>{{dish.totalPrice}}</b></p>
+                                                 </div>
+                                             </div>
+
+                                             <div class="breakPaddingMargin">
+                                                 <div class="row">
+                                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                         <a class="hand addButton" ng-click="quantityIncreased(dish)">
+                                                             <span class="glyphicon glyphicon-plus"></span>
+                                                         </a>
+                                                     </div>
+                                                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                         {{dish.quantity}}
+                                                     </div>
+                                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                         <a class="hand addButton" ng-click="quantityDecreased(dish)">
+                                                             <span class="glyphicon glyphicon-minus"></span>
+                                                         </a>
+                                                     </div>
+                                                     <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 rPad15">
+                                                         {{dish.value}}
+
+                                                         <a class="hand addButton pull-right" ng-click="removeDish($index)">
+                                                             <span class="glyphicon glyphicon-trash"></span>
+                                                         </a>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                         <div class="row">
+                                             <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                                 <p class="pull-left">Total</p>
+                                             </div>
+                                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                                 <p class="pull-right">{{totalValue}}</p>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topBelowMargin16">
+                <button type="button" class="btn btn-block btn-pram-primary">Serve Plate</button>
+            </div>
+        </div>
     </div>
 </div>
