@@ -4,7 +4,7 @@ define([], function() {
     return restaurantDetailsController;
 });
 
-function RestaurantDetailsController ($scope, $modal, $routeParams, $location, DataStore, $window, $http, AppConstants, RestRequests){
+function RestaurantDetailsController ($scope, $modal, $routeParams, $location, DataStore, $http, UserInfoProvider, $rootScope ) {
     console.log( $routeParams );
 
     $scope.rest = {};
@@ -52,64 +52,75 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
         return typeof $scope.dishShortlisted.length !== 'undefined' && $scope.dishShortlisted.length > 0 ? '' : 'inVisible';
     };
 
-    
-   /* $scope.openQuickView = function(index){
-        var current = $scope.result[index];
-        var status = current.showQuickView;
-    
-        for(var i=0; i<$scope.result.length; i++){
-            
-            var obj = $scope.result[i];
-            obj.showQuickView = true;
-        }
-        
-        current.showQuickView = !status;
-    }*/
-    
-    
+    $scope.isSelectedDishAlreadyPresentInTheOrder = function( dish, type ) {
+        var index = -1;
 
-    //$scope.count = 1;
+        var shortListedDishLength = $scope.dishShortlisted.length;
+
+        for( var i=0; i<shortListedDishLength; i++ ) {
+            var dishAtIndex = $scope.dishShortlisted[i];
+
+            if( dishAtIndex.dish === dish.title && type === dishAtIndex.value ) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    };
 
     $scope.itemAddedHalf = function(item,index){
-        console.log(item.title);
-        console.log(item.price.half);
-        $scope.cartLoaded = true;
-        $scope.itemAddedName = item.title;
 
+        var indexOfElementIfAlreadyPresent =  $scope.isSelectedDishAlreadyPresentInTheOrder( item, 'Half');
 
-        var objectToPush = {
-            dish : item.title,
-            price : item.price.half,
-            quantity : 1,
-            totalPrice : item.price.half,
-            value : "Half"
-        }
-        
-        $scope.dishShortlisted.push( objectToPush );
+        if( indexOfElementIfAlreadyPresent !== -1 ) {
+            $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].quantity++;
+            $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].totalPrice = $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].price * $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].quantity;
+        } else {
 
-        DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
+            $scope.cartLoaded = true;
+            $scope.itemAddedName = item.title;
 
-        console.log($scope.dishShortlisted[0].dish);
-    }
-
-    $scope.itemAddedFull = function(item){
-        $scope.cartLoaded = true;
-        //console.log($scope.dishShortlisted.quantity);
-        $scope.itemAddedName = item.title;
-        console.log("the value is>>>>>"+$scope.itemAddedName);
 
             var objectToPush = {
-                dish : item.title,
-                price : item.price.full,
-                quantity : 1,
-                totalPrice : item.price.full,
-                value : "Full"
-            }
-            
-            $scope.dishShortlisted.push( objectToPush );
-             DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
-            //$scope.dishDuplicacy = $scope.
-    }
+                dish: item.title,
+                price: item.price.half,
+                quantity: 1,
+                totalPrice: item.price.half,
+                value: "Half"
+            };
+
+            $scope.dishShortlisted.push(objectToPush);
+
+            DataStore.storeData('dishShortlisted', $scope.dishShortlisted);
+        }
+    };
+
+    $scope.itemAddedFull = function(item){
+
+        var indexOfElementIfAlreadyPresent =  $scope.isSelectedDishAlreadyPresentInTheOrder( item, 'Full');
+
+        if( indexOfElementIfAlreadyPresent !== -1 ) {
+            $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].quantity++;
+            $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].totalPrice = $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].price * $scope.dishShortlisted[ indexOfElementIfAlreadyPresent].quantity;
+        } else {
+
+            $scope.cartLoaded = true;
+            $scope.itemAddedName = item.title;
+
+
+            var objectToPush = {
+                dish: item.title,
+                price: item.price.full,
+                quantity: 1,
+                totalPrice: item.price.full,
+                value: "Full"
+            };
+
+            $scope.dishShortlisted.push(objectToPush);
+            DataStore.storeData('dishShortlisted', $scope.dishShortlisted);
+        }
+    };
 
     $scope.quantityIncreased = function(dish){
         console.log(dish);
@@ -117,21 +128,44 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, D
         dish.quantity = dish.quantity + 1;
         dish.totalPrice = dish.quantity * dish.price;
 
-    }
+    };
     $scope.quantityDecreased = function(dish){
 
-        dish.quantity = dish.quantity - 1;
-        dish.totalPrice = dish.quantity * dish.price;
-    }
+        if( dish.quantity > 2 ) {
+            dish.quantity = dish.quantity - 1;
+            dish.totalPrice = dish.quantity * dish.price;
+        }
+    };
     $scope.removeDish = function(index){
         
         $scope.dishShortlisted.splice(index, 1);
         console.log($scope.dishShortlisted);
-    }
+    };
 
     $scope.proceeded = function(){
-        $location.path('/CheckOut');
-    }
+
+        if( !UserInfoProvider.isUserLoggedIn() ) {
+        $rootScope.openLoginModal();
+        } else {
+            $location.path('/checkOut');
+        }
+    };
+
+    $scope.getTotalCost = function() {
+
+        var cost = 0;
+
+        if( $scope.dishShortlisted.length > 0 ) {
+            angular.forEach( $scope.dishShortlisted, function( item ) {
+                console.log( item ) ;
+
+                cost = cost + item.totalPrice;
+            })
+        }
+
+        return cost;
+
+    };
 
 
 $scope.reviews = [{name:'Saumya',review:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',rating:'2'},

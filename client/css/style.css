@@ -1336,6 +1336,10 @@ a.addButton .glyphicon-plus, a.addButton .glyphicon-minus, a.addButton .glyphico
   padding: 5px 5px 5px 7px;
   box-shadow: 0px 0px 5px 2px #ccc;
   border-radius: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -moz-transition: all 0.2s;
   -o-transition: all 0.2s;
   -webkit-transition: all 0.2s;
