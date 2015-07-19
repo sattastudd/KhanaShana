@@ -20,7 +20,8 @@ var RegExProvider = {
     number : /^[0-9]{1,}$/,
     slug : /^[a-zA-Z-]+$/,
     fileName : /^[a-zA-Z0-9-]+.[jpg,jpeg,png,JPG,JPEG,PNG]+$/,
-    boolean : /^[true,false]{1,}$/
+    boolean : /^[true,false]{1,}$/,
+    dishType : /^[Half,Full]{1,}$/
 };
 
 var isFieldNotValid = function (value, isMandatory, mandatoryMessage, regEx, inValidMessage){
@@ -87,6 +88,10 @@ var isNumberNotValid = function( number, isMandatory ) {
 var isBooleanNotValid = function( value, isMandatory ) {
     return isFieldNotValid( value, isMandatory, mandatoryMessage, RegExProvider.boolean, ServerConstants.errorMessage.boolean );
 };
+
+var isDishTypeNotValid = function( value, isMandatory ) {
+    return isFieldNotValid( value, isMandatory, mandatoryMessage, RegExProvider.dishType, ServerConstants.errorMessage.dishType );
+}
 
 var isFileNameNotValid = function (value) {
     var result = !RegExProvider.fileName.test(value);
@@ -181,5 +186,7 @@ exports.isRoleDropDownNotValid = isRoleDropDownNotValid;
 
 exports.isFileNameNotValid = isFileNameNotValid;
 exports.isBooleanNotValid = isBooleanNotValid;
+
+exports.isDishTypeNotValid = isDishTypeNotValid;
 
 exports.isEverythingAllowed = isEverythingAllowed;

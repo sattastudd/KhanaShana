@@ -1,131 +1,108 @@
 <div ng-controller="checkOutContoller">
-    <div class="container containerBlock">
+    <div class="container containerBlock segoeFont" style="min-height: 800px; padding-bottom: 15px;">
+
+        <div class="row bMar15">
+            <div class="col-xs-12 materialTheme tpad10 bPad10 hand">
+                <div class="reviewOrder " ng-click="reviewBlockClicked()">
+                    1. Review Your Plate
+                </div>
+            </div>
+        </div>
+
+        <div class="collapseAdjustMent" collapse="reviewCollapsed">
+            <div class="row bMar15">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-class="getClassForBoxes($index+1)" ng-repeat="ord in order">
+                    <div class="materialTheme tpad10 bPad10 lpad15 rPad15 orderItem">
+                        <div class="dishName">{{ord.dish}}</div>
+                        <div>{{ord.quantity}} {{ ord.quantity > 1 ? 'Pieces' : 'Piece' }}</div>
+                        <div>For Rs. {{ord.price}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row bMar15">
+                <div class="col-xs-12 materialTheme tpad10 bPad10 hand">
+                    <div class="reviewOrder " ng-click="reviewBlockClicked()">
+                        Total Cost <span class="pull-right">Rs {{getTotalCost()}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row bMar15">
+            <div class="col-xs-12 materialTheme tpad10 bPad10 hand">
+                <div class="reviewOrder " ng-click="addressBlockClicked()">
+                    2. Delivery Address
+                </div>
+            </div>
+        </div>
+
+        <div class="collapseAdjustMent" collapse="addressCollapsed">
+            <div class="row bMar15">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-class="getClassForBoxes($index+1)" ng-repeat="addr in address">
+                    <div class="materialTheme tpad10 bPad10 lpad15 rPad15 orderItem">
+                        <div class="dishName">
+                            {{addr.name}}
+                            <span class="pull-right glyphicon glyphicon-user"></span>
+                        </div>
+
+                        <div class="address">
+                            {{addr.destination}}
+                            <span class="pull-right glyphicon glyphicon-home"></span>
+                        </div>
+
+                        <div>
+                            {{addr.phone}}
+                            <span class="pull-right glyphicon glyphicon-earphone"></span>
+                        </div>
+
+                        <div class="address">
+                            {{addr.mail}}
+                            <span class="pull-right glyphicon glyphicon-envelope"></span>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-pram-secondary btn-block">Deliver Here</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-class="getClassForBoxes(address.length+1)">
+                    <div class="materialTheme tpad10 bPad10 lpad15 rPad15 orderItem">
+                        <div>
+                            <button type="button" class="btn btn-pram-primary btn-block">Add A New Address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row bMar15">
+            <div class="col-xs-12 materialTheme tpad10 bPad10 hand">
+                <div class="reviewOrder ">
+                    3. Payment Mode
+                </div>
+            </div>
+        </div>
+
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <h1>
-                    Review your order and Check Out
-                    <i class="glyphicon glyphicon-paste"></i>
-                </h1>
-                <hr />
-            </div>
-        </div>
-        <div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 checkoutTabs bpad8" ng-click="reviewBlockClicked()">
-                <div class="row">
-                    <h3 class="lpad15">Review your Order</h3>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-class="getClassForBoxes('1')">
+                <div class="materialTheme tpad10 bPad10 lpad15 rPad15 orderItem">
+                    <div>
+                        <button type="button" class="btn btn-pram-primary btn-block">Cash On Delivery</button>
+                    </div>
                 </div>
             </div>
-            <div collapse="reviewCollapsed">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <h3>Your Order</h3>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 orderBlock">
-                                <table class="table tableFont">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Dish</th>
-                                            <th>Qty</th>
-                                            <th>Price</th>
-                                            <th>Edit</th>
-                                        </tr>
-                                        <tbody>
-                                            <tr ng-repeat="list in order">
-                                                <td>{{list.no}}</td>
-                                                <td>{{list.name}}</td>
-                                                <td>{{list.quantity}}</td>
-                                                <td>{{list.price}}</td>
-                                                <td><i class="glyphicon glyphicon-trash"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total</td>
-                                                <td>{{orderTotal}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <h3>Any Requests</h3>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <textarea ng-model="checkOut.requests" style="width:100%" rows="4" placeholder="Type your requests">
-                                    </textarea>
-                                </div>
-                            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-class="getClassForBoxes('2')">
+                    <div class="materialTheme tpad10 bPad10 lpad15 rPad15 orderItem">
+                        <div>
+                            <button type="button" class="btn btn-pram-primary btn-block">Online Payment</button>
                         </div>
                     </div>
-                </div>
+
             </div>
         </div>
-            <div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 checkoutTabs bpad8" ng-click="addressBlockClicked()">
-                    <div class="row">
-                        <h3 class="lpad15">Select Address</h3>
-                    </div>
-                </div>
-                <div collapse="addressCollapsed">
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
-                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 makingCenter" ng-repeat="list in address">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" 
-                                    ng-click="addressSelected($index)" ng-class="{addressLineTitle1: addressDeActive, addressLineTitle2:
-                                    addressActive}">
-                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                            <h4>{{list.name}}</h4>
-                                        </div>
-                                        <div class="col-xs-2 col-md-2 col-md-2 col-lg-2 addressOk">
-                                            <i class="glyphicon glyphicon-ok-sign" ng-show="addressActive"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 addressLineContent" 
-                                    ng-click="addressSelected()">
-                                        <p>{{list.destination}}</p>
-                                        <p>Contact No. : {{list.phone}}</p>
-                                        <p>E mail : {{list.mail}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 makingCenter">
-                                    <button type="button" class="btn btn-default" ng-hide="hideAddressBtn" ng-click="showAddressModal()">
-                                        Add an Address
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 checkoutTabs bpad8" ng-click="paymentBlockClicked()">
-                <div class="row">
-                    <h3 class="lpad15">Payment Method</h3>
-                </div>
-            </div>
-            <div collapse="paymentCollapsed">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bpad8">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reviewBlock">
-                            <h2>Payment Method</h2>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tpad10">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>

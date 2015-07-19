@@ -3,22 +3,28 @@
 var mongoose = require( 'mongoose' );
 
 var priceSchema = new mongoose.Schema({
+    _id : false,
     title : String,
-    quantity : Number
+    quantity : Number,
     price : Number,
-    total : Number
+    total : Number,
+    type : String
 });
 
 
 var ordersSchema  = new mongoose.Schema({
-	restaurant : String,
+	restaurant : {
+        name : String,
+        slug : String
+    },
 	user : {
-		name : String,
-		email : String,
+		email : String
 	},
+    status : String,
 	items : [ priceSchema ],
 	total : Number,
-	order_date : Date,
+	pending_state_date : Date,
+    order_date : Date,
 	address : String,
 	discount : Number,
 	net : Number,
@@ -32,7 +38,7 @@ var model = null;
 var setUpConnection = function( connectionToBeUsed ) {
     connection = connectionToBeUsed;
 
-    model = connection.model('Orders', commentSchema, 'Orders' );
+    model = connection.model('Orders', ordersSchema, 'Orders' );
 };
 
 var getModel = function(){

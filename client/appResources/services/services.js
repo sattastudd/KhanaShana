@@ -29,7 +29,9 @@ define(['angular', '../require/route-config'], function (angular,
             restaurantSearch: 'restaurant/search',
             typeahead: 'restaurant/typeahead',
             locations: 'locations',
-            password: 'password'
+            password: 'password',
+            restaurant : 'restaurant',
+            pendingOrder : 'orders/pending'
 
         })
         .constant('RegExProvider', {
@@ -159,7 +161,6 @@ define(['angular', '../require/route-config'], function (angular,
             this.storeData = function (key, value) {
 
                 storedData[key] = value;
-                console.log(storedData);
             };
 
             this.getData = function (key) {

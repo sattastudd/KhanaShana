@@ -13,54 +13,71 @@ function checkOutContoller ($scope, $modal, $location, DataStore, $window, $http
 	$scope.addressSelected = function(index){
 		$scope.addressActive = true;
 		console.log("inside address selection...."+index);
-	}
+	};
 
-	$scope.address = [{name:"Address 1", destination:"TCS Awadh Park Vibhuti Khand Gomti Nagar Lucknow UP",
+	$scope.address = [{name:"Satish Mishra", destination:"TCS Awadh Park Vibhuti Khand Gomti Nagar Lucknow UP",
 						phone:"9807170270", mail:"sattasaphire@gmail.com"},
-						{name:"Address 2", destination:"TCS Awadh Park Vibhuti Khand Gomti Nagar Lucknow UP",
+						{name:"Satish Mishra", destination:"TCS Awadh Park Vibhuti Khand Gomti Nagar Lucknow UP",
 						phone:"9807170270", mail:"sattasaphire@gmail.com"}];
 
 	$scope.checkOut = {};
-
-	/*$scope.saveAddress = function(){
-		if(null !== $scope.checkOut || $scope.checkOut === "" || angular.isUndefined($scope.checkOut)){
-			$scope.address.push({
-				name: "Address X",
-				destination: $scope.checkOut.houseNo+$scope.checkOut.area+$scope.checkOut.landmark,
-				phone: $scope.checkOut.contact,
-				mail: $scope.checkOut.mail
-			})
-			
-			$scope.hideAddressBtn = false;
-			$scope.isCollapsed = true;
-		}
-
-		$scope.checkOut = null;
-	}*/
 
 	$scope.reviewCollapsed = true;
 
 	$scope.reviewBlockClicked = function(){
 		$scope.reviewCollapsed = !$scope.reviewCollapsed;		
-	}
+	};
 
 	$scope.addressCollapsed = false;
 
 	$scope.addressBlockClicked = function(){
 		$scope.addressCollapsed = !$scope.addressCollapsed;
-	}
+	};
 
 	$scope.paymentCollapsed = true;
+
+    $scope.getClassForBoxes = function( index ) {
+        var classToReturn = '';
+
+        if( index > 3 ) {
+            classToReturn = classToReturn + 'tMar15 ';
+        }
+
+        index = index % 3;
+
+        if( index == 0) {
+            return classToReturn + 'noRPad';
+        } else if ( index == 2) {
+            return  classToReturn + 'noRPad noLPad';
+        }
+        return classToReturn + 'noLPad';
+    };
+
+
 
 	$scope.paymentBlockClicked = function(){
 		$scope.paymentCollapsed = !$scope.paymentCollapsed;
 		console.log("payment block clicked");
-	}
+	};
 
-	$scope.order = [{no:"1", name:"Paneer Butter Masala", price:"100", quantity:"2"},
-					{no:"2", name:"Paneer Chilli", price:"240", quantity:"2"},
-					{no:"3", name:"kabab Masala", price:"220", quantity:"2"},
-					{no:"4", name:"Kadhai Paneer", price:"200", quantity:"2"}];
+    $scope.order= DataStore.getData('dishShortlisted');
+	/*$scope.order = [{no:"1", dish:"Shami kabab", price:"100", quantity:"2"},
+					{no:"2", dish:"Galatians kaba", price:"240", quantity:"2"},
+        {no:3, dish: 'Gol Roti', price : 10, quantity: 4},
+        {no:4, dish: 'Sukhi Roti', price : 10, quantity: 4}];*/
+
+    $scope.getTotalCost = function() {
+        var totalCost = 0;
+
+        angular.forEach( $scope.order, function( order ) {
+            totalCost = totalCost + ( order.quantity * order.price );
+        });
+
+        return totalCost;
+    };
+
+
+    console.log( $scope.order );
 
 	$scope.showAddressModal = function(){
             $modal.open({

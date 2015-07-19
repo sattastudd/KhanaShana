@@ -38,6 +38,7 @@ var appConstants = {
         noSearchCriteria : 'Please enter at least one search criteria.',
         number : 'Invalid Number',
         boolean : 'Invalid value',
+        dishType : 'Invalid dish type',
         dropdown : 'Please select a value from dropdown',
         roleError : 'Invalid Role',
         noDeliveryArea : 'Please select a delivery area',

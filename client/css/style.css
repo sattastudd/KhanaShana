@@ -11,13 +11,17 @@ p {
   margin: 0 0 0px; }
 
 body {
-  background-color: #FAF8FD;
+  background-color: #F1F1F1;
   font-family: Avdira;
   font-size: 18px; }
 
 /*Global Classes Begin*/
 #main {
   padding-top: 50px; }
+
+.materialTheme {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .fullScreenWidth {
   width: 100%; }
@@ -54,33 +58,58 @@ body {
   font-family: 'Segoe UI';
   background-color: #DC141B;
   color: #fff;
-  font-size: 18px; }
+  font-size: 18px;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
   .btn-pram-primary:hover {
-    background-color: #c61218;
-    color: #fff; }
+    background-color: rgba(220, 20, 27, 0.8);
+    color: #fff;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); }
   .btn-pram-primary:active {
-    background-color: #b01015;
-    color: #fff; }
+    background-color: rgba(220, 20, 27, 0.7);
+    color: #fff;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); }
   .btn-pram-primary:focus {
-    background-color: #DC141B;
+    background-color: rgba(220, 20, 27, 0.8);
     color: #fff;
     outline: none; }
 
 .btn-pram-secondary {
   font-family: 'Segoe UI';
-  background-color: #dbdade;
+  background-color: #e0dfe1;
   color: #333;
-  font-size: 18px; }
+  font-size: 18px;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
   .btn-pram-secondary:hover {
-    background-color: #cfcdd1;
-    color: #333; }
+    background-color: rgba(224, 223, 225, 0.8);
+    color: #333;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); }
   .btn-pram-secondary:active {
-    background-color: #cfcdd1;
+    background-color: rgba(224, 223, 225, 0.7);
     color: #333; }
   .btn-pram-secondary:focus {
-    background-color: #cfcdd1;
+    background-color: rgba(224, 223, 225, 0.8);
     color: #333;
     outline: none; }
+
+.btn-pram-primary, .btn-pram-secondary {
+  position: relative; }
+  .btn-pram-primary svg, .btn-pram-secondary svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
+  .btn-pram-primary circle, .btn-pram-secondary circle {
+    fill: white;
+    opacity: .1; }
 
 .collapsibleContent {
   -moz-transition: all 0.3s;
@@ -285,7 +314,7 @@ body {
             -o-transition: all 0.3s;
             -webkit-transition: all 0.3s;
             transition: all 0.3s;
-            background-color: #FAF8FD; }
+            background-color: #F1F1F1; }
             .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu.noHeight {
               padding: 0;
               height: 0;
@@ -298,7 +327,7 @@ body {
             .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover {
               cursor: default; }
               .customNavBar .visible-lg .loginControlsContainer .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover:hover {
-                background-color: #FAF8FD;
+                background-color: #F1F1F1;
                 color: #000; }
   .customNavBar .visible-xs {
     position: relative; }
@@ -352,7 +381,7 @@ body {
                   -o-transition: all 0.3s;
                   -webkit-transition: all 0.3s;
                   transition: all 0.3s;
-                  background-color: #FAF8FD; }
+                  background-color: #F1F1F1; }
                   .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu.noHeight {
                     padding: 0;
                     height: 0;
@@ -365,7 +394,7 @@ body {
                   .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover {
                     cursor: default; }
                     .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer.shrinked .loginControlsWrapper div.userIcon .dropdown-menu li a.noHover:hover {
-                      background-color: #FAF8FD;
+                      background-color: #F1F1F1;
                       color: #000; }
         .customNavBar .visible-xs .navLinks > div > div.loginControlsContainer .loginControlsWrapper {
           width: 71px;
@@ -579,6 +608,9 @@ body {
 .bpad13 {
   padding-bottom: 13px; }
 
+.rMar15 {
+  margin-right: 15px; }
+
 .lpad5 {
   padding-left: 5px; }
 
@@ -622,7 +654,7 @@ body {
     width: 90px; }
   .bannerSearch .dropdown {
     list-style: none;
-    background-color: #FAF8FD;
+    background-color: #F1F1F1;
     padding-left: 0;
     margin-left: 21px;
     margin-right: 90px;
@@ -966,6 +998,9 @@ button.kh-primary {
 
 .bMar4 {
   margin-bottom: 4px; }
+
+.bMar15 {
+  margin-bottom: 15px; }
 
 .topBelowMargin16 {
   margin: 16px 0; }
@@ -1414,33 +1449,25 @@ a.addButton:hover .glyphicon-trash {
     border-right: 0px;
     margin-top: 0px; }
 
-   .restaurantName {
-      font-size: 21px;
-  }
-  .glyphPlusMinus {
-  	height: 30px;
-  	font-size: 33px;
-  	width: 30px;
-  }
+  .restaurantName {
+    font-size: 21px; }
 
   .menuCategory {
-  	border-bottom: 1px solid gainsboro;
-  	padding-bottom: 18px;
-  	margin-bottom: 14px;
-  }
+    border-bottom: 1px solid gainsboro;
+    padding-bottom: 18px;
+    margin-bottom: 14px; }
+
   .itemList {
     border-bottom: solid 1px gainsboro;
     margin-bottom: 15px;
     margin-top: 3px;
-    padding-bottom: 18px;
-  }
-  .smallScrText{
-  	font-size: 22px;
-  }
+    padding-bottom: 18px; }
+
+  .smallScrText {
+    font-size: 22px; }
 
   .restaurantBannerContainer {
-  	height: 230px;
-  }
+    height: 230px; }
 
   .itemList {
     margin-left: 0px; }
@@ -1455,12 +1482,10 @@ a.addButton:hover .glyphicon-trash {
     width: 125px; }
 
   .restaurantName {
-      font-size: 17px;
-  }
+    font-size: 17px; }
 
   .restaurantBannerContainer {
-  	height: 160px;
-  }
+    height: 160px; }
 
   .rateStar {
     font-size: 14px; }
@@ -1643,5 +1668,40 @@ a.addButton:hover .glyphicon-trash {
     opacity: .1; }
   100% {
     opacity: 1; } }
+/** Checkout page */
+.reviewOrder {
+  font-size: 24px; }
+
+.tMar15 {
+  margin-top: 15px; }
+
+.orderItem {
+  font-size: 16px; }
+  .orderItem .dishName {
+    border-bottom: 1px solid #eee;
+    font-size: 18px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    font-weight: 400; }
+  .orderItem .glyphicon {
+    color: #ccc;
+    position: relative;
+    top: 2px; }
+  .orderItem .address {
+    position: relative;
+    padding-right: 25px; }
+    .orderItem .address .glyphicon {
+      position: absolute;
+      right: 3px;
+      top: 5px; }
+  .orderItem button {
+    margin: 10px 0; }
+
+.collapseAdjustMent {
+  margin-left: -15px;
+  margin-right: -15px; }
+  .collapseAdjustMent > .row {
+    margin-left: 0;
+    margin-right: 0; }
 
 /*# sourceMappingURL=style.css.map */

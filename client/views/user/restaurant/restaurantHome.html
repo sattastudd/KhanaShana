@@ -77,93 +77,93 @@
             </div>
 
             <div class="tabbedContent">
-                 <div class="menu active">
-                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mtop10">
-                         <div class="row">
-                             <div class="col-xs-12 col-sm-12 col-md-3 mol-lg-3">
-                                 <div class="row">
+                <div class="menu active">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mtop10">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-3 mol-lg-3">
+                                <div class="row">
 
-                                     <div class="col-xs-12">
+                                    <div class="col-xs-12">
                                         <h3 class="segoeFont borderBottom specialityText" style="margin-bottom: 10px">Courses</h3>
-                                     </div>
+                                    </div>
 
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 menuCategory segoeFont"
-                                          ng-repeat="menu in rest.menus" ng-click="menuSelected(menu)">
-                                         <label class="hand smallScrText">{{menu.title}}</label>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 menuCategory segoeFont"
+                                         ng-repeat="menu in rest.menus" ng-click="menuSelected(menu)">
+                                        <label class="hand smallScrText">{{menu.title}}</label>
 
-                                         <div class="row" collapse="menu.isCollapsed">
-                                             <div class="col-xs-12 col-sm-12 hidden-md hidden-lg itemList"
-                                                  ng-repeat="item in menu.items">
-                                                 <div class="col-xs-5 col-sm-5">
-                                                     <p><b>{{item.title}}</b></p>
-                                                 </div>
-                                                 <div class="col-xs-7 col-sm-7">
-                                                     <div class="row">
-                                                         <div class="row marRight0 menuPrice">
-
-                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bMar5"
-                                                         ng-if="item.price.half!==0">
-
-                                                        <a class="hand addButton" style="padding-bottom:13px" ng-click="itemAddedHalf(item,$index)">
-                                                            <span class="glyphicon glyphicon-plus"></span>
-                                                        </a>
-
-                                                        <p>Half</p>
-
-                                                        <p class="price">Rs.<b>{{item.price.half}}</b></p>
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <a class="hand addButton" ng-click="itemAddedFull(item)">
-                                                            <span class="glyphicon glyphicon-plus"></span>
-                                                        </a>
-
-                                                        <p>Full</p>
-
-                                                        <p class="price">Rs.<b>{{item.price.full}}</b></p>
-                                                    </div>
-
+                                        <div class="row" collapse="menu.isCollapsed">
+                                            <div class="col-xs-12 col-sm-12 hidden-md hidden-lg itemList"
+                                                 ng-repeat="item in menu.items">
+                                                <div class="col-xs-5 col-sm-5">
+                                                    <p><b>{{item.title}}</b></p>
                                                 </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="row">
-                                     <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
-                                         <nav class="navbar navbar-default navbar-fixed-bottom"
-                                              style="background-color:#222;color:white;">
-                                             <div class="container">
-                                                 <div class="row">
-                                                     <div class="col-xs-7 col-sm-7">
-                                                         <p class="navbarBottomTitle">{{itemAddedName}}</p>
-                                                     </div>
-                                                     <div class="col-xs-3 col-sm-3 navbarBottomTotal hand"
-                                                          ng-click="reviewOrder()">
-                                                         <p>Total</p>
-                                                     </div>
-                                                     <div class="col-xs-2 col-sm-2 hand" ng-click="reviewOrder()">
-                                                         <i class="glyphicon glyphicon-shopping-cart smallCartGlyph"></i>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </nav>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="hidden-xs hidden-sm col-md-6 mol-lg-6 menuItems" ng-class="showShowMenu()">
-                                 <div class="row">
-                                     <div class="col-xs-12">
-                                         <h3 class="segoeFont borderBottom specialityText">{{menuName}}</h3>
-                                     </div>
-                                 </div>
+                                                <div class="col-xs-7 col-sm-7">
+                                                    <div class="row">
+                                                        <div class="row marRight0 menuPrice">
+
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bMar5"
+                                                                 ng-if="item.price.half!==0">
+
+                                                                <a class="hand addButton" style="padding-bottom:13px" ng-click="itemAddedHalf(item, menu)">
+                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                </a>
+
+                                                                <p>Half</p>
+
+                                                                <p class="price">Rs.<b>{{item.price.half}}</b></p>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                <a class="hand addButton" ng-click="itemAddedFull(item, menu)">
+                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                </a>
+
+                                                                <p>Full</p>
+
+                                                                <p class="price">Rs.<b>{{item.price.full}}</b></p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+                                        <nav class="navbar navbar-default navbar-fixed-bottom"
+                                             style="background-color:#222;color:white;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-7 col-sm-7">
+                                                        <p class="navbarBottomTitle">{{itemAddedName}}</p>
+                                                    </div>
+                                                    <div class="col-xs-3 col-sm-3 navbarBottomTotal hand"
+                                                         ng-click="reviewOrder()">
+                                                        <p>Total</p>
+                                                    </div>
+                                                    <div class="col-xs-2 col-sm-2 hand" ng-click="reviewOrder()">
+                                                        <i class="glyphicon glyphicon-shopping-cart smallCartGlyph"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-xs hidden-sm col-md-6 mol-lg-6 menuItems" ng-class="showShowMenu()">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="segoeFont borderBottom specialityText">{{menuName}}</h3>
+                                    </div>
+                                </div>
 
 
-                                 <div class="row">
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 itemList segoeFont " ng-repeat="item in menu.items">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 itemList segoeFont " ng-repeat="item in menu.items">
 
-                                         <div class="row noLeftRightMargin topBelowPadding6" ng-class="{'borderBottom' : !$last}">
-                                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                        <div class="row noLeftRightMargin topBelowPadding6" ng-class="{'borderBottom' : !$last}">
+                                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                                                 {{item.title}}
                                             </div>
 
@@ -173,7 +173,7 @@
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bMar5"
                                                          ng-if="item.price.half!==0">
 
-                                                        <a class="hand addButton" style="padding-bottom:13px" ng-click="itemAddedHalf(item,$index)">
+                                                        <a class="hand addButton" style="padding-bottom:13px" ng-click="itemAddedHalf(item, menu.title)">
                                                             <span class="glyphicon glyphicon-plus"></span>
                                                         </a>
 
@@ -182,7 +182,7 @@
                                                         <p class="price">Rs.<b>{{item.price.half}}</b></p>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <a class="hand addButton" ng-click="itemAddedFull(item)">
+                                                        <a class="hand addButton" ng-click="itemAddedFull(item, menu.title)">
                                                             <span class="glyphicon glyphicon-plus"></span>
                                                         </a>
 
@@ -193,129 +193,129 @@
 
                                                 </div>
                                             </div>
-                                         </div>
+                                        </div>
 
-                                     </div>
-                                 </div>
-                             </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                             <div class="hidden-xs hidden-sm col-md-3 col-lg-3 menuItems" ng-class="showCheckoutLink()">
+                            <div class="hidden-xs hidden-sm col-md-3 col-lg-3 menuItems" ng-class="showCheckoutLink()">
 
-                                 <div class="row">
-                                     <div class="col-xs-12">
-                                         <h3 class="segoeFont borderBottom specialityText">Your Plate</h3>
-                                     </div>
-                                 </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="segoeFont borderBottom specialityText">Your Plate</h3>
+                                    </div>
+                                </div>
 
-                                 <div class="row">
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topBelowMargin16">
-                                         <button type="button" class="btn btn-block btn-pram-primary" ng-click="proceeded()">Serve Plate</button>
-                                     </div>
-                                 </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topBelowMargin16">
+                                        <button type="button" class="btn btn-block btn-pram-primary" ng-click="proceeded()">Serve Plate</button>
+                                    </div>
+                                </div>
 
-                                 <div class="row">
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 segoeFont"
-                                          ng-repeat="dish in dishShortlisted">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 segoeFont"
+                                         ng-repeat="dish in dishShortlisted">
 
-                                         <div class="tpad6 bPad10 lpad10 OnePxGainsBroBorder noBottomBorder" ng-class="{'borderBottom' : $last}">
-                                             <div class="row bMar4">
-                                                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                                                     <p>{{dish.dish}}</p>
-                                                 </div>
-                                                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 noLPad">
-                                                     <p>Rs-<b>{{dish.totalPrice}}</b></p>
-                                                 </div>
-                                             </div>
+                                        <div class="tpad6 bPad10 lpad10 OnePxGainsBroBorder noBottomBorder" ng-class="{'borderBottom' : $last}">
+                                            <div class="row bMar4">
+                                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                                    <p>{{dish.dish}}</p>
+                                                </div>
+                                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 noLPad">
+                                                    <p>Rs-<b>{{dish.totalPrice}}</b></p>
+                                                </div>
+                                            </div>
 
-                                             <div class="breakPaddingMargin">
-                                                 <div class="row">
-                                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                                         <a class="hand addButton" ng-click="quantityIncreased(dish)">
-                                                             <span class="glyphicon glyphicon-plus"></span>
-                                                         </a>
-                                                     </div>
-                                                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                                                         {{dish.quantity}}
-                                                     </div>
-                                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                                         <a class="hand addButton" ng-click="quantityDecreased(dish)">
-                                                             <span class="glyphicon glyphicon-minus"></span>
-                                                         </a>
-                                                     </div>
-                                                     <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 rPad15">
-                                                         {{dish.value}}
+                                            <div class="breakPaddingMargin">
+                                                <div class="row">
+                                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                        <a class="hand addButton" ng-click="quantityIncreased(dish)">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                        {{dish.quantity}}
+                                                    </div>
+                                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                        <a class="hand addButton" ng-click="quantityDecreased(dish)">
+                                                            <span class="glyphicon glyphicon-minus"></span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 rPad15">
+                                                        {{dish.value}}
 
-                                                         <a class="hand addButton pull-right" ng-click="removeDish($index)">
-                                                             <span class="glyphicon glyphicon-trash"></span>
-                                                         </a>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 segoeFont">
-                                         <div class="row">
-                                             <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                                                 <p class="lpad15 pull-left">Total</p>
-                                             </div>
-                                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                                                 <p class="rPad15 pull-right">Rs. {{getTotalCost()}}</p>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                                                        <a class="hand addButton pull-right" ng-click="removeDish($index)">
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 segoeFont">
+                                        <div class="row">
+                                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                                <p class="lpad15 pull-left">Total</p>
+                                            </div>
+                                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                                <p class="rPad15 pull-right">Rs. {{getTotalCost()}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                 <div class="gallery">
-                     Gallery
-                 </div>
+                <div class="gallery">
+                    Gallery
+                </div>
 
-                 <div class="reviews">
-                   <div class="row mtop30">
-                     <div class="col-xs-12 borderBottom">
+                <div class="reviews">
+                    <div class="row mtop30">
+                        <div class="col-xs-12 borderBottom">
+                            <div class="col-xs-3">
+                                <img src="http://qph.is.quoracdn.net/main-thumb-65424091-200-qfewjnaxxfuqpiqwdlmljcqfxobsefrf.jpeg" class="userIconBorder"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <textarea class="col-xs-12 revTextArea" type="text"></textarea>
+                            </div>
+                            <div class="col-xs-offset-8 col-xs-4 mtop15">
+                                <button type="button" class="btn btn-primary pull-right">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 mtopBot10" ng-repeat="review in reviews">
                         <div class="col-xs-3">
-                            <img src="http://qph.is.quoracdn.net/main-thumb-65424091-200-qfewjnaxxfuqpiqwdlmljcqfxobsefrf.jpeg" class="userIconBorder"/>
+                            <img src="http://www.limestone.edu/sites/default/files/styles/medium/public/user.png?itok=ueTc1g_4" class="userIconBorder"/>
+                            <div class="mtop15">
+                                <label class="center">{{review.name}}<label>
+                            </div>
                         </div>
                         <div class="col-xs-9">
-                            <textarea class="col-xs-12 revTextArea" type="text"></textarea>
-                         </div>
-                        <div class="col-xs-offset-8 col-xs-4 mtop15">
-                            <button type="button" class="btn btn-primary pull-right">Submit</button>
-                        </div>
-                     </div>
-                   </div>
-                   
-                    <div class="col-xs-12 mtopBot10" ng-repeat="review in reviews">
-                       <div class="col-xs-3">
-                            <img src="http://www.limestone.edu/sites/default/files/styles/medium/public/user.png?itok=ueTc1g_4" class="userIconBorder"/>
-                           <div class="mtop15">
-                               <label class="center">{{review.name}}<label>
-                            </div>
-                       </div>
-                       <div class="col-xs-9">
                             <div class="col-xs-12 reviewTextBlock">
                                 <div class="col-xs-12 rateStar">
                                     <rating ng-model="review.rating" max="5" readonly="true"></rating>
                                 </div>
-                                <div class="col-xs-12">       
-                                      <p class="reviewFont">{{review.review}}</p>
+                                <div class="col-xs-12">
+                                    <p class="reviewFont">{{review.review}}</p>
                                 </div>
-                           </div>
-                           <div class="col-xs-12">
-                               <p class="pull-right reviewTIme">Tuesday, 15/OCT/2015</p>
-                           </div>
-                       </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="pull-right reviewTIme">Tuesday, 15/OCT/2015</p>
+                            </div>
+                        </div>
                     </div>
-               </div>
+                </div>
 
-                 <div class="location">
-                     Location
-                 </div>
+                <div class="location">
+                    Location
+                </div>
 
-             </div>
+            </div>
         </div>
     </div>
 </div>
