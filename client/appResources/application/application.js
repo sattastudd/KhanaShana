@@ -25,7 +25,7 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
         ))
         .when('/checkOut',
             routeConfig.config(
-                'views/user/UserCheckOut.html',
+                'views/user/userCheckOut.html',
                 '../../appResources/controller/userCheckOutController'
         ))
         .when('/404',
