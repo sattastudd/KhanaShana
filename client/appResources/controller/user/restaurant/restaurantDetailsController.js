@@ -30,6 +30,9 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, A
 
             $scope.closeOtherMenus();
 
+            DataStore.storeData('restName', $scope.rest.name);
+            DataStore.storeData('restSLug', $scope.rest.slug);
+
         })
         .error( function ( data ) {
             console.log( data );
@@ -94,6 +97,7 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, A
 
             $scope.dishShortlisted.push(objectToPush);
         }
+        DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
     };
 
     $scope.itemAddedFull = function(item, categoryTitle){
@@ -120,6 +124,7 @@ function RestaurantDetailsController ($scope, $modal, $routeParams, $location, A
 
             $scope.dishShortlisted.push(objectToPush);
         }
+        DataStore.storeData( 'dishShortlisted', $scope.dishShortlisted );
     };
 
     $scope.quantityIncreased = function(dish){
@@ -206,7 +211,7 @@ $scope.reviews = [{name:'Saumya',review:'Lorem ipsum dolor sit amet, consectetur
 };
 
 
-function orderReviewModalController ($scope, $modalInstance, $location, DataStore, AppConstants, RestRequests, $http, displayedOnPage ) {
+function orderReviewModalController ($scope, UserInfoProvider, $modalInstance, $location, DataStore, AppConstants, RestRequests, $http, displayedOnPage, $rootScope ) {
 
     $scope.closeModal = function(){
         $modalInstance.close();
@@ -215,16 +220,16 @@ function orderReviewModalController ($scope, $modalInstance, $location, DataStor
     $scope.dishShortlisted =  DataStore.getData( 'dishShortlisted' );
 
     $scope.quantityIncreased = function(dish){
-
-
         dish.quantity = dish.quantity + 1;
         dish.totalPrice = dish.quantity * dish.price;
 
     };
     $scope.quantityDecreased = function(dish){
 
-        dish.quantity = dish.quantity - 1;
-        dish.totalPrice = dish.quantity * dish.price;
+        if( dish.quantity > 2 ) {
+            dish.quantity = dish.quantity - 1;
+            dish.totalPrice = dish.quantity * dish.price;
+        }
     };
     $scope.removeDish = function(index){
         
@@ -232,6 +237,51 @@ function orderReviewModalController ($scope, $modalInstance, $location, DataStor
     };
 
     $scope.proceeded = function(){
-        $location.path('/CheckOut');
-    }
+
+        if( !UserInfoProvider.isUserLoggedIn() ) {
+        $rootScope.openLoginModal();
+        } else {
+            var payLoad = {
+                restaurant : {
+                    name : DataStore.getData('restName'),
+                    slug : DataStore.getData('restSLug')
+                },
+                dishes : $scope.dishShortlisted
+            };
+
+            var requestName = AppConstants.loggedInUser + '/' + RestRequests.pendingOrder;
+
+            $http.post(requestName, payLoad)
+                .success( function( data ) {
+                    console.log( data );
+                })
+                .error( function( data ) {
+                    console.log( data );
+                });
+
+
+            DataStore.storeData('dishShortlisted', $scope.dishShortlisted);
+            $scope.closeModal();
+            $location.path('/checkOut');
+            window.scrollTo(0, 0);
+        }
+    };
+    $scope.removeDish = function(index){
+        
+        $scope.dishShortlisted.splice(index, 1);
+    };
+
+     $scope.getTotalCost = function() {
+
+        var cost = 0;
+
+        if( $scope.dishShortlisted.length > 0 ) {
+            angular.forEach( $scope.dishShortlisted, function( item ) {
+                cost = cost + item.totalPrice;
+            })
+        }
+
+        return cost;
+
+    };
 }    
