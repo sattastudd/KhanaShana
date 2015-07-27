@@ -79,10 +79,11 @@ function checkOutContoller ($scope, $modal, $location, DataStore, $window, $http
 
     console.log( $scope.order );
 
-	$scope.showAddressModal = function(){
+	$scope.openAddressModal = function(){
             $modal.open({
                 templateUrl : 'views/modals/address/addressModal.html',
                 controller : 'AddressModalController',
+                windowClass    : 'darkTransparentBack',
                 size : 'sm',
                 resolve : {
                     displayedOnPage : function() {

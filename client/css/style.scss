@@ -1525,6 +1525,13 @@ button.kh-primary {
 .makingCenter {
   padding-bottom: 5px;
 }
+.adressModalGlyphs{
+  padding-right: 40px;
+  color: gainsboro;
+}
+.addressModalInput{
+  margin-bottom: 10px;
+}
 
 /* styles for check out page ends */
 
@@ -2289,6 +2296,7 @@ $outerDuration : 2s;
 
 .orderItem{
   font-size : 16px;
+  margin-bottom: 10px;
 
   .dishName{
     border-bottom: 1px solid #eee;
