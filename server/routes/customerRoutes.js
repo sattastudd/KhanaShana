@@ -20,3 +20,9 @@ router.post( '/user/orders/pending', function( req, res, next ) {
 
     logger.info( 'In customerRoutes | Finished ' + req.route.path );
 });
+
+/* Request-Name : /user/orders, Type : Post, Allowed : user*/
+/* This request would be used by users to add a order into pending orders list automatically. */
+router.post( '/user/orders', function( req, res, next ) {
+    PendingOrdersController.sendRequestToPayU( req, res, next );
+});

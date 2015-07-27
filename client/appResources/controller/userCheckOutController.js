@@ -90,7 +90,50 @@ function checkOutContoller ($scope, $modal, $location, DataStore, $window, $http
                     }
                 }
             })
-	}
+	};
+
+    $scope.payOnLine = function(){
+        $http.post( 'node/user/orders')
+            .success( function( data ) {
+
+                var paymentForm =  document.forms.paymentForm;
+                console.log( document.getElementsByName('key'));
+
+                document.getElementById('key').value = data.key;
+                document.getElementById('txnId').value = 1234;
+                document.getElementById('amount').value = data.amount;
+
+                document.getElementById('productinfo').value = data.productinfo;
+                document.getElementById('firstname').value = data.firstname;
+                document.getElementById('email').value = data.email;
+
+                document.getElementById('phone').value = data.phone;
+                document.getElementById('surl').value = data.surl;
+                document.getElementById('furl').value = data.furl;
+
+                document.getElementById('hash').value = data.hash;
+
+                console.log( document.getElementById('key').value);
+                console.log( document.getElementById('txnId').value);
+                console.log( document.getElementById('amount').value);
+
+                console.log( document.getElementById('productinfo').value);
+                console.log( document.getElementById('firstname').value);
+                console.log( document.getElementById('email').value);
+
+                console.log( document.getElementById('phone').value);
+                console.log( document.getElementById('surl').value);
+                console.log( document.getElementById('furl').value);
+
+                console.log( document.getElementById('hash').value);
+
+                paymentForm.submit();
+
+            })
+            .error( function( data ) {
+                console.log( data );
+            });
+    }
 
 }
 
