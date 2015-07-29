@@ -41,10 +41,10 @@ var checksum = function (str, algorithm, encoding) {
 };
 
 var getNecessaryData = function( req, res, next ) {
-    console.log(checksum('JBZaLc|1|100|Farzi|Gaurav|er.grvtiwari@gmail.com|||||||||||GQs7yium', 'sha512') );
+    console.log(checksum('Z5B4BA|1|100|Farzi|Gaurav|er.grvtiwari@gmail.com|||||||||||cvLpoeI4', 'sha512') );
     res.status( 200).json( {
         'key': 'Z5B4BA',
-        'txnId': '1',
+        'txnid': '1',
         'amount': '100',
         'productinfo': 'Farzi',
         'firstname': 'Gaurav',
@@ -53,6 +53,7 @@ var getNecessaryData = function( req, res, next ) {
         'surl': 'www.peturaam.com/node/public/consume',
         'furl': 'www.peturram.com/node/public/fail',
         'hash': checksum('Z5B4BA|1|100|Farzi|Gaurav|er.grvtiwari@gmail.com|||||||||||cvLpoeI4', 'sha512'),
+        'plainHash' : 'Z5B4BA|1|100|Farzi|Gaurav|er.grvtiwari@gmail.com|||||||||||cvLpoeI4',
         'service_provider': 'payu_paisa'
     });
 };

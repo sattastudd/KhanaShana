@@ -101,7 +101,7 @@ function checkOutContoller ($scope, $modal, $location, DataStore, $window, $http
                 console.log( document.getElementsByName('key'));
 
                 document.getElementById('key').value = data.key;
-                document.getElementById('txnId').value = 1234;
+                document.getElementById('txnid').value = data.txnid;
                 document.getElementById('amount').value = data.amount;
 
                 document.getElementById('productinfo').value = data.productinfo;
@@ -113,9 +113,10 @@ function checkOutContoller ($scope, $modal, $location, DataStore, $window, $http
                 document.getElementById('furl').value = data.furl;
 
                 document.getElementById('hash').value = data.hash;
+                document.getElementById('hashValue').value = data.plainHash;
 
                 console.log( document.getElementById('key').value);
-                console.log( document.getElementById('txnId').value);
+                console.log( document.getElementById('txnid').value);
                 console.log( document.getElementById('amount').value);
 
                 console.log( document.getElementById('productinfo').value);
@@ -126,7 +127,7 @@ function checkOutContoller ($scope, $modal, $location, DataStore, $window, $http
                 console.log( document.getElementById('surl').value);
                 console.log( document.getElementById('furl').value);
 
-                console.log( document.getElementById('hash').value);
+                console.log( document.getElementById('hashValue').value);
 
                 paymentForm.submit();
 
