@@ -1,0 +1,52 @@
+<style>
+.okGlyph{
+	color: green;
+    font-size: 80px;
+}
+.orderConfirmText{
+	font-size: 24px;
+}
+.viewOrderBtn{
+	font-size: 22px;
+    font-family: segoi UI;
+    border: 1px solid black;
+    width: 220px;
+    height: 45px;
+    padding-top: 7px;
+    margin-bottom: 90px;
+    margin-top: 40px;
+}
+</style>
+
+<div ng-controller="orderConfirmController">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 tMar30" align="center">
+				<div class="col-xs-12 tMar30">
+					<i class="glyphicon glyphicon-ok-circle okGlyph"></i>
+				</div>
+				<div class="col-xs-12">
+					<h1>
+						<b>Your Payment is successfully Completed</b>
+					</h1>
+					<h1>
+						Order No. <a class="hand" ng-click="orderClicked()">12345</a>
+					</h1>
+				</div>
+				<div class="col-xs-12">
+					<h2 class="orderConfirmText">
+						It will take a moment to confirm the order with the Restaurant.
+					</h2>
+					<h2 class="orderConfirmText">
+						You will soon get a mail and sms regarding order details and confirmation. 
+					</h2>
+				</div>
+				<div class="col-xs-12">
+					<div class="viewOrderBtn hand" ng-click="orderClicked()">
+						View Orders
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

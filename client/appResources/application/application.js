@@ -53,6 +53,11 @@ define(["services", "../require/route-config"], function(app, routeConfig) {
                 'views/user/userProfile.html',
                 '../../appResources/controller/userProfileController'
         ))
+        .when('/successfullPayment',
+            routeConfig.config(
+                'views/user/orderConfirmation.html',
+                '../../appResources/controller/orderConfirmationController'
+        ))
         .otherwise({
             redirectTo: '/404'
         });

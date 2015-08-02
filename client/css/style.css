@@ -15,6 +15,16 @@ body {
   font-family: Avdira;
   font-size: 18px; }
 
+.darker {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
+    height: 400px;
+    background-color: rgba(0,0,0,.3); 
+}
+
 /*Global Classes Begin*/
 #main {
   padding-top: 50px; }
@@ -1208,6 +1218,7 @@ button.kh-primary {
     font-size: 20px;
     color: #DC141B; } }
 /* styles for user profile ends */
+
 /* styles for user restaurant home page starts */
 .restaurantBannerContainer {
   position: relative;
